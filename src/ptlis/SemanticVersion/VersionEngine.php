@@ -6,6 +6,7 @@ namespace ptlis\SemanticVersion;
 use ptlis\SemanticVersion\Entity\RangedVersion;
 use ptlis\SemanticVersion\Entity\Version;
 use ptlis\SemanticVersion\Entity\VersionRange;
+use ptlis\SemanticVersion\Exception\InvalidVersionException;
 
 /**
  * Class VersionsHandler
@@ -20,9 +21,9 @@ class VersionEngine
      */
     private static $versionRegex = "
         v*                                          # Optional 'v' prefix
-        (?<major>[0-9x\*]+)                         # Major Version
-        (?:\.(?<minor>[0-9x\*]+)?)?                 # Minor Version
-        (?:\.(?<patch>[0-9x\*]+)?)?                 # Patch
+        (?<major>[0-9]+|x|\*)                       # Major Version
+        (?:\.(?<minor>[0-9]+|x|\*)?)?               # Minor Version
+        (?:\.(?<patch>[0-9]+|x|\*)?)?               # Patch
         (?:\-*
             (?<label_full>                          # Label & number (with seperator)
                 (?<label>alpha|beta|rc)             # Label
@@ -106,12 +107,20 @@ class VersionEngine
      */
     public static function validVersion($versionNo)
     {
-        return (bool)preg_match(static::getVersionRegex(), $versionNo);
+        try {
+            static::parseVersion($versionNo);
+            $valid = true;
+        } catch (InvalidVersionException $e) {
+            $valid = false;
+        }
+        return $valid;
     }
 
 
     /**
      * Parse a version number into an array of version number parts.
+     *
+     * @throws Exception\InvalidVersionException
      *
      * @param string $versionNo
      *
@@ -122,8 +131,9 @@ class VersionEngine
         $version = null;
 
         if (preg_match(static::getVersionRegex(), $versionNo, $matches)) {
-
             $version = static::matchesToVersion($matches);
+        } else {
+            throw new InvalidVersionException('The version number "' . $versionNo . '" could not be parsed.');
         }
 
         return $version;
@@ -323,6 +333,8 @@ class VersionEngine
     /**
      * Transform an array of matches from preg_match to a Version entity.
      *
+     * @throws InvalidVersionException
+     *
      * @param array         $matches
      * @param string|null   $prefix
      *
@@ -330,27 +342,48 @@ class VersionEngine
      */
     private static function matchesToVersion(array $matches, $prefix = null)
     {
+        $majorPresent = array_key_exists($prefix . 'major', $matches);
+        $minorPresent = array_key_exists($prefix . 'minor', $matches) && strlen($matches[$prefix . 'minor']);
+        $patchPresent = array_key_exists($prefix . 'patch', $matches) && strlen($matches[$prefix . 'patch']);
+        $labelPresent = array_key_exists($prefix . 'label', $matches) && strlen($matches[$prefix . 'label']);
+        $labelNumPresent = array_key_exists($prefix . 'label_num', $matches) && strlen($matches[$prefix . 'label_num']);
+
+        // Handle error case where major version is omitted or a wildcard but minor/patch is a number
+        if ((!$majorPresent || $matches[$prefix . 'major'] === '*' || $matches[$prefix . 'major'] === 'x')
+                && (($minorPresent && $matches[$prefix . 'minor'] !== '*' && $matches[$prefix . 'minor'] !== 'x')
+                || ($patchPresent && $matches[$prefix . 'patch'] !== '*' && $matches[$prefix . 'patch'] !== 'x'))
+        ) {
+            throw new InvalidVersionException('The version number "' . $matches[0] . '" could not be parsed.');
+        }
+
+        // Handle error case where minor version is omitted or a wildcard but patch is a number
+        if ((!$minorPresent || $matches[$prefix . 'minor'] === '*' || $matches[$prefix . 'minor'] === 'x')
+            && ($patchPresent && $matches[$prefix . 'patch'] !== '*' && $matches[$prefix . 'patch'] !== 'x')
+        ) {
+            throw new InvalidVersionException('The version number "' . $matches[0] . '" could not be parsed.');
+        }
+
         $version = new Version();
 
-        if (array_key_exists($prefix . 'major', $matches)) {
+        if ($majorPresent) {
             $version->setMajor($matches[$prefix . 'major']);
         }
 
-        if (array_key_exists($prefix . 'minor', $matches) && strlen($matches[$prefix . 'minor'])) {
+        if ($minorPresent) {
             $version->setMinor($matches[$prefix . 'minor']);
         }
 
-        if (array_key_exists($prefix . 'patch', $matches) && strlen($matches[$prefix . 'patch'])) {
+        if ($patchPresent) {
             $version->setPatch($matches[$prefix . 'patch']);
         }
 
-        if (array_key_exists($prefix . 'label', $matches) && strlen($matches[$prefix . 'label'])) {
+        if ($labelPresent) {
             $version
                 ->setLabel($matches[$prefix . 'label_full'])
                 ->setLabelPrecedence(static::getPrecedence($matches[$prefix . 'label']));
         }
 
-        if (array_key_exists($prefix . 'label_num', $matches) && strlen($matches[$prefix . 'label_num'])) {
+        if ($labelNumPresent) {
             $version->setLabelNumber($matches[$prefix . 'label_num']);
         }
 
