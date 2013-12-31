@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<phpdox xmlns="http://phpdox.net/config" silent="false">
+    <project name="ptlis/SemanticVersion" source="${basedir}/src" workdir="${basedir}/build/phpdox/xml">
+
+        <collector publiconly="false" backend="parser">
+            <include mask="*.php" />
+            <exclude mask="" />
+
+            <inheritance resolve="true" />
+        </collector>
+
+        <generator output="${basedir}/build/api">
+            <build engine="html" enabled="true" output="html">
+                <template dir="${phpDox.home}/templates/html" />
+                <file extension="xhtml" />
+            </build>
+        </generator>
+    </project>
+
+</phpdox>
