@@ -249,9 +249,13 @@ class VersionEngine
             $upper->setComparator(RangedVersion::LESS_THAN);
         }
 
-        $versionRange
-            ->setLower($lower)
-            ->setUpper($upper);
+        if (!is_null($lower->getComparator())) {
+            $versionRange->setLower($lower);
+        }
+
+        if (!is_null($upper->getComparator())) {
+            $versionRange->setUpper($upper);
+        }
 
         return $versionRange;
     }
