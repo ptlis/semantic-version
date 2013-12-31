@@ -129,7 +129,12 @@ class Version
      */
     public function setMajor($major)
     {
-        $this->major = (int)$major;
+        if ($major === 'x' || $major === '*') {
+            $this->major = '*';
+            $this->setMinor('*');
+        } else {
+            $this->major = (int)$major;
+        }
 
         return $this;
     }
@@ -145,13 +150,18 @@ class Version
 
 
     /**
-     * @param int $minor
+     * @param int|string $minor
      *
      * @return Version
      */
     public function setMinor($minor)
     {
-        $this->minor = (int)$minor;
+        if ($minor === 'x' || $minor === '*') {
+            $this->minor = '*';
+            $this->setPatch('*');
+        } else {
+            $this->minor = (int)$minor;
+        }
 
         return $this;
     }
@@ -167,13 +177,17 @@ class Version
 
 
     /**
-     * @param int $patch
+     * @param int|string $patch
      *
      * @return Version
      */
     public function setPatch($patch)
     {
-        $this->patch = (int)$patch;
+        if ($patch === 'x' || $patch === '*') {
+            $this->patch = '*';
+        } else {
+            $this->patch = (int)$patch;
+        }
 
         return $this;
     }

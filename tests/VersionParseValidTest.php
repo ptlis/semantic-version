@@ -278,4 +278,244 @@ class VersionParseValidTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(0, $outVersion->getLabelNumber());
         $this->assertSame(Version::LABEL_NONE, $outVersion->getLabelPrecedence());
     }
+
+
+    public function testPatchWildcardX()
+    {
+        $inVersion = '1.5.x';
+        $expectVersion = '1.5.*';
+        $outVersion = VersionEngine::parseVersion($inVersion);
+        $valid = VersionEngine::validVersion($inVersion);
+
+        $this->assertNotNull($outVersion);
+        $this->assertSame($expectVersion, $outVersion->__toString());
+        $this->assertTrue($valid);
+
+        $this->assertSame(1, $outVersion->getMajor());
+        $this->assertSame(5, $outVersion->getMinor());
+        $this->assertSame('*', $outVersion->getPatch());
+        $this->assertSame(null, $outVersion->getLabel());
+        $this->assertSame(0, $outVersion->getLabelNumber());
+        $this->assertSame(Version::LABEL_NONE, $outVersion->getLabelPrecedence());
+    }
+
+
+    public function testMinorWildcardX()
+    {
+        $inVersion = '1.x';
+        $expectVersion = '1.*.*';
+        $outVersion = VersionEngine::parseVersion($inVersion);
+        $valid = VersionEngine::validVersion($inVersion);
+
+        $this->assertNotNull($outVersion);
+        $this->assertSame($expectVersion, $outVersion->__toString());
+        $this->assertTrue($valid);
+
+        $this->assertSame(1, $outVersion->getMajor());
+        $this->assertSame('*', $outVersion->getMinor());
+        $this->assertSame('*', $outVersion->getPatch());
+        $this->assertSame(null, $outVersion->getLabel());
+        $this->assertSame(0, $outVersion->getLabelNumber());
+        $this->assertSame(Version::LABEL_NONE, $outVersion->getLabelPrecedence());
+    }
+
+
+    public function testMinorPatchWildcardX()
+    {
+        $inVersion = '1.x.x';
+        $expectVersion = '1.*.*';
+        $outVersion = VersionEngine::parseVersion($inVersion);
+        $valid = VersionEngine::validVersion($inVersion);
+
+        $this->assertNotNull($outVersion);
+        $this->assertSame($expectVersion, $outVersion->__toString());
+        $this->assertTrue($valid);
+
+        $this->assertSame(1, $outVersion->getMajor());
+        $this->assertSame('*', $outVersion->getMinor());
+        $this->assertSame('*', $outVersion->getPatch());
+        $this->assertSame(null, $outVersion->getLabel());
+        $this->assertSame(0, $outVersion->getLabelNumber());
+        $this->assertSame(Version::LABEL_NONE, $outVersion->getLabelPrecedence());
+    }
+
+
+    public function testMajorWildcardX()
+    {
+        $inVersion = 'x';
+        $expectVersion = '*.*.*';
+        $outVersion = VersionEngine::parseVersion($inVersion);
+        $valid = VersionEngine::validVersion($inVersion);
+
+        $this->assertNotNull($outVersion);
+        $this->assertSame($expectVersion, $outVersion->__toString());
+        $this->assertTrue($valid);
+
+        $this->assertSame('*', $outVersion->getMajor());
+        $this->assertSame('*', $outVersion->getMinor());
+        $this->assertSame('*', $outVersion->getPatch());
+        $this->assertSame(null, $outVersion->getLabel());
+        $this->assertSame(0, $outVersion->getLabelNumber());
+        $this->assertSame(Version::LABEL_NONE, $outVersion->getLabelPrecedence());
+    }
+
+
+    public function testMajorMinorWildcardX()
+    {
+        $inVersion = 'x.x';
+        $expectVersion = '*.*.*';
+        $outVersion = VersionEngine::parseVersion($inVersion);
+        $valid = VersionEngine::validVersion($inVersion);
+
+        $this->assertNotNull($outVersion);
+        $this->assertSame($expectVersion, $outVersion->__toString());
+        $this->assertTrue($valid);
+
+        $this->assertSame('*', $outVersion->getMajor());
+        $this->assertSame('*', $outVersion->getMinor());
+        $this->assertSame('*', $outVersion->getPatch());
+        $this->assertSame(null, $outVersion->getLabel());
+        $this->assertSame(0, $outVersion->getLabelNumber());
+        $this->assertSame(Version::LABEL_NONE, $outVersion->getLabelPrecedence());
+    }
+
+
+    public function testMajorMinorPatchWildcardX()
+    {
+        $inVersion = 'x.x.x';
+        $expectVersion = '*.*.*';
+        $outVersion = VersionEngine::parseVersion($inVersion);
+        $valid = VersionEngine::validVersion($inVersion);
+
+        $this->assertNotNull($outVersion);
+        $this->assertSame($expectVersion, $outVersion->__toString());
+        $this->assertTrue($valid);
+
+        $this->assertSame('*', $outVersion->getMajor());
+        $this->assertSame('*', $outVersion->getMinor());
+        $this->assertSame('*', $outVersion->getPatch());
+        $this->assertSame(null, $outVersion->getLabel());
+        $this->assertSame(0, $outVersion->getLabelNumber());
+        $this->assertSame(Version::LABEL_NONE, $outVersion->getLabelPrecedence());
+    }
+
+
+    public function testPatchWildcardStar()
+    {
+        $inVersion = '1.5.*';
+        $expectVersion = '1.5.*';
+        $outVersion = VersionEngine::parseVersion($inVersion);
+        $valid = VersionEngine::validVersion($inVersion);
+
+        $this->assertNotNull($outVersion);
+        $this->assertSame($expectVersion, $outVersion->__toString());
+        $this->assertTrue($valid);
+
+        $this->assertSame(1, $outVersion->getMajor());
+        $this->assertSame(5, $outVersion->getMinor());
+        $this->assertSame('*', $outVersion->getPatch());
+        $this->assertSame(null, $outVersion->getLabel());
+        $this->assertSame(0, $outVersion->getLabelNumber());
+        $this->assertSame(Version::LABEL_NONE, $outVersion->getLabelPrecedence());
+    }
+
+
+    public function testMinorWildcardStar()
+    {
+        $inVersion = '1.*';
+        $expectVersion = '1.*.*';
+        $outVersion = VersionEngine::parseVersion($inVersion);
+        $valid = VersionEngine::validVersion($inVersion);
+
+        $this->assertNotNull($outVersion);
+        $this->assertSame($expectVersion, $outVersion->__toString());
+        $this->assertTrue($valid);
+
+        $this->assertSame(1, $outVersion->getMajor());
+        $this->assertSame('*', $outVersion->getMinor());
+        $this->assertSame('*', $outVersion->getPatch());
+        $this->assertSame(null, $outVersion->getLabel());
+        $this->assertSame(0, $outVersion->getLabelNumber());
+        $this->assertSame(Version::LABEL_NONE, $outVersion->getLabelPrecedence());
+    }
+
+
+    public function testMinorPatchWildcardStar()
+    {
+        $inVersion = '1.*.*';
+        $expectVersion = '1.*.*';
+        $outVersion = VersionEngine::parseVersion($inVersion);
+        $valid = VersionEngine::validVersion($inVersion);
+
+        $this->assertNotNull($outVersion);
+        $this->assertSame($expectVersion, $outVersion->__toString());
+        $this->assertTrue($valid);
+
+        $this->assertSame(1, $outVersion->getMajor());
+        $this->assertSame('*', $outVersion->getMinor());
+        $this->assertSame('*', $outVersion->getPatch());
+        $this->assertSame(null, $outVersion->getLabel());
+        $this->assertSame(0, $outVersion->getLabelNumber());
+        $this->assertSame(Version::LABEL_NONE, $outVersion->getLabelPrecedence());
+    }
+
+
+    public function testMajorWildcardStar()
+    {
+        $inVersion = '*';
+        $expectVersion = '*.*.*';
+        $outVersion = VersionEngine::parseVersion($inVersion);
+        $valid = VersionEngine::validVersion($inVersion);
+
+        $this->assertNotNull($outVersion);
+        $this->assertSame($expectVersion, $outVersion->__toString());
+        $this->assertTrue($valid);
+
+        $this->assertSame('*', $outVersion->getMajor());
+        $this->assertSame('*', $outVersion->getMinor());
+        $this->assertSame('*', $outVersion->getPatch());
+        $this->assertSame(null, $outVersion->getLabel());
+        $this->assertSame(0, $outVersion->getLabelNumber());
+        $this->assertSame(Version::LABEL_NONE, $outVersion->getLabelPrecedence());
+    }
+
+
+    public function testMajorMinorWildcardStar()
+    {
+        $inVersion = '*.*';
+        $expectVersion = '*.*.*';
+        $outVersion = VersionEngine::parseVersion($inVersion);
+        $valid = VersionEngine::validVersion($inVersion);
+
+        $this->assertNotNull($outVersion);
+        $this->assertSame($expectVersion, $outVersion->__toString());
+        $this->assertTrue($valid);
+
+        $this->assertSame('*', $outVersion->getMajor());
+        $this->assertSame('*', $outVersion->getMinor());
+        $this->assertSame('*', $outVersion->getPatch());
+        $this->assertSame(null, $outVersion->getLabel());
+        $this->assertSame(0, $outVersion->getLabelNumber());
+        $this->assertSame(Version::LABEL_NONE, $outVersion->getLabelPrecedence());
+    }
+
+
+    public function testMajorMinorPatchWildcardStar()
+    {
+        $inVersion = '*.*.*';
+        $expectVersion = '*.*.*';
+        $outVersion = VersionEngine::parseVersion($inVersion);
+        $valid = VersionEngine::validVersion($inVersion);
+
+        $this->assertNotNull($outVersion);
+        $this->assertSame($expectVersion, $outVersion->__toString());
+        $this->assertTrue($valid);
+
+        $this->assertSame('*', $outVersion->getMajor());
+        $this->assertSame('*', $outVersion->getMinor());
+        $this->assertSame('*', $outVersion->getPatch());
+        $this->assertSame(null, $outVersion->getLabel());
+        $this->assertSame(0, $outVersion->getLabelNumber());
+        $this->assertSame(Version::LABEL_NONE, $outVersion->getLabelPrecedence());
+    }
 }

@@ -20,9 +20,9 @@ class VersionEngine
      */
     private static $versionRegex = "
         v*                                          # Optional 'v' prefix
-        (?<major>[0-9]+)                            # Major Version
-        (?:\.(?<minor>[0-9x]+)?)?                   # Minor Version
-        (?:\.(?<patch>[0-9x]+)?)?                   # Patch
+        (?<major>[0-9x\*]+)                         # Major Version
+        (?:\.(?<minor>[0-9x\*]+)?)?                 # Minor Version
+        (?:\.(?<patch>[0-9x\*]+)?)?                 # Patch
         (?:\-*
             (?<label_full>                          # Label & number (with seperator)
                 (?<label>alpha|beta|rc)             # Label
@@ -121,6 +121,7 @@ class VersionEngine
         $version = null;
 
         if (preg_match(static::getVersionRegex(), $versionNo, $matches)) {
+
             $version = static::matchesToVersion($matches);
         }
 
