@@ -84,12 +84,17 @@ class VersionRange
     {
         $strRange = '';
 
-        if (!is_null($this->lower)) {
-            $strRange .= $this->lower->__toString();
-        }
+        if (!is_null($this->lower) && !is_null($this->upper)
+                && $this->lower->__toString() == $this->upper->__toString()) {
+            $strRange = $this->lower->__toString();
+        } else {
+            if (!is_null($this->lower)) {
+                $strRange .= $this->lower->__toString();
+            }
 
-        if (!is_null($this->upper)) {
-            $strRange .= $this->upper->__toString();
+            if (!is_null($this->upper)) {
+                $strRange .= $this->upper->__toString();
+            }
         }
 
         return trim($strRange);

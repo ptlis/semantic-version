@@ -211,4 +211,62 @@ class VersionRangeParseValidTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(0, $outRange->getUpper()->getVersion()->getLabelNumber());
         $this->assertSame(Version::LABEL_NONE, $outRange->getUpper()->getVersion()->getLabelPrecedence());
     }
+
+
+    public function testSingleMajorMinorPatch()
+    {
+        $inRange = '1.0.5';
+        $expectVersion = '=1.0.5';
+        $outRange = VersionEngine::parseVersionRange($inRange);
+        $valid = VersionEngine::validVersionRange($inRange);
+
+        $this->assertNotNull($outRange);
+        $this->assertSame($expectVersion, $outRange->__toString());
+        $this->assertTrue($valid);
+
+        $this->assertSame('=', $outRange->getLower()->getComparator());
+        $this->assertSame(1, $outRange->getLower()->getVersion()->getMajor());
+        $this->assertSame(0, $outRange->getLower()->getVersion()->getMinor());
+        $this->assertSame(5, $outRange->getLower()->getVersion()->getPatch());
+        $this->assertSame(null, $outRange->getLower()->getVersion()->getLabel());
+        $this->assertSame(0, $outRange->getLower()->getVersion()->getLabelNumber());
+        $this->assertSame(Version::LABEL_NONE, $outRange->getLower()->getVersion()->getLabelPrecedence());
+
+        $this->assertSame('=', $outRange->getUpper()->getComparator());
+        $this->assertSame(1, $outRange->getUpper()->getVersion()->getMajor());
+        $this->assertSame(0, $outRange->getUpper()->getVersion()->getMinor());
+        $this->assertSame(5, $outRange->getUpper()->getVersion()->getPatch());
+        $this->assertSame(null, $outRange->getUpper()->getVersion()->getLabel());
+        $this->assertSame(0, $outRange->getUpper()->getVersion()->getLabelNumber());
+        $this->assertSame(Version::LABEL_NONE, $outRange->getUpper()->getVersion()->getLabelPrecedence());
+    }
+
+
+    public function testSingleMajorMinorPatchLabel()
+    {
+        $inRange = '1.0.5-rc2';
+        $expectVersion = '=1.0.5-rc2';
+        $outRange = VersionEngine::parseVersionRange($inRange);
+        $valid = VersionEngine::validVersionRange($inRange);
+
+        $this->assertNotNull($outRange);
+        $this->assertSame($expectVersion, $outRange->__toString());
+        $this->assertTrue($valid);
+
+        $this->assertSame('=', $outRange->getLower()->getComparator());
+        $this->assertSame(1, $outRange->getLower()->getVersion()->getMajor());
+        $this->assertSame(0, $outRange->getLower()->getVersion()->getMinor());
+        $this->assertSame(5, $outRange->getLower()->getVersion()->getPatch());
+        $this->assertSame('rc2', $outRange->getLower()->getVersion()->getLabel());
+        $this->assertSame(2, $outRange->getLower()->getVersion()->getLabelNumber());
+        $this->assertSame(Version::LABEL_RC, $outRange->getLower()->getVersion()->getLabelPrecedence());
+
+        $this->assertSame('=', $outRange->getUpper()->getComparator());
+        $this->assertSame(1, $outRange->getUpper()->getVersion()->getMajor());
+        $this->assertSame(0, $outRange->getUpper()->getVersion()->getMinor());
+        $this->assertSame(5, $outRange->getUpper()->getVersion()->getPatch());
+        $this->assertSame('rc2', $outRange->getUpper()->getVersion()->getLabel());
+        $this->assertSame(2, $outRange->getUpper()->getVersion()->getLabelNumber());
+        $this->assertSame(Version::LABEL_RC, $outRange->getUpper()->getVersion()->getLabelPrecedence());
+    }
 }

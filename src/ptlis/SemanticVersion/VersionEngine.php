@@ -219,7 +219,7 @@ class VersionEngine
         $versionRange = new VersionRange();
 
         // Label & patch - exact match
-        if (array_key_exists('single_patch', $matches) && strlen($matches['single_path'])) {
+        if (array_key_exists('single_patch', $matches) && strlen($matches['single_patch'])) {
             $lower = static::matchesToRangedVersion($matches, 'single_');
             $lower->setComparator(RangedVersion::EQUAL);
 
