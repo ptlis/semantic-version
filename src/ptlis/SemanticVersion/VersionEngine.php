@@ -90,6 +90,7 @@ class VersionEngine
             . ')?'
             . '\s*'
             . '('
+            .     '(?<single_tilde>~)?'
             .     str_replace(array_keys($singleReplace), $singleReplace, static::$versionRegex)
             . ')?'
             . '\s*$/ix';
@@ -219,15 +220,54 @@ class VersionEngine
     {
         $versionRange = new VersionRange();
 
+        // Tilde match
+        if (array_key_exists('single_tilde', $matches) && strlen($matches['single_tilde'])) {
+
+            // Full version tilde match
+            if (array_key_exists('single_patch', $matches) && is_numeric($matches['single_patch'])) {
+                $lower = static::matchesToRangedVersion($matches, 'single_');
+                $lower->setComparator(RangedVersion::GREATER_OR_EQUAL_TO);
+
+                $upper = static::matchesToRangedVersion($matches, 'single_');
+                $upper->getVersion()->setMinor($upper->getVersion()->getMinor() + 1);
+                $upper->getVersion()->setPatch(0);
+                $upper->setComparator(RangedVersion::LESS_THAN);
+
+            // Major & Minor tilde match
+            } elseif (array_key_exists('single_minor', $matches) && is_numeric($matches['single_minor'])) {
+                $lower = static::matchesToRangedVersion($matches, 'single_');
+                $lower->getVersion()->setPatch(0);
+                $lower->setComparator(RangedVersion::GREATER_OR_EQUAL_TO);
+
+                $upper = static::matchesToRangedVersion($matches, 'single_');
+                $upper->getVersion()->setMajor($upper->getVersion()->getMajor() + 1);
+                $upper->getVersion()->setMinor(0);
+                $upper->getVersion()->setPatch(0);
+                $upper->setComparator(RangedVersion::LESS_THAN);
+
+            // Major tilde match
+            } else {
+                $lower = static::matchesToRangedVersion($matches, 'single_');
+                $lower->getVersion()->setMinor(0);
+                $lower->getVersion()->setPatch(0);
+                $lower->setComparator(RangedVersion::GREATER_OR_EQUAL_TO);
+
+                $upper = static::matchesToRangedVersion($matches, 'single_');
+                $upper->getVersion()->setMajor($upper->getVersion()->getMajor() + 1);
+                $upper->getVersion()->setMinor(0);
+                $upper->getVersion()->setPatch(0);
+                $upper->setComparator(RangedVersion::LESS_THAN);
+            }
+
         // Label & patch - exact match
-        if (array_key_exists('single_patch', $matches) && strlen($matches['single_patch'])) {
+        } elseif (array_key_exists('single_patch', $matches) && strlen($matches['single_patch'])) {
             $lower = static::matchesToRangedVersion($matches, 'single_');
             $lower->setComparator(RangedVersion::EQUAL);
 
             $upper = static::matchesToRangedVersion($matches, 'single_');
             $upper->setComparator(RangedVersion::EQUAL);
 
-            // Minor - range (minor inc by 1)
+        // Minor - range (minor inc by 1)
         } elseif (array_key_exists('single_minor', $matches) && strlen($matches['single_minor'])) {
             $lower = static::matchesToRangedVersion($matches, 'single_');
             $lower->setComparator(RangedVersion::GREATER_OR_EQUAL_TO);
@@ -237,7 +277,7 @@ class VersionEngine
             $upper->getVersion()->setPatch(0);
             $upper->setComparator(RangedVersion::LESS_THAN);
 
-            // Major - range (major inc by 1;
+        // Major - range (major inc by 1;
         } else {
             $lower = static::matchesToRangedVersion($matches, 'single_');
             $lower->setComparator(RangedVersion::GREATER_OR_EQUAL_TO);
@@ -257,6 +297,7 @@ class VersionEngine
             $versionRange->setUpper($upper);
         }
 
+        //var_dump($versionRange);
         return $versionRange;
     }
 
