@@ -12,6 +12,15 @@
         </testsuite>
     </testsuites>
 
+    <filter>
+        <whitelist>
+            <directory suffix=".php">./src/</directory>
+        </whitelist>
+        <exclude>
+            <directory suffix=".php">./vendor/</directory>
+        </exclude>
+    </filter>
+
     <logging>
         <log type="coverage-html" target="build/coverage" title="Hercule"
              charset="UTF-8" yui="true" highlight="true"
