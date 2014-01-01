@@ -17,11 +17,7 @@ namespace ptlis\SemanticVersion;
 
 use ptlis\SemanticVersion\Entity\Comparator\ComparatorFactory;
 use ptlis\SemanticVersion\Entity\ComparatorVersion;
-use ptlis\SemanticVersion\Entity\Label\LabelInterface;
-use ptlis\SemanticVersion\Entity\Label\LabelAlpha;
-use ptlis\SemanticVersion\Entity\Label\LabelBeta;
-use ptlis\SemanticVersion\Entity\Label\LabelNone;
-use ptlis\SemanticVersion\Entity\Label\LabelRc;
+use ptlis\SemanticVersion\Entity\Label\LabelFactory;
 use ptlis\SemanticVersion\Entity\Version;
 use ptlis\SemanticVersion\Entity\VersionRange;
 use ptlis\SemanticVersion\Exception\InvalidComparatorVersionException;
@@ -227,67 +223,67 @@ class VersionEngine
             // Full version tilde match
             if (array_key_exists('single_patch', $matches) && is_numeric($matches['single_patch'])) {
                 $lower = static::matchesToComparatorVersion($matches, 'single_');
-                $lower->setComparator($comparatorFactory->getComparator('>='));
+                $lower->setComparator($comparatorFactory->get('>='));
 
                 $upper = static::matchesToComparatorVersion($matches, 'single_');
                 $upper->getVersion()->setMinor($upper->getVersion()->getMinor() + 1);
                 $upper->getVersion()->setPatch(0);
-                $upper->setComparator($comparatorFactory->getComparator('<'));
+                $upper->setComparator($comparatorFactory->get('<'));
 
             // Major & Minor tilde match
             } elseif (array_key_exists('single_minor', $matches) && is_numeric($matches['single_minor'])) {
                 $lower = static::matchesToComparatorVersion($matches, 'single_');
                 $lower->getVersion()->setPatch(0);
-                $lower->setComparator($comparatorFactory->getComparator('>='));
+                $lower->setComparator($comparatorFactory->get('>='));
 
                 $upper = static::matchesToComparatorVersion($matches, 'single_');
                 $upper->getVersion()->setMajor($upper->getVersion()->getMajor() + 1);
                 $upper->getVersion()->setMinor(0);
                 $upper->getVersion()->setPatch(0);
-                $upper->setComparator($comparatorFactory->getComparator('<'));
+                $upper->setComparator($comparatorFactory->get('<'));
 
             // Major tilde match
             } else {
                 $lower = static::matchesToComparatorVersion($matches, 'single_');
                 $lower->getVersion()->setMinor(0);
                 $lower->getVersion()->setPatch(0);
-                $lower->setComparator($comparatorFactory->getComparator('>='));
+                $lower->setComparator($comparatorFactory->get('>='));
 
                 $upper = static::matchesToComparatorVersion($matches, 'single_');
                 $upper->getVersion()->setMajor($upper->getVersion()->getMajor() + 1);
                 $upper->getVersion()->setMinor(0);
                 $upper->getVersion()->setPatch(0);
-                $upper->setComparator($comparatorFactory->getComparator('<'));
+                $upper->setComparator($comparatorFactory->get('<'));
             }
 
         // Label & patch - exact match
         } elseif (array_key_exists('single_patch', $matches) && strlen($matches['single_patch'])) {
             $lower = static::matchesToComparatorVersion($matches, 'single_');
-            $lower->setComparator($comparatorFactory->getComparator('='));
+            $lower->setComparator($comparatorFactory->get('='));
 
             $upper = static::matchesToComparatorVersion($matches, 'single_');
-            $upper->setComparator($comparatorFactory->getComparator('='));
+            $upper->setComparator($comparatorFactory->get('='));
 
         // Minor - range (minor inc by 1)
         } elseif (array_key_exists('single_minor', $matches) && strlen($matches['single_minor'])) {
             $lower = static::matchesToComparatorVersion($matches, 'single_');
-            $lower->setComparator($comparatorFactory->getComparator('>='));
+            $lower->setComparator($comparatorFactory->get('>='));
 
             $upper = static::matchesToComparatorVersion($matches, 'single_');
             $upper->getVersion()->setMinor($upper->getVersion()->getMinor() + 1);
             $upper->getVersion()->setPatch(0);
-            $upper->setComparator($comparatorFactory->getComparator('<'));
+            $upper->setComparator($comparatorFactory->get('<'));
 
         // Major - range (major inc by 1;
         } else {
             $lower = static::matchesToComparatorVersion($matches, 'single_');
-            $lower->setComparator($comparatorFactory->getComparator('>='));
+            $lower->setComparator($comparatorFactory->get('>='));
 
             $upper = static::matchesToComparatorVersion($matches, 'single_');
             $upper->getVersion()->setMajor($upper->getVersion()->getMajor() + 1);
             $upper->getVersion()->setMinor(0);
             $upper->getVersion()->setPatch(0);
-            $upper->setComparator($comparatorFactory->getComparator('<'));
+            $upper->setComparator($comparatorFactory->get('<'));
         }
 
         if (!is_null($lower->getComparator())) {
@@ -361,7 +357,9 @@ class VersionEngine
             $labelVersion = null;
         }
 
-        $version->setLabel(static::getLabel($labelName, $labelVersion));
+        $labelFactory = new LabelFactory();
+
+        $version->setLabel($labelFactory->get($labelName, $labelVersion));
 
         return $version;
     }
@@ -396,39 +394,10 @@ class VersionEngine
 
         // A comparator has been found
         if (array_key_exists($prefix . 'comparator', $matches) && strlen($matches[$prefix . 'comparator'])) {
-            $comparatorVersion->setComparator($comparatorFactory->getComparator($matches[$prefix . 'comparator']));
+            $comparatorVersion->setComparator($comparatorFactory->get($matches[$prefix . 'comparator']));
         }
 
 
         return $comparatorVersion;
-    }
-
-
-    /**
-     * @param string    $name
-     * @param int|null  $version
-     *
-     * @return LabelInterface
-     */
-    private static function getLabel($name, $version = null)
-    {
-        switch ($name) {
-            case 'alpha':
-                $label = new LabelAlpha();
-                break;
-            case 'beta':
-                $label = new LabelBeta();
-                break;
-            case 'rc':
-                $label = new LabelRc();
-                break;
-            default:
-                $label = new LabelNone();
-                $version = null;
-                break;
-        }
-        $label->setVersion($version);
-
-        return $label;
     }
 }

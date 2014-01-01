@@ -33,7 +33,7 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $factory = new ComparatorFactory();
 
-        $this->assertEquals(new EqualTo(), $factory->getComparator('='));
+        $this->assertEquals(new EqualTo(), $factory->get('='));
     }
 
 
@@ -41,7 +41,7 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $factory = new ComparatorFactory();
 
-        $this->assertEquals(new GreaterThan(), $factory->getComparator('>'));
+        $this->assertEquals(new GreaterThan(), $factory->get('>'));
     }
 
 
@@ -49,7 +49,7 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $factory = new ComparatorFactory();
 
-        $this->assertEquals(new GreaterOrEqualTo(), $factory->getComparator('>='));
+        $this->assertEquals(new GreaterOrEqualTo(), $factory->get('>='));
     }
 
 
@@ -57,7 +57,7 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $factory = new ComparatorFactory();
 
-        $this->assertEquals(new LessThan(), $factory->getComparator('<'));
+        $this->assertEquals(new LessThan(), $factory->get('<'));
     }
 
 
@@ -65,7 +65,7 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $factory = new ComparatorFactory();
 
-        $this->assertEquals(new LessOrEqualTo(), $factory->getComparator('<='));
+        $this->assertEquals(new LessOrEqualTo(), $factory->get('<='));
     }
 
 
@@ -79,7 +79,7 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
         );
 
         $factory = new ComparatorFactory();
-        $factory->getComparator($comparatorStr);
+        $factory->get($comparatorStr);
     }
 
 
@@ -91,11 +91,11 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
             ]
         );
 
-        $this->assertEquals(new EqualTo(), $factory->getComparator('='));
+        $this->assertEquals(new EqualTo(), $factory->get('='));
     }
 
 
-    public function testCustomComparatorListInalid()
+    public function testCustomComparatorListInvalid()
     {
         $comparatorStr = '<';
 
@@ -110,6 +110,6 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
             ]
         );
 
-        $factory->getComparator($comparatorStr);
+        $factory->get($comparatorStr);
     }
 }

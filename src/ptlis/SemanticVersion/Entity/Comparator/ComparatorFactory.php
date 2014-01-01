@@ -29,8 +29,11 @@ class ComparatorFactory
      */
     private $comparatorList;
 
+
     /**
-     * @param array|null $comparatorList
+     * Constructor.
+     *
+     * @param array|null $comparatorList Override default comparators.
      */
     public function __construct(array $comparatorList = null)
     {
@@ -50,6 +53,7 @@ class ComparatorFactory
         }
     }
 
+
     /**
      * Get a comparator class from the comparator symbol.
      *
@@ -59,7 +63,7 @@ class ComparatorFactory
      *
      * @return ComparatorInterface
      */
-    public function getComparator($symbol)
+    public function get($symbol)
     {
         if (!array_key_exists($symbol, $this->comparatorList)) {
             throw new InvalidComparatorException('The provided comparator "' . $symbol . '" is invalid.');
