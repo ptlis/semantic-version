@@ -3,7 +3,7 @@
 /**
  * Abstract Class for Named labels.
  *
- * PHP Version 5.3
+ * PHP Version 5.4
  *
  * @copyright   (c) 2014 brian ridley
  * @author      brian ridley <ptlis@ptlis.net>
