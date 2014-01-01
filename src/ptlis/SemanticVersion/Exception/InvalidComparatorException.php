@@ -18,10 +18,6 @@ namespace ptlis\SemanticVersion\Exception;
 /**
  * Exception thrown when an invalid comparator is found.
  */
-class InvalidComparatorException extends \RuntimeException
+class InvalidComparatorException extends SemanticVersionException
 {
-    public function __construct($message, \Exception $previous = null)
-    {
-        parent::__construct($message, null, $previous);
-    }
 }

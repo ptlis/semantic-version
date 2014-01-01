@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Exception thrown when the engine is unable to parse a version number.
+ * Base exception type for library.
  *
  * PHP Version 5.4
  *
@@ -16,8 +16,12 @@
 namespace ptlis\SemanticVersion\Exception;
 
 /**
- * Exception thrown when the engine is unable to parse a version number.
+ * Base exception type for library.
  */
-class InvalidVersionException extends SemanticVersionException
+class SemanticVersionException extends \RuntimeException
 {
+    public function __construct($message, \Exception $previous = null)
+    {
+        parent::__construct($message, null, $previous);
+    }
 }

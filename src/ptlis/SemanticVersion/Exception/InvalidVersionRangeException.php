@@ -18,10 +18,6 @@ namespace ptlis\SemanticVersion\Exception;
 /**
  * Exception thrown when the engine is unable to parse a version range.
  */
-class InvalidVersionRangeException extends \RuntimeException
+class InvalidVersionRangeException extends SemanticVersionException
 {
-    public function __construct($message, \Exception $previous = null)
-    {
-        parent::__construct($message, null, $previous);
-    }
 }
