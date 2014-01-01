@@ -347,14 +347,18 @@ class VersionEngine
         }
 
         if ($labelPresent) {
+            $labelName = $matches[$prefix . 'label'];
+
             $labelVersion = null;
             if ($labelNumPresent) {
                 $labelVersion = $matches[$prefix . 'label_num'];
             }
-
-            $version
-                ->setLabel(static::getLabel($matches[$prefix . 'label'], $labelVersion));
+        } else {
+            $labelName = null;
+            $labelVersion = null;
         }
+
+        $version->setLabel(static::getLabel($labelName, $labelVersion));
 
         return $version;
     }
@@ -395,33 +399,6 @@ class VersionEngine
 
 
     /**
-     * Get the precedence value for a label.
-     *
-     * @param $label
-     *
-     * @return int
-     */
-    private static function getPrecedence($label)
-    {
-        $precedence = Version::LABEL_NONE;
-
-        switch ($label) {
-            case 'alpha':
-                $precedence = Version::LABEL_ALPHA;
-                break;
-            case 'beta':
-                $precedence = Version::LABEL_BETA;
-                break;
-            case 'rc':
-                $precedence = Version::LABEL_RC;
-                break;
-        }
-
-        return $precedence;
-    }
-
-
-    /**
      * @param string    $name
      * @param int|null  $version
      *
@@ -432,20 +409,19 @@ class VersionEngine
         switch ($name) {
             case 'alpha':
                 $label = new LabelAlpha();
-                $label->setVersion($version);
                 break;
             case 'beta':
                 $label = new LabelBeta();
-                $label->setVersion($version);
                 break;
             case 'rc':
                 $label = new LabelRc();
-                $label->setVersion($version);
                 break;
             default:
                 $label = new LabelNone();
+                $version = null;
                 break;
         }
+        $label->setVersion($version);
 
         return $label;
     }

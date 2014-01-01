@@ -50,7 +50,7 @@ class Version implements VersionInterface
      */
     public function setLabel(LabelInterface $label)
     {
-        $this->label = (string)$label;
+        $this->label = $label;
 
         return $this;
     }

@@ -29,7 +29,36 @@ use ptlis\SemanticVersion\VersionEngine;
  */
 class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
 {
-    public function testAllFields()
+    public function testAllFieldsLabelNone()
+    {
+        $inStr = '1.0.0';
+
+        $outVersion = VersionEngine::parseVersion($inStr);
+
+        $expectStr = '1.0.0';
+        $expectVersion = new Version();
+
+        $expectVersion
+            ->setMajor(1)
+            ->setMinor(0)
+            ->setPatch(0)
+            ->setLabel(new LabelNone());
+
+        $this->assertSame($expectStr, $outVersion->__toString());
+        $this->assertEquals($expectVersion, $outVersion);
+
+        $this->assertEquals($expectVersion->getMajor(), $outVersion->getMajor());
+        $this->assertEquals($expectVersion->getMinor(), $outVersion->getMinor());
+        $this->assertEquals($expectVersion->getPatch(), $outVersion->getPatch());
+        $this->assertEquals($expectVersion->getLabel(), $outVersion->getLabel());
+
+        $this->assertEquals($expectVersion->getLabel()->getName(), $outVersion->getLabel()->getName());
+        $this->assertEquals($expectVersion->getLabel()->getVersion(), $outVersion->getLabel()->getVersion());
+        $this->assertEquals($expectVersion->getLabel()->getPrecedence(), $outVersion->getLabel()->getPrecedence());
+    }
+
+
+    public function testAllFieldsLabelAlpha()
     {
         $inStr = '1.0.0-alpha.1';
 
@@ -51,6 +80,68 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectVersion->getMinor(), $outVersion->getMinor());
         $this->assertEquals($expectVersion->getPatch(), $outVersion->getPatch());
         $this->assertEquals($expectVersion->getLabel(), $outVersion->getLabel());
+
+        $this->assertEquals($expectVersion->getLabel()->getName(), $outVersion->getLabel()->getName());
+        $this->assertEquals($expectVersion->getLabel()->getVersion(), $outVersion->getLabel()->getVersion());
+        $this->assertEquals($expectVersion->getLabel()->getPrecedence(), $outVersion->getLabel()->getPrecedence());
+    }
+
+
+    public function testAllFieldsLabelBeta()
+    {
+        $inStr = '1.0.0-beta.12';
+
+        $outVersion = VersionEngine::parseVersion($inStr);
+
+        $expectStr = '1.0.0-beta.12';
+        $expectVersion = new Version();
+
+        $expectVersion
+            ->setMajor(1)
+            ->setMinor(0)
+            ->setPatch(0)
+            ->setLabel(new LabelBeta(12));
+
+        $this->assertSame($expectStr, $outVersion->__toString());
+        $this->assertEquals($expectVersion, $outVersion);
+
+        $this->assertEquals($expectVersion->getMajor(), $outVersion->getMajor());
+        $this->assertEquals($expectVersion->getMinor(), $outVersion->getMinor());
+        $this->assertEquals($expectVersion->getPatch(), $outVersion->getPatch());
+        $this->assertEquals($expectVersion->getLabel(), $outVersion->getLabel());
+
+        $this->assertEquals($expectVersion->getLabel()->getName(), $outVersion->getLabel()->getName());
+        $this->assertEquals($expectVersion->getLabel()->getVersion(), $outVersion->getLabel()->getVersion());
+        $this->assertEquals($expectVersion->getLabel()->getPrecedence(), $outVersion->getLabel()->getPrecedence());
+    }
+
+
+    public function testAllFieldsLabelRc()
+    {
+        $inStr = '1.0.0-rc.4';
+
+        $outVersion = VersionEngine::parseVersion($inStr);
+
+        $expectStr = '1.0.0-rc.4';
+        $expectVersion = new Version();
+
+        $expectVersion
+            ->setMajor(1)
+            ->setMinor(0)
+            ->setPatch(0)
+            ->setLabel(new LabelRc(4));
+
+        $this->assertSame($expectStr, $outVersion->__toString());
+        $this->assertEquals($expectVersion, $outVersion);
+
+        $this->assertEquals($expectVersion->getMajor(), $outVersion->getMajor());
+        $this->assertEquals($expectVersion->getMinor(), $outVersion->getMinor());
+        $this->assertEquals($expectVersion->getPatch(), $outVersion->getPatch());
+        $this->assertEquals($expectVersion->getLabel(), $outVersion->getLabel());
+
+        $this->assertEquals($expectVersion->getLabel()->getName(), $outVersion->getLabel()->getName());
+        $this->assertEquals($expectVersion->getLabel()->getVersion(), $outVersion->getLabel()->getVersion());
+        $this->assertEquals($expectVersion->getLabel()->getPrecedence(), $outVersion->getLabel()->getPrecedence());
     }
 
 
