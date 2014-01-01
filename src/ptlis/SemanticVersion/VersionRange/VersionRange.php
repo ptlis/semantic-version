@@ -37,6 +37,8 @@ class VersionRange implements InRangeInterface
 
 
     /**
+     * @throws InvalidVersionRangeException
+     *
      * @param ComparatorVersion $lower
      *
      * @return VersionRange
@@ -66,6 +68,8 @@ class VersionRange implements InRangeInterface
 
 
     /**
+     * @throws InvalidVersionRangeException
+     *
      * @param ComparatorVersion $upper
      *
      * @return VersionRange
