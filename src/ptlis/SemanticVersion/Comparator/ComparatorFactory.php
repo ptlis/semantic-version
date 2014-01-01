@@ -27,31 +27,70 @@ class ComparatorFactory
      *
      * @var array
      */
-    private $comparatorList;
+    private $comparatorList = [
+        '='     => 'ptlis\SemanticVersion\Comparator\EqualTo',
+        '>='    => 'ptlis\SemanticVersion\Comparator\GreaterOrEqualTo',
+        '>'     => 'ptlis\SemanticVersion\Comparator\GreaterThan',
+        '<='    => 'ptlis\SemanticVersion\Comparator\LessOrEqualTo',
+        '<'     => 'ptlis\SemanticVersion\Comparator\LessThan',
+    ];
 
 
     /**
-     * Constructor.
+     * Adds a label type to factory.
      *
-     * @param array|null $comparatorList Override default comparators.
+     * @throws \RuntimeException
+     *
+     * @param $type
+     * @param $class
      */
-    public function __construct(array $comparatorList = null)
+    public function addType($type, $class)
     {
-        // Override defaults
-        if (!is_null($comparatorList) && is_array($comparatorList) && count($comparatorList)) {
-            // TODO: Not in ctor, validate classes (plus add / remove functions?)
-            $this->comparatorList = $comparatorList;
-
-        // Keep defaults
-        } else {
-            $this->comparatorList = [
-                '='     => 'ptlis\SemanticVersion\Comparator\EqualTo',
-                '>='    => 'ptlis\SemanticVersion\Comparator\GreaterOrEqualTo',
-                '>'     => 'ptlis\SemanticVersion\Comparator\GreaterThan',
-                '<='    => 'ptlis\SemanticVersion\Comparator\LessOrEqualTo',
-                '<'     => 'ptlis\SemanticVersion\Comparator\LessThan',
-            ];
+        if (!class_exists($class)) {
+            throw new \RuntimeException(
+                'The class "' . $class . '" does not exist'
+            );
         }
+
+        // TODO: check for implements interface
+
+        $this->comparatorList[$type] = $class;
+    }
+
+
+    /**
+     * Remove a label type from factory.
+     *
+     * @param $type
+     */
+    public function removeType($type)
+    {
+        unset($this->comparatorList[$type]);
+    }
+
+
+    /**
+     *
+     *
+     * @throws \RuntimeException
+     *
+     * @param array $comparatorList
+     */
+    public function setTypeList(array $comparatorList)
+    {
+        $this->clearTypeList();
+        foreach ($comparatorList as $type => $class) {
+            $this->addType($type, $class);
+        }
+    }
+
+
+    /**
+     * Clears the type list.
+     */
+    public function clearTypeList()
+    {
+        $this->comparatorList = [];
     }
 
 

@@ -85,11 +85,8 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCustomComparatorListValid()
     {
-        $factory = new ComparatorFactory(
-            [
-                '=' => 'ptlis\SemanticVersion\Comparator\EqualTo'
-            ]
-        );
+        $factory = new ComparatorFactory();
+        $factory->setTypeList(['=' => 'ptlis\SemanticVersion\Comparator\EqualTo']);
 
         $this->assertEquals(new EqualTo(), $factory->get('='));
     }
@@ -100,16 +97,43 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
         $comparatorStr = '<';
 
         $this->setExpectedException(
-            '\ptlis\SemanticVersion\Exception\InvalidComparatorException',
+            'ptlis\SemanticVersion\Exception\InvalidComparatorException',
             'The provided comparator "' . $comparatorStr . '" is invalid.'
         );
 
-        $factory = new ComparatorFactory(
-            [
-                '=' => 'ptlis\SemanticVersion\Comparator\EqualTo'
-            ]
-        );
+        $factory = new ComparatorFactory();
+        $factory->setTypeList(['=' => 'ptlis\SemanticVersion\Comparator\EqualTo']);
 
         $factory->get($comparatorStr);
+    }
+
+
+    public function testRemoveComparator()
+    {
+        $comparatorStr = '=';
+
+        $this->setExpectedException(
+            'ptlis\SemanticVersion\Exception\InvalidComparatorException',
+            'The provided comparator "' . $comparatorStr . '" is invalid.'
+        );
+
+        $factory = new ComparatorFactory();
+        $factory->removeType($comparatorStr);
+
+        $factory->get($comparatorStr);
+    }
+
+
+    public function testInvalidClass()
+    {
+        $className = 'ptlis\SemanticVersion\Label\Boo';
+
+        $this->setExpectedException(
+            '\RuntimeException',
+            'The class "' . $className . '" does not exist'
+        );
+
+        $factory = new ComparatorFactory();
+        $factory->addType('boo', $className);
     }
 }

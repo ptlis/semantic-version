@@ -70,12 +70,41 @@ class LabelFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCustomLabelListValid()
     {
-        $factory = new LabelFactory(
-            [
-                '=' => 'ptlis\SemanticVersion\Label\LabelAlpha'
-            ]
-        );
+        $factory = new LabelFactory();
+        $factory->setTypeList(['=' => 'ptlis\SemanticVersion\Label\LabelAlpha']);
 
         $this->assertEquals(new LabelNone(), $factory->get('beta'));
+    }
+
+
+    public function testRemoveLabel()
+    {
+        $factory = new LabelFactory();
+        $factory->removeType('alpha');
+
+        $this->assertEquals(new LabelNone(), $factory->get('alpha'));
+    }
+
+
+    public function testDefaultLabel()
+    {
+        $factory = new LabelFactory();
+        $factory->setDefaultLabel('ptlis\SemanticVersion\Label\LabelAlpha');
+
+        $this->assertEquals(new LabelAlpha(), $factory->get('foobar'));
+    }
+
+
+    public function testInvalidClass()
+    {
+        $className = 'ptlis\SemanticVersion\Label\Boo';
+
+        $this->setExpectedException(
+            '\RuntimeException',
+            'The class "' . $className . '" does not exist'
+        );
+
+        $factory = new LabelFactory();
+        $factory->addType('boo', $className);
     }
 }

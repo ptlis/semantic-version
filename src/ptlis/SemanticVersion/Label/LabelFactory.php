@@ -23,38 +23,86 @@ class LabelFactory
     /**
      * @var LabelNone
      */
-    private $defaultLabel;
+    private $defaultLabel = 'ptlis\SemanticVersion\Label\LabelNone';
 
     /**
      * Mapping of label names to classes.
      *
      * @var array
      */
-    private $labelList;
+    private $labelList = [
+        'alpha' => 'ptlis\SemanticVersion\Label\LabelAlpha',
+        'beta'  => 'ptlis\SemanticVersion\Label\LabelBeta',
+        'rc'    => 'ptlis\SemanticVersion\Label\LabelRc'
+    ];
 
 
     /**
-     * Constructor
+     * Adds a label type to factory.
      *
-     * @param array|null $labelList Override default labels.
+     * @throws \RuntimeException
+     *
+     * @param $type
+     * @param $class
      */
-    public function __construct(array $labelList = null)
+    public function addType($type, $class)
     {
-        // Override defaults
-        if (!is_null($labelList) && is_array($labelList) && count($labelList)) {
-            // TODO: Not in ctor, validate classes (plus add / remove functions?)
-            $this->labelList = $labelList;
-
-        // Keep defaults
-        } else {
-            $this->labelList = [
-                'alpha' => 'ptlis\SemanticVersion\Label\LabelAlpha',
-                'beta'  => 'ptlis\SemanticVersion\Label\LabelBeta',
-                'rc'    => 'ptlis\SemanticVersion\Label\LabelRc'
-            ];
+        if (!class_exists($class)) {
+            throw new \RuntimeException(
+                'The class "' . $class . '" does not exist'
+            );
         }
 
-        $this->defaultLabel = 'ptlis\SemanticVersion\Label\LabelNone';
+        // TODO: check for implements interface
+
+        $this->labelList[$type] = $class;
+    }
+
+
+    /**
+     * Remove a label type from factory.
+     *
+     * @param $type
+     */
+    public function removeType($type)
+    {
+        unset($this->labelList[$type]);
+    }
+
+
+    /**
+     *
+     *
+     * @throws \RuntimeException
+     *
+     * @param array $labelList
+     */
+    public function setTypeList(array $labelList)
+    {
+        $this->clearTypeList();
+        foreach ($labelList as $type => $class) {
+            $this->addType($type, $class);
+        }
+    }
+
+
+    /**
+     * Clears the type list.
+     */
+    public function clearTypeList()
+    {
+        $this->labelList = [];
+    }
+
+
+    /**
+     * Set the label to default to
+     *
+     * @param string $defaultLabel
+     */
+    public function setDefaultLabel($defaultLabel)
+    {
+        $this->defaultLabel = $defaultLabel;
     }
 
 
