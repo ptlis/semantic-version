@@ -16,6 +16,7 @@
 namespace ptlis\SemanticVersion\VersionRange;
 
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
+use ptlis\SemanticVersion\Exception\InvalidVersionRangeException;
 use ptlis\SemanticVersion\InRange\InRangeInterface;
 use ptlis\SemanticVersion\Version\VersionInterface;
 
@@ -42,6 +43,13 @@ class VersionRange implements InRangeInterface
      */
     public function setLower(ComparatorVersion $lower = null)
     {
+        if (!is_null($this->upper) && (!$this->upper->isSatisfiedBy($lower->getVersion())
+                || !$lower->isSatisfiedBy($this->upper->getVersion()) )) {
+            throw new InvalidVersionRangeException(
+                'The provided version is outside the bounds allowed by the upper bound.'
+            );
+        }
+
         $this->lower = $lower;
 
         return $this;
@@ -64,6 +72,13 @@ class VersionRange implements InRangeInterface
      */
     public function setUpper(ComparatorVersion $upper = null)
     {
+        if (!is_null($this->lower) && (!$this->lower->isSatisfiedBy($upper->getVersion())
+                || !$upper->isSatisfiedBy($this->lower->getVersion()) )) {
+            throw new InvalidVersionRangeException(
+                'The provided version is outside the bounds allowed by the lower bound.'
+            );
+        }
+
         $this->upper = $upper;
 
         return $this;

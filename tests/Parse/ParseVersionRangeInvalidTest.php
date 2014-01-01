@@ -64,4 +64,18 @@ class ParseVersionRangeInvalidTest extends \PHPUnit_Framework_TestCase
         $engine  = new VersionEngine();
         $engine->parseVersionRange($inStr);
     }
+
+
+    public function testInvalidRange()
+    {
+        $inStr = '<1.0.3>2.0.0';
+
+        $this->setExpectedException(
+            '\ptlis\SemanticVersion\Exception\InvalidVersionRangeException',
+            'The version range "' . $inStr . '" could not be parsed.'
+        );
+
+        $engine  = new VersionEngine();
+        $engine->parseVersionRange($inStr);
+    }
 }
