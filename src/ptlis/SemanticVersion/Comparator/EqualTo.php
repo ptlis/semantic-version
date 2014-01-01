@@ -43,6 +43,6 @@ class EqualTo extends AbstractComparator
      */
     public function compare(VersionInterface $lVersion, VersionInterface $rVersion)
     {
-        return $lVersion->equalTo($rVersion);
+        return ($lVersion->__toString() === $rVersion->__toString());
     }
 }

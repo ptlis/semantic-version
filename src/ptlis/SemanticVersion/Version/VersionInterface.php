@@ -91,56 +91,6 @@ interface VersionInterface
 
 
     /**
-     * Return true if the two comparable items are equal.
-     *
-     * @param VersionInterface $version
-     *
-     * @return bool
-     */
-    public function equalTo(VersionInterface $version);
-
-
-    /**
-     * Return true if the current instance is less than the passed instance.
-     *
-     * @param VersionInterface $version
-     *
-     * @return bool
-     */
-    public function lessThan(VersionInterface $version);
-
-
-    /**
-     * Return true if the current instance is less or equal to the passed instance.
-     *
-     * @param VersionInterface $version
-     *
-     * @return bool
-     */
-    public function lessOrEqualTo(VersionInterface $version);
-
-
-    /**
-     * Return true if the current instance is greater than the passed instance.
-     *
-     * @param VersionInterface $version
-     *
-     * @return bool
-     */
-    public function greaterThan(VersionInterface $version);
-
-
-    /**
-     * Return true if the current instance is greater or equal to the passed instance.
-     *
-     * @param VersionInterface $version
-     *
-     * @return bool
-     */
-    public function greaterOrEqualTo(VersionInterface $version);
-
-
-    /**
      * Returns a string representation of the version number.
      *
      * @return string

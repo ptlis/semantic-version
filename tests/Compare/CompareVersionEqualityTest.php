@@ -17,6 +17,7 @@
 
 namespace tests\Compare;
 
+use ptlis\SemanticVersion\Comparator\EqualTo;
 use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;
 use ptlis\SemanticVersion\Version\Version;
@@ -40,7 +41,9 @@ class CompareVersionTest extends \PHPUnit_Framework_TestCase
             ->setMinor(0)
             ->setPatch(0);
 
-        $this->assertTrue($version1->equalTo($version2));
+        $equalTo = new EqualTo();
+
+        $this->assertTrue($equalTo->compare($version1, $version2));
     }
 
 
@@ -60,7 +63,9 @@ class CompareVersionTest extends \PHPUnit_Framework_TestCase
             ->setPatch(0)
             ->setLabel(new LabelAlpha(1));
 
-        $this->assertTrue($version1->equalTo($version2));
+        $equalTo = new EqualTo();
+
+        $this->assertTrue($equalTo->compare($version1, $version2));
     }
 
 
@@ -78,7 +83,9 @@ class CompareVersionTest extends \PHPUnit_Framework_TestCase
             ->setMinor(0)
             ->setPatch(0);
 
-        $this->assertFalse($version1->equalTo($version2));
+        $equalTo = new EqualTo();
+
+        $this->assertFalse($equalTo->compare($version1, $version2));
     }
 
 
@@ -96,7 +103,9 @@ class CompareVersionTest extends \PHPUnit_Framework_TestCase
             ->setMinor(1)
             ->setPatch(0);
 
-        $this->assertFalse($version1->equalTo($version2));
+        $equalTo = new EqualTo();
+
+        $this->assertFalse($equalTo->compare($version1, $version2));
     }
 
 
@@ -114,7 +123,9 @@ class CompareVersionTest extends \PHPUnit_Framework_TestCase
             ->setMinor(0)
             ->setPatch(5);
 
-        $this->assertFalse($version1->equalTo($version2));
+        $equalTo = new EqualTo();
+
+        $this->assertFalse($equalTo->compare($version1, $version2));
     }
 
 
@@ -133,7 +144,9 @@ class CompareVersionTest extends \PHPUnit_Framework_TestCase
             ->setPatch(0)
             ->setLabel(new LabelAlpha());
 
-        $this->assertFalse($version1->equalTo($version2));
+        $equalTo = new EqualTo();
+
+        $this->assertFalse($equalTo->compare($version1, $version2));
     }
 
 
@@ -153,7 +166,9 @@ class CompareVersionTest extends \PHPUnit_Framework_TestCase
             ->setPatch(0)
             ->setLabel(new LabelAlpha(1));
 
-        $this->assertFalse($version1->equalTo($version2));
+        $equalTo = new EqualTo();
+
+        $this->assertFalse($equalTo->compare($version1, $version2));
     }
 
 
@@ -173,6 +188,8 @@ class CompareVersionTest extends \PHPUnit_Framework_TestCase
             ->setPatch(0)
             ->setLabel(new LabelBeta());
 
-        $this->assertFalse($version1->equalTo($version2));
+        $equalTo = new EqualTo();
+
+        $this->assertFalse($equalTo->compare($version1, $version2));
     }
 }

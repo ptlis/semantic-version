@@ -43,6 +43,42 @@ class LessThan extends AbstractComparator
      */
     public function compare(VersionInterface $lVersion, VersionInterface $rVersion)
     {
-        return $lVersion->lessThan($rVersion);
+        switch (true) {
+            case ($lVersion->getMajor() < $rVersion->getMajor()):
+                $lessThan = true;
+                break;
+
+            case ($lVersion->getMajor() == $rVersion->getMajor()
+                && $lVersion->getMinor() < $rVersion->getMinor()):
+                $lessThan = true;
+                break;
+
+            case ($lVersion->getMajor() == $rVersion->getMajor()
+                && $lVersion->getMinor() == $rVersion->getMinor()
+                && $lVersion->getPatch() < $rVersion->getPatch()):
+                $lessThan = true;
+                break;
+
+            case ($lVersion->getMajor() == $rVersion->getMajor()
+                && $lVersion->getMinor() == $rVersion->getMinor()
+                && $lVersion->getPatch() == $rVersion->getPatch()
+                && $lVersion->getLabel()->getPrecedence() < $rVersion->getLabel()->getPrecedence()):
+                $lessThan = true;
+                break;
+
+            case ($lVersion->getMajor() == $rVersion->getMajor()
+                && $lVersion->getMinor() == $rVersion->getMinor()
+                && $lVersion->getPatch() == $rVersion->getPatch()
+                && $lVersion->getLabel()->getPrecedence() == $rVersion->getLabel()->getPrecedence()
+                && $lVersion->getLabel()->getVersion() < $rVersion->getLabel()->getVersion()):
+                $lessThan = true;
+                break;
+
+            default:
+                $lessThan = false;
+                break;
+        }
+
+        return $lessThan;
     }
 }
