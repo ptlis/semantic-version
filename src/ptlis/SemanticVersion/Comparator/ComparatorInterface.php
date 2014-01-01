@@ -15,6 +15,8 @@
 
 namespace ptlis\SemanticVersion\Comparator;
 
+use ptlis\SemanticVersion\Version\VersionInterface;
+
 /**
  * Interface that comparators must implement.
  */
@@ -33,4 +35,14 @@ interface ComparatorInterface
      * @return string
      */
     public static function getSymbol();
+
+    /**
+     * Compare the provided versions using the appropriate method for the comparator.
+     *
+     * @param VersionInterface $lVersion
+     * @param VersionInterface $rVersion
+     *
+     * @return boolean
+     */
+    public function compare(VersionInterface $lVersion, VersionInterface $rVersion);
 }

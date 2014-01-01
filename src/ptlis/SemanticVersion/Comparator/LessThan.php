@@ -15,6 +15,8 @@
 
 namespace ptlis\SemanticVersion\Comparator;
 
+use ptlis\SemanticVersion\Version\VersionInterface;
+
 /**
  * Less than comparator.
  */
@@ -28,5 +30,19 @@ class LessThan extends AbstractComparator
     public static function getSymbol()
     {
         return '<';
+    }
+
+
+    /**
+     * Return true if the left version is less than right version.
+     *
+     * @param VersionInterface $lVersion
+     * @param VersionInterface $rVersion
+     *
+     * @return boolean
+     */
+    public function compare(VersionInterface $lVersion, VersionInterface $rVersion)
+    {
+        return $lVersion->lessThan($rVersion);
     }
 }

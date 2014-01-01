@@ -15,6 +15,8 @@
 
 namespace ptlis\SemanticVersion\Comparator;
 
+use ptlis\SemanticVersion\Version\VersionInterface;
+
 /**
  * Equality comparator.
  */
@@ -28,5 +30,19 @@ class EqualTo extends AbstractComparator
     public static function getSymbol()
     {
         return '=';
+    }
+
+
+    /**
+     * Return true if the versions match.
+     *
+     * @param VersionInterface $lVersion
+     * @param VersionInterface $rVersion
+     *
+     * @return boolean
+     */
+    public function compare(VersionInterface $lVersion, VersionInterface $rVersion)
+    {
+        return $lVersion->equalTo($rVersion);
     }
 }

@@ -16,12 +16,14 @@
 namespace ptlis\SemanticVersion\ComparatorVersion;
 
 use ptlis\SemanticVersion\Comparator\ComparatorInterface;
+use ptlis\SemanticVersion\InRange\InRangeInterface;
 use ptlis\SemanticVersion\Version\Version;
+use ptlis\SemanticVersion\Version\VersionInterface;
 
 /**
  * Entity to represent a semantic version number with a comparator.
  */
-class ComparatorVersion
+class ComparatorVersion implements InRangeInterface
 {
     /**
      * Comparator for ranging.
@@ -90,5 +92,18 @@ class ComparatorVersion
     public function __toString()
     {
         return $this->comparator . $this->version->__toString();
+    }
+
+
+    /**
+     * Returns true if the provided version satisfies the requirements of the version range.
+     *
+     * @param VersionInterface $version
+     *
+     * @return boolean
+     */
+    public function isSatisfiedBy(VersionInterface $version)
+    {
+        return $this->comparator->compare($version, $this->version);
     }
 }
