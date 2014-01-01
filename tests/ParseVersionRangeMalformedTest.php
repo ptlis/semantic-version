@@ -17,7 +17,7 @@
 
 namespace tests;
 
-use ptlis\SemanticVersion\Entity\RangedVersion;
+use ptlis\SemanticVersion\Entity\ComparatorVersion;
 use ptlis\SemanticVersion\Entity\Version;
 use ptlis\SemanticVersion\Entity\VersionRange;
 use ptlis\SemanticVersion\VersionEngine;
@@ -44,9 +44,9 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setLabel(null)
             ->setLabelNumber(0)
             ->setLabelPrecedence(Version::LABEL_NONE);
-        $lowerRangedVersion = new RangedVersion();
-        $lowerRangedVersion
-            ->setComparator(RangedVersion::GREATER_OR_EQUAL_TO)
+        $lowerComparatorVersion = new ComparatorVersion();
+        $lowerComparatorVersion
+            ->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO)
             ->setVersion($lowerVersion);
 
         // Upper
@@ -58,16 +58,16 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setLabel(null)
             ->setLabelNumber(0)
             ->setLabelPrecedence(Version::LABEL_NONE);
-        $upperRangedVersion = new RangedVersion();
-        $upperRangedVersion
-            ->setComparator(RangedVersion::LESS_OR_EQUAL_TO)
+        $upperComparatorVersion = new ComparatorVersion();
+        $upperComparatorVersion
+            ->setComparator(ComparatorVersion::LESS_OR_EQUAL_TO)
             ->setVersion($upperVersion);
 
         // Range
         $expectVersionRange = new VersionRange();
         $expectVersionRange
-            ->setLower($lowerRangedVersion)
-            ->setUpper($upperRangedVersion);
+            ->setLower($lowerComparatorVersion)
+            ->setUpper($upperComparatorVersion);
 
         $this->assertSame($expectStr, $outVersionRange->__toString());
         $this->assertEquals($expectVersionRange, $outVersionRange);
@@ -91,9 +91,9 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setLabel(null)
             ->setLabelNumber(0)
             ->setLabelPrecedence(Version::LABEL_NONE);
-        $lowerRangedVersion = new RangedVersion();
-        $lowerRangedVersion
-            ->setComparator(RangedVersion::GREATER_OR_EQUAL_TO)
+        $lowerComparatorVersion = new ComparatorVersion();
+        $lowerComparatorVersion
+            ->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO)
             ->setVersion($lowerVersion);
 
         // Upper
@@ -105,16 +105,16 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setLabel(null)
             ->setLabelNumber(0)
             ->setLabelPrecedence(Version::LABEL_NONE);
-        $upperRangedVersion = new RangedVersion();
-        $upperRangedVersion
-            ->setComparator(RangedVersion::LESS_OR_EQUAL_TO)
+        $upperComparatorVersion = new ComparatorVersion();
+        $upperComparatorVersion
+            ->setComparator(ComparatorVersion::LESS_OR_EQUAL_TO)
             ->setVersion($upperVersion);
 
         // Range
         $expectVersionRange = new VersionRange();
         $expectVersionRange
-            ->setLower($lowerRangedVersion)
-            ->setUpper($upperRangedVersion);
+            ->setLower($lowerComparatorVersion)
+            ->setUpper($upperComparatorVersion);
 
         $this->assertSame($expectStr, $outVersionRange->__toString());
         $this->assertEquals($expectVersionRange, $outVersionRange);
@@ -138,9 +138,9 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setLabel(null)
             ->setLabelNumber(0)
             ->setLabelPrecedence(Version::LABEL_NONE);
-        $lowerRangedVersion = new RangedVersion();
-        $lowerRangedVersion
-            ->setComparator(RangedVersion::GREATER_OR_EQUAL_TO)
+        $lowerComparatorVersion = new ComparatorVersion();
+        $lowerComparatorVersion
+            ->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO)
             ->setVersion($lowerVersion);
 
         // Upper
@@ -152,16 +152,16 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setLabel(null)
             ->setLabelNumber(0)
             ->setLabelPrecedence(Version::LABEL_NONE);
-        $upperRangedVersion = new RangedVersion();
-        $upperRangedVersion
-            ->setComparator(RangedVersion::LESS_OR_EQUAL_TO)
+        $upperComparatorVersion = new ComparatorVersion();
+        $upperComparatorVersion
+            ->setComparator(ComparatorVersion::LESS_OR_EQUAL_TO)
             ->setVersion($upperVersion);
 
         // Range
         $expectVersionRange = new VersionRange();
         $expectVersionRange
-            ->setLower($lowerRangedVersion)
-            ->setUpper($upperRangedVersion);
+            ->setLower($lowerComparatorVersion)
+            ->setUpper($upperComparatorVersion);
 
         $this->assertSame($expectStr, $outVersionRange->__toString());
         $this->assertEquals($expectVersionRange, $outVersionRange);
@@ -185,9 +185,9 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setLabel('rc1')
             ->setLabelNumber(1)
             ->setLabelPrecedence(Version::LABEL_RC);
-        $lowerRangedVersion = new RangedVersion();
-        $lowerRangedVersion
-            ->setComparator(RangedVersion::GREATER_OR_EQUAL_TO)
+        $lowerComparatorVersion = new ComparatorVersion();
+        $lowerComparatorVersion
+            ->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO)
             ->setVersion($lowerVersion);
 
         // Upper
@@ -199,16 +199,16 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setLabel(null)
             ->setLabelNumber(0)
             ->setLabelPrecedence(Version::LABEL_NONE);
-        $upperRangedVersion = new RangedVersion();
-        $upperRangedVersion
-            ->setComparator(RangedVersion::LESS_OR_EQUAL_TO)
+        $upperComparatorVersion = new ComparatorVersion();
+        $upperComparatorVersion
+            ->setComparator(ComparatorVersion::LESS_OR_EQUAL_TO)
             ->setVersion($upperVersion);
 
         // Range
         $expectVersionRange = new VersionRange();
         $expectVersionRange
-            ->setLower($lowerRangedVersion)
-            ->setUpper($upperRangedVersion);
+            ->setLower($lowerComparatorVersion)
+            ->setUpper($upperComparatorVersion);
 
         $this->assertSame($expectStr, $outVersionRange->__toString());
         $this->assertEquals($expectVersionRange, $outVersionRange);

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Entity to represent a ranged semantic version number.
+ * Entity to represent a semantic version number with a comparator.
  *
  * PHP Version 5.3
  *
@@ -16,9 +16,9 @@
 namespace ptlis\SemanticVersion\Entity;
 
 /**
- * Entity to represent a ranged semantic version number.
+ * Entity to represent a semantic version number with a comparator.
  */
-class RangedVersion
+class ComparatorVersion
 {
     const GREATER_THAN          = '>';
     const GREATER_OR_EQUAL_TO   = '>=';
@@ -87,7 +87,7 @@ class RangedVersion
 
 
     /**
-     * Returns a string representation of the ranged version number.
+     * Returns a string representation of the comparator version number.
      *
      * @return string
      */

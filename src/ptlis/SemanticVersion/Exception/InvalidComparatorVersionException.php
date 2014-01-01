@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Exception thrown when the engine is unable to parse a ranged version number.
+ * Exception thrown when the engine is unable to parse a comparator version number.
  *
  * PHP Version 5.3
  *
@@ -16,9 +16,9 @@
 namespace ptlis\SemanticVersion\Exception;
 
 /**
- * Exception thrown when the engine is unable to parse a ranged version number.
+ * Exception thrown when the engine is unable to parse a comparator version number.
  */
-class InvalidRangedVersionException extends \RuntimeException
+class InvalidComparatorVersionException extends \RuntimeException
 {
     public function __construct($message, \Exception $previous = null)
     {

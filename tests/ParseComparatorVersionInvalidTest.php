@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Tests to ensure correct handling of invalid ranged version numbers.
+ * Tests to ensure correct handling of invalid comparator version numbers.
  *
  * PHP Version 5.4
  *
@@ -20,19 +20,19 @@ namespace tests;
 use ptlis\SemanticVersion\VersionEngine;
 
 /**
- * Tests to ensure correct handling of invalid ranged version numbers.
+ * Tests to ensure correct handling of invalid comparator version numbers.
  */
-class ParseRangedVersionInvalidTest extends \PHPUnit_Framework_TestCase
+class ParseComparatorVersionInvalidTest extends \PHPUnit_Framework_TestCase
 {
     public function testEmpty()
     {
         $inStr = '';
 
         $this->setExpectedException(
-            '\ptlis\SemanticVersion\Exception\InvalidRangedVersionException',
-            'The ranged version "' . $inStr . '" could not be parsed.'
+            '\ptlis\SemanticVersion\Exception\InvalidComparatorVersionException',
+            'The comparator version "' . $inStr . '" could not be parsed.'
         );
-        VersionEngine::parseRangedVersion($inStr);
+        VersionEngine::parseComparatorVersion($inStr);
     }
 
 
@@ -41,10 +41,10 @@ class ParseRangedVersionInvalidTest extends \PHPUnit_Framework_TestCase
         $inStr = '=>1.0.3';
 
         $this->setExpectedException(
-            '\ptlis\SemanticVersion\Exception\InvalidRangedVersionException',
-            'The ranged version "' . $inStr . '" could not be parsed.'
+            '\ptlis\SemanticVersion\Exception\InvalidComparatorVersionException',
+            'The comparator version "' . $inStr . '" could not be parsed.'
         );
-        VersionEngine::parseRangedVersion($inStr);
+        VersionEngine::parseComparatorVersion($inStr);
     }
 
 
@@ -53,9 +53,9 @@ class ParseRangedVersionInvalidTest extends \PHPUnit_Framework_TestCase
         $inStr = '>=1.x.3';
 
         $this->setExpectedException(
-            '\ptlis\SemanticVersion\Exception\InvalidRangedVersionException',
-            'The ranged version "' . $inStr . '" could not be parsed.'
+            '\ptlis\SemanticVersion\Exception\InvalidComparatorVersionException',
+            'The comparator version "' . $inStr . '" could not be parsed.'
         );
-        VersionEngine::parseRangedVersion($inStr);
+        VersionEngine::parseComparatorVersion($inStr);
     }
 }

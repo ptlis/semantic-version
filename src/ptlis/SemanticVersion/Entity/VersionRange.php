@@ -21,22 +21,22 @@ namespace ptlis\SemanticVersion\Entity;
 class VersionRange
 {
     /**
-     * @var RangedVersion
+     * @var ComparatorVersion
      */
     private $upper;
 
     /**
-     * @var RangedVersion
+     * @var ComparatorVersion
      */
     private $lower;
 
 
     /**
-     * @param RangedVersion $lower
+     * @param ComparatorVersion $lower
      *
      * @return VersionRange
      */
-    public function setLower(RangedVersion $lower = null)
+    public function setLower(ComparatorVersion $lower = null)
     {
         $this->lower = $lower;
 
@@ -45,7 +45,7 @@ class VersionRange
 
 
     /**
-     * @return RangedVersion|null
+     * @return ComparatorVersion|null
      */
     public function getLower()
     {
@@ -54,11 +54,11 @@ class VersionRange
 
 
     /**
-     * @param RangedVersion $upper
+     * @param ComparatorVersion $upper
      *
      * @return VersionRange
      */
-    public function setUpper(RangedVersion $upper = null)
+    public function setUpper(ComparatorVersion $upper = null)
     {
         $this->upper = $upper;
 
@@ -67,7 +67,7 @@ class VersionRange
 
 
     /**
-     * @return RangedVersion|null
+     * @return ComparatorVersion|null
      */
     public function getUpper()
     {

@@ -15,10 +15,10 @@
 
 namespace ptlis\SemanticVersion;
 
-use ptlis\SemanticVersion\Entity\RangedVersion;
+use ptlis\SemanticVersion\Entity\ComparatorVersion;
 use ptlis\SemanticVersion\Entity\Version;
 use ptlis\SemanticVersion\Entity\VersionRange;
-use ptlis\SemanticVersion\Exception\InvalidRangedVersionException;
+use ptlis\SemanticVersion\Exception\InvalidComparatorVersionException;
 use ptlis\SemanticVersion\Exception\InvalidVersionException;
 use ptlis\SemanticVersion\Exception\InvalidVersionRangeException;
 
@@ -56,7 +56,7 @@ class VersionEngine
         return '/^\s*' . static::$versionRegex . '\s*$/ix';
     }
 
-    private static function getRangedVersionRegex()
+    private static function getComparatorVersionRegex()
     {
         return '/^\s*' . static::$rangeRegex . '\s*' . static::$versionRegex . '\s*$/ix';
     }
@@ -133,23 +133,25 @@ class VersionEngine
 
 
     /**
-     * Parse a ranged version number into an array of version number parts.
+     * Parse a comparator version number into an array of version number parts.
      *
-     * @throws InvalidRangedVersionException
+     * @throws InvalidComparatorVersionException
      *
      * @param string $versionNo
      *
-     * @return RangedVersion
+     * @return ComparatorVersion
      */
-    public static function parseRangedVersion($versionNo)
+    public static function parseComparatorVersion($versionNo)
     {
-        if (preg_match(static::getRangedVersionRegex(), $versionNo, $matches)) {
-            $rangedVersion = static::matchesToRangedVersion($matches);
+        if (preg_match(static::getComparatorVersionRegex(), $versionNo, $matches)) {
+            $comparatorVersion = static::matchesToComparatorVersion($matches);
         } else {
-            throw new InvalidRangedVersionException('The ranged version "' . $versionNo . '" could not be parsed.');
+            throw new InvalidComparatorVersionException(
+                'The comparator version "' . $versionNo . '" could not be parsed.'
+            );
         }
 
-        return $rangedVersion;
+        return $comparatorVersion;
     }
 
 
@@ -169,18 +171,18 @@ class VersionEngine
 
             try {
                 if (array_key_exists('min_major', $matches) && strlen($matches['min_major'])) {
-                    $versionRange->setLower(static::matchesToRangedVersion($matches, 'min_'));
+                    $versionRange->setLower(static::matchesToComparatorVersion($matches, 'min_'));
                 }
 
                 if (array_key_exists('max_major', $matches) && strlen($matches['max_major'])) {
-                    $versionRange->setUpper(static::matchesToRangedVersion($matches, 'max_'));
+                    $versionRange->setUpper(static::matchesToComparatorVersion($matches, 'max_'));
                 }
 
                 if (array_key_exists('single_major', $matches) && strlen($matches['single_major'])) {
                     $versionRange = static::singleMatchesToVersionRange($matches);
                 }
 
-            } catch (InvalidRangedVersionException $e) {
+            } catch (InvalidComparatorVersionException $e) {
                 throw new InvalidVersionRangeException(
                     'The version range "' . $versionNo . '" could not be parsed.',
                     $e
@@ -216,68 +218,68 @@ class VersionEngine
 
             // Full version tilde match
             if (array_key_exists('single_patch', $matches) && is_numeric($matches['single_patch'])) {
-                $lower = static::matchesToRangedVersion($matches, 'single_');
-                $lower->setComparator(RangedVersion::GREATER_OR_EQUAL_TO);
+                $lower = static::matchesToComparatorVersion($matches, 'single_');
+                $lower->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO);
 
-                $upper = static::matchesToRangedVersion($matches, 'single_');
+                $upper = static::matchesToComparatorVersion($matches, 'single_');
                 $upper->getVersion()->setMinor($upper->getVersion()->getMinor() + 1);
                 $upper->getVersion()->setPatch(0);
-                $upper->setComparator(RangedVersion::LESS_THAN);
+                $upper->setComparator(ComparatorVersion::LESS_THAN);
 
             // Major & Minor tilde match
             } elseif (array_key_exists('single_minor', $matches) && is_numeric($matches['single_minor'])) {
-                $lower = static::matchesToRangedVersion($matches, 'single_');
+                $lower = static::matchesToComparatorVersion($matches, 'single_');
                 $lower->getVersion()->setPatch(0);
-                $lower->setComparator(RangedVersion::GREATER_OR_EQUAL_TO);
+                $lower->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO);
 
-                $upper = static::matchesToRangedVersion($matches, 'single_');
+                $upper = static::matchesToComparatorVersion($matches, 'single_');
                 $upper->getVersion()->setMajor($upper->getVersion()->getMajor() + 1);
                 $upper->getVersion()->setMinor(0);
                 $upper->getVersion()->setPatch(0);
-                $upper->setComparator(RangedVersion::LESS_THAN);
+                $upper->setComparator(ComparatorVersion::LESS_THAN);
 
             // Major tilde match
             } else {
-                $lower = static::matchesToRangedVersion($matches, 'single_');
+                $lower = static::matchesToComparatorVersion($matches, 'single_');
                 $lower->getVersion()->setMinor(0);
                 $lower->getVersion()->setPatch(0);
-                $lower->setComparator(RangedVersion::GREATER_OR_EQUAL_TO);
+                $lower->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO);
 
-                $upper = static::matchesToRangedVersion($matches, 'single_');
+                $upper = static::matchesToComparatorVersion($matches, 'single_');
                 $upper->getVersion()->setMajor($upper->getVersion()->getMajor() + 1);
                 $upper->getVersion()->setMinor(0);
                 $upper->getVersion()->setPatch(0);
-                $upper->setComparator(RangedVersion::LESS_THAN);
+                $upper->setComparator(ComparatorVersion::LESS_THAN);
             }
 
         // Label & patch - exact match
         } elseif (array_key_exists('single_patch', $matches) && strlen($matches['single_patch'])) {
-            $lower = static::matchesToRangedVersion($matches, 'single_');
-            $lower->setComparator(RangedVersion::EQUAL_TO);
+            $lower = static::matchesToComparatorVersion($matches, 'single_');
+            $lower->setComparator(ComparatorVersion::EQUAL_TO);
 
-            $upper = static::matchesToRangedVersion($matches, 'single_');
-            $upper->setComparator(RangedVersion::EQUAL_TO);
+            $upper = static::matchesToComparatorVersion($matches, 'single_');
+            $upper->setComparator(ComparatorVersion::EQUAL_TO);
 
         // Minor - range (minor inc by 1)
         } elseif (array_key_exists('single_minor', $matches) && strlen($matches['single_minor'])) {
-            $lower = static::matchesToRangedVersion($matches, 'single_');
-            $lower->setComparator(RangedVersion::GREATER_OR_EQUAL_TO);
+            $lower = static::matchesToComparatorVersion($matches, 'single_');
+            $lower->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO);
 
-            $upper = static::matchesToRangedVersion($matches, 'single_');
+            $upper = static::matchesToComparatorVersion($matches, 'single_');
             $upper->getVersion()->setMinor($upper->getVersion()->getMinor() + 1);
             $upper->getVersion()->setPatch(0);
-            $upper->setComparator(RangedVersion::LESS_THAN);
+            $upper->setComparator(ComparatorVersion::LESS_THAN);
 
         // Major - range (major inc by 1;
         } else {
-            $lower = static::matchesToRangedVersion($matches, 'single_');
-            $lower->setComparator(RangedVersion::GREATER_OR_EQUAL_TO);
+            $lower = static::matchesToComparatorVersion($matches, 'single_');
+            $lower->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO);
 
-            $upper = static::matchesToRangedVersion($matches, 'single_');
+            $upper = static::matchesToComparatorVersion($matches, 'single_');
             $upper->getVersion()->setMajor($upper->getVersion()->getMajor() + 1);
             $upper->getVersion()->setMinor(0);
             $upper->getVersion()->setPatch(0);
-            $upper->setComparator(RangedVersion::LESS_THAN);
+            $upper->setComparator(ComparatorVersion::LESS_THAN);
         }
 
         if (!is_null($lower->getComparator())) {
@@ -354,36 +356,36 @@ class VersionEngine
 
 
     /**
-     * Transform an array of matches from preg_match to a RangedVersion entity.
+     * Transform an array of matches from preg_match to a ComparatorVersion entity.
      *
-     * @throws InvalidRangedVersionException
+     * @throws InvalidComparatorVersionException
      *
      * @param array         $matches
      * @param string|null   $prefix
      *
-     * @return RangedVersion
+     * @return ComparatorVersion
      */
-    private static function matchesToRangedVersion(array $matches, $prefix = null)
+    private static function matchesToComparatorVersion(array $matches, $prefix = null)
     {
-        $rangedVersion = new RangedVersion();
+        $comparatorVersion = new ComparatorVersion();
         try {
             $version = static::matchesToVersion($matches, $prefix);
         } catch (InvalidVersionException $e) {
-            throw new InvalidRangedVersionException(
-                'The ranged version "' . $matches[0] . '" could not be parsed.',
+            throw new InvalidComparatorVersionException(
+                'The comparator version "' . $matches[0] . '" could not be parsed.',
                 $e
             );
         }
 
-        $rangedVersion
+        $comparatorVersion
             ->setVersion($version);
 
         if (array_key_exists($prefix . 'comparator', $matches) && strlen($matches[$prefix . 'comparator'])) {
-            $rangedVersion
+            $comparatorVersion
                 ->setComparator($matches[$prefix . 'comparator']);
         }
 
-        return $rangedVersion;
+        return $comparatorVersion;
     }
 
 
