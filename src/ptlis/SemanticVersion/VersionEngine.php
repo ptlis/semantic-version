@@ -175,11 +175,6 @@ class VersionEngine
                     $e
                 );
 
-            } catch (InvalidVersionException $e) {
-                throw new InvalidVersionRangeException(
-                    'The version range "' . $versionNo . '" could not be parsed.',
-                    $e
-                );
             }
 
             if (is_null($versionRange->getLower()) && is_null($versionRange->getUpper())) {

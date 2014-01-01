@@ -25,6 +25,35 @@ use ptlis\SemanticVersion\VersionEngine;
  */
 class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
 {
+    public function testAllFields()
+    {
+        $inStr = '1.0.0-alpha.1';
+
+        $outVersion = VersionEngine::parseVersion($inStr);
+
+        $expectStr = '1.0.0-alpha.1';
+        $expectVersion = new Version();
+
+        $expectVersion
+            ->setMajor(1)
+            ->setMinor(0)
+            ->setPatch(0)
+            ->setLabel('alpha.1')
+            ->setLabelNumber(1)
+            ->setLabelPrecedence(Version::LABEL_ALPHA);
+
+        $this->assertSame($expectStr, $outVersion->__toString());
+        $this->assertEquals($expectVersion, $outVersion);
+
+        $this->assertEquals($expectVersion->getMajor(), $outVersion->getMajor());
+        $this->assertEquals($expectVersion->getMinor(), $outVersion->getMinor());
+        $this->assertEquals($expectVersion->getPatch(), $outVersion->getPatch());
+        $this->assertEquals($expectVersion->getLabel(), $outVersion->getLabel());
+        $this->assertEquals($expectVersion->getLabelNumber(), $outVersion->getLabelNumber());
+        $this->assertEquals($expectVersion->getLabelPrecedence(), $outVersion->getLabelPrecedence());
+    }
+
+
     public function testMajor()
     {
         $inStr = '1';

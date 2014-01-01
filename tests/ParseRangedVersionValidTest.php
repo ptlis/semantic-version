@@ -26,6 +26,32 @@ use ptlis\SemanticVersion\VersionEngine;
  */
 class ParseRangedVersionValidTest extends \PHPUnit_Framework_TestCase
 {
+    public function testAllFields()
+    {
+        $inStr = '>1.0.0';
+
+        $outRangedVersion = VersionEngine::parseRangedVersion($inStr);
+
+        $expectStr = '>1.0.0';
+        $expectRangedVersion = new RangedVersion();
+        $expectRangedVersion
+            ->setComparator(RangedVersion::GREATER_THAN)
+            ->setVersion(new Version());
+        $expectRangedVersion->getVersion()
+            ->setMajor(1)
+            ->setMinor(0)
+            ->setPatch(0)
+            ->setLabel(null)
+            ->setLabelNumber(0)
+            ->setLabelPrecedence(Version::LABEL_NONE);
+
+        $this->assertSame($expectStr, $outRangedVersion->__toString());
+        $this->assertEquals($expectRangedVersion, $outRangedVersion);
+
+        $this->assertEquals($expectRangedVersion->getComparator(), $outRangedVersion->getComparator());
+        $this->assertEquals($expectRangedVersion->getVersion(), $outRangedVersion->getVersion());
+    }
+
     public function testGreaterThanMajor()
     {
         $inStr = '>1';

@@ -24,6 +24,56 @@ use ptlis\SemanticVersion\VersionEngine;
 
 class ParseVersionRangeValidTest extends \PHPUnit_Framework_TestCase
 {
+    public function testAllFields()
+    {
+        $inStr = '>1.0.0<=2.0.0';
+
+        $outVersionRange = VersionEngine::parseVersionRange($inStr);
+
+        $expectStr = '>1.0.0<=2.0.0';
+
+        // Lower
+        $lowerVersion = new Version();
+        $lowerVersion
+            ->setMajor('1')
+            ->setMinor('0')
+            ->setPatch('0')
+            ->setLabel(null)
+            ->setLabelNumber(0)
+            ->setLabelPrecedence(Version::LABEL_NONE);
+        $lowerRangedVersion = new RangedVersion();
+        $lowerRangedVersion
+            ->setComparator(RangedVersion::GREATER_THAN)
+            ->setVersion($lowerVersion);
+
+        // Upper
+        $upperVersion = new Version();
+        $upperVersion
+            ->setMajor('2')
+            ->setMinor('0')
+            ->setPatch('0')
+            ->setLabel(null)
+            ->setLabelNumber(0)
+            ->setLabelPrecedence(Version::LABEL_NONE);
+        $upperRangedVersion = new RangedVersion();
+        $upperRangedVersion
+            ->setComparator(RangedVersion::LESS_OR_EQUAL_TO)
+            ->setVersion($upperVersion);
+
+        // Range
+        $expectVersionRange = new VersionRange();
+        $expectVersionRange
+            ->setLower($lowerRangedVersion)
+            ->setUpper($upperRangedVersion);
+
+        $this->assertSame($expectStr, $outVersionRange->__toString());
+        $this->assertEquals($expectVersionRange, $outVersionRange);
+
+        $this->assertEquals($expectVersionRange->getUpper(), $outVersionRange->getUpper());
+        $this->assertEquals($expectVersionRange->getLower(), $outVersionRange->getLower());
+    }
+
+
     public function testBothMajorFullyQualified()
     {
         $inStr = '>1.0.0<=2.0.0';
