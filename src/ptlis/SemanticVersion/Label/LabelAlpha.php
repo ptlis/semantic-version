@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class representing the beta label.
+ * Class representing the alpha label.
  *
  * PHP Version 5.4
  *
@@ -13,12 +13,12 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Entity\Label;
+namespace ptlis\SemanticVersion\Label;
 
 /**
- * Class representing the beta label.
+ * Class representing the alpha label.
  */
-class LabelBeta extends AbstractNamedLabel
+class LabelAlpha extends AbstractNamedLabel
 {
     /**
      * Get the label name.
@@ -27,17 +27,17 @@ class LabelBeta extends AbstractNamedLabel
      */
     public function getName()
     {
-        return 'beta';
+        return 'alpha';
     }
 
 
     /**
-     * Second lowest precedence.
+     * Lowest precedence.
      *
      * @return int
      */
     public function getPrecedence()
     {
-        return 2;
+        return 1;
     }
 }

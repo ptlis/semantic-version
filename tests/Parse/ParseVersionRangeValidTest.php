@@ -17,16 +17,16 @@
 
 namespace tests\Parse;
 
-use ptlis\SemanticVersion\Entity\Comparator\EqualTo;
-use ptlis\SemanticVersion\Entity\Comparator\GreaterOrEqualTo;
-use ptlis\SemanticVersion\Entity\Comparator\GreaterThan;
-use ptlis\SemanticVersion\Entity\Comparator\LessOrEqualTo;
-use ptlis\SemanticVersion\Entity\Comparator\LessThan;
-use ptlis\SemanticVersion\Entity\ComparatorVersion;
-use ptlis\SemanticVersion\Entity\Label\LabelNone;
-use ptlis\SemanticVersion\Entity\Label\LabelRc;
-use ptlis\SemanticVersion\Entity\Version;
-use ptlis\SemanticVersion\Entity\VersionRange;
+use ptlis\SemanticVersion\Comparator\EqualTo;
+use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
+use ptlis\SemanticVersion\Comparator\GreaterThan;
+use ptlis\SemanticVersion\Comparator\LessOrEqualTo;
+use ptlis\SemanticVersion\Comparator\LessThan;
+use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
+use ptlis\SemanticVersion\Label\LabelNone;
+use ptlis\SemanticVersion\Label\LabelRc;
+use ptlis\SemanticVersion\Version\Version;
+use ptlis\SemanticVersion\VersionRange\VersionRange;
 use ptlis\SemanticVersion\VersionEngine;
 
 class ParseVersionRangeValidTest extends \PHPUnit_Framework_TestCase

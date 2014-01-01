@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Interface that comparators must implement.
+ * Class representing the release candidate label.
  *
  * PHP Version 5.4
  *
@@ -13,24 +13,31 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Entity\Comparator;
+namespace ptlis\SemanticVersion\Label;
 
 /**
- * Interface that comparators must implement.
+ * Class representing the release candidate label.
  */
-interface ComparatorInterface
+class LabelRc extends AbstractNamedLabel
 {
     /**
-     * Return a string representation of the comparator.
+     * Get the label name.
      *
      * @return string
      */
-    public function __toString();
+    public function getName()
+    {
+        return 'rc';
+    }
+
 
     /**
-     * Retrieve the comparator's symbol.
+     * Second greatest precedence.
      *
-     * @return string
+     * @return int
      */
-    public static function getSymbol();
+    public function getPrecedence()
+    {
+        return 3;
+    }
 }

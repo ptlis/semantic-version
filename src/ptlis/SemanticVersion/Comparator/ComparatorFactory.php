@@ -13,7 +13,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Entity\Comparator;
+namespace ptlis\SemanticVersion\Comparator;
 
 use ptlis\SemanticVersion\Exception\InvalidComparatorException;
 
@@ -39,16 +39,17 @@ class ComparatorFactory
     {
         // Override defaults
         if (!is_null($comparatorList) && is_array($comparatorList) && count($comparatorList)) {
+            // TODO: Not in ctor, validate classes (plus add / remove functions?)
             $this->comparatorList = $comparatorList;
 
         // Keep defaults
         } else {
             $this->comparatorList = [
-                '='     => 'ptlis\SemanticVersion\Entity\Comparator\EqualTo',
-                '>='    => 'ptlis\SemanticVersion\Entity\Comparator\GreaterOrEqualTo',
-                '>'     => 'ptlis\SemanticVersion\Entity\Comparator\GreaterThan',
-                '<='    => 'ptlis\SemanticVersion\Entity\Comparator\LessOrEqualTo',
-                '<'     => 'ptlis\SemanticVersion\Entity\Comparator\LessThan',
+                '='     => 'ptlis\SemanticVersion\Comparator\EqualTo',
+                '>='    => 'ptlis\SemanticVersion\Comparator\GreaterOrEqualTo',
+                '>'     => 'ptlis\SemanticVersion\Comparator\GreaterThan',
+                '<='    => 'ptlis\SemanticVersion\Comparator\LessOrEqualTo',
+                '<'     => 'ptlis\SemanticVersion\Comparator\LessThan',
             ];
         }
     }

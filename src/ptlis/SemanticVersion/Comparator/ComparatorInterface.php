@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class representing the alpha label.
+ * Interface that comparators must implement.
  *
  * PHP Version 5.4
  *
@@ -13,31 +13,24 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Entity\Label;
+namespace ptlis\SemanticVersion\Comparator;
 
 /**
- * Class representing the alpha label.
+ * Interface that comparators must implement.
  */
-class LabelAlpha extends AbstractNamedLabel
+interface ComparatorInterface
 {
     /**
-     * Get the label name.
+     * Return a string representation of the comparator.
      *
      * @return string
      */
-    public function getName()
-    {
-        return 'alpha';
-    }
-
+    public function __toString();
 
     /**
-     * Lowest precedence.
+     * Retrieve the comparator's symbol.
      *
-     * @return int
+     * @return string
      */
-    public function getPrecedence()
-    {
-        return 1;
-    }
+    public static function getSymbol();
 }

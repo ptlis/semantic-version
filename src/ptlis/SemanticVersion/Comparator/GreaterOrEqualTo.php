@@ -13,7 +13,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Entity\Comparator;
+namespace ptlis\SemanticVersion\Comparator;
 
 /**
  * Greater than equal or comparator.

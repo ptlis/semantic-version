@@ -17,11 +17,11 @@
 
 namespace tests\Compare;
 
-use ptlis\SemanticVersion\Entity\Label\LabelAlpha;
-use ptlis\SemanticVersion\Entity\Label\LabelBeta;
-use ptlis\SemanticVersion\Entity\Label\LabelNone;
-use ptlis\SemanticVersion\Entity\Label\LabelRc;
-use ptlis\SemanticVersion\Entity\Version;
+use ptlis\SemanticVersion\Label\LabelAlpha;
+use ptlis\SemanticVersion\Label\LabelBeta;
+use ptlis\SemanticVersion\Label\LabelNone;
+use ptlis\SemanticVersion\Label\LabelRc;
+use ptlis\SemanticVersion\Version\Version;
 
 /**
  * Tests to ensure correct handling of version number greater than version.

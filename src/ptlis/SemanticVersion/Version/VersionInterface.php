@@ -13,9 +13,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Entity;
+namespace ptlis\SemanticVersion\Version;
 
-use ptlis\SemanticVersion\Entity\Label\LabelInterface;
+use ptlis\SemanticVersion\Label\LabelInterface;
 
 /**
  * Interface class for version number entities.

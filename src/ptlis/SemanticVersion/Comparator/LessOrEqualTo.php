@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Equality comparator.
+ * Less than or equal comparator.
  *
  * PHP Version 5.4
  *
@@ -13,12 +13,12 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Entity\Comparator;
+namespace ptlis\SemanticVersion\Comparator;
 
 /**
- * Equality comparator.
+ * Less than or equal comparator.
  */
-class EqualTo extends AbstractComparator
+class LessOrEqualTo extends AbstractComparator
 {
     /**
      * Retrieve the comparator's symbol.
@@ -27,6 +27,6 @@ class EqualTo extends AbstractComparator
      */
     public static function getSymbol()
     {
-        return '=';
+        return '<=';
     }
 }

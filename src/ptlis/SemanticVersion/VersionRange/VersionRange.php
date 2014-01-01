@@ -13,7 +13,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Entity;
+namespace ptlis\SemanticVersion\VersionRange;
+
+use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 
 /**
  * Entity to represent a semantic version number range.

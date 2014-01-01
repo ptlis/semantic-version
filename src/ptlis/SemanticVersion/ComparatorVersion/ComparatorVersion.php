@@ -13,9 +13,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Entity;
+namespace ptlis\SemanticVersion\ComparatorVersion;
 
-use ptlis\SemanticVersion\Entity\Comparator\ComparatorInterface;
+use ptlis\SemanticVersion\Comparator\ComparatorInterface;
 
 /**
  * Entity to represent a semantic version number with a comparator.

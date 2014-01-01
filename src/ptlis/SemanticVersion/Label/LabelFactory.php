@@ -13,7 +13,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Entity\Label;
+namespace ptlis\SemanticVersion\Label;
 
 /**
  * Factory to create Labels.
@@ -42,18 +42,19 @@ class LabelFactory
     {
         // Override defaults
         if (!is_null($labelList) && is_array($labelList) && count($labelList)) {
+            // TODO: Not in ctor, validate classes (plus add / remove functions?)
             $this->labelList = $labelList;
 
-            // Keep defaults
+        // Keep defaults
         } else {
             $this->labelList = [
-                'alpha' => 'ptlis\SemanticVersion\Entity\Label\LabelAlpha',
-                'beta'  => 'ptlis\SemanticVersion\Entity\Label\LabelBeta',
-                'rc'    => 'ptlis\SemanticVersion\Entity\Label\LabelRc'
+                'alpha' => 'ptlis\SemanticVersion\Label\LabelAlpha',
+                'beta'  => 'ptlis\SemanticVersion\Label\LabelBeta',
+                'rc'    => 'ptlis\SemanticVersion\Label\LabelRc'
             ];
         }
 
-        $this->defaultLabel = 'ptlis\SemanticVersion\Entity\Label\LabelNone';
+        $this->defaultLabel = 'ptlis\SemanticVersion\Label\LabelNone';
     }
 
 

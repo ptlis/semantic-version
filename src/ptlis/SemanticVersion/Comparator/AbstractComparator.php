@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Less than comparator.
+ * Abstract class for comparators.
  *
  * PHP Version 5.4
  *
@@ -13,20 +13,20 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Entity\Comparator;
+namespace ptlis\SemanticVersion\Comparator;
 
 /**
- * Less than comparator.
+ * Abstract class for comparators.
  */
-class LessThan extends AbstractComparator
+abstract class AbstractComparator implements ComparatorInterface
 {
     /**
-     * Retrieve the comparator's symbol.
+     * Return the string representation of the comparator
      *
      * @return string
      */
-    public static function getSymbol()
+    public function __toString()
     {
-        return '<';
+        return $this::getSymbol();
     }
 }

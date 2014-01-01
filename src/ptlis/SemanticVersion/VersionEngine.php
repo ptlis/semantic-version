@@ -15,11 +15,11 @@
 
 namespace ptlis\SemanticVersion;
 
-use ptlis\SemanticVersion\Entity\Comparator\ComparatorFactory;
-use ptlis\SemanticVersion\Entity\ComparatorVersion;
-use ptlis\SemanticVersion\Entity\Label\LabelFactory;
-use ptlis\SemanticVersion\Entity\Version;
-use ptlis\SemanticVersion\Entity\VersionRange;
+use ptlis\SemanticVersion\Comparator\ComparatorFactory;
+use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
+use ptlis\SemanticVersion\Label\LabelFactory;
+use ptlis\SemanticVersion\Version\Version;
+use ptlis\SemanticVersion\VersionRange\VersionRange;
 use ptlis\SemanticVersion\Exception\InvalidComparatorVersionException;
 use ptlis\SemanticVersion\Exception\InvalidVersionException;
 use ptlis\SemanticVersion\Exception\InvalidVersionRangeException;

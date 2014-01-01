@@ -17,11 +17,11 @@
 
 namespace tests\Parse;
 
-use ptlis\SemanticVersion\Entity\Comparator\GreaterOrEqualTo;
-use ptlis\SemanticVersion\Entity\ComparatorVersion;
-use ptlis\SemanticVersion\Entity\Label\LabelNone;
-use ptlis\SemanticVersion\Entity\Label\LabelRc;
-use ptlis\SemanticVersion\Entity\Version;
+use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
+use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
+use ptlis\SemanticVersion\Label\LabelNone;
+use ptlis\SemanticVersion\Label\LabelRc;
+use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionEngine;
 
 /**

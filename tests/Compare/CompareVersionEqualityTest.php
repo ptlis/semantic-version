@@ -17,9 +17,9 @@
 
 namespace tests\Compare;
 
-use ptlis\SemanticVersion\Entity\Label\LabelAlpha;
-use ptlis\SemanticVersion\Entity\Label\LabelBeta;
-use ptlis\SemanticVersion\Entity\Version;
+use ptlis\SemanticVersion\Label\LabelAlpha;
+use ptlis\SemanticVersion\Label\LabelBeta;
+use ptlis\SemanticVersion\Version\Version;
 
 /**
  * Tests to ensure correct handling of version number equality version.

@@ -13,7 +13,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Entity\Label;
+namespace ptlis\SemanticVersion\Label;
 
 /**
  * Interface that version labels must implement.

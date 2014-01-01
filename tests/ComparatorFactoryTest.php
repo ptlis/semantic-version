@@ -17,12 +17,12 @@
 
 namespace tests;
 
-use ptlis\SemanticVersion\Entity\Comparator\ComparatorFactory;
-use ptlis\SemanticVersion\Entity\Comparator\EqualTo;
-use ptlis\SemanticVersion\Entity\Comparator\GreaterOrEqualTo;
-use ptlis\SemanticVersion\Entity\Comparator\GreaterThan;
-use ptlis\SemanticVersion\Entity\Comparator\LessOrEqualTo;
-use ptlis\SemanticVersion\Entity\Comparator\LessThan;
+use ptlis\SemanticVersion\Comparator\ComparatorFactory;
+use ptlis\SemanticVersion\Comparator\EqualTo;
+use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
+use ptlis\SemanticVersion\Comparator\GreaterThan;
+use ptlis\SemanticVersion\Comparator\LessOrEqualTo;
+use ptlis\SemanticVersion\Comparator\LessThan;
 
 /**
  * Tests to ensure correct behaviour of ComparatorFactory.
@@ -87,7 +87,7 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $factory = new ComparatorFactory(
             [
-                '=' => 'ptlis\SemanticVersion\Entity\Comparator\EqualTo'
+                '=' => 'ptlis\SemanticVersion\Comparator\EqualTo'
             ]
         );
 
@@ -106,7 +106,7 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
 
         $factory = new ComparatorFactory(
             [
-                '=' => 'ptlis\SemanticVersion\Entity\Comparator\EqualTo'
+                '=' => 'ptlis\SemanticVersion\Comparator\EqualTo'
             ]
         );
 

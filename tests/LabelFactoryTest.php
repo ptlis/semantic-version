@@ -17,11 +17,11 @@
 
 namespace tests;
 
-use ptlis\SemanticVersion\Entity\Label\LabelAlpha;
-use ptlis\SemanticVersion\Entity\Label\LabelBeta;
-use ptlis\SemanticVersion\Entity\Label\LabelFactory;
-use ptlis\SemanticVersion\Entity\Label\LabelNone;
-use ptlis\SemanticVersion\Entity\Label\LabelRc;
+use ptlis\SemanticVersion\Label\LabelAlpha;
+use ptlis\SemanticVersion\Label\LabelBeta;
+use ptlis\SemanticVersion\Label\LabelFactory;
+use ptlis\SemanticVersion\Label\LabelNone;
+use ptlis\SemanticVersion\Label\LabelRc;
 
 /**
  * Tests to ensure correct behaviour of ComparatorFactory.
@@ -72,7 +72,7 @@ class LabelFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $factory = new LabelFactory(
             [
-                '=' => 'ptlis\SemanticVersion\Entity\Label\LabelAlpha'
+                '=' => 'ptlis\SemanticVersion\Label\LabelAlpha'
             ]
         );
 
