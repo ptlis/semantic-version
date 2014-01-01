@@ -15,6 +15,8 @@
 
 namespace ptlis\SemanticVersion\VersionRange;
 
+use ptlis\SemanticVersion\Comparator\EqualTo;
+use ptlis\SemanticVersion\Comparator\GreaterThan;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\Exception\InvalidVersionRangeException;
 use ptlis\SemanticVersion\InRange\InRangeInterface;
@@ -95,6 +97,48 @@ class VersionRange implements InRangeInterface
     public function getUpper()
     {
         return $this->upper;
+    }
+
+
+    /**
+     * @throws InvalidVersionRangeException
+     *
+     * @param ComparatorVersion $version1
+     * @param ComparatorVersion $version2
+     *
+     * @return $this
+     */
+    public function setUpperLower(ComparatorVersion $version1, ComparatorVersion $version2)
+    {
+        $equalTo = new EqualTo();
+        $greaterThan = new GreaterThan();
+
+        // If the versions are equal it doesn't matter
+        if ($equalTo->compare($version1->getVersion(), $version2->getVersion())) {
+            $upper = $version1;
+            $lower = $version2;
+
+        // $version1 is greater
+        } elseif ($greaterThan->compare($version1->getVersion(), $version2->getVersion())) {
+            $upper = $version1;
+            $lower = $version2;
+
+        // $version2 is greater
+        } else {
+            $upper = $version2;
+            $lower = $version1;
+        }
+
+        if (!$upper->isSatisfiedBy($lower->getVersion()) || !$lower->isSatisfiedBy($upper->getVersion())) {
+            throw new InvalidVersionRangeException(
+                'The provided versions conflict.'
+            );
+        }
+
+        $this->upper = $upper;
+        $this->lower = $lower;
+
+        return $this;
     }
 
 

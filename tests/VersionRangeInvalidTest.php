@@ -182,4 +182,41 @@ class VersionRangeInvalidTest extends \PHPUnit_Framework_TestCase
             ->setLower($lowerBound)
             ->setUpper($upperBound);
     }
+
+
+    public function testLowerAndUpperFlippedThree()
+    {
+        $this->setExpectedException(
+            '\ptlis\SemanticVersion\Exception\InvalidVersionRangeException',
+            'The provided versions conflict.'
+        );
+
+        $lowerVersion = new Version();
+        $lowerVersion
+            ->setMajor(1)
+            ->setMinor(0)
+            ->setPatch(15)
+            ->setLabel(new LabelNone());
+
+        $lowerBound = new ComparatorVersion();
+        $lowerBound
+            ->setComparator(new LessOrEqualTo())
+            ->setVersion($lowerVersion);
+
+        $upperVersion = new Version();
+        $upperVersion
+            ->setMajor(2)
+            ->setMinor(0)
+            ->setPatch(15)
+            ->setLabel(new LabelNone());
+
+        $upperBound = new ComparatorVersion();
+        $upperBound
+            ->setComparator(new GreaterOrEqualTo())
+            ->setVersion($upperVersion);
+
+        $versionRange = new VersionRange();
+        $versionRange
+            ->setUpperLower($upperBound, $lowerBound);
+    }
 }
