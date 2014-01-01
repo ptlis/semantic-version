@@ -32,7 +32,9 @@ class ParseComparatorVersionInvalidTest extends \PHPUnit_Framework_TestCase
             '\ptlis\SemanticVersion\Exception\InvalidComparatorVersionException',
             'The comparator version "' . $inStr . '" could not be parsed.'
         );
-        VersionEngine::parseComparatorVersion($inStr);
+
+        $engine = new VersionEngine();
+        $engine->parseComparatorVersion($inStr);
     }
 
 
@@ -44,7 +46,9 @@ class ParseComparatorVersionInvalidTest extends \PHPUnit_Framework_TestCase
             '\ptlis\SemanticVersion\Exception\InvalidComparatorVersionException',
             'The comparator version "' . $inStr . '" could not be parsed.'
         );
-        VersionEngine::parseComparatorVersion($inStr);
+
+        $engine = new VersionEngine();
+        $engine->parseComparatorVersion($inStr);
     }
 
 
@@ -56,6 +60,8 @@ class ParseComparatorVersionInvalidTest extends \PHPUnit_Framework_TestCase
             '\ptlis\SemanticVersion\Exception\InvalidComparatorVersionException',
             'The comparator version "' . $inStr . '" could not be parsed.'
         );
-        VersionEngine::parseComparatorVersion($inStr);
+
+        $engine = new VersionEngine();
+        $engine->parseComparatorVersion($inStr);
     }
 }

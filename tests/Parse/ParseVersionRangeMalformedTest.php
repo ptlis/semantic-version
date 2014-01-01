@@ -35,7 +35,8 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '>=1.<=1.2.0';
 
-        $outVersionRange = VersionEngine::parseVersionRange($inStr);
+        $engine  = new VersionEngine();
+        $outVersionRange = $engine->parseVersionRange($inStr);
 
         $expectStr = '>=1.0.0<=1.2.0';
 
@@ -78,7 +79,8 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '>=1.0.<=1.2.0';
 
-        $outVersionRange = VersionEngine::parseVersionRange($inStr);
+        $engine  = new VersionEngine();
+        $outVersionRange = $engine->parseVersionRange($inStr);
 
         $expectStr = '>=1.0.0<=1.2.0';
 
@@ -121,7 +123,8 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '>=1.0.0-<=1.2.0';
 
-        $outVersionRange = VersionEngine::parseVersionRange($inStr);
+        $engine  = new VersionEngine();
+        $outVersionRange = $engine->parseVersionRange($inStr);
 
         $expectStr = '>=1.0.0<=1.2.0';
 
@@ -164,7 +167,8 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '>=1.0.0-rc1<=1.2.0';
 
-        $outVersionRange = VersionEngine::parseVersionRange($inStr);
+        $engine  = new VersionEngine();
+        $outVersionRange = $engine->parseVersionRange($inStr);
 
         $expectStr = '>=1.0.0-rc.1<=1.2.0';
 

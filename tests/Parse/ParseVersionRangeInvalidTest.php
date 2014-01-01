@@ -32,7 +32,9 @@ class ParseVersionRangeInvalidTest extends \PHPUnit_Framework_TestCase
             '\ptlis\SemanticVersion\Exception\InvalidVersionRangeException',
             'The version range "' . $inStr . '" could not be parsed.'
         );
-        VersionEngine::parseVersionRange($inStr);
+
+        $engine  = new VersionEngine();
+        $engine->parseVersionRange($inStr);
     }
 
 
@@ -44,7 +46,9 @@ class ParseVersionRangeInvalidTest extends \PHPUnit_Framework_TestCase
             '\ptlis\SemanticVersion\Exception\InvalidVersionRangeException',
             'The version range "' . $inStr . '" could not be parsed.'
         );
-        VersionEngine::parseVersionRange($inStr);
+
+        $engine  = new VersionEngine();
+        $engine->parseVersionRange($inStr);
     }
 
 
@@ -56,6 +60,8 @@ class ParseVersionRangeInvalidTest extends \PHPUnit_Framework_TestCase
             '\ptlis\SemanticVersion\Exception\InvalidVersionRangeException',
             'The version range "' . $inStr . '" could not be parsed.'
         );
-        VersionEngine::parseVersionRange($inStr);
+
+        $engine  = new VersionEngine();
+        $engine->parseVersionRange($inStr);
     }
 }

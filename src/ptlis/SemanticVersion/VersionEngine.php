@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Core parsing engine.
+ * Simple class to provide version parsing with good defaults.
  *
  * PHP Version 5.4
  *
@@ -28,10 +28,49 @@ use ptlis\SemanticVersion\Exception\InvalidVersionException;
 use ptlis\SemanticVersion\Exception\InvalidVersionRangeException;
 
 /**
- * Core parsing engine.
+ * Simple class to provide version parsing with good defaults.
  */
 class VersionEngine
 {
+    /**
+     * @var VersionRegex
+     */
+    private $regexProvider;
+
+    /**
+     * @var LabelFactory
+     */
+    private $labelFac;
+
+    /**
+     * @var VersionFactory
+     */
+    private $versionFac;
+
+    /**
+     * @var ComparatorVersionFactory
+     */
+    private $comparatorVersionFac;
+
+    /**
+     * @var VersionRangeFactory
+     */
+    private $versionRangeFac;
+
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->regexProvider = new VersionRegex();
+        $this->labelFac = new LabelFactory();
+        $this->versionFac = new VersionFactory($this->regexProvider, $this->labelFac);
+        $this->comparatorVersionFac = new ComparatorVersionFactory($this->regexProvider, $this->versionFac);
+        $this->versionRangeFac = new VersionRangeFactory($this->regexProvider, $this->comparatorVersionFac);
+    }
+
+
     /**
      * Parse a version number into an array of version number parts.
      *
@@ -41,13 +80,9 @@ class VersionEngine
      *
      * @return Version
      */
-    public static function parseVersion($versionNo)
+    public function parseVersion($versionNo)
     {
-        // TODO: Inject!
-        $labelFactory = new LabelFactory();
-        $versionFactory = new VersionFactory(new VersionRegex(), $labelFactory);
-
-        return $versionFactory->parse($versionNo);
+        return $this->versionFac->parse($versionNo);
     }
 
 
@@ -60,13 +95,9 @@ class VersionEngine
      *
      * @return ComparatorVersion
      */
-    public static function parseComparatorVersion($versionNo)
+    public function parseComparatorVersion($versionNo)
     {
-        $labelFactory = new LabelFactory();
-        $versionFactory = new VersionFactory(new VersionRegex(), $labelFactory);
-        $comparatorVersionFac = new ComparatorVersionFactory(new VersionRegex(), $versionFactory);
-
-        return $comparatorVersionFac->parse($versionNo);
+        return $this->comparatorVersionFac->parse($versionNo);
     }
 
 
@@ -79,13 +110,8 @@ class VersionEngine
      *
      * @return VersionRange
      */
-    public static function parseVersionRange($versionNo)
+    public function parseVersionRange($versionNo)
     {
-        $labelFactory = new LabelFactory();
-        $versionFactory = new VersionFactory(new VersionRegex(), $labelFactory);
-        $comparatorVersionFac = new ComparatorVersionFactory(new VersionRegex(), $versionFactory);
-        $versionRangeFactory = new VersionRangeFactory(new VersionRegex(), $comparatorVersionFac);
-
-        return $versionRangeFactory->parse($versionNo);
+        return $this->versionRangeFac->parse($versionNo);
     }
 }

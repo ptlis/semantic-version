@@ -32,7 +32,9 @@ class ParseVersionInvalidTest extends \PHPUnit_Framework_TestCase
             '\ptlis\SemanticVersion\Exception\InvalidVersionException',
             'The version number "' . $inStr . '" could not be parsed.'
         );
-        VersionEngine::parseVersion($inStr);
+
+        $engine = new VersionEngine();
+        $engine->parseVersion($inStr);
     }
 
 
@@ -44,7 +46,9 @@ class ParseVersionInvalidTest extends \PHPUnit_Framework_TestCase
             '\ptlis\SemanticVersion\Exception\InvalidVersionException',
             'The version number "' . $inStr . '" could not be parsed.'
         );
-        VersionEngine::parseVersion($inStr);
+
+        $engine = new VersionEngine();
+        $engine->parseVersion($inStr);
     }
 
 
@@ -56,7 +60,9 @@ class ParseVersionInvalidTest extends \PHPUnit_Framework_TestCase
             '\ptlis\SemanticVersion\Exception\InvalidVersionException',
             'The version number "' . $inStr . '" could not be parsed.'
         );
-        VersionEngine::parseVersion($inStr);
+
+        $engine = new VersionEngine();
+        $engine->parseVersion($inStr);
     }
 
 
@@ -68,7 +74,9 @@ class ParseVersionInvalidTest extends \PHPUnit_Framework_TestCase
             '\ptlis\SemanticVersion\Exception\InvalidVersionException',
             'The version number "' . $inStr . '" could not be parsed.'
         );
-        VersionEngine::parseVersion($inStr);
+
+        $engine = new VersionEngine();
+        $engine->parseVersion($inStr);
     }
 
 
@@ -80,7 +88,9 @@ class ParseVersionInvalidTest extends \PHPUnit_Framework_TestCase
             '\ptlis\SemanticVersion\Exception\InvalidVersionException',
             'The version number "' . $inStr . '" could not be parsed.'
         );
-        VersionEngine::parseVersion($inStr);
+
+        $engine = new VersionEngine();
+        $engine->parseVersion($inStr);
     }
 
 
@@ -92,7 +102,9 @@ class ParseVersionInvalidTest extends \PHPUnit_Framework_TestCase
             '\ptlis\SemanticVersion\Exception\InvalidVersionException',
             'The version number "' . $inStr . '" could not be parsed.'
         );
-        VersionEngine::parseVersion($inStr);
+
+        $engine = new VersionEngine();
+        $engine->parseVersion($inStr);
     }
 
 
@@ -104,7 +116,9 @@ class ParseVersionInvalidTest extends \PHPUnit_Framework_TestCase
             '\ptlis\SemanticVersion\Exception\InvalidVersionException',
             'The version number "' . $inStr . '" could not be parsed.'
         );
-        VersionEngine::parseVersion($inStr);
+
+        $engine = new VersionEngine();
+        $engine->parseVersion($inStr);
     }
 
 
@@ -116,7 +130,9 @@ class ParseVersionInvalidTest extends \PHPUnit_Framework_TestCase
             '\ptlis\SemanticVersion\Exception\InvalidVersionException',
             'The version number "' . $inStr . '" could not be parsed.'
         );
-        VersionEngine::parseVersion($inStr);
+
+        $engine = new VersionEngine();
+        $engine->parseVersion($inStr);
     }
 
 
@@ -128,7 +144,9 @@ class ParseVersionInvalidTest extends \PHPUnit_Framework_TestCase
             '\ptlis\SemanticVersion\Exception\InvalidVersionException',
             'The version number "' . $inStr . '" could not be parsed.'
         );
-        VersionEngine::parseVersion($inStr);
+
+        $engine = new VersionEngine();
+        $engine->parseVersion($inStr);
     }
 
 
@@ -140,7 +158,9 @@ class ParseVersionInvalidTest extends \PHPUnit_Framework_TestCase
             '\ptlis\SemanticVersion\Exception\InvalidVersionException',
             'The version number "' . $inStr . '" could not be parsed.'
         );
-        VersionEngine::parseVersion($inStr);
+
+        $engine = new VersionEngine();
+        $engine->parseVersion($inStr);
     }
 
 
@@ -152,7 +172,9 @@ class ParseVersionInvalidTest extends \PHPUnit_Framework_TestCase
             '\ptlis\SemanticVersion\Exception\InvalidVersionException',
             'The version number "' . $inStr . '" could not be parsed.'
         );
-        VersionEngine::parseVersion($inStr);
+
+        $engine = new VersionEngine();
+        $engine->parseVersion($inStr);
     }
 
 
@@ -164,6 +186,8 @@ class ParseVersionInvalidTest extends \PHPUnit_Framework_TestCase
             '\ptlis\SemanticVersion\Exception\InvalidVersionException',
             'The version number "' . $inStr . '" could not be parsed.'
         );
-        VersionEngine::parseVersion($inStr);
+
+        $engine = new VersionEngine();
+        $engine->parseVersion($inStr);
     }
 }

@@ -35,7 +35,8 @@ class ParseVersionRangeValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '>1.0.0<=2.0.0';
 
-        $outVersionRange = VersionEngine::parseVersionRange($inStr);
+        $engine  = new VersionEngine();
+        $outVersionRange = $engine->parseVersionRange($inStr);
 
         $expectStr = '>1.0.0<=2.0.0';
 
@@ -81,7 +82,8 @@ class ParseVersionRangeValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '>1.0.0<=2.0.0';
 
-        $outVersionRange = VersionEngine::parseVersionRange($inStr);
+        $engine  = new VersionEngine();
+        $outVersionRange = $engine->parseVersionRange($inStr);
 
         $expectStr = '>1.0.0<=2.0.0';
 
@@ -124,7 +126,8 @@ class ParseVersionRangeValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '>1.0.0<=1.1.0';
 
-        $outVersionRange = VersionEngine::parseVersionRange($inStr);
+        $engine  = new VersionEngine();
+        $outVersionRange = $engine->parseVersionRange($inStr);
 
         $expectStr = '>1.0.0<=1.1.0';
 
@@ -167,7 +170,8 @@ class ParseVersionRangeValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '>1.0.0<=1.0.5';
 
-        $outVersionRange = VersionEngine::parseVersionRange($inStr);
+        $engine  = new VersionEngine();
+        $outVersionRange = $engine->parseVersionRange($inStr);
 
         $expectStr = '>1.0.0<=1.0.5';
 
@@ -210,7 +214,8 @@ class ParseVersionRangeValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '>1.0.0';
 
-        $outVersionRange = VersionEngine::parseVersionRange($inStr);
+        $engine  = new VersionEngine();
+        $outVersionRange = $engine->parseVersionRange($inStr);
 
         $expectStr = '>1.0.0';
 
@@ -240,7 +245,8 @@ class ParseVersionRangeValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '<=1.0.0';
 
-        $outVersionRange = VersionEngine::parseVersionRange($inStr);
+        $engine  = new VersionEngine();
+        $outVersionRange = $engine->parseVersionRange($inStr);
 
         $expectStr = '<=1.0.0';
 
@@ -270,7 +276,8 @@ class ParseVersionRangeValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1';
 
-        $outVersionRange = VersionEngine::parseVersionRange($inStr);
+        $engine  = new VersionEngine();
+        $outVersionRange = $engine->parseVersionRange($inStr);
 
         $expectStr = '>=1.0.0<2.0.0';
 
@@ -313,7 +320,8 @@ class ParseVersionRangeValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1.0';
 
-        $outVersionRange = VersionEngine::parseVersionRange($inStr);
+        $engine  = new VersionEngine();
+        $outVersionRange = $engine->parseVersionRange($inStr);
 
         $expectStr = '>=1.0.0<1.1.0';
 
@@ -356,7 +364,8 @@ class ParseVersionRangeValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1.0.5';
 
-        $outVersionRange = VersionEngine::parseVersionRange($inStr);
+        $engine  = new VersionEngine();
+        $outVersionRange = $engine->parseVersionRange($inStr);
 
         $expectStr = '=1.0.5';
 
@@ -387,7 +396,8 @@ class ParseVersionRangeValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1.0.5-rc.2';
 
-        $outVersionRange = VersionEngine::parseVersionRange($inStr);
+        $engine  = new VersionEngine();
+        $outVersionRange = $engine->parseVersionRange($inStr);
 
         $expectStr = '=1.0.5-rc.2';
 
@@ -418,7 +428,8 @@ class ParseVersionRangeValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '~1';
 
-        $outVersionRange = VersionEngine::parseVersionRange($inStr);
+        $engine  = new VersionEngine();
+        $outVersionRange = $engine->parseVersionRange($inStr);
 
         $expectStr = '>=1.0.0<2.0.0';
 
@@ -461,7 +472,8 @@ class ParseVersionRangeValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '~1.7';
 
-        $outVersionRange = VersionEngine::parseVersionRange($inStr);
+        $engine  = new VersionEngine();
+        $outVersionRange = $engine->parseVersionRange($inStr);
 
         $expectStr = '>=1.7.0<2.0.0';
 
@@ -504,7 +516,8 @@ class ParseVersionRangeValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '~1.7.9';
 
-        $outVersionRange = VersionEngine::parseVersionRange($inStr);
+        $engine  = new VersionEngine();
+        $outVersionRange = $engine->parseVersionRange($inStr);
 
         $expectStr = '>=1.7.9<1.8.0';
 
@@ -547,7 +560,8 @@ class ParseVersionRangeValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '~1.x';
 
-        $outVersionRange = VersionEngine::parseVersionRange($inStr);
+        $engine  = new VersionEngine();
+        $outVersionRange = $engine->parseVersionRange($inStr);
 
         $expectStr = '>=1.0.0<2.0.0';
 
@@ -590,7 +604,8 @@ class ParseVersionRangeValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '~1.7.x';
 
-        $outVersionRange = VersionEngine::parseVersionRange($inStr);
+        $engine  = new VersionEngine();
+        $outVersionRange = $engine->parseVersionRange($inStr);
 
         $expectStr = '>=1.7.0<2.0.0';
 

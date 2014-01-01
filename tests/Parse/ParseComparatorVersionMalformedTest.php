@@ -33,7 +33,8 @@ class ParseComparatorVersionMalformedTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '>=1.';
 
-        $outComparatorVersion = VersionEngine::parseComparatorVersion($inStr);
+        $engine = new VersionEngine();
+        $outComparatorVersion = $engine->parseComparatorVersion($inStr);
 
         $expectStr = '>=1.0.0';
         $expectComparatorVersion = new ComparatorVersion();
@@ -55,7 +56,8 @@ class ParseComparatorVersionMalformedTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '>=1.5.';
 
-        $outComparatorVersion = VersionEngine::parseComparatorVersion($inStr);
+        $engine = new VersionEngine();
+        $outComparatorVersion = $engine->parseComparatorVersion($inStr);
 
         $expectStr = '>=1.5.0';
         $expectComparatorVersion = new ComparatorVersion();
@@ -77,7 +79,8 @@ class ParseComparatorVersionMalformedTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '>=1.5.0-';
 
-        $outComparatorVersion = VersionEngine::parseComparatorVersion($inStr);
+        $engine = new VersionEngine();
+        $outComparatorVersion = $engine->parseComparatorVersion($inStr);
 
         $expectStr = '>=1.5.0';
         $expectComparatorVersion = new ComparatorVersion();
@@ -99,7 +102,8 @@ class ParseComparatorVersionMalformedTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '>=1.5.0-rc1';
 
-        $outComparatorVersion = VersionEngine::parseComparatorVersion($inStr);
+        $engine = new VersionEngine();
+        $outComparatorVersion = $engine->parseComparatorVersion($inStr);
 
         $expectStr = '>=1.5.0-rc.1';
         $expectComparatorVersion = new ComparatorVersion();

@@ -33,7 +33,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1.0.0';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '1.0.0';
         $expectVersion = new Version();
@@ -62,7 +63,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1.0.0-alpha.1';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '1.0.0-alpha.1';
         $expectVersion = new Version();
@@ -91,7 +93,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1.0.0-beta.12';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '1.0.0-beta.12';
         $expectVersion = new Version();
@@ -120,7 +123,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1.0.0-rc.4';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '1.0.0-rc.4';
         $expectVersion = new Version();
@@ -149,7 +153,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '1.0.0';
         $expectVersion = new Version();
@@ -169,7 +174,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1.5';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '1.5.0';
         $expectVersion = new Version();
@@ -189,7 +195,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1.5.3';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '1.5.3';
         $expectVersion = new Version();
@@ -209,7 +216,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1.5.0-alpha';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '1.5.0-alpha';
         $expectVersion = new Version();
@@ -229,7 +237,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1.5.0-alpha.2';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '1.5.0-alpha.2';
         $expectVersion = new Version();
@@ -249,7 +258,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1.5.0-beta';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '1.5.0-beta';
         $expectVersion = new Version();
@@ -269,7 +279,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1.5.0-beta.2';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '1.5.0-beta.2';
         $expectVersion = new Version();
@@ -289,7 +300,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1.5.0-rc';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '1.5.0-rc';
         $expectVersion = new Version();
@@ -309,7 +321,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1.5.0-rc.2';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '1.5.0-rc.2';
         $expectVersion = new Version();
@@ -331,7 +344,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '01';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '1.0.0';
         $expectVersion = new Version();
@@ -351,7 +365,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1.05';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '1.5.0';
         $expectVersion = new Version();
@@ -371,7 +386,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1.05.03';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '1.5.3';
         $expectVersion = new Version();
@@ -391,7 +407,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '  1.5.3 ';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '1.5.3';
         $expectVersion = new Version();
@@ -411,7 +428,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1.5.x';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '1.5.*';
         $expectVersion = new Version();
@@ -431,7 +449,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1.x';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '1.*.*';
         $expectVersion = new Version();
@@ -451,7 +470,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1.x.x';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '1.*.*';
         $expectVersion = new Version();
@@ -471,7 +491,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = 'x';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '*.*.*';
         $expectVersion = new Version();
@@ -491,7 +512,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = 'x.x';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '*.*.*';
         $expectVersion = new Version();
@@ -511,7 +533,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = 'x.x.x';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '*.*.*';
         $expectVersion = new Version();
@@ -531,7 +554,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1.5.*';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '1.5.*';
         $expectVersion = new Version();
@@ -551,7 +575,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1.*';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '1.*.*';
         $expectVersion = new Version();
@@ -571,7 +596,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '1.*.*';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '1.*.*';
         $expectVersion = new Version();
@@ -591,7 +617,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '*';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '*.*.*';
         $expectVersion = new Version();
@@ -611,7 +638,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '*.*';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '*.*.*';
         $expectVersion = new Version();
@@ -631,7 +659,8 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     {
         $inStr = '*.*.*';
 
-        $outVersion = VersionEngine::parseVersion($inStr);
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
 
         $expectStr = '*.*.*';
         $expectVersion = new Version();
