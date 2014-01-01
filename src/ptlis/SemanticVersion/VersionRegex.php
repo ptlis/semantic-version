@@ -15,17 +15,22 @@
 
 namespace ptlis\SemanticVersion;
 
+use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersionRegexProviderInterface;
+use ptlis\SemanticVersion\Version\VersionRegexProviderInterface;
+use ptlis\SemanticVersion\VersionRange\VersionRangeRegexProviderInterface;
+
 /**
  * Utility class to provide regular expressions used when parsing version numbers, ranges etc.
  */
-class VersionRegex
+class VersionRegex implements VersionRegexProviderInterface, VersionRangeRegexProviderInterface,
+ComparatorVersionRegexProviderInterface
 {
     /**
      * Base regex for parsing semantic version numbers.
      *
      * @var string
      */
-    private static $versionRegex = "
+    private $versionRegex = "
         v*                                          # Optional 'v' prefix
         (?<major>[0-9]+|x|\*)                       # Major Version
         (?:\.(?<minor>[0-9]+|x|\*)?)?               # Minor Version
@@ -44,7 +49,7 @@ class VersionRegex
      *
      * @var string
      */
-    private static $comparatorRegex = "(?<comparator>[<>]?=?)";
+    private $comparatorRegex = "(?<comparator>[<>]?=?)";
 
 
     /**
@@ -52,7 +57,7 @@ class VersionRegex
      *
      * @var string
      */
-    private static $comparatorMinRegex = "(?<min_comparator>>=?)";
+    private $comparatorMinRegex = "(?<min_comparator>>=?)";
 
 
     /**
@@ -60,7 +65,7 @@ class VersionRegex
      *
      * @var string
      */
-    private static $comparatorMaxRegex = "(?<max_comparator><=?)";
+    private $comparatorMaxRegex = "(?<max_comparator><=?)";
 
 
     /**
@@ -68,9 +73,9 @@ class VersionRegex
      *
      * @return string
      */
-    public static function getVersion()
+    public function getVersion()
     {
-        return '/^\s*' . static::$versionRegex . '\s*$/ix';
+        return '/^\s*' . $this->versionRegex . '\s*$/ix';
     }
 
 
@@ -79,9 +84,9 @@ class VersionRegex
      *
      * @return string
      */
-    public static function getComparatorVersion()
+    public function getComparatorVersion()
     {
-        return '/^\s*' . static::$comparatorRegex . '\s*' . static::$versionRegex . '\s*$/ix';
+        return '/^\s*' . $this->comparatorRegex . '\s*' . $this->versionRegex . '\s*$/ix';
     }
 
 
@@ -90,7 +95,7 @@ class VersionRegex
      *
      * @return string
      */
-    public static function getVersionRange()
+    public function getVersionRange()
     {
         $minReplace = [
             '<major>'       => '<min_major>',
@@ -121,20 +126,20 @@ class VersionRegex
 
         return '/^\s*'
         . '('
-        .     static::$comparatorMinRegex
+        .     $this->comparatorMinRegex
         .     '\s*'
-        .     str_replace(array_keys($minReplace), $minReplace, static::$versionRegex)
+        .     str_replace(array_keys($minReplace), $minReplace, $this->versionRegex)
         . ')?'
         . '\s*'
         . '('
-        .     static::$comparatorMaxRegex
+        .     $this->comparatorMaxRegex
         .     '\s*'
-        .     str_replace(array_keys($maxReplace), $maxReplace, static::$versionRegex)
+        .     str_replace(array_keys($maxReplace), $maxReplace, $this->versionRegex)
         . ')?'
         . '\s*'
         . '('
         .     '(?<single_tilde>~)?'
-        .     str_replace(array_keys($singleReplace), $singleReplace, static::$versionRegex)
+        .     str_replace(array_keys($singleReplace), $singleReplace, $this->versionRegex)
         . ')?'
         . '\s*$/ix';
     }
