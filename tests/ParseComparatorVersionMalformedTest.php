@@ -17,6 +17,7 @@
 
 namespace tests;
 
+use ptlis\SemanticVersion\Entity\Comparator\GreaterOrEqualTo;
 use ptlis\SemanticVersion\Entity\ComparatorVersion;
 use ptlis\SemanticVersion\Entity\Label\LabelNone;
 use ptlis\SemanticVersion\Entity\Label\LabelRc;
@@ -37,7 +38,7 @@ class ParseComparatorVersionMalformedTest extends \PHPUnit_Framework_TestCase
         $expectStr = '>=1.0.0';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO)
+            ->setComparator(new GreaterOrEqualTo())
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)
@@ -59,7 +60,7 @@ class ParseComparatorVersionMalformedTest extends \PHPUnit_Framework_TestCase
         $expectStr = '>=1.5.0';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO)
+            ->setComparator(new GreaterOrEqualTo())
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)
@@ -81,7 +82,7 @@ class ParseComparatorVersionMalformedTest extends \PHPUnit_Framework_TestCase
         $expectStr = '>=1.5.0';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO)
+            ->setComparator(new GreaterOrEqualTo())
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)
@@ -103,7 +104,7 @@ class ParseComparatorVersionMalformedTest extends \PHPUnit_Framework_TestCase
         $expectStr = '>=1.5.0-rc.1';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO)
+            ->setComparator(new GreaterOrEqualTo())
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)

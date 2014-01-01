@@ -17,6 +17,11 @@
 
 namespace tests;
 
+use ptlis\SemanticVersion\Entity\Comparator\EqualTo;
+use ptlis\SemanticVersion\Entity\Comparator\GreaterOrEqualTo;
+use ptlis\SemanticVersion\Entity\Comparator\GreaterThan;
+use ptlis\SemanticVersion\Entity\Comparator\LessOrEqualTo;
+use ptlis\SemanticVersion\Entity\Comparator\LessThan;
 use ptlis\SemanticVersion\Entity\ComparatorVersion;
 use ptlis\SemanticVersion\Entity\Label\LabelNone;
 use ptlis\SemanticVersion\Entity\Version;
@@ -36,7 +41,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
         $expectStr = '>1.0.0';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::GREATER_THAN)
+            ->setComparator(new GreaterThan())
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)
@@ -60,7 +65,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
         $expectStr = '>1.0.0';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::GREATER_THAN)
+            ->setComparator(new GreaterThan())
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)
@@ -82,7 +87,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
         $expectStr = '>1.7.0';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::GREATER_THAN)
+            ->setComparator(new GreaterThan())
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)
@@ -104,7 +109,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
         $expectStr = '>1.7.9';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::GREATER_THAN)
+            ->setComparator(new GreaterThan())
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)
@@ -126,7 +131,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
         $expectStr = '>=1.0.0';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO)
+            ->setComparator(new GreaterOrEqualTo())
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)
@@ -148,7 +153,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
         $expectStr = '>=1.7.0';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO)
+            ->setComparator(new GreaterOrEqualTo())
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)
@@ -170,7 +175,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
         $expectStr = '>=1.7.9';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO)
+            ->setComparator(new GreaterOrEqualTo())
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)
@@ -192,7 +197,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
         $expectStr = '<1.0.0';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::LESS_THAN)
+            ->setComparator(new LessThan())
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)
@@ -214,7 +219,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
         $expectStr = '<1.7.0';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::LESS_THAN)
+            ->setComparator(new LessThan())
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)
@@ -236,7 +241,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
         $expectStr = '<1.7.9';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::LESS_THAN)
+            ->setComparator(new LessThan)
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)
@@ -258,7 +263,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
         $expectStr = '<=1.0.0';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::LESS_OR_EQUAL_TO)
+            ->setComparator(new LessOrEqualTo())
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)
@@ -280,7 +285,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
         $expectStr = '<=1.7.0';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::LESS_OR_EQUAL_TO)
+            ->setComparator(new LessOrEqualTo)
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)
@@ -302,7 +307,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
         $expectStr = '<=1.7.9';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::LESS_OR_EQUAL_TO)
+            ->setComparator(new LessOrEqualTo)
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)
@@ -324,7 +329,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
         $expectStr = '=1.0.0';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::EQUAL_TO)
+            ->setComparator(new EqualTo())
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)
@@ -346,7 +351,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
         $expectStr = '=1.7.0';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::EQUAL_TO)
+            ->setComparator(new EqualTo())
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)
@@ -368,7 +373,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
         $expectStr = '=1.7.9';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::EQUAL_TO)
+            ->setComparator(new EqualTo())
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)
@@ -397,7 +402,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
         $expectStr = '<1.0.0';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::LESS_THAN)
+            ->setComparator(new LessThan)
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)
@@ -419,7 +424,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
         $expectStr = '>1.5.0';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::GREATER_THAN)
+            ->setComparator(new GreaterThan())
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)
@@ -441,7 +446,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
         $expectStr = '<=1.5.3';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::LESS_OR_EQUAL_TO)
+            ->setComparator(new LessOrEqualTo)
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)
@@ -463,7 +468,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
         $expectStr = '>=1.5.3';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
-            ->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO)
+            ->setComparator(new GreaterOrEqualTo())
             ->setVersion(new Version());
         $expectComparatorVersion->getVersion()
             ->setMajor(1)

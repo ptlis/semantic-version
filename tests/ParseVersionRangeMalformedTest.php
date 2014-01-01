@@ -17,6 +17,8 @@
 
 namespace tests;
 
+use ptlis\SemanticVersion\Entity\Comparator\GreaterOrEqualTo;
+use ptlis\SemanticVersion\Entity\Comparator\LessOrEqualTo;
 use ptlis\SemanticVersion\Entity\ComparatorVersion;
 use ptlis\SemanticVersion\Entity\Label\LabelNone;
 use ptlis\SemanticVersion\Entity\Label\LabelRc;
@@ -46,7 +48,7 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setLabel(new LabelNone());
         $lowerComparatorVersion = new ComparatorVersion();
         $lowerComparatorVersion
-            ->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO)
+            ->setComparator(new GreaterOrEqualTo())
             ->setVersion($lowerVersion);
 
         // Upper
@@ -58,7 +60,7 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setLabel(new LabelNone());
         $upperComparatorVersion = new ComparatorVersion();
         $upperComparatorVersion
-            ->setComparator(ComparatorVersion::LESS_OR_EQUAL_TO)
+            ->setComparator(new LessOrEqualTo())
             ->setVersion($upperVersion);
 
         // Range
@@ -89,7 +91,7 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setLabel(new LabelNone());
         $lowerComparatorVersion = new ComparatorVersion();
         $lowerComparatorVersion
-            ->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO)
+            ->setComparator(new GreaterOrEqualTo)
             ->setVersion($lowerVersion);
 
         // Upper
@@ -101,7 +103,7 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setLabel(new LabelNone());
         $upperComparatorVersion = new ComparatorVersion();
         $upperComparatorVersion
-            ->setComparator(ComparatorVersion::LESS_OR_EQUAL_TO)
+            ->setComparator(new LessOrEqualTo())
             ->setVersion($upperVersion);
 
         // Range
@@ -132,7 +134,7 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setLabel(new LabelNone());
         $lowerComparatorVersion = new ComparatorVersion();
         $lowerComparatorVersion
-            ->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO)
+            ->setComparator(new GreaterOrEqualTo)
             ->setVersion($lowerVersion);
 
         // Upper
@@ -144,7 +146,7 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setLabel(new LabelNone());
         $upperComparatorVersion = new ComparatorVersion();
         $upperComparatorVersion
-            ->setComparator(ComparatorVersion::LESS_OR_EQUAL_TO)
+            ->setComparator(new LessOrEqualTo())
             ->setVersion($upperVersion);
 
         // Range
@@ -175,7 +177,7 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setLabel(new LabelRc(1));
         $lowerComparatorVersion = new ComparatorVersion();
         $lowerComparatorVersion
-            ->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO)
+            ->setComparator(new GreaterOrEqualTo)
             ->setVersion($lowerVersion);
 
         // Upper
@@ -187,7 +189,7 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setLabel(new LabelNone());
         $upperComparatorVersion = new ComparatorVersion();
         $upperComparatorVersion
-            ->setComparator(ComparatorVersion::LESS_OR_EQUAL_TO)
+            ->setComparator(new LessOrEqualTo())
             ->setVersion($upperVersion);
 
         // Range

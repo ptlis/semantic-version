@@ -15,18 +15,13 @@
 
 namespace ptlis\SemanticVersion\Entity;
 
+use ptlis\SemanticVersion\Entity\Comparator\ComparatorInterface;
+
 /**
  * Entity to represent a semantic version number with a comparator.
  */
 class ComparatorVersion
 {
-    const GREATER_THAN          = '>';
-    const GREATER_OR_EQUAL_TO   = '>=';
-    const LESS_THAN             = '<';
-    const LESS_OR_EQUAL_TO      = '<=';
-    const EQUAL_TO              = '=';
-
-
     /**
      * Comparator for ranging.
      *
@@ -43,11 +38,11 @@ class ComparatorVersion
 
 
     /**
-     * @param string $comparator
+     * @param ComparatorInterface $comparator
      *
      * @return $this
      */
-    public function setComparator($comparator)
+    public function setComparator(ComparatorInterface $comparator)
     {
         $this->comparator = $comparator;
 
@@ -56,7 +51,7 @@ class ComparatorVersion
 
 
     /**
-     * @return string
+     * @return ComparatorInterface
      */
     public function getComparator()
     {

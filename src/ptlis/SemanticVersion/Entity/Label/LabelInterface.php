@@ -15,7 +15,9 @@
 
 namespace ptlis\SemanticVersion\Entity\Label;
 
-
+/**
+ * Interface that version labels must implement.
+ */
 interface LabelInterface
 {
     /**
