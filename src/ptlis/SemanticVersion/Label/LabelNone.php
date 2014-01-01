@@ -23,7 +23,7 @@ class LabelNone implements LabelInterface
     /**
      * No label.
      *
-     * @return string|null
+     * @return null
      */
     public function getName()
     {
@@ -34,7 +34,7 @@ class LabelNone implements LabelInterface
     /**
      * Get the label version number.
      *
-     * @return int|null
+     * @return null
      */
     public function getVersion()
     {

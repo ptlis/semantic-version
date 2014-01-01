@@ -28,7 +28,7 @@ class ComparatorVersion implements InRangeInterface
     /**
      * Comparator for ranging.
      *
-     * @var string
+     * @var ComparatorInterface
      */
     private $comparator;
 
