@@ -82,7 +82,6 @@ class VersionRangeFactory
                     'The version range "' . $versionNo . '" could not be parsed.',
                     $e
                 );
-
             }
 
             if (is_null($versionRange->getLower()) && is_null($versionRange->getUpper())) {
@@ -116,7 +115,7 @@ class VersionRangeFactory
                 $upper->getVersion()->setPatch(0);
                 $upper->setComparator($comparatorFactory->get('<'));
 
-                // Major & Minor tilde match
+            // Major & Minor tilde match
             } elseif (array_key_exists('single_minor', $versionRangeArr)
                     && is_numeric($versionRangeArr['single_minor'])) {
                 $lower = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'single_');
