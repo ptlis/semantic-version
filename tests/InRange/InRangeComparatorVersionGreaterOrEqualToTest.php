@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Tests to ensure correct handling of ComparatorVersion::inRange where comparator is GreaterOrEqualTo.
+ * Tests to ensure correct handling of ComparatorVersion::isSatisfiedBy where comparator is GreaterOrEqualTo.
  *
  * PHP Version 5.4
  *

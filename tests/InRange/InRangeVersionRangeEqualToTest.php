@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Tests to ensure correct handling of ComparatorVersion::isSatisfiedBy where comparator is EqualTo
+ * Tests to ensure correct handling of VersionRange::isSatisfiedBy where comparators are EqualTo
  *
  * PHP Version 5.4
  *
@@ -22,8 +22,9 @@ use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;
 use ptlis\SemanticVersion\Version\Version;
+use ptlis\SemanticVersion\VersionRange\VersionRange;
 
-class InRangeComparatorVersionEqualToTest extends \PHPUnit_Framework_TestCase
+class InRangeVersionRangeEqualToTest extends \PHPUnit_Framework_TestCase
 {
     public function testEquality()
     {
@@ -39,6 +40,11 @@ class InRangeComparatorVersionEqualToTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new EqualTo())
             ->setVersion($version1);
 
+        $versionRange = new VersionRange();
+        $versionRange
+            ->setLower($comparatorVersion)
+            ->setUpper($comparatorVersion);
+
         $version2 = new Version();
         $version2
             ->setMajor(1)
@@ -46,7 +52,7 @@ class InRangeComparatorVersionEqualToTest extends \PHPUnit_Framework_TestCase
             ->setPatch(15)
             ->setLabel(new LabelAlpha(3));
 
-        $this->assertTrue($comparatorVersion->isSatisfiedBy($version2));
+        $this->assertTrue($versionRange->isSatisfiedBy($version2));
     }
 
 
@@ -64,6 +70,11 @@ class InRangeComparatorVersionEqualToTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new EqualTo())
             ->setVersion($version1);
 
+        $versionRange = new VersionRange();
+        $versionRange
+            ->setLower($comparatorVersion)
+            ->setUpper($comparatorVersion);
+
         $version2 = new Version();
         $version2
             ->setMajor(1)
@@ -71,7 +82,7 @@ class InRangeComparatorVersionEqualToTest extends \PHPUnit_Framework_TestCase
             ->setPatch(15)
             ->setLabel(new LabelAlpha(3));
 
-        $this->assertFalse($comparatorVersion->isSatisfiedBy($version2));
+        $this->assertFalse($versionRange->isSatisfiedBy($version2));
     }
 
 
@@ -89,6 +100,11 @@ class InRangeComparatorVersionEqualToTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new EqualTo())
             ->setVersion($version1);
 
+        $versionRange = new VersionRange();
+        $versionRange
+            ->setLower($comparatorVersion)
+            ->setUpper($comparatorVersion);
+
         $version2 = new Version();
         $version2
             ->setMajor(1)
@@ -96,7 +112,7 @@ class InRangeComparatorVersionEqualToTest extends \PHPUnit_Framework_TestCase
             ->setPatch(15)
             ->setLabel(new LabelAlpha(3));
 
-        $this->assertFalse($comparatorVersion->isSatisfiedBy($version2));
+        $this->assertFalse($versionRange->isSatisfiedBy($version2));
     }
 
 
@@ -114,6 +130,11 @@ class InRangeComparatorVersionEqualToTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new EqualTo())
             ->setVersion($version1);
 
+        $versionRange = new VersionRange();
+        $versionRange
+            ->setLower($comparatorVersion)
+            ->setUpper($comparatorVersion);
+
         $version2 = new Version();
         $version2
             ->setMajor(1)
@@ -121,7 +142,7 @@ class InRangeComparatorVersionEqualToTest extends \PHPUnit_Framework_TestCase
             ->setPatch(15)
             ->setLabel(new LabelAlpha(3));
 
-        $this->assertFalse($comparatorVersion->isSatisfiedBy($version2));
+        $this->assertFalse($versionRange->isSatisfiedBy($version2));
     }
 
 
@@ -139,6 +160,11 @@ class InRangeComparatorVersionEqualToTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new EqualTo())
             ->setVersion($version1);
 
+        $versionRange = new VersionRange();
+        $versionRange
+            ->setLower($comparatorVersion)
+            ->setUpper($comparatorVersion);
+
         $version2 = new Version();
         $version2
             ->setMajor(1)
@@ -146,7 +172,7 @@ class InRangeComparatorVersionEqualToTest extends \PHPUnit_Framework_TestCase
             ->setPatch(15)
             ->setLabel(new LabelAlpha(3));
 
-        $this->assertFalse($comparatorVersion->isSatisfiedBy($version2));
+        $this->assertFalse($versionRange->isSatisfiedBy($version2));
     }
 
 
@@ -164,6 +190,11 @@ class InRangeComparatorVersionEqualToTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new EqualTo())
             ->setVersion($version1);
 
+        $versionRange = new VersionRange();
+        $versionRange
+            ->setLower($comparatorVersion)
+            ->setUpper($comparatorVersion);
+
         $version2 = new Version();
         $version2
             ->setMajor(1)
@@ -171,6 +202,6 @@ class InRangeComparatorVersionEqualToTest extends \PHPUnit_Framework_TestCase
             ->setPatch(15)
             ->setLabel(new LabelAlpha(4));
 
-        $this->assertFalse($comparatorVersion->isSatisfiedBy($version2));
+        $this->assertFalse($versionRange->isSatisfiedBy($version2));
     }
 }

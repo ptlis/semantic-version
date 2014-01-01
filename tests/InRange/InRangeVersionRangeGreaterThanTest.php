@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Tests to ensure correct handling of ComparatorVersion::isSatisfiedBy where comparator is LessThan.
+ * Tests to ensure correct handling of VersionRange::isSatisfiedBy where lower comparator is GreaterThan.
  *
  * PHP Version 5.4
  *
@@ -17,13 +17,14 @@
 
 namespace tests\InRange;
 
-use ptlis\SemanticVersion\Comparator\LessThan;
+use ptlis\SemanticVersion\Comparator\GreaterThan;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;
 use ptlis\SemanticVersion\Version\Version;
+use ptlis\SemanticVersion\VersionRange\VersionRange;
 
-class InRangeComparatorVersionLessThanTest extends \PHPUnit_Framework_TestCase
+class InRangeVersionRangeGreaterThanTest extends \PHPUnit_Framework_TestCase
 {
     public function testNotEqualTo()
     {
@@ -36,8 +37,12 @@ class InRangeComparatorVersionLessThanTest extends \PHPUnit_Framework_TestCase
 
         $comparatorVersion = new ComparatorVersion();
         $comparatorVersion
-            ->setComparator(new LessThan())
+            ->setComparator(new GreaterThan())
             ->setVersion($version1);
+
+        $versionRange = new VersionRange();
+        $versionRange
+            ->setLower($comparatorVersion);
 
         $version2 = new Version();
         $version2
@@ -46,26 +51,7 @@ class InRangeComparatorVersionLessThanTest extends \PHPUnit_Framework_TestCase
             ->setPatch(15)
             ->setLabel(new LabelAlpha(3));
 
-        $this->assertFalse($comparatorVersion->isSatisfiedBy($version2));
-    }
-
-
-    public function testLessThanMajor()
-    {
-        $version1 = new Version();
-        $version1
-            ->setMajor(2);
-
-        $comparatorVersion = new ComparatorVersion();
-        $comparatorVersion
-            ->setComparator(new LessThan())
-            ->setVersion($version1);
-
-        $version2 = new Version();
-        $version2
-            ->setMajor(1);
-
-        $this->assertTrue($comparatorVersion->isSatisfiedBy($version2));
+        $this->assertFalse($versionRange->isSatisfiedBy($version2));
     }
 
 
@@ -77,35 +63,41 @@ class InRangeComparatorVersionLessThanTest extends \PHPUnit_Framework_TestCase
 
         $comparatorVersion = new ComparatorVersion();
         $comparatorVersion
-            ->setComparator(new LessThan())
+            ->setComparator(new GreaterThan())
             ->setVersion($version1);
+
+        $versionRange = new VersionRange();
+        $versionRange
+            ->setLower($comparatorVersion);
 
         $version2 = new Version();
         $version2
             ->setMajor(2);
 
-        $this->assertFalse($comparatorVersion->isSatisfiedBy($version2));
+        $this->assertTrue($versionRange->isSatisfiedBy($version2));
     }
 
 
-    public function testLessThanMinor()
+    public function testLessThanMajor()
     {
         $version1 = new Version();
         $version1
-            ->setMajor(1)
-            ->setMinor(5);
+            ->setMajor(2);
 
         $comparatorVersion = new ComparatorVersion();
         $comparatorVersion
-            ->setComparator(new LessThan())
+            ->setComparator(new GreaterThan())
             ->setVersion($version1);
+
+        $versionRange = new VersionRange();
+        $versionRange
+            ->setLower($comparatorVersion);
 
         $version2 = new Version();
         $version2
-            ->setMajor(1)
-            ->setMinor(0);
+            ->setMajor(1);
 
-        $this->assertTrue($comparatorVersion->isSatisfiedBy($version2));
+        $this->assertFalse($versionRange->isSatisfiedBy($version2));
     }
 
 
@@ -118,38 +110,44 @@ class InRangeComparatorVersionLessThanTest extends \PHPUnit_Framework_TestCase
 
         $comparatorVersion = new ComparatorVersion();
         $comparatorVersion
-            ->setComparator(new LessThan())
+            ->setComparator(new GreaterThan())
             ->setVersion($version1);
+
+        $versionRange = new VersionRange();
+        $versionRange
+            ->setLower($comparatorVersion);
 
         $version2 = new Version();
         $version2
             ->setMajor(1)
             ->setMinor(5);
 
-        $this->assertFalse($comparatorVersion->isSatisfiedBy($version2));
+        $this->assertTrue($versionRange->isSatisfiedBy($version2));
     }
 
 
-    public function testLessThanPatch()
+    public function testLessThanMinor()
     {
         $version1 = new Version();
         $version1
             ->setMajor(1)
-            ->setMinor(0)
-            ->setPatch(18);
+            ->setMinor(5);
 
         $comparatorVersion = new ComparatorVersion();
         $comparatorVersion
-            ->setComparator(new LessThan())
+            ->setComparator(new GreaterThan())
             ->setVersion($version1);
+
+        $versionRange = new VersionRange();
+        $versionRange
+            ->setLower($comparatorVersion);
 
         $version2 = new Version();
         $version2
             ->setMajor(1)
-            ->setMinor(0)
-            ->setPatch(15);
+            ->setMinor(0);
 
-        $this->assertTrue($comparatorVersion->isSatisfiedBy($version2));
+        $this->assertFalse($versionRange->isSatisfiedBy($version2));
     }
 
 
@@ -163,8 +161,12 @@ class InRangeComparatorVersionLessThanTest extends \PHPUnit_Framework_TestCase
 
         $comparatorVersion = new ComparatorVersion();
         $comparatorVersion
-            ->setComparator(new LessThan())
+            ->setComparator(new GreaterThan())
             ->setVersion($version1);
+
+        $versionRange = new VersionRange();
+        $versionRange
+            ->setLower($comparatorVersion);
 
         $version2 = new Version();
         $version2
@@ -172,32 +174,34 @@ class InRangeComparatorVersionLessThanTest extends \PHPUnit_Framework_TestCase
             ->setMinor(0)
             ->setPatch(16);
 
-        $this->assertFalse($comparatorVersion->isSatisfiedBy($version2));
+        $this->assertTrue($versionRange->isSatisfiedBy($version2));
     }
 
 
-    public function testLessThanLabelName()
+    public function testLessThanPatch()
     {
         $version1 = new Version();
         $version1
             ->setMajor(1)
             ->setMinor(0)
-            ->setPatch(15)
-            ->setLabel(new LabelBeta());
+            ->setPatch(18);
 
         $comparatorVersion = new ComparatorVersion();
         $comparatorVersion
-            ->setComparator(new LessThan())
+            ->setComparator(new GreaterThan())
             ->setVersion($version1);
+
+        $versionRange = new VersionRange();
+        $versionRange
+            ->setLower($comparatorVersion);
 
         $version2 = new Version();
         $version2
             ->setMajor(1)
             ->setMinor(0)
-            ->setPatch(15)
-            ->setLabel(new LabelAlpha());
+            ->setPatch(15);
 
-        $this->assertTrue($comparatorVersion->isSatisfiedBy($version2));
+        $this->assertFalse($versionRange->isSatisfiedBy($version2));
     }
 
 
@@ -212,8 +216,12 @@ class InRangeComparatorVersionLessThanTest extends \PHPUnit_Framework_TestCase
 
         $comparatorVersion = new ComparatorVersion();
         $comparatorVersion
-            ->setComparator(new LessThan())
+            ->setComparator(new GreaterThan())
             ->setVersion($version1);
+
+        $versionRange = new VersionRange();
+        $versionRange
+            ->setLower($comparatorVersion);
 
         $version2 = new Version();
         $version2
@@ -222,23 +230,27 @@ class InRangeComparatorVersionLessThanTest extends \PHPUnit_Framework_TestCase
             ->setPatch(15)
             ->setLabel(new LabelBeta());
 
-        $this->assertFalse($comparatorVersion->isSatisfiedBy($version2));
+        $this->assertTrue($versionRange->isSatisfiedBy($version2));
     }
 
 
-    public function testLessThanLabelVersion()
+    public function testLessThanLabelName()
     {
         $version1 = new Version();
         $version1
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(15)
-            ->setLabel(new LabelAlpha(3));
+            ->setLabel(new LabelBeta());
 
         $comparatorVersion = new ComparatorVersion();
         $comparatorVersion
-            ->setComparator(new LessThan())
+            ->setComparator(new GreaterThan())
             ->setVersion($version1);
+
+        $versionRange = new VersionRange();
+        $versionRange
+            ->setLower($comparatorVersion);
 
         $version2 = new Version();
         $version2
@@ -247,7 +259,7 @@ class InRangeComparatorVersionLessThanTest extends \PHPUnit_Framework_TestCase
             ->setPatch(15)
             ->setLabel(new LabelAlpha());
 
-        $this->assertTrue($comparatorVersion->isSatisfiedBy($version2));
+        $this->assertFalse($versionRange->isSatisfiedBy($version2));
     }
 
 
@@ -262,8 +274,12 @@ class InRangeComparatorVersionLessThanTest extends \PHPUnit_Framework_TestCase
 
         $comparatorVersion = new ComparatorVersion();
         $comparatorVersion
-            ->setComparator(new LessThan())
+            ->setComparator(new GreaterThan())
             ->setVersion($version1);
+
+        $versionRange = new VersionRange();
+        $versionRange
+            ->setLower($comparatorVersion);
 
         $version2 = new Version();
         $version2
@@ -272,6 +288,35 @@ class InRangeComparatorVersionLessThanTest extends \PHPUnit_Framework_TestCase
             ->setPatch(15)
             ->setLabel(new LabelAlpha(3));
 
-        $this->assertFalse($comparatorVersion->isSatisfiedBy($version2));
+        $this->assertTrue($versionRange->isSatisfiedBy($version2));
+    }
+
+
+    public function testLessThanLabelVersion()
+    {
+        $version1 = new Version();
+        $version1
+            ->setMajor(1)
+            ->setMinor(0)
+            ->setPatch(15)
+            ->setLabel(new LabelAlpha(3));
+
+        $comparatorVersion = new ComparatorVersion();
+        $comparatorVersion
+            ->setComparator(new GreaterThan())
+            ->setVersion($version1);
+
+        $versionRange = new VersionRange();
+        $versionRange
+            ->setLower($comparatorVersion);
+
+        $version2 = new Version();
+        $version2
+            ->setMajor(1)
+            ->setMinor(0)
+            ->setPatch(15)
+            ->setLabel(new LabelAlpha());
+
+        $this->assertFalse($versionRange->isSatisfiedBy($version2));
     }
 }

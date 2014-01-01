@@ -16,11 +16,13 @@
 namespace ptlis\SemanticVersion\VersionRange;
 
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
+use ptlis\SemanticVersion\InRange\InRangeInterface;
+use ptlis\SemanticVersion\Version\VersionInterface;
 
 /**
  * Entity to represent a semantic version number range.
  */
-class VersionRange
+class VersionRange implements InRangeInterface
 {
     /**
      * @var ComparatorVersion
@@ -100,5 +102,33 @@ class VersionRange
         }
 
         return trim($strRange);
+    }
+
+
+    /**
+     * Returns true if the provided version satisfies the requirements of the version range.
+     *
+     * @param VersionInterface $version
+     *
+     * @return boolean
+     */
+    public function isSatisfiedBy(VersionInterface $version)
+    {
+        $satisfied = false;
+
+        // Upper & Lower set, both are satisfied by version
+        if (!is_null($this->lower) && $this->lower->isSatisfiedBy($version)
+                && !is_null($this->upper) && $this->upper->isSatisfiedBy($version)) {
+            $satisfied = true;
+
+        // Lower set only, is satisfied by version
+        } elseif (is_null($this->upper) && !is_null($this->lower) && $this->lower->isSatisfiedBy($version)) {
+            $satisfied = true;
+
+        // Upper set only, is satisfied by version
+        } elseif (is_null($this->lower) && !is_null($this->upper) && $this->upper->isSatisfiedBy($version)) {
+            $satisfied = true;
+        }
+        return $satisfied;
     }
 }
