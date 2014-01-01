@@ -15,12 +15,7 @@
 
 namespace ptlis\SemanticVersion;
 
-use ptlis\SemanticVersion\Entity\Comparator\ComparatorInterface;
-use ptlis\SemanticVersion\Entity\Comparator\EqualTo;
-use ptlis\SemanticVersion\Entity\Comparator\GreaterOrEqualTo;
-use ptlis\SemanticVersion\Entity\Comparator\GreaterThan;
-use ptlis\SemanticVersion\Entity\Comparator\LessOrEqualTo;
-use ptlis\SemanticVersion\Entity\Comparator\LessThan;
+use ptlis\SemanticVersion\Entity\Comparator\ComparatorFactory;
 use ptlis\SemanticVersion\Entity\ComparatorVersion;
 use ptlis\SemanticVersion\Entity\Label\LabelInterface;
 use ptlis\SemanticVersion\Entity\Label\LabelAlpha;
@@ -29,7 +24,6 @@ use ptlis\SemanticVersion\Entity\Label\LabelNone;
 use ptlis\SemanticVersion\Entity\Label\LabelRc;
 use ptlis\SemanticVersion\Entity\Version;
 use ptlis\SemanticVersion\Entity\VersionRange;
-use ptlis\SemanticVersion\Exception\InvalidComparatorException;
 use ptlis\SemanticVersion\Exception\InvalidComparatorVersionException;
 use ptlis\SemanticVersion\Exception\InvalidVersionException;
 use ptlis\SemanticVersion\Exception\InvalidVersionRangeException;
@@ -223,6 +217,8 @@ class VersionEngine
      */
     private function singleMatchesToVersionRange(array $matches)
     {
+        $comparatorFactory = new ComparatorFactory();
+
         $versionRange = new VersionRange();
 
         // Tilde match
@@ -231,67 +227,67 @@ class VersionEngine
             // Full version tilde match
             if (array_key_exists('single_patch', $matches) && is_numeric($matches['single_patch'])) {
                 $lower = static::matchesToComparatorVersion($matches, 'single_');
-                $lower->setComparator(new GreaterOrEqualTo());
+                $lower->setComparator($comparatorFactory->getComparator('>='));
 
                 $upper = static::matchesToComparatorVersion($matches, 'single_');
                 $upper->getVersion()->setMinor($upper->getVersion()->getMinor() + 1);
                 $upper->getVersion()->setPatch(0);
-                $upper->setComparator(new LessThan());
+                $upper->setComparator($comparatorFactory->getComparator('<'));
 
             // Major & Minor tilde match
             } elseif (array_key_exists('single_minor', $matches) && is_numeric($matches['single_minor'])) {
                 $lower = static::matchesToComparatorVersion($matches, 'single_');
                 $lower->getVersion()->setPatch(0);
-                $lower->setComparator(new GreaterOrEqualTo());
+                $lower->setComparator($comparatorFactory->getComparator('>='));
 
                 $upper = static::matchesToComparatorVersion($matches, 'single_');
                 $upper->getVersion()->setMajor($upper->getVersion()->getMajor() + 1);
                 $upper->getVersion()->setMinor(0);
                 $upper->getVersion()->setPatch(0);
-                $upper->setComparator(new LessThan());
+                $upper->setComparator($comparatorFactory->getComparator('<'));
 
             // Major tilde match
             } else {
                 $lower = static::matchesToComparatorVersion($matches, 'single_');
                 $lower->getVersion()->setMinor(0);
                 $lower->getVersion()->setPatch(0);
-                $lower->setComparator(new GreaterOrEqualTo());
+                $lower->setComparator($comparatorFactory->getComparator('>='));
 
                 $upper = static::matchesToComparatorVersion($matches, 'single_');
                 $upper->getVersion()->setMajor($upper->getVersion()->getMajor() + 1);
                 $upper->getVersion()->setMinor(0);
                 $upper->getVersion()->setPatch(0);
-                $upper->setComparator(new LessThan());
+                $upper->setComparator($comparatorFactory->getComparator('<'));
             }
 
         // Label & patch - exact match
         } elseif (array_key_exists('single_patch', $matches) && strlen($matches['single_patch'])) {
             $lower = static::matchesToComparatorVersion($matches, 'single_');
-            $lower->setComparator(new EqualTo());
+            $lower->setComparator($comparatorFactory->getComparator('='));
 
             $upper = static::matchesToComparatorVersion($matches, 'single_');
-            $upper->setComparator(new EqualTo());
+            $upper->setComparator($comparatorFactory->getComparator('='));
 
         // Minor - range (minor inc by 1)
         } elseif (array_key_exists('single_minor', $matches) && strlen($matches['single_minor'])) {
             $lower = static::matchesToComparatorVersion($matches, 'single_');
-            $lower->setComparator(new GreaterOrEqualTo());
+            $lower->setComparator($comparatorFactory->getComparator('>='));
 
             $upper = static::matchesToComparatorVersion($matches, 'single_');
             $upper->getVersion()->setMinor($upper->getVersion()->getMinor() + 1);
             $upper->getVersion()->setPatch(0);
-            $upper->setComparator(new LessThan());
+            $upper->setComparator($comparatorFactory->getComparator('<'));
 
         // Major - range (major inc by 1;
         } else {
             $lower = static::matchesToComparatorVersion($matches, 'single_');
-            $lower->setComparator(new GreaterOrEqualTo());
+            $lower->setComparator($comparatorFactory->getComparator('>='));
 
             $upper = static::matchesToComparatorVersion($matches, 'single_');
             $upper->getVersion()->setMajor($upper->getVersion()->getMajor() + 1);
             $upper->getVersion()->setMinor(0);
             $upper->getVersion()->setPatch(0);
-            $upper->setComparator(new LessThan());
+            $upper->setComparator($comparatorFactory->getComparator('<'));
         }
 
         if (!is_null($lower->getComparator())) {
@@ -383,6 +379,8 @@ class VersionEngine
      */
     private static function matchesToComparatorVersion(array $matches, $prefix = null)
     {
+        $comparatorFactory = new ComparatorFactory();
+
         $comparatorVersion = new ComparatorVersion();
         try {
             $version = static::matchesToVersion($matches, $prefix);
@@ -398,7 +396,7 @@ class VersionEngine
 
         // A comparator has been found
         if (array_key_exists($prefix . 'comparator', $matches) && strlen($matches[$prefix . 'comparator'])) {
-            $comparatorVersion->setComparator(static::getComparator($matches[$prefix . 'comparator']));
+            $comparatorVersion->setComparator($comparatorFactory->getComparator($matches[$prefix . 'comparator']));
         }
 
 
@@ -432,41 +430,5 @@ class VersionEngine
         $label->setVersion($version);
 
         return $label;
-    }
-
-
-    /**
-     * Get a comparator class from the comparator symbol.
-     *
-     * @throws InvalidComparatorException
-     *
-     * @param string $symbol
-     *
-     * @return ComparatorInterface
-     */
-    private static function getComparator($symbol)
-    {
-        switch ($symbol) {
-            case '=':
-                $comparator = new EqualTo();
-                break;
-            case '>=':
-                $comparator = new GreaterOrEqualTo();
-                break;
-            case '>':
-                $comparator = new GreaterThan();
-                break;
-            case '<=':
-                $comparator = new LessOrEqualTo();
-                break;
-            case '<':
-                $comparator = new LessThan();
-                break;
-            default:
-                throw new InvalidComparatorException('The provided comparator "' . $symbol . '" is invalid.');
-                break;
-        }
-
-        return $comparator;
     }
 }
