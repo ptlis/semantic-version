@@ -18,6 +18,8 @@
 namespace tests;
 
 use ptlis\SemanticVersion\Entity\ComparatorVersion;
+use ptlis\SemanticVersion\Entity\Label\LabelNone;
+use ptlis\SemanticVersion\Entity\Label\LabelRc;
 use ptlis\SemanticVersion\Entity\Version;
 use ptlis\SemanticVersion\Entity\VersionRange;
 use ptlis\SemanticVersion\VersionEngine;
@@ -41,9 +43,7 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel(null)
-            ->setLabelNumber(0)
-            ->setLabelPrecedence(Version::LABEL_NONE);
+            ->setLabel(new LabelNone());
         $lowerComparatorVersion = new ComparatorVersion();
         $lowerComparatorVersion
             ->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO)
@@ -55,9 +55,7 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('2')
             ->setPatch('0')
-            ->setLabel(null)
-            ->setLabelNumber(0)
-            ->setLabelPrecedence(Version::LABEL_NONE);
+            ->setLabel(new LabelNone());
         $upperComparatorVersion = new ComparatorVersion();
         $upperComparatorVersion
             ->setComparator(ComparatorVersion::LESS_OR_EQUAL_TO)
@@ -88,9 +86,7 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel(null)
-            ->setLabelNumber(0)
-            ->setLabelPrecedence(Version::LABEL_NONE);
+            ->setLabel(new LabelNone());
         $lowerComparatorVersion = new ComparatorVersion();
         $lowerComparatorVersion
             ->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO)
@@ -102,9 +98,7 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('2')
             ->setPatch('0')
-            ->setLabel(null)
-            ->setLabelNumber(0)
-            ->setLabelPrecedence(Version::LABEL_NONE);
+            ->setLabel(new LabelNone());
         $upperComparatorVersion = new ComparatorVersion();
         $upperComparatorVersion
             ->setComparator(ComparatorVersion::LESS_OR_EQUAL_TO)
@@ -135,9 +129,7 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel(null)
-            ->setLabelNumber(0)
-            ->setLabelPrecedence(Version::LABEL_NONE);
+            ->setLabel(new LabelNone());
         $lowerComparatorVersion = new ComparatorVersion();
         $lowerComparatorVersion
             ->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO)
@@ -149,9 +141,7 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('2')
             ->setPatch('0')
-            ->setLabel(null)
-            ->setLabelNumber(0)
-            ->setLabelPrecedence(Version::LABEL_NONE);
+            ->setLabel(new LabelNone());
         $upperComparatorVersion = new ComparatorVersion();
         $upperComparatorVersion
             ->setComparator(ComparatorVersion::LESS_OR_EQUAL_TO)
@@ -174,7 +164,7 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
 
         $outVersionRange = VersionEngine::parseVersionRange($inStr);
 
-        $expectStr = '>=1.0.0-rc1<=1.2.0';
+        $expectStr = '>=1.0.0-rc.1<=1.2.0';
 
         // Lower
         $lowerVersion = new Version();
@@ -182,9 +172,7 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel('rc1')
-            ->setLabelNumber(1)
-            ->setLabelPrecedence(Version::LABEL_RC);
+            ->setLabel(new LabelRc(1));
         $lowerComparatorVersion = new ComparatorVersion();
         $lowerComparatorVersion
             ->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO)
@@ -196,9 +184,7 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('2')
             ->setPatch('0')
-            ->setLabel(null)
-            ->setLabelNumber(0)
-            ->setLabelPrecedence(Version::LABEL_NONE);
+            ->setLabel(new LabelNone());
         $upperComparatorVersion = new ComparatorVersion();
         $upperComparatorVersion
             ->setComparator(ComparatorVersion::LESS_OR_EQUAL_TO)

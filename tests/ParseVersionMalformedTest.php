@@ -17,6 +17,8 @@
 
 namespace tests;
 
+use ptlis\SemanticVersion\Entity\Label\LabelNone;
+use ptlis\SemanticVersion\Entity\Label\LabelRc;
 use ptlis\SemanticVersion\Entity\Version;
 use ptlis\SemanticVersion\VersionEngine;
 
@@ -38,9 +40,7 @@ class ParseVersionMalformedTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(0)
-            ->setLabel(null)
-            ->setLabelNumber(0)
-            ->setLabelPrecedence(Version::LABEL_NONE);
+            ->setLabel(new LabelNone());
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);
@@ -60,9 +60,7 @@ class ParseVersionMalformedTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(5)
             ->setPatch(0)
-            ->setLabel(null)
-            ->setLabelNumber(0)
-            ->setLabelPrecedence(Version::LABEL_NONE);
+            ->setLabel(new LabelNone());
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);
@@ -82,9 +80,7 @@ class ParseVersionMalformedTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(5)
             ->setPatch(0)
-            ->setLabel(null)
-            ->setLabelNumber(0)
-            ->setLabelPrecedence(Version::LABEL_NONE);
+            ->setLabel(new LabelNone());
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);
@@ -97,16 +93,14 @@ class ParseVersionMalformedTest extends \PHPUnit_Framework_TestCase
 
         $outVersion = VersionEngine::parseVersion($inStr);
 
-        $expectStr = '1.5.0-rc1';
+        $expectStr = '1.5.0-rc.1';
         $expectVersion = new Version();
 
         $expectVersion
             ->setMajor(1)
             ->setMinor(5)
             ->setPatch(0)
-            ->setLabel('rc1')
-            ->setLabelNumber(1)
-            ->setLabelPrecedence(Version::LABEL_RC);
+            ->setLabel(new LabelRc(1));
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);

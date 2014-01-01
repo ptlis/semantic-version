@@ -16,6 +16,11 @@
 namespace ptlis\SemanticVersion;
 
 use ptlis\SemanticVersion\Entity\ComparatorVersion;
+use ptlis\SemanticVersion\Entity\Label\LabelInterface;
+use ptlis\SemanticVersion\Entity\Label\LabelAlpha;
+use ptlis\SemanticVersion\Entity\Label\LabelBeta;
+use ptlis\SemanticVersion\Entity\Label\LabelNone;
+use ptlis\SemanticVersion\Entity\Label\LabelRc;
 use ptlis\SemanticVersion\Entity\Version;
 use ptlis\SemanticVersion\Entity\VersionRange;
 use ptlis\SemanticVersion\Exception\InvalidComparatorVersionException;
@@ -342,13 +347,13 @@ class VersionEngine
         }
 
         if ($labelPresent) {
-            $version
-                ->setLabel($matches[$prefix . 'label_full'])
-                ->setLabelPrecedence(static::getPrecedence($matches[$prefix . 'label']));
-        }
+            $labelVersion = null;
+            if ($labelNumPresent) {
+                $labelVersion = $matches[$prefix . 'label_num'];
+            }
 
-        if ($labelNumPresent) {
-            $version->setLabelNumber($matches[$prefix . 'label_num']);
+            $version
+                ->setLabel(static::getLabel($matches[$prefix . 'label'], $labelVersion));
         }
 
         return $version;
@@ -413,5 +418,35 @@ class VersionEngine
         }
 
         return $precedence;
+    }
+
+
+    /**
+     * @param string    $name
+     * @param int|null  $version
+     *
+     * @return LabelInterface
+     */
+    private static function getLabel($name, $version = null)
+    {
+        switch ($name) {
+            case 'alpha':
+                $label = new LabelAlpha();
+                $label->setVersion($version);
+                break;
+            case 'beta':
+                $label = new LabelBeta();
+                $label->setVersion($version);
+                break;
+            case 'rc':
+                $label = new LabelRc();
+                $label->setVersion($version);
+                break;
+            default:
+                $label = new LabelNone();
+                break;
+        }
+
+        return $label;
     }
 }

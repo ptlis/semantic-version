@@ -55,7 +55,7 @@ interface LabelInterface
     /**
      * Return a string representation of the label.
      *
-     * @return string|null
+     * @return string
      */
     public function __toString();
 }

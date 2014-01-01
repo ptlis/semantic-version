@@ -18,6 +18,8 @@
 namespace tests;
 
 use ptlis\SemanticVersion\Entity\ComparatorVersion;
+use ptlis\SemanticVersion\Entity\Label\LabelNone;
+use ptlis\SemanticVersion\Entity\Label\LabelRc;
 use ptlis\SemanticVersion\Entity\Version;
 use ptlis\SemanticVersion\VersionEngine;
 
@@ -41,9 +43,7 @@ class ParseComparatorVersionMalformedTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(0)
-            ->setLabel(null)
-            ->setLabelNumber(0)
-            ->setLabelPrecedence(Version::LABEL_NONE);
+            ->setLabel(new LabelNone());
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
@@ -65,9 +65,7 @@ class ParseComparatorVersionMalformedTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(5)
             ->setPatch(0)
-            ->setLabel(null)
-            ->setLabelNumber(0)
-            ->setLabelPrecedence(Version::LABEL_NONE);
+            ->setLabel(new LabelNone());
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
@@ -89,9 +87,7 @@ class ParseComparatorVersionMalformedTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(5)
             ->setPatch(0)
-            ->setLabel(null)
-            ->setLabelNumber(0)
-            ->setLabelPrecedence(Version::LABEL_NONE);
+            ->setLabel(new LabelNone());
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
@@ -104,7 +100,7 @@ class ParseComparatorVersionMalformedTest extends \PHPUnit_Framework_TestCase
 
         $outComparatorVersion = VersionEngine::parseComparatorVersion($inStr);
 
-        $expectStr = '>=1.5.0-rc1';
+        $expectStr = '>=1.5.0-rc.1';
         $expectComparatorVersion = new ComparatorVersion();
         $expectComparatorVersion
             ->setComparator(ComparatorVersion::GREATER_OR_EQUAL_TO)
@@ -113,9 +109,7 @@ class ParseComparatorVersionMalformedTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(5)
             ->setPatch(0)
-            ->setLabel('rc1')
-            ->setLabelNumber(1)
-            ->setLabelPrecedence(Version::LABEL_RC);
+            ->setLabel(new LabelRc(1));
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);

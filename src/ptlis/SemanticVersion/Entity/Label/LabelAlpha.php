@@ -23,7 +23,7 @@ class LabelAlpha extends AbstractNamedLabel
     /**
      * Get the label name.
      *
-     * @return string|null
+     * @return string
      */
     public function getName()
     {

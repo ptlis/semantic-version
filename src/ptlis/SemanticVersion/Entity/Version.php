@@ -15,16 +15,13 @@
 
 namespace ptlis\SemanticVersion\Entity;
 
+use ptlis\SemanticVersion\Entity\Label\LabelInterface;
+
 /*
  * Entity to represent a semantic version number.
  */
-class Version
+class Version implements VersionInterface
 {
-    const LABEL_ALPHA = 1;
-    const LABEL_BETA = 2;
-    const LABEL_RC = 3;
-    const LABEL_NONE = 4;
-
     /**
      * @var int
      */
@@ -41,27 +38,17 @@ class Version
     private $patch = 0;
 
     /**
-     * @var string
+     * @var LabelInterface
      */
     private $label;
 
-    /**
-     * @var int
-     */
-    private $labelNumber = 0;
 
     /**
-     * @var int
-     */
-    private $labelPrecedence = self::LABEL_NONE;
-
-
-    /**
-     * @param string $label
+     * @param LabelInterface $label
      *
      * @return Version
      */
-    public function setLabel($label)
+    public function setLabel(LabelInterface $label)
     {
         $this->label = (string)$label;
 
@@ -70,7 +57,7 @@ class Version
 
 
     /**
-     * @return string
+     * @return LabelInterface
      */
     public function getLabel()
     {
@@ -79,51 +66,7 @@ class Version
 
 
     /**
-     * @param int $labelNumber
-     *
-     * @return Version
-     */
-    public function setLabelNumber($labelNumber)
-    {
-        $this->labelNumber = (int)$labelNumber;
-
-        return $this;
-    }
-
-
-    /**
-     * @return int
-     */
-    public function getLabelNumber()
-    {
-        return $this->labelNumber;
-    }
-
-
-    /**
-     * @param int $labelPrecedence
-     *
-     * @return Version
-     */
-    public function setLabelPrecedence($labelPrecedence)
-    {
-        $this->labelPrecedence = (int)$labelPrecedence;
-
-        return $this;
-    }
-
-
-    /**
-     * @return int
-     */
-    public function getLabelPrecedence()
-    {
-        return $this->labelPrecedence;
-    }
-
-
-    /**
-     * @param int $major
+     * @param int|string $major
      *
      * @return Version
      */
@@ -141,7 +84,7 @@ class Version
 
 
     /**
-     * @return int
+     * @return int|string
      */
     public function getMajor()
     {
@@ -168,7 +111,7 @@ class Version
 
 
     /**
-     * @return int
+     * @return int|string
      */
     public function getMinor()
     {
@@ -194,7 +137,7 @@ class Version
 
 
     /**
-     * @return int
+     * @return int|string
      */
     public function getPatch()
     {

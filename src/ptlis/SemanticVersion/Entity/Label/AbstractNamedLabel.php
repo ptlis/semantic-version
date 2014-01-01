@@ -27,6 +27,17 @@ abstract class AbstractNamedLabel implements LabelInterface
 
 
     /**
+     * Constructor
+     *
+     * @param int|null $version
+     */
+    public function __construct($version = null)
+    {
+        $this->version = $version;
+    }
+
+
+    /**
      * Get the label version number.
      *
      * @return int
