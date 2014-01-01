@@ -20,7 +20,7 @@ use ptlis\SemanticVersion\Entity\Label\LabelInterface;
 /**
  * Interface class for version number entities.
  */
-interface VersionInterface
+interface VersionInterface extends ComparableInterface
 {
     /**
      * @param LabelInterface $label

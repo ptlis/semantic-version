@@ -167,4 +167,17 @@ class Version implements VersionInterface
 
         return (string)$strVersion;
     }
+
+
+    /**
+     * Return true if the provided versions match
+     *
+     * @param ComparableInterface $version
+     *
+     * @return bool
+     */
+    public function equalTo(ComparableInterface $version)
+    {
+        return ($this->__toString() == $version->__toString());
+    }
 }
