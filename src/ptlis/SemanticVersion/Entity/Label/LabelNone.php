@@ -51,6 +51,7 @@ class LabelNone implements LabelInterface
      */
     public function setVersion($version)
     {
+        $version;   // Be quiet phpmd
         return $this;
     }
 

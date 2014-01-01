@@ -31,7 +31,7 @@ class VersionRegex
         (?:\.(?<minor>[0-9]+|x|\*)?)?               # Minor Version
         (?:\.(?<patch>[0-9]+|x|\*)?)?               # Patch
         (?:\-*
-            (?<label_full>                          # Label & number (with seperator)
+            (?<label_full>                          # Label & number (with separator)
                 (?<label>alpha|beta|rc)             # Label
                 \.?(?<label_num>[0-9]+)?            # Label Number - for precedence
             )?
@@ -138,5 +138,4 @@ class VersionRegex
         . ')?'
         . '\s*$/ix';
     }
-
 }
