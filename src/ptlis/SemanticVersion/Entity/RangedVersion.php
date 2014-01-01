@@ -24,7 +24,7 @@ class RangedVersion
     const GREATER_OR_EQUAL_TO   = '>=';
     const LESS_THAN             = '<';
     const LESS_OR_EQUAL_TO      = '<=';
-    const EQUAL                 = '=';
+    const EQUAL_TO              = '=';
 
 
     /**

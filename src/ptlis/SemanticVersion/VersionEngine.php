@@ -6,7 +6,9 @@ namespace ptlis\SemanticVersion;
 use ptlis\SemanticVersion\Entity\RangedVersion;
 use ptlis\SemanticVersion\Entity\Version;
 use ptlis\SemanticVersion\Entity\VersionRange;
+use ptlis\SemanticVersion\Exception\InvalidRangedVersionException;
 use ptlis\SemanticVersion\Exception\InvalidVersionException;
+use ptlis\SemanticVersion\Exception\InvalidVersionRangeException;
 
 /**
  * Class VersionsHandler
@@ -99,37 +101,16 @@ class VersionEngine
 
 
     /**
-     * Validate a semantic version number.
-     *
-     * @param string $versionNo
-     *
-     * @return boolean
-     */
-    public static function validVersion($versionNo)
-    {
-        try {
-            static::parseVersion($versionNo);
-            $valid = true;
-        } catch (InvalidVersionException $e) {
-            $valid = false;
-        }
-        return $valid;
-    }
-
-
-    /**
      * Parse a version number into an array of version number parts.
      *
      * @throws Exception\InvalidVersionException
      *
      * @param string $versionNo
      *
-     * @return Version | null
+     * @return Version
      */
     public static function parseVersion($versionNo)
     {
-        $version = null;
-
         if (preg_match(static::getVersionRegex(), $versionNo, $matches)) {
             $version = static::matchesToVersion($matches);
         } else {
@@ -141,31 +122,20 @@ class VersionEngine
 
 
     /**
-     * Validate a ranged semantic version number.
-     *
-     * @param string $versionNo
-     *
-     * @return boolean
-     */
-    public static function validRangedVersion($versionNo)
-    {
-        return (bool)preg_match(static::getRangedVersionRegex(), $versionNo);
-    }
-
-
-    /**
      * Parse a ranged version number into an array of version number parts.
      *
+     * @throws InvalidRangedVersionException
+     *
      * @param string $versionNo
      *
-     * @return RangedVersion | null
+     * @return RangedVersion
      */
     public static function parseRangedVersion($versionNo)
     {
-        $rangedVersion = null;
-
         if (preg_match(static::getRangedVersionRegex(), $versionNo, $matches)) {
             $rangedVersion = static::matchesToRangedVersion($matches);
+        } else {
+            throw new InvalidRangedVersionException('The ranged version "' . $versionNo . '" could not be parsed.');
         }
 
         return $rangedVersion;
@@ -173,46 +143,51 @@ class VersionEngine
 
 
     /**
-     * Validate a version range string.
-     *
-     * @param string $versionNo
-     *
-     * @return boolean
-     */
-    public static function validVersionRange($versionNo)
-    {
-        return (bool)preg_match(static::getVersionRange(), $versionNo);
-    }
-
-
-    /**
      * Parse a version range string into a VersionRange entity.
      *
+     * @throws InvalidVersionRangeException
+     *
      * @param string $versionNo
      *
-     * @return VersionRange | null
+     * @return VersionRange
      */
     public static function parseVersionRange($versionNo)
     {
-        $versionRange = null;
-
         if (preg_match(static::getVersionRange(), $versionNo, $matches)) {
             $versionRange = new VersionRange();
 
-            if (array_key_exists('min_major', $matches) && strlen($matches['min_major'])) {
-                $versionRange
-                    ->setLower(static::matchesToRangedVersion($matches, 'min_'));
+            try {
+                if (array_key_exists('min_major', $matches) && strlen($matches['min_major'])) {
+                    $versionRange->setLower(static::matchesToRangedVersion($matches, 'min_'));
+                }
+
+                if (array_key_exists('max_major', $matches) && strlen($matches['max_major'])) {
+                    $versionRange->setUpper(static::matchesToRangedVersion($matches, 'max_'));
+                }
+
+                if (array_key_exists('single_major', $matches) && strlen($matches['single_major'])) {
+                    $versionRange = static::singleMatchesToVersionRange($matches);
+                }
+
+            } catch (InvalidRangedVersionException $e) {
+                throw new InvalidVersionRangeException(
+                    'The version range "' . $versionNo . '" could not be parsed.',
+                    $e
+                );
+
+            } catch (InvalidVersionException $e) {
+                throw new InvalidVersionRangeException(
+                    'The version range "' . $versionNo . '" could not be parsed.',
+                    $e
+                );
             }
 
-            if (array_key_exists('max_major', $matches) && strlen($matches['max_major'])) {
-                $versionRange
-                    ->setUpper(static::matchesToRangedVersion($matches, 'max_'));
+            if (is_null($versionRange->getLower()) && is_null($versionRange->getUpper())) {
+                throw new InvalidVersionRangeException('The version range "' . $versionNo . '" could not be parsed.');
             }
 
-            if (array_key_exists('single_major', $matches) && strlen($matches['single_major'])) {
-                $versionRange = static::singleMatchesToVersionRange($matches);
-            }
-
+        } else {
+            throw new InvalidVersionRangeException('The version range "' . $versionNo . '" could not be parsed.');
         }
 
         return $versionRange;
@@ -272,10 +247,10 @@ class VersionEngine
         // Label & patch - exact match
         } elseif (array_key_exists('single_patch', $matches) && strlen($matches['single_patch'])) {
             $lower = static::matchesToRangedVersion($matches, 'single_');
-            $lower->setComparator(RangedVersion::EQUAL);
+            $lower->setComparator(RangedVersion::EQUAL_TO);
 
             $upper = static::matchesToRangedVersion($matches, 'single_');
-            $upper->setComparator(RangedVersion::EQUAL);
+            $upper->setComparator(RangedVersion::EQUAL_TO);
 
         // Minor - range (minor inc by 1)
         } elseif (array_key_exists('single_minor', $matches) && strlen($matches['single_minor'])) {
@@ -307,27 +282,8 @@ class VersionEngine
             $versionRange->setUpper($upper);
         }
 
-        //var_dump($versionRange);
         return $versionRange;
     }
-
-
-    /**
-     * Find out if version no is within range.
-     *
-     * @param Version $needle
-     * @param Version $min
-     * @param Version $max
-     *
-     * @return boolean
-     */
-/*    public static function inRange(Version $needle, Version $min, Version $max)
-    {
-        $inRange = false;
-        // TODO: implement, elsewhere
-
-        return $inRange;
-    }*/
 
 
     /**
@@ -394,6 +350,8 @@ class VersionEngine
     /**
      * Transform an array of matches from preg_match to a RangedVersion entity.
      *
+     * @throws InvalidRangedVersionException
+     *
      * @param array         $matches
      * @param string|null   $prefix
      *
@@ -402,7 +360,14 @@ class VersionEngine
     private static function matchesToRangedVersion(array $matches, $prefix = null)
     {
         $rangedVersion = new RangedVersion();
-        $version = static::matchesToVersion($matches, $prefix);
+        try {
+            $version = static::matchesToVersion($matches, $prefix);
+        } catch (InvalidVersionException $e) {
+            throw new InvalidRangedVersionException(
+                'The ranged version "' . $matches[0] . '" could not be parsed.',
+                $e
+            );
+        }
 
         $rangedVersion
             ->setVersion($version);
