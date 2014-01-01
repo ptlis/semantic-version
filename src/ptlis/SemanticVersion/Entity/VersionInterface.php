@@ -111,6 +111,16 @@ interface VersionInterface
 
 
     /**
+     * Return true if the current instance is less or equal to the passed instance.
+     *
+     * @param VersionInterface $version
+     *
+     * @return bool
+     */
+    public function lessOrEqualTo(VersionInterface $version);
+
+
+    /**
      * Return true if the current instance is greater than the passed instance.
      *
      * @param VersionInterface $version
@@ -118,6 +128,16 @@ interface VersionInterface
      * @return bool
      */
     public function greaterThan(VersionInterface $version);
+
+
+    /**
+     * Return true if the current instance is greater or equal to the passed instance.
+     *
+     * @param VersionInterface $version
+     *
+     * @return bool
+     */
+    public function greaterOrEqualTo(VersionInterface $version);
 
 
     /**

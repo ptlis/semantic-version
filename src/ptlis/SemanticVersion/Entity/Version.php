@@ -208,6 +208,19 @@ class Version implements VersionInterface
 
 
     /**
+     * Return true if the current instance is less or equal to the passed instance.
+     *
+     * @param VersionInterface $version
+     *
+     * @return bool
+     */
+    public function lessOrEqualTo(VersionInterface $version)
+    {
+        return $this->equalTo($version) || $this->lessThan($version);
+    }
+
+
+    /**
      * Return true if the current instance is greater than the passed instance.
      *
      * @param VersionInterface $version
@@ -217,6 +230,19 @@ class Version implements VersionInterface
     public function greaterThan(VersionInterface $version)
     {
         return $version->lessThan($this);
+    }
+
+
+    /**
+     * Return true if the current instance is greater or equal to the passed instance.
+     *
+     * @param VersionInterface $version
+     *
+     * @return bool
+     */
+    public function greaterOrEqualTo(VersionInterface $version)
+    {
+        return $this->equalTo($version) || $this->greaterThan($version);
     }
 
 

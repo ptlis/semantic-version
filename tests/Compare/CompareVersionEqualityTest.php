@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Tests to ensure correct handling of version number equality comparison.
+ * Tests to ensure correct handling of version number equality version.
  *
  * PHP Version 5.4
  *
@@ -22,7 +22,7 @@ use ptlis\SemanticVersion\Entity\Label\LabelBeta;
 use ptlis\SemanticVersion\Entity\Version;
 
 /**
- * Tests to ensure correct handling of version number equality comparison.
+ * Tests to ensure correct handling of version number equality version.
  */
 class CompareVersionTest extends \PHPUnit_Framework_TestCase
 {
