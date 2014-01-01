@@ -23,7 +23,7 @@ abstract class AbstractNamedLabel implements LabelInterface
     /**
      * @var int
      */
-    private $version;
+    private $version = 0;
 
 
     /**

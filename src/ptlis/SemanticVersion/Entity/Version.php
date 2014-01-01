@@ -16,6 +16,7 @@
 namespace ptlis\SemanticVersion\Entity;
 
 use ptlis\SemanticVersion\Entity\Label\LabelInterface;
+use ptlis\SemanticVersion\Entity\Label\LabelNone;
 
 /*
  * Entity to represent a semantic version number.
@@ -41,6 +42,15 @@ class Version implements VersionInterface
      * @var LabelInterface
      */
     private $label;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->label = new LabelNone();
+    }
 
 
     /**
@@ -194,7 +204,7 @@ class Version implements VersionInterface
                     && $this->getMinor() == $version->getMinor()
                     && $this->getPatch() == $version->getPatch()
                     && $this->getLabel()->getPrecedence() == $version->getLabel()->getPrecedence()
-                    && $this->getLabel()->getVersion() < $version->getLabel()->getPrecedence()):
+                    && $this->getLabel()->getVersion() < $version->getLabel()->getVersion()):
                 $lessThan = true;
                 break;
 
