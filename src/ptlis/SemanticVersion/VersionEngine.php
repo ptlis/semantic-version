@@ -30,90 +30,6 @@ use ptlis\SemanticVersion\Exception\InvalidVersionRangeException;
 class VersionEngine
 {
     /**
-     * Regex for parsing semantic version numbers.
-     *
-     * @var string
-     */
-    private static $versionRegex = "
-        v*                                          # Optional 'v' prefix
-        (?<major>[0-9]+|x|\*)                       # Major Version
-        (?:\.(?<minor>[0-9]+|x|\*)?)?               # Minor Version
-        (?:\.(?<patch>[0-9]+|x|\*)?)?               # Patch
-        (?:\-*
-            (?<label_full>                          # Label & number (with seperator)
-                (?<label>alpha|beta|rc)             # Label
-                \.?(?<label_num>[0-9]+)?            # Label Number - for precedence
-            )?
-        )?
-    ";
-
-    private static $rangeRegex = "(?<comparator>[<>]?=?)";
-
-    private static $rangeMinRegex = "(?<min_comparator>>=?)";
-
-    private static $rangeMaxRegex = "(?<max_comparator><=?)";
-
-    private static function getVersionRegex()
-    {
-        return '/^\s*' . static::$versionRegex . '\s*$/ix';
-    }
-
-    private static function getComparatorVersionRegex()
-    {
-        return '/^\s*' . static::$rangeRegex . '\s*' . static::$versionRegex . '\s*$/ix';
-    }
-
-    private static function getVersionRange()
-    {
-        $minReplace = [
-            '<major>'       => '<min_major>',
-            '<minor>'       => '<min_minor>',
-            '<patch>'       => '<min_patch>',
-            '<label_full>'  => '<min_label_full>',
-            '<label>'       => '<min_label>',
-            '<label_num>'   => '<min_label_num>'
-        ];
-
-        $maxReplace = [
-            '<major>'       => '<max_major>',
-            '<minor>'       => '<max_minor>',
-            '<patch>'       => '<max_patch>',
-            '<label_full>'  => '<max_label_full>',
-            '<label>'       => '<max_label>',
-            '<label_num>'   => '<max_label_num>'
-        ];
-
-        $singleReplace = [
-            '<major>'       => '<single_major>',
-            '<minor>'       => '<single_minor>',
-            '<patch>'       => '<single_patch>',
-            '<label_full>'  => '<single_label_full>',
-            '<label>'       => '<single_label>',
-            '<label_num>'   => '<single_label_num>'
-        ];
-
-        return '/^\s*'
-            . '('
-            .     static::$rangeMinRegex
-            .     '\s*'
-            .     str_replace(array_keys($minReplace), $minReplace, static::$versionRegex)
-            . ')?'
-            . '\s*'
-            . '('
-            .     static::$rangeMaxRegex
-            .     '\s*'
-            .     str_replace(array_keys($maxReplace), $maxReplace, static::$versionRegex)
-            . ')?'
-            . '\s*'
-            . '('
-            .     '(?<single_tilde>~)?'
-            .     str_replace(array_keys($singleReplace), $singleReplace, static::$versionRegex)
-            . ')?'
-            . '\s*$/ix';
-    }
-
-
-    /**
      * Parse a version number into an array of version number parts.
      *
      * @throws Exception\InvalidVersionException
@@ -124,7 +40,7 @@ class VersionEngine
      */
     public static function parseVersion($versionNo)
     {
-        if (preg_match(static::getVersionRegex(), $versionNo, $matches)) {
+        if (preg_match(VersionRegex::getVersion(), $versionNo, $matches)) {
             $version = static::matchesToVersion($matches);
         } else {
             throw new InvalidVersionException('The version number "' . $versionNo . '" could not be parsed.');
@@ -145,7 +61,7 @@ class VersionEngine
      */
     public static function parseComparatorVersion($versionNo)
     {
-        if (preg_match(static::getComparatorVersionRegex(), $versionNo, $matches)) {
+        if (preg_match(VersionRegex::getComparatorVersion(), $versionNo, $matches)) {
             $comparatorVersion = static::matchesToComparatorVersion($matches);
         } else {
             throw new InvalidComparatorVersionException(
@@ -168,7 +84,7 @@ class VersionEngine
      */
     public static function parseVersionRange($versionNo)
     {
-        if (preg_match(static::getVersionRange(), $versionNo, $matches)) {
+        if (preg_match(VersionRegex::getVersionRange(), $versionNo, $matches)) {
             $versionRange = new VersionRange();
 
             try {
