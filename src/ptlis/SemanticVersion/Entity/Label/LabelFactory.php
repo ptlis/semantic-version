@@ -69,10 +69,11 @@ class LabelFactory
     {
         if (array_key_exists($name, $this->labelList)) {
             $label = new $this->labelList[$name]();
-            $label->setVersion($version);
         } else {
             $label = new $this->defaultLabel();
+            $version = null;
         }
+        $label->setVersion($version);
 
         return $label;
     }
