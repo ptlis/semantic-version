@@ -20,7 +20,7 @@ use ptlis\SemanticVersion\Entity\Label\LabelInterface;
 /**
  * Interface class for version number entities.
  */
-interface VersionInterface extends ComparableInterface
+interface VersionInterface
 {
     /**
      * @param LabelInterface $label
@@ -88,6 +88,36 @@ interface VersionInterface extends ComparableInterface
      * @return int|string
      */
     public function getPatch();
+
+
+    /**
+     * Return true if the two comparable items are equal.
+     *
+     * @param VersionInterface $version
+     *
+     * @return bool
+     */
+    public function equalTo(VersionInterface $version);
+
+
+    /**
+     * Return true if the current instance is less than the passed instance.
+     *
+     * @param VersionInterface $version
+     *
+     * @return bool
+     */
+    public function lessThan(VersionInterface $version);
+
+
+    /**
+     * Return true if the current instance is greater than the passed instance.
+     *
+     * @param VersionInterface $version
+     *
+     * @return bool
+     */
+    public function greaterThan(VersionInterface $version);
 
 
     /**

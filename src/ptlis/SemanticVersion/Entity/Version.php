@@ -146,6 +146,81 @@ class Version implements VersionInterface
 
 
     /**
+     * Return true if the provided versions match
+     *
+     * @param VersionInterface $version
+     *
+     * @return bool
+     */
+    public function equalTo(VersionInterface $version)
+    {
+        return ($this->__toString() == $version->__toString());
+    }
+
+
+    /**
+     * Return true if the current instance is less than the passed instance.
+     *
+     * @param VersionInterface $version
+     *
+     * @return bool
+     */
+    public function lessThan(VersionInterface $version)
+    {
+        switch (true) {
+            case ($this->getMajor() < $version->getMajor()):
+                $lessThan = true;
+                break;
+
+            case ($this->getMajor() == $version->getMajor()
+                    && $this->getMinor() < $version->getMinor()):
+                $lessThan = true;
+                break;
+
+            case ($this->getMajor() == $version->getMajor()
+                    && $this->getMinor() == $version->getMinor()
+                    && $this->getPatch() < $version->getPatch()):
+                $lessThan = true;
+                break;
+
+            case ($this->getMajor() == $version->getMajor()
+                    && $this->getMinor() == $version->getMinor()
+                    && $this->getPatch() == $version->getPatch()
+                    && $this->getLabel()->getPrecedence() < $version->getLabel()->getPrecedence()):
+                $lessThan = true;
+                break;
+
+            case ($this->getMajor() == $version->getMajor()
+                    && $this->getMinor() == $version->getMinor()
+                    && $this->getPatch() == $version->getPatch()
+                    && $this->getLabel()->getPrecedence() == $version->getLabel()->getPrecedence()
+                    && $this->getLabel()->getVersion() < $version->getLabel()->getPrecedence()):
+                $lessThan = true;
+                break;
+
+            default:
+                $lessThan = false;
+                break;
+        }
+
+        return $lessThan;
+    }
+
+
+    /**
+     * Return true if the current instance is greater than the passed instance.
+     *
+     * @param VersionInterface $version
+     *
+     * @return bool
+     */
+    public function greaterThan(VersionInterface $version)
+    {
+        return $version->lessThan($this);
+    }
+
+
+    /**
      * Returns a string representation of the version number.
      *
      * @return string
@@ -166,18 +241,5 @@ class Version implements VersionInterface
         }
 
         return (string)$strVersion;
-    }
-
-
-    /**
-     * Return true if the provided versions match
-     *
-     * @param ComparableInterface $version
-     *
-     * @return bool
-     */
-    public function equalTo(ComparableInterface $version)
-    {
-        return ($this->__toString() == $version->__toString());
     }
 }
