@@ -108,12 +108,25 @@ class LabelFactory
     /**
      * Set the label to use for wildcard matching (labels not in list)
      *
-     * @param string $wildcardLabel
+     * @throws \RuntimeException
+     *
+     * @param string $class
      */
-    public function setWildcardLabel($wildcardLabel)
+    public function setWildcardLabel($class)
     {
-        // TODO: Check type!
-        $this->wildcardLabel = $wildcardLabel;
+        if (!class_exists($class)) {
+            throw new \RuntimeException(
+                'The class "' . $class . '" does not exist'
+            );
+        }
+
+        if (!((new $class()) instanceof LabelInterface)) {
+            throw new \RuntimeException(
+                'Wildcard labels must implement the ptlis\SemanticVersion\Label\WildcardLabelInterface interface'
+            );
+        }
+
+        $this->wildcardLabel = $class;
     }
 
 

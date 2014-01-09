@@ -18,7 +18,7 @@ namespace ptlis\SemanticVersion\Label;
 /**
  * Interface that wildcard version labels must implement.
  */
-interface WildcardLabelInterface extends LabelInterface
+interface LabelWildcardInterface extends LabelInterface
 {
     /**
      * Sets the label name.

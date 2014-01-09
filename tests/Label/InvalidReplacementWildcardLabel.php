@@ -2,10 +2,7 @@
 
 namespace tests\Label;
 
-use ptlis\SemanticVersion\Label\LabelInterface;
-use ptlis\SemanticVersion\Label\LabelWildcardInterface;
-
-class ReplacementWildcardLabel implements LabelWildcardInterface
+class InvalidReplacementWildcardLabel
 {
     private $name;
 

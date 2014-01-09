@@ -19,6 +19,7 @@ namespace Label\tests;
 
 require_once 'InvalidLabel.php';
 require_once 'ReplacementWildcardLabel.php';
+require_once 'InvalidReplacementWildcardLabel.php';
 
 use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;
@@ -89,7 +90,7 @@ class LabelFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testDefaultLabel()
+    public function testWildcardLabelClass()
     {
         $factory = new LabelFactory();
         $factory->setWildcardLabel('tests\Label\ReplacementWildcardLabel');
@@ -98,6 +99,34 @@ class LabelFactoryTest extends \PHPUnit_Framework_TestCase
         $expectLabel->setName('foobar');
 
         $this->assertEquals($expectLabel, $factory->get('foobar'));
+    }
+
+
+    public function testWildcardLabelClassDoesntExist()
+    {
+        $className = 'tests\Label\WildcardBoo';
+
+        $this->setExpectedException(
+            '\RuntimeException',
+            'The class "' . $className . '" does not exist'
+        );
+
+        $factory = new LabelFactory();
+        $factory->setWildcardLabel($className);
+    }
+
+
+    public function testWildcardLabelClassDoesntImplementInterface()
+    {
+        $className = 'tests\Label\InvalidReplacementWildcardLabel';
+
+        $this->setExpectedException(
+            '\RuntimeException',
+            'Wildcard labels must implement the ptlis\SemanticVersion\Label\WildcardLabelInterface interface'
+        );
+
+        $factory = new LabelFactory();
+        $factory->setWildcardLabel($className);
     }
 
 
