@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class representing the alpha label.
+ * Class representing the development release labels.
  *
  * PHP Version 5.4
  *
@@ -16,10 +16,26 @@
 namespace ptlis\SemanticVersion\Label;
 
 /**
- * Class representing the alpha label.
+ * Class representing the development release label.
  */
-class LabelAlpha extends AbstractNamedLabel
+class LabelDev extends AbstractNamedLabel
 {
+    /**
+     * @var string
+     */
+    private $name;
+
+    /**
+     * Set the label name
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+
     /**
      * Get the label name.
      *
@@ -27,17 +43,17 @@ class LabelAlpha extends AbstractNamedLabel
      */
     public function getName()
     {
-        return 'alpha';
+        return $this->name;
     }
 
 
     /**
-     * Second lowest precedence.
+     * Lowest precedence.
      *
      * @return int
      */
     public function getPrecedence()
     {
-        return 2;
+        return 1;
     }
 }

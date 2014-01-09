@@ -18,12 +18,15 @@
 namespace Label\tests;
 
 require_once 'InvalidLabel.php';
+require_once 'ReplacementWildcardLabel.php';
 
 use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;
+use ptlis\SemanticVersion\Label\LabelDev;
 use ptlis\SemanticVersion\Label\LabelFactory;
 use ptlis\SemanticVersion\Label\LabelNone;
 use ptlis\SemanticVersion\Label\LabelRc;
+use tests\Label\ReplacementWildcardLabel;
 
 /**
  * Tests to ensure correct behaviour of ComparatorFactory.
@@ -62,20 +65,15 @@ class LabelFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testInvalidLabel()
-    {
-        $factory = new LabelFactory();
-
-        $this->assertEquals(new LabelNone(), $factory->get('foobar'));
-    }
-
-
     public function testCustomLabelListValid()
     {
         $factory = new LabelFactory();
         $factory->setTypeList(['=' => 'ptlis\SemanticVersion\Label\LabelAlpha']);
 
-        $this->assertEquals(new LabelNone(), $factory->get('beta'));
+        $expectLabel = new LabelDev();
+        $expectLabel->setName('beta');
+
+        $this->assertEquals($expectLabel, $factory->get('beta'));
     }
 
 
@@ -84,16 +82,22 @@ class LabelFactoryTest extends \PHPUnit_Framework_TestCase
         $factory = new LabelFactory();
         $factory->removeType('alpha');
 
-        $this->assertEquals(new LabelNone(), $factory->get('alpha'));
+        $expectLabel = new LabelDev();
+        $expectLabel->setName('alpha');
+
+        $this->assertEquals($expectLabel, $factory->get('alpha'));
     }
 
 
     public function testDefaultLabel()
     {
         $factory = new LabelFactory();
-        $factory->setDefaultLabel('ptlis\SemanticVersion\Label\LabelAlpha');
+        $factory->setWildcardLabel('tests\Label\ReplacementWildcardLabel');
 
-        $this->assertEquals(new LabelAlpha(), $factory->get('foobar'));
+        $expectLabel = new ReplacementWildcardLabel();
+        $expectLabel->setName('foobar');
+
+        $this->assertEquals($expectLabel, $factory->get('foobar'));
     }
 
 

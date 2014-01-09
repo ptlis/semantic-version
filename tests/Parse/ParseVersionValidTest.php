@@ -19,6 +19,7 @@ namespace tests\Parse;
 
 use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;
+use ptlis\SemanticVersion\Label\LabelDev;
 use ptlis\SemanticVersion\Label\LabelNone;
 use ptlis\SemanticVersion\Label\LabelRc;
 use ptlis\SemanticVersion\Version\Version;
@@ -206,6 +207,30 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMinor(5)
             ->setPatch(3)
             ->setLabel(new LabelNone());
+
+        $this->assertSame($expectStr, $outVersion->__toString());
+        $this->assertEquals($expectVersion, $outVersion);
+    }
+
+
+    public function testMajorMinorPatchDevelopment()
+    {
+        $inStr = '1.5.0-dev';
+
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
+
+        $expectStr = '1.5.0-dev';
+        $expectVersion = new Version();
+
+        $expectLabel = new LabelDev();
+        $expectLabel->setName('dev');
+
+        $expectVersion
+            ->setMajor(1)
+            ->setMinor(5)
+            ->setPatch(0)
+            ->setLabel($expectLabel);
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);

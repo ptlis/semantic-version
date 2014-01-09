@@ -38,6 +38,6 @@ class LabelRc extends AbstractNamedLabel
      */
     public function getPrecedence()
     {
-        return 3;
+        return 4;
     }
 }

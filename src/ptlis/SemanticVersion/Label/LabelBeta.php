@@ -32,12 +32,12 @@ class LabelBeta extends AbstractNamedLabel
 
 
     /**
-     * Second lowest precedence.
+     * Third lowest precedence.
      *
      * @return int
      */
     public function getPrecedence()
     {
-        return 2;
+        return 3;
     }
 }

@@ -63,7 +63,7 @@ class LabelNone implements LabelInterface
      */
     public function getPrecedence()
     {
-        return 4;
+        return 5;
     }
 
 

@@ -21,9 +21,15 @@ namespace ptlis\SemanticVersion\Label;
 class LabelFactory
 {
     /**
-     * @var LabelNone
+     * @var string
      */
-    private $defaultLabel = 'ptlis\SemanticVersion\Label\LabelNone';
+    private $wildcardLabel = 'ptlis\SemanticVersion\Label\LabelDev';
+
+    /**
+     * @var string
+     */
+    private $noneLabel = 'ptlis\SemanticVersion\Label\LabelNone';
+
 
     /**
      * Mapping of label names to classes.
@@ -100,13 +106,14 @@ class LabelFactory
 
 
     /**
-     * Set the label to default to
+     * Set the label to use for wildcard matching (labels not in list)
      *
-     * @param string $defaultLabel
+     * @param string $wildcardLabel
      */
-    public function setDefaultLabel($defaultLabel)
+    public function setWildcardLabel($wildcardLabel)
     {
-        $this->defaultLabel = $defaultLabel;
+        // TODO: Check type!
+        $this->wildcardLabel = $wildcardLabel;
     }
 
 
@@ -120,10 +127,16 @@ class LabelFactory
      */
     public function get($name, $version = null)
     {
-        if (array_key_exists($name, $this->labelList)) {
-            $label = new $this->labelList[$name]();
+        if (strlen($name)) {
+            if (array_key_exists($name, $this->labelList)) {
+                $label = new $this->labelList[$name]();
+            } else {
+                $label = new $this->wildcardLabel();
+                $label->setName($name);
+            }
+
         } else {
-            $label = new $this->defaultLabel();
+            $label = new $this->noneLabel();
             $version = null;
         }
         $label->setVersion($version);

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class representing the alpha label.
+ * Interface that wildcard version labels must implement.
  *
  * PHP Version 5.4
  *
@@ -16,28 +16,16 @@
 namespace ptlis\SemanticVersion\Label;
 
 /**
- * Class representing the alpha label.
+ * Interface that wildcard version labels must implement.
  */
-class LabelAlpha extends AbstractNamedLabel
+interface WildcardLabelInterface extends LabelInterface
 {
     /**
-     * Get the label name.
+     * Sets the label name.
      *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'alpha';
-    }
-
-
-    /**
-     * Second lowest precedence.
+     * @param string $name
      *
-     * @return int
+     * @return mixed
      */
-    public function getPrecedence()
-    {
-        return 2;
-    }
+    public function setName($name);
 }
