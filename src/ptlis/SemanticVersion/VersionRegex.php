@@ -17,12 +17,12 @@ namespace ptlis\SemanticVersion;
 
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersionRegexProviderInterface;
 use ptlis\SemanticVersion\Version\VersionRegexProviderInterface;
-use ptlis\SemanticVersion\VersionRange\VersionRangeRegexProviderInterface;
+use ptlis\SemanticVersion\BoundingPair\BoundingPairRegexProviderInterface;
 
 /**
  * Utility class to provide regular expressions used when parsing version numbers, ranges etc.
  */
-class VersionRegex implements VersionRegexProviderInterface, VersionRangeRegexProviderInterface,
+class VersionRegex implements VersionRegexProviderInterface, BoundingPairRegexProviderInterface,
 ComparatorVersionRegexProviderInterface
 {
     /**
@@ -91,11 +91,11 @@ ComparatorVersionRegexProviderInterface
 
 
     /**
-     * Returns the regex to parse a version range.
+     * Returns the regex to parse a bounding pair.
      *
      * @return string
      */
-    public function getVersionRange()
+    public function getBoundingPair()
     {
         $versionKeyList = [
             'major',

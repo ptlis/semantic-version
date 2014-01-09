@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Tests to ensure correct parsing of valid version ranges.
+ * Tests to ensure correct parsing of valid bounding pairs.
  *
  * PHP Version 5.4
  *
@@ -28,7 +28,7 @@ use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionEngine;
 
 /**
- * Tests to ensure correct parsing of valid version ranges.
+ * Tests to ensure correct parsing of valid bounding pairs.
  */
 class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
 {

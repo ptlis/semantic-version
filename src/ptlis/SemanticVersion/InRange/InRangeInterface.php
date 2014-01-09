@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Interface used to see if a version satisfies the requirements of the version range.
+ * Interface used to see if a version satisfies the requirements of the bounding pair.
  *
  * PHP Version 5.4
  *
@@ -18,12 +18,12 @@ namespace ptlis\SemanticVersion\InRange;
 use ptlis\SemanticVersion\Version\VersionInterface;
 
 /**
- * Interface used to see if a version satisfies the requirements of the version range.
+ * Interface used to see if a version satisfies the requirements of the bounding pair.
  */
 interface InRangeInterface
 {
     /**
-     * Returns true if the provided version satisfies the requirements of the version range.
+     * Returns true if the provided version satisfies the requirements of the bounding pair.
      *
      * @param VersionInterface $version
      *

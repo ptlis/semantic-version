@@ -21,11 +21,11 @@ use ptlis\SemanticVersion\Label\LabelFactory;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersionFactory;
 use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\Version\VersionFactory;
-use ptlis\SemanticVersion\VersionRange\VersionRangeFactory;
-use ptlis\SemanticVersion\VersionRange\VersionRange;
+use ptlis\SemanticVersion\BoundingPair\BoundingPairFactory;
+use ptlis\SemanticVersion\BoundingPair\BoundingPair;
 use ptlis\SemanticVersion\Exception\InvalidComparatorVersionException;
 use ptlis\SemanticVersion\Exception\InvalidVersionException;
-use ptlis\SemanticVersion\Exception\InvalidVersionRangeException;
+use ptlis\SemanticVersion\Exception\InvalidBoundingPairException;
 
 /**
  * Simple class to provide version parsing with good defaults.
@@ -43,7 +43,7 @@ class VersionEngine
     private $comparatorVersionFac;
 
     /**
-     * @var VersionRangeFactory
+     * @var BoundingPairFactory
      */
     private $versionRangeFac;
 
@@ -58,7 +58,7 @@ class VersionEngine
         $comparatorFac = new ComparatorFactory();
         $this->versionFac = new VersionFactory($regexProvider, $labelFac);
         $this->comparatorVersionFac = new ComparatorVersionFactory($regexProvider, $this->versionFac, $comparatorFac);
-        $this->versionRangeFac = new VersionRangeFactory(
+        $this->versionRangeFac = new BoundingPairFactory(
             $regexProvider,
             $this->comparatorVersionFac,
             $this->versionFac,
@@ -98,15 +98,15 @@ class VersionEngine
 
 
     /**
-     * Parse a version range string into a VersionRange entity.
+     * Parse a bounding pair string into a BoundingPair entity.
      *
-     * @throws InvalidVersionRangeException
+     * @throws InvalidBoundingPairException
      *
      * @param string $versionNo
      *
-     * @return VersionRange
+     * @return BoundingPair
      */
-    public function parseVersionRange($versionNo)
+    public function parseBoundingPair($versionNo)
     {
         return $this->versionRangeFac->parse($versionNo);
     }

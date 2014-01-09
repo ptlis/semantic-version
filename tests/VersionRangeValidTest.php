@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Tests to ensure correct error handling for invalid VersionRanges.
+ * Tests to ensure correct error handling for invalid BoundingPairs.
  *
  * PHP Version 5.4
  *
@@ -23,12 +23,12 @@ use ptlis\SemanticVersion\Comparator\LessThan;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\Label\LabelNone;
 use ptlis\SemanticVersion\Version\Version;
-use ptlis\SemanticVersion\VersionRange\VersionRange;
+use ptlis\SemanticVersion\BoundingPair\BoundingPair;
 
 /**
  * Tests to ensure correct behaviour of ComparatorFactory.
  */
-class VersionRangeValidTest extends \PHPUnit_Framework_TestCase
+class BoundingPairValidTest extends \PHPUnit_Framework_TestCase
 {
     public function testLowerAndUpperCompoundSetterRanged()
     {
@@ -56,7 +56,7 @@ class VersionRangeValidTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new LessThan())
             ->setVersion($upperVersion);
 
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
         $versionRange
             ->setUpperLower($lowerBound, $upperBound);
 
@@ -91,7 +91,7 @@ class VersionRangeValidTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new EqualTo())
             ->setVersion($upperVersion);
 
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
         $versionRange
             ->setUpperLower($lowerBound, $upperBound);
 

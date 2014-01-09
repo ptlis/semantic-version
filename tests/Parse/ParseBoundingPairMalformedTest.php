@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Tests to ensure correct parsing of malformed version ranges.
+ * Tests to ensure correct parsing of malformed bounding pairs.
  *
  * PHP Version 5.4
  *
@@ -23,20 +23,20 @@ use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\Label\LabelNone;
 use ptlis\SemanticVersion\Label\LabelRc;
 use ptlis\SemanticVersion\Version\Version;
-use ptlis\SemanticVersion\VersionRange\VersionRange;
+use ptlis\SemanticVersion\BoundingPair\BoundingPair;
 use ptlis\SemanticVersion\VersionEngine;
 
 /*
- * Tests to ensure correct parsing of malformed version ranges.
+ * Tests to ensure correct parsing of malformed bounding pairs.
  */
-class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
+class ParseBoundingPairMalformedTest extends \PHPUnit_Framework_TestCase
 {
     public function testTrailingMajorDot()
     {
         $inStr = '>=1.<=1.2.0';
 
         $engine  = new VersionEngine();
-        $outVersionRange = $engine->parseVersionRange($inStr);
+        $outBoundingPair = $engine->parseBoundingPair($inStr);
 
         $expectStr = '>=1.0.0<=1.2.0';
 
@@ -65,13 +65,13 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setVersion($upperVersion);
 
         // Range
-        $expectVersionRange = new VersionRange();
-        $expectVersionRange
+        $expectBoundingPair = new BoundingPair();
+        $expectBoundingPair
             ->setLower($lowerComparatorVersion)
             ->setUpper($upperComparatorVersion);
 
-        $this->assertSame($expectStr, $outVersionRange->__toString());
-        $this->assertEquals($expectVersionRange, $outVersionRange);
+        $this->assertSame($expectStr, $outBoundingPair->__toString());
+        $this->assertEquals($expectBoundingPair, $outBoundingPair);
     }
 
 
@@ -80,7 +80,7 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
         $inStr = '>=1.0.<=1.2.0';
 
         $engine  = new VersionEngine();
-        $outVersionRange = $engine->parseVersionRange($inStr);
+        $outBoundingPair = $engine->parseBoundingPair($inStr);
 
         $expectStr = '>=1.0.0<=1.2.0';
 
@@ -109,13 +109,13 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setVersion($upperVersion);
 
         // Range
-        $expectVersionRange = new VersionRange();
-        $expectVersionRange
+        $expectBoundingPair = new BoundingPair();
+        $expectBoundingPair
             ->setLower($lowerComparatorVersion)
             ->setUpper($upperComparatorVersion);
 
-        $this->assertSame($expectStr, $outVersionRange->__toString());
-        $this->assertEquals($expectVersionRange, $outVersionRange);
+        $this->assertSame($expectStr, $outBoundingPair->__toString());
+        $this->assertEquals($expectBoundingPair, $outBoundingPair);
     }
 
 
@@ -124,7 +124,7 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
         $inStr = '>=1.0.0-<=1.2.0';
 
         $engine  = new VersionEngine();
-        $outVersionRange = $engine->parseVersionRange($inStr);
+        $outBoundingPair = $engine->parseBoundingPair($inStr);
 
         $expectStr = '>=1.0.0<=1.2.0';
 
@@ -153,13 +153,13 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setVersion($upperVersion);
 
         // Range
-        $expectVersionRange = new VersionRange();
-        $expectVersionRange
+        $expectBoundingPair = new BoundingPair();
+        $expectBoundingPair
             ->setLower($lowerComparatorVersion)
             ->setUpper($upperComparatorVersion);
 
-        $this->assertSame($expectStr, $outVersionRange->__toString());
-        $this->assertEquals($expectVersionRange, $outVersionRange);
+        $this->assertSame($expectStr, $outBoundingPair->__toString());
+        $this->assertEquals($expectBoundingPair, $outBoundingPair);
     }
 
 
@@ -168,7 +168,7 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
         $inStr = '>=1.0.0-rc1<=1.2.0';
 
         $engine  = new VersionEngine();
-        $outVersionRange = $engine->parseVersionRange($inStr);
+        $outBoundingPair = $engine->parseBoundingPair($inStr);
 
         $expectStr = '>=1.0.0-rc.1<=1.2.0';
 
@@ -197,13 +197,13 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setVersion($upperVersion);
 
         // Range
-        $expectVersionRange = new VersionRange();
-        $expectVersionRange
+        $expectBoundingPair = new BoundingPair();
+        $expectBoundingPair
             ->setLower($lowerComparatorVersion)
             ->setUpper($upperComparatorVersion);
 
-        $this->assertSame($expectStr, $outVersionRange->__toString());
-        $this->assertEquals($expectVersionRange, $outVersionRange);
+        $this->assertSame($expectStr, $outBoundingPair->__toString());
+        $this->assertEquals($expectBoundingPair, $outBoundingPair);
     }
 
 
@@ -212,7 +212,7 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
         $inStr = '<=2.5.0>=1.0.5';
 
         $engine  = new VersionEngine();
-        $outVersionRange = $engine->parseVersionRange($inStr);
+        $outBoundingPair = $engine->parseBoundingPair($inStr);
 
         $expectStr = '>=1.0.5<=2.5.0';
 
@@ -241,12 +241,12 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
             ->setVersion($upperVersion);
 
         // Range
-        $expectVersionRange = new VersionRange();
-        $expectVersionRange
+        $expectBoundingPair = new BoundingPair();
+        $expectBoundingPair
             ->setLower($lowerComparatorVersion)
             ->setUpper($upperComparatorVersion);
 
-        $this->assertSame($expectStr, $outVersionRange->__toString());
-        $this->assertEquals($expectVersionRange, $outVersionRange);
+        $this->assertSame($expectStr, $outBoundingPair->__toString());
+        $this->assertEquals($expectBoundingPair, $outBoundingPair);
     }
 }

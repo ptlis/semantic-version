@@ -96,7 +96,7 @@ class ComparatorVersion implements InRangeInterface
 
 
     /**
-     * Returns true if the provided version satisfies the requirements of the version range.
+     * Returns true if the provided version satisfies the requirements of the bounding pair.
      *
      * @param VersionInterface $version
      *

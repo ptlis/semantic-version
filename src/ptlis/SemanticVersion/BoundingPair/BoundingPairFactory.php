@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Factory to create VersionRanges.
+ * Factory to create BoundingPairs.
  *
  * PHP Version 5.4
  *
@@ -13,7 +13,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\VersionRange;
+namespace ptlis\SemanticVersion\BoundingPair;
 
 use ptlis\SemanticVersion\Comparator\ComparatorFactory;
 use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
@@ -21,16 +21,16 @@ use ptlis\SemanticVersion\Comparator\LessThan;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersionFactory;
 use ptlis\SemanticVersion\Exception\InvalidComparatorVersionException;
-use ptlis\SemanticVersion\Exception\InvalidVersionRangeException;
+use ptlis\SemanticVersion\Exception\InvalidBoundingPairException;
 use ptlis\SemanticVersion\Version\VersionFactory;
 
 /**
- * Factory to create VersionRanges.
+ * Factory to create BoundingPairs.
  */
-class VersionRangeFactory
+class BoundingPairFactory
 {
     /**
-     * @var VersionRangeRegexProviderInterface
+     * @var BoundingPairRegexProviderInterface
      */
     private $regexProvider;
 
@@ -52,13 +52,13 @@ class VersionRangeFactory
     /**
      * Constructor
      *
-     * @param VersionRangeRegexProviderInterface    $regexProvider
+     * @param BoundingPairRegexProviderInterface    $regexProvider
      * @param ComparatorVersionFactory              $comparatorVersionFac
      * @param VersionFactory                        $versionFac
      * @param ComparatorFactory                     $comparatorFac
      */
     public function __construct(
-        VersionRangeRegexProviderInterface $regexProvider,
+        BoundingPairRegexProviderInterface $regexProvider,
         ComparatorVersionFactory $comparatorVersionFac,
         VersionFactory $versionFac,
         ComparatorFactory $comparatorFac
@@ -73,16 +73,16 @@ class VersionRangeFactory
     /**
      * Parse a string version number & return a Version object.
      *
-     * @throws InvalidVersionRangeException
+     * @throws InvalidBoundingPairException
      *
      * @param $versionNo
      *
-     * @return VersionRange
+     * @return BoundingPair
      */
     public function parse($versionNo)
     {
-        if (preg_match($this->regexProvider->getVersionRange(), $versionNo, $matches)) {
-            $versionRange = new VersionRange();
+        if (preg_match($this->regexProvider->getBoundingPair(), $versionNo, $matches)) {
+            $versionRange = new BoundingPair();
 
             try {
 
@@ -115,18 +115,18 @@ class VersionRangeFactory
                 }
 
             } catch (InvalidComparatorVersionException $e) {
-                throw new InvalidVersionRangeException(
-                    'The version range "' . $versionNo . '" could not be parsed.',
+                throw new InvalidBoundingPairException(
+                    'The bounding pair "' . $versionNo . '" could not be parsed.',
                     $e
                 );
             }
 
             if (is_null($versionRange->getLower()) && is_null($versionRange->getUpper())) {
-                throw new InvalidVersionRangeException('The version range "' . $versionNo . '" could not be parsed.');
+                throw new InvalidBoundingPairException('The bounding pair "' . $versionNo . '" could not be parsed.');
             }
 
         } else {
-            throw new InvalidVersionRangeException('The version range "' . $versionNo . '" could not be parsed.');
+            throw new InvalidBoundingPairException('The bounding pair "' . $versionNo . '" could not be parsed.');
         }
 
         return $versionRange;
@@ -135,7 +135,7 @@ class VersionRangeFactory
 
     public function getFromSingleArray($versionRangeArr)
     {
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
 
         // Tilde match
         if (array_key_exists('tilde', $versionRangeArr) && strlen($versionRangeArr['tilde'])) {

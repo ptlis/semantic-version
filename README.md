@@ -21,11 +21,12 @@ See the [Semantic Versioning](http://semver.org/) website for the specification 
     echo $comparatorVersion->getComparator()->getSymbol(); // '>='
     $comparatorVersion->getVersion()... // As Version description above
 
-    $comparatorRange = $engine->parseVersionRange('>=1.0.0<2.0.0');
-    $comparatorRange->getUpper()... // As VersionRange description above
-    $comparatorRange->getLower()... // As VersionRange description above
+    $boundingPair = $engine->parseBoundingPair('>=1.0.0<2.0.0');
+    $boundingPair->getUpper()... // As ComparatorVersion description above
+    $boundingPair->getLower()... // As ComparatorVersion description above
 ```
 
 ## TODO
 
 * Sort
+* test for label omitting hypen

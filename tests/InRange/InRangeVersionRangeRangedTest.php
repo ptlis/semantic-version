@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Tests to ensure correct handling of VersionRange::isSatisfiedBy where both upper & lower are provided.
+ * Tests to ensure correct handling of BoundingPair::isSatisfiedBy where both upper & lower are provided.
  *
  * PHP Version 5.4
  *
@@ -24,9 +24,9 @@ use ptlis\SemanticVersion\Label\LabelBeta;
 use ptlis\SemanticVersion\Label\LabelNone;
 use ptlis\SemanticVersion\Label\LabelRc;
 use ptlis\SemanticVersion\Version\Version;
-use ptlis\SemanticVersion\VersionRange\VersionRange;
+use ptlis\SemanticVersion\BoundingPair\BoundingPair;
 
-class InRangeVersionRangeRangedTest extends \PHPUnit_Framework_TestCase
+class InRangeBoundingPairRangedTest extends \PHPUnit_Framework_TestCase
 {
     public function testInRangeMajor()
     {
@@ -54,7 +54,7 @@ class InRangeVersionRangeRangedTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new LessThan())
             ->setVersion($upperVersion);
 
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
         $versionRange
             ->setLower($lowerBound)
             ->setUpper($upperBound);
@@ -96,7 +96,7 @@ class InRangeVersionRangeRangedTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new LessThan())
             ->setVersion($upperVersion);
 
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
         $versionRange
             ->setLower($lowerBound)
             ->setUpper($upperBound);
@@ -138,7 +138,7 @@ class InRangeVersionRangeRangedTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new LessThan())
             ->setVersion($upperVersion);
 
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
         $versionRange
             ->setLower($lowerBound)
             ->setUpper($upperBound);
@@ -180,7 +180,7 @@ class InRangeVersionRangeRangedTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new LessThan())
             ->setVersion($upperVersion);
 
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
         $versionRange
             ->setLower($lowerBound)
             ->setUpper($upperBound);
@@ -222,7 +222,7 @@ class InRangeVersionRangeRangedTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new LessThan())
             ->setVersion($upperVersion);
 
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
         $versionRange
             ->setLower($lowerBound)
             ->setUpper($upperBound);

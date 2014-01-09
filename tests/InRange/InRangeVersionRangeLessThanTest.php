@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Tests to ensure correct handling of VersionRange::isSatisfiedBy where upper comparator is LessThan.
+ * Tests to ensure correct handling of BoundingPair::isSatisfiedBy where upper comparator is LessThan.
  *
  * PHP Version 5.4
  *
@@ -22,9 +22,9 @@ use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;
 use ptlis\SemanticVersion\Version\Version;
-use ptlis\SemanticVersion\VersionRange\VersionRange;
+use ptlis\SemanticVersion\BoundingPair\BoundingPair;
 
-class InRangeVersionRangeLessThanTest extends \PHPUnit_Framework_TestCase
+class InRangeBoundingPairLessThanTest extends \PHPUnit_Framework_TestCase
 {
     public function testNotEqualTo()
     {
@@ -40,7 +40,7 @@ class InRangeVersionRangeLessThanTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new LessThan())
             ->setVersion($version1);
 
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
         $versionRange
             ->setUpper($comparatorVersion);
 
@@ -66,7 +66,7 @@ class InRangeVersionRangeLessThanTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new LessThan())
             ->setVersion($version1);
 
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
         $versionRange
             ->setUpper($comparatorVersion);
 
@@ -89,7 +89,7 @@ class InRangeVersionRangeLessThanTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new LessThan())
             ->setVersion($version1);
 
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
         $versionRange
             ->setUpper($comparatorVersion);
 
@@ -113,7 +113,7 @@ class InRangeVersionRangeLessThanTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new LessThan())
             ->setVersion($version1);
 
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
         $versionRange
             ->setUpper($comparatorVersion);
 
@@ -138,7 +138,7 @@ class InRangeVersionRangeLessThanTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new LessThan())
             ->setVersion($version1);
 
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
         $versionRange
             ->setUpper($comparatorVersion);
 
@@ -164,7 +164,7 @@ class InRangeVersionRangeLessThanTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new LessThan())
             ->setVersion($version1);
 
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
         $versionRange
             ->setUpper($comparatorVersion);
 
@@ -191,7 +191,7 @@ class InRangeVersionRangeLessThanTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new LessThan())
             ->setVersion($version1);
 
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
         $versionRange
             ->setUpper($comparatorVersion);
 
@@ -219,7 +219,7 @@ class InRangeVersionRangeLessThanTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new LessThan())
             ->setVersion($version1);
 
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
         $versionRange
             ->setUpper($comparatorVersion);
 
@@ -248,7 +248,7 @@ class InRangeVersionRangeLessThanTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new LessThan())
             ->setVersion($version1);
 
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
         $versionRange
             ->setUpper($comparatorVersion);
 
@@ -277,7 +277,7 @@ class InRangeVersionRangeLessThanTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new LessThan())
             ->setVersion($version1);
 
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
         $versionRange
             ->setUpper($comparatorVersion);
 
@@ -306,7 +306,7 @@ class InRangeVersionRangeLessThanTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new LessThan())
             ->setVersion($version1);
 
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
         $versionRange
             ->setUpper($comparatorVersion);
 

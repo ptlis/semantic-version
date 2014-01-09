@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Exception thrown when the engine is unable to parse a version range.
+ * Interface class for regex provider to be used by factory to parse a version number range.
  *
  * PHP Version 5.4
  *
@@ -13,11 +13,12 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Exception;
+namespace ptlis\SemanticVersion\BoundingPair;
 
 /**
- * Exception thrown when the engine is unable to parse a version range.
+ * Interface class for regex provider to be used by factory to parse a version number range.
  */
-class InvalidVersionRangeException extends SemanticVersionException
+interface BoundingPairRegexProviderInterface
 {
+    public function getBoundingPair();
 }

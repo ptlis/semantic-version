@@ -13,19 +13,19 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\VersionRange;
+namespace ptlis\SemanticVersion\BoundingPair;
 
 use ptlis\SemanticVersion\Comparator\EqualTo;
 use ptlis\SemanticVersion\Comparator\GreaterThan;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
-use ptlis\SemanticVersion\Exception\InvalidVersionRangeException;
+use ptlis\SemanticVersion\Exception\InvalidBoundingPairException;
 use ptlis\SemanticVersion\InRange\InRangeInterface;
 use ptlis\SemanticVersion\Version\VersionInterface;
 
 /**
  * Entity to represent a semantic version number range.
  */
-class VersionRange implements InRangeInterface
+class BoundingPair implements InRangeInterface
 {
     /**
      * @var ComparatorVersion
@@ -39,17 +39,17 @@ class VersionRange implements InRangeInterface
 
 
     /**
-     * @throws InvalidVersionRangeException
+     * @throws InvalidBoundingPairException
      *
      * @param ComparatorVersion $lower
      *
-     * @return VersionRange
+     * @return BoundingPair
      */
     public function setLower(ComparatorVersion $lower = null)
     {
         if (!is_null($this->upper) && (!$this->upper->isSatisfiedBy($lower->getVersion())
                 || !$lower->isSatisfiedBy($this->upper->getVersion()) )) {
-            throw new InvalidVersionRangeException(
+            throw new InvalidBoundingPairException(
                 'The provided version is outside the bounds allowed by the upper bound.'
             );
         }
@@ -70,17 +70,17 @@ class VersionRange implements InRangeInterface
 
 
     /**
-     * @throws InvalidVersionRangeException
+     * @throws InvalidBoundingPairException
      *
      * @param ComparatorVersion $upper
      *
-     * @return VersionRange
+     * @return BoundingPair
      */
     public function setUpper(ComparatorVersion $upper = null)
     {
         if (!is_null($this->lower) && (!$this->lower->isSatisfiedBy($upper->getVersion())
                 || !$upper->isSatisfiedBy($this->lower->getVersion()) )) {
-            throw new InvalidVersionRangeException(
+            throw new InvalidBoundingPairException(
                 'The provided version is outside the bounds allowed by the lower bound.'
             );
         }
@@ -101,7 +101,7 @@ class VersionRange implements InRangeInterface
 
 
     /**
-     * @throws InvalidVersionRangeException
+     * @throws InvalidBoundingPairException
      *
      * @param ComparatorVersion $version1
      * @param ComparatorVersion $version2
@@ -130,7 +130,7 @@ class VersionRange implements InRangeInterface
         }
 
         if (!$upper->isSatisfiedBy($lower->getVersion()) || !$lower->isSatisfiedBy($upper->getVersion())) {
-            throw new InvalidVersionRangeException(
+            throw new InvalidBoundingPairException(
                 'The provided versions conflict.'
             );
         }
@@ -143,7 +143,7 @@ class VersionRange implements InRangeInterface
 
 
     /**
-     * Returns a string representation of the version range.
+     * Returns a string representation of the bounding pair.
      *
      * @return string
      */
@@ -169,7 +169,7 @@ class VersionRange implements InRangeInterface
 
 
     /**
-     * Returns true if the provided version satisfies the requirements of the version range.
+     * Returns true if the provided version satisfies the requirements of the bounding pair.
      *
      * @param VersionInterface $version
      *

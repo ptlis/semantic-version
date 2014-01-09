@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Tests to ensure correct error handling for invalid VersionRanges.
+ * Tests to ensure correct error handling for invalid BoundingPairs.
  *
  * PHP Version 5.4
  *
@@ -25,17 +25,17 @@ use ptlis\SemanticVersion\Comparator\LessThan;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\Label\LabelNone;
 use ptlis\SemanticVersion\Version\Version;
-use ptlis\SemanticVersion\VersionRange\VersionRange;
+use ptlis\SemanticVersion\BoundingPair\BoundingPair;
 
 /**
  * Tests to ensure correct behaviour of ComparatorFactory.
  */
-class VersionRangeInvalidTest extends \PHPUnit_Framework_TestCase
+class BoundingPairInvalidTest extends \PHPUnit_Framework_TestCase
 {
     public function testEqualityNotEqualLowerFirst()
     {
         $this->setExpectedException(
-            '\ptlis\SemanticVersion\Exception\InvalidVersionRangeException',
+            '\ptlis\SemanticVersion\Exception\InvalidBoundingPairException',
             'The provided version is outside the bounds allowed by the lower bound.'
         );
 
@@ -63,7 +63,7 @@ class VersionRangeInvalidTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new EqualTo())
             ->setVersion($upperVersion);
 
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
         $versionRange
             ->setLower($lowerBound)
             ->setUpper($upperBound);
@@ -73,7 +73,7 @@ class VersionRangeInvalidTest extends \PHPUnit_Framework_TestCase
     public function testEqualityNotEqualUpperFirst()
     {
         $this->setExpectedException(
-            '\ptlis\SemanticVersion\Exception\InvalidVersionRangeException',
+            '\ptlis\SemanticVersion\Exception\InvalidBoundingPairException',
             'The provided version is outside the bounds allowed by the upper bound.'
         );
 
@@ -101,7 +101,7 @@ class VersionRangeInvalidTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new EqualTo())
             ->setVersion($upperVersion);
 
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
         $versionRange
             ->setUpper($upperBound)
             ->setLower($lowerBound);
@@ -111,7 +111,7 @@ class VersionRangeInvalidTest extends \PHPUnit_Framework_TestCase
     public function testLowerAndUpperFlippedOne()
     {
         $this->setExpectedException(
-            '\ptlis\SemanticVersion\Exception\InvalidVersionRangeException',
+            '\ptlis\SemanticVersion\Exception\InvalidBoundingPairException',
             'The provided version is outside the bounds allowed by the lower bound.'
         );
 
@@ -139,7 +139,7 @@ class VersionRangeInvalidTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new GreaterThan())
             ->setVersion($upperVersion);
 
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
         $versionRange
             ->setLower($lowerBound)
             ->setUpper($upperBound);
@@ -149,7 +149,7 @@ class VersionRangeInvalidTest extends \PHPUnit_Framework_TestCase
     public function testLowerAndUpperFlippedTwo()
     {
         $this->setExpectedException(
-            '\ptlis\SemanticVersion\Exception\InvalidVersionRangeException',
+            '\ptlis\SemanticVersion\Exception\InvalidBoundingPairException',
             'The provided version is outside the bounds allowed by the lower bound.'
         );
 
@@ -177,7 +177,7 @@ class VersionRangeInvalidTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new GreaterOrEqualTo())
             ->setVersion($upperVersion);
 
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
         $versionRange
             ->setLower($lowerBound)
             ->setUpper($upperBound);
@@ -187,7 +187,7 @@ class VersionRangeInvalidTest extends \PHPUnit_Framework_TestCase
     public function testLowerAndUpperFlippedThree()
     {
         $this->setExpectedException(
-            '\ptlis\SemanticVersion\Exception\InvalidVersionRangeException',
+            '\ptlis\SemanticVersion\Exception\InvalidBoundingPairException',
             'The provided versions conflict.'
         );
 
@@ -215,7 +215,7 @@ class VersionRangeInvalidTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new GreaterOrEqualTo())
             ->setVersion($upperVersion);
 
-        $versionRange = new VersionRange();
+        $versionRange = new BoundingPair();
         $versionRange
             ->setUpperLower($upperBound, $lowerBound);
     }
