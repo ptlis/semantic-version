@@ -29,4 +29,3 @@ See the [Semantic Versioning](http://semver.org/) website for the specification 
 ## TODO
 
 * Sort
-* Handle hyphenated ranges (eg "1.2 - 1.4")

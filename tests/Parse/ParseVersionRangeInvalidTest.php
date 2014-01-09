@@ -72,7 +72,7 @@ class ParseVersionRangeInvalidTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException(
             '\ptlis\SemanticVersion\Exception\InvalidVersionRangeException',
-            'The version range "' . $inStr . '" could not be parsed.'
+            'The provided version is outside the bounds allowed by the lower bound.'
         );
 
         $engine  = new VersionEngine();

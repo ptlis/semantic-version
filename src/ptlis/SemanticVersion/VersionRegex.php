@@ -35,11 +35,11 @@ ComparatorVersionRegexProviderInterface
         (?<major>[0-9]+|x|\*)                       # Major Version
         (?:\.(?<minor>[0-9]+|x|\*)?)?               # Minor Version
         (?:\.(?<patch>[0-9]+|x|\*)?)?               # Patch
-        (?:\-*
-            (?<label_full>                          # Label & number (with separator)
+        (?:\-                                       # Label & number (with separator)
+            (?<label_full>
                 (?<label>alpha|beta|rc)             # Label
                 \.?(?<label_num>[0-9]+)?            # Label Number - for precedence
-            )?
+            )
         )?
     ";
 
@@ -49,7 +49,7 @@ ComparatorVersionRegexProviderInterface
      *
      * @var string
      */
-    private $comparatorRegex = "(?<comparator>[<>]?=?)";
+    private $comparatorRegex = "(?<comparator>[<>]?=?)          # Comparator\n";
 
 
     /**
@@ -57,7 +57,7 @@ ComparatorVersionRegexProviderInterface
      *
      * @var string
      */
-    private $comparatorMinRegex = "(?<min_comparator>>=?)";
+    private $comparatorMinRegex = "(?<comparator>>=?)           # Min Comparator\n";
 
 
     /**
@@ -65,7 +65,7 @@ ComparatorVersionRegexProviderInterface
      *
      * @var string
      */
-    private $comparatorMaxRegex = "(?<max_comparator><=?)";
+    private $comparatorMaxRegex = "(?<comparator><=?)           # Max Comparator\n";
 
 
     /**
@@ -75,7 +75,7 @@ ComparatorVersionRegexProviderInterface
      */
     public function getVersion()
     {
-        return '/^\s*' . $this->versionRegex . '\s*$/ix';
+        return '/^\s*' . $this->versionRegex . '\s*\-*$/ix';
     }
 
 
@@ -86,7 +86,7 @@ ComparatorVersionRegexProviderInterface
      */
     public function getComparatorVersion()
     {
-        return '/^\s*' . $this->comparatorRegex . '\s*' . $this->versionRegex . '\s*$/ix';
+        return '/^\s*' . $this->comparatorRegex . '\s*' . $this->versionRegex . '\s*\-*$/ix';
     }
 
 
@@ -97,50 +97,81 @@ ComparatorVersionRegexProviderInterface
      */
     public function getVersionRange()
     {
-        $minReplace = [
-            '<major>'       => '<min_major>',
-            '<minor>'       => '<min_minor>',
-            '<patch>'       => '<min_patch>',
-            '<label_full>'  => '<min_label_full>',
-            '<label>'       => '<min_label>',
-            '<label_num>'   => '<min_label_num>'
+        $versionKeyList = [
+            'major',
+            'minor',
+            'patch',
+            'label_full',
+            'label',
+            'label_num'
         ];
 
-        $maxReplace = [
-            '<major>'       => '<max_major>',
-            '<minor>'       => '<max_minor>',
-            '<patch>'       => '<max_patch>',
-            '<label_full>'  => '<max_label_full>',
-            '<label>'       => '<max_label>',
-            '<label_num>'   => '<max_label_num>'
-        ];
+        $minComp            = $this->getPrefixedRegex($this->comparatorMinRegex, 'min_', ['comparator']);
+        $minCompVersion     = $this->getPrefixedRegex($this->versionRegex, 'min_', $versionKeyList);
+        $maxComp            = $this->getPrefixedRegex($this->comparatorMaxRegex, 'max_', ['comparator']);
+        $maxCompVersion     = $this->getPrefixedRegex($this->versionRegex, 'max_', $versionKeyList);
 
-        $singleReplace = [
-            '<major>'       => '<single_major>',
-            '<minor>'       => '<single_minor>',
-            '<patch>'       => '<single_patch>',
-            '<label_full>'  => '<single_label_full>',
-            '<label>'       => '<single_label>',
-            '<label_num>'   => '<single_label_num>'
-        ];
+        $minHyphenVersion   = $this->getPrefixedRegex($this->versionRegex, 'min_hyphen_', $versionKeyList);
+        $maxHyphenVersion   = $this->getPrefixedRegex($this->versionRegex, 'max_hyphen_', $versionKeyList);
 
-        return '/^\s*'
-        . '('
-        .     $this->comparatorMinRegex
-        .     '\s*'
-        .     str_replace(array_keys($minReplace), $minReplace, $this->versionRegex)
-        . ')?'
-        . '\s*'
-        . '('
-        .     $this->comparatorMaxRegex
-        .     '\s*'
-        .     str_replace(array_keys($maxReplace), $maxReplace, $this->versionRegex)
-        . ')?'
-        . '\s*'
-        . '('
-        .     '(?<single_tilde>~)?'
-        .     str_replace(array_keys($singleReplace), $singleReplace, $this->versionRegex)
-        . ')?'
-        . '\s*$/ix';
+        $tilde              = $this->getPrefixedRegex($this->versionRegex, 'tilde_', $versionKeyList);
+
+        return "
+            /^
+                (
+                    (
+                        (
+                            \s*
+                            $minComp
+                            \s*
+                            $minCompVersion
+                            \s*
+                            \-*
+                        )|(
+                            \s*
+                            $maxComp
+                            \s*
+                            $maxCompVersion
+                            \s*
+                            \-*
+                        )
+                    ){1,2}
+                )?
+
+                (
+                    (
+                        \s*
+                        $minHyphenVersion
+                        \s*
+                    )
+                    \-
+                    (
+                        \s*
+                        $maxHyphenVersion
+                        \s*
+                    )
+                )?
+
+                (
+                    \s*
+                    (?<tilde>~)?
+                    \s*
+                    $tilde
+                    \s*
+                )?
+            $/ix";
+    }
+
+
+    private function getPrefixedRegex($regex, $prefix, array $keyList)
+    {
+        $search = [];
+        $replace = [];
+        foreach ($keyList as $key) {
+            $search[] = '<' . $key . '>';
+            $replace[] = '<' . $prefix . $key . '>';
+        }
+
+        return str_replace($search, $replace, $regex);
     }
 }

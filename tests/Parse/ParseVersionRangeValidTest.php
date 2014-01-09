@@ -23,6 +23,7 @@ use ptlis\SemanticVersion\Comparator\GreaterThan;
 use ptlis\SemanticVersion\Comparator\LessOrEqualTo;
 use ptlis\SemanticVersion\Comparator\LessThan;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
+use ptlis\SemanticVersion\Label\LabelBeta;
 use ptlis\SemanticVersion\Label\LabelNone;
 use ptlis\SemanticVersion\Label\LabelRc;
 use ptlis\SemanticVersion\Version\Version;
@@ -625,6 +626,94 @@ class ParseVersionRangeValidTest extends \PHPUnit_Framework_TestCase
         $upperVersion = new Version();
         $upperVersion
             ->setMajor('2')
+            ->setMinor('0')
+            ->setPatch('0')
+            ->setLabel(new LabelNone());
+        $upperComparatorVersion = new ComparatorVersion();
+        $upperComparatorVersion
+            ->setComparator(new LessThan())
+            ->setVersion($upperVersion);
+
+        // Range
+        $expectVersionRange = new VersionRange();
+        $expectVersionRange
+            ->setLower($lowerComparatorVersion)
+            ->setUpper($upperComparatorVersion);
+
+        $this->assertSame($expectStr, $outVersionRange->__toString());
+        $this->assertEquals($expectVersionRange, $outVersionRange);
+    }
+
+
+    public function testHyphenated()
+    {
+        $inStr = '1.5.3-3.0.0';
+
+        $engine  = new VersionEngine();
+        $outVersionRange = $engine->parseVersionRange($inStr);
+
+        $expectStr = '>=1.5.3<3.0.0';
+
+        // Lower
+        $lowerVersion = new Version();
+        $lowerVersion
+            ->setMajor('1')
+            ->setMinor('5')
+            ->setPatch('3')
+            ->setLabel(new LabelNone());
+        $lowerComparatorVersion = new ComparatorVersion();
+        $lowerComparatorVersion
+            ->setComparator(new GreaterOrEqualTo())
+            ->setVersion($lowerVersion);
+
+        // Upper
+        $upperVersion = new Version();
+        $upperVersion
+            ->setMajor('3')
+            ->setMinor('0')
+            ->setPatch('0')
+            ->setLabel(new LabelNone());
+        $upperComparatorVersion = new ComparatorVersion();
+        $upperComparatorVersion
+            ->setComparator(new LessThan())
+            ->setVersion($upperVersion);
+
+        // Range
+        $expectVersionRange = new VersionRange();
+        $expectVersionRange
+            ->setLower($lowerComparatorVersion)
+            ->setUpper($upperComparatorVersion);
+
+        $this->assertSame($expectStr, $outVersionRange->__toString());
+        $this->assertEquals($expectVersionRange, $outVersionRange);
+    }
+
+
+    public function testHyphenatedLabel()
+    {
+        $inStr = '2.1.3-beta.1-3.0.0';
+
+        $engine  = new VersionEngine();
+        $outVersionRange = $engine->parseVersionRange($inStr);
+
+        $expectStr = '>=2.1.3-beta.1<3.0.0';
+
+        // Lower
+        $lowerVersion = new Version();
+        $lowerVersion
+            ->setMajor('2')
+            ->setMinor('1')
+            ->setPatch('3')
+            ->setLabel(new LabelBeta(1));
+        $lowerComparatorVersion = new ComparatorVersion();
+        $lowerComparatorVersion
+            ->setComparator(new GreaterOrEqualTo())
+            ->setVersion($lowerVersion);
+
+        // Upper
+        $upperVersion = new Version();
+        $upperVersion
+            ->setMajor('3')
             ->setMinor('0')
             ->setPatch('0')
             ->setLabel(new LabelNone());
