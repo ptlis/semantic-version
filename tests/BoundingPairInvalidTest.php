@@ -28,7 +28,7 @@ use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\BoundingPair\BoundingPair;
 
 /**
- * Tests to ensure correct behaviour of ComparatorFactory.
+ * Tests to ensure correct error handling for invalid BoundingPairs.
  */
 class BoundingPairInvalidTest extends \PHPUnit_Framework_TestCase
 {

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Tests to ensure correct error handling for invalid BoundingPairs.
+ * Tests to ensure correct error handling for valid BoundingPairs.
  *
  * PHP Version 5.4
  *
@@ -26,7 +26,7 @@ use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\BoundingPair\BoundingPair;
 
 /**
- * Tests to ensure correct behaviour of ComparatorFactory.
+ * Tests to ensure correct error handling for valid BoundingPairs.
  */
 class BoundingPairValidTest extends \PHPUnit_Framework_TestCase
 {
