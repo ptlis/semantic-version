@@ -126,18 +126,19 @@ class VersionFactory
      */
     private function validateVersionArray(array $versionArr, $prefix)
     {
+        $majorKey = $prefix . 'major';
+        $minorKey = $prefix . 'minor';
+        $patchKey = $prefix . 'patch';
+
         // Handle error case where major version is omitted or a wildcard but minor/patch is a number
-        if ($this->omittedOrWildcard($versionArr, $prefix . 'major')
-            && ($this->presentNotWildcard($versionArr, $prefix . 'minor')
-                || $this->presentNotWildcard($versionArr, $prefix . 'patch'))
+        if ($this->omittedOrWildcard($versionArr, $majorKey)
+            && ($this->presentNotWildcard($versionArr, $minorKey) || $this->presentNotWildcard($versionArr, $patchKey))
         ) {
             throw new InvalidVersionException('The version number "' . $versionArr[0] . '" could not be parsed.');
         }
 
         // Handle error case where minor version is omitted or a wildcard but patch is a number
-        if ($this->omittedOrWildcard($versionArr, $prefix . 'minor')
-            && $this->presentNotWildcard($versionArr, $prefix . 'patch')
-        ) {
+        if ($this->omittedOrWildcard($versionArr, $minorKey) && $this->presentNotWildcard($versionArr, $patchKey)) {
             throw new InvalidVersionException('The version number "' . $versionArr[0] . '" could not be parsed.');
         }
     }
