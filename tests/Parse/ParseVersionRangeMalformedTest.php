@@ -205,4 +205,48 @@ class ParseVersionRangeMalformedTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectStr, $outVersionRange->__toString());
         $this->assertEquals($expectVersionRange, $outVersionRange);
     }
+
+
+    public function testComparatorFlipped()
+    {
+        $inStr = '<=2.5.0>=1.0.5';
+
+        $engine  = new VersionEngine();
+        $outVersionRange = $engine->parseVersionRange($inStr);
+
+        $expectStr = '>=1.0.5<=2.5.0';
+
+        // Lower
+        $lowerVersion = new Version();
+        $lowerVersion
+            ->setMajor('1')
+            ->setMinor('0')
+            ->setPatch('5')
+            ->setLabel(new LabelNone());
+        $lowerComparatorVersion = new ComparatorVersion();
+        $lowerComparatorVersion
+            ->setComparator(new GreaterOrEqualTo)
+            ->setVersion($lowerVersion);
+
+        // Upper
+        $upperVersion = new Version();
+        $upperVersion
+            ->setMajor('2')
+            ->setMinor('5')
+            ->setPatch('0')
+            ->setLabel(new LabelNone());
+        $upperComparatorVersion = new ComparatorVersion();
+        $upperComparatorVersion
+            ->setComparator(new LessOrEqualTo())
+            ->setVersion($upperVersion);
+
+        // Range
+        $expectVersionRange = new VersionRange();
+        $expectVersionRange
+            ->setLower($lowerComparatorVersion)
+            ->setUpper($upperComparatorVersion);
+
+        $this->assertSame($expectStr, $outVersionRange->__toString());
+        $this->assertEquals($expectVersionRange, $outVersionRange);
+    }
 }
