@@ -35,19 +35,27 @@ class ComparatorVersionFactory
      */
     private $versionFactory;
 
+    /**
+     * @var ComparatorFactory
+     */
+    private $comparatorFac;
+
 
     /**
      * Constructor
      *
      * @param ComparatorVersionRegexProviderInterface $regexProvider
-     * @param VersionFactory                          $versionFactory
+     * @param VersionFactory                          $versionFac
+     * @param ComparatorFactory                       $comparatorFac
      */
     public function __construct(
         ComparatorVersionRegexProviderInterface $regexProvider,
-        VersionFactory $versionFactory
+        VersionFactory $versionFac,
+        ComparatorFactory $comparatorFac
     ) {
         $this->regexProvider = $regexProvider;
-        $this->versionFactory = $versionFactory;
+        $this->versionFactory = $versionFac;
+        $this->comparatorFac = $comparatorFac;
     }
 
 
@@ -86,8 +94,6 @@ class ComparatorVersionFactory
      */
     public function getFromArray(array $comparatorVersionArr, $prefix = null)
     {
-        $comparatorFactory = new ComparatorFactory();   // TODO: Inject!
-
         $comparatorVersion = new ComparatorVersion();
         try {
             $version = $this->versionFactory->getFromArray($comparatorVersionArr, $prefix);
@@ -104,7 +110,9 @@ class ComparatorVersionFactory
         // A comparator has been found
         if (array_key_exists($prefix . 'comparator', $comparatorVersionArr)
                 && strlen($comparatorVersionArr[$prefix . 'comparator'])) {
-            $comparatorVersion->setComparator($comparatorFactory->get($comparatorVersionArr[$prefix . 'comparator']));
+            $comparatorVersion->setComparator(
+                $this->comparatorFac->get($comparatorVersionArr[$prefix . 'comparator'])
+            );
         }
 
 

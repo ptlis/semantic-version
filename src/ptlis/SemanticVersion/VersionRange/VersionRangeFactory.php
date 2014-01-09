@@ -45,20 +45,28 @@ class VersionRangeFactory
     private $versionFac;
 
     /**
+     * @var ComparatorFactory
+     */
+    private $comparatorFac;
+
+    /**
      * Constructor
      *
      * @param VersionRangeRegexProviderInterface    $regexProvider
      * @param ComparatorVersionFactory              $comparatorVersionFac
      * @param VersionFactory                        $versionFac
+     * @param ComparatorFactory                     $comparatorFac
      */
     public function __construct(
         VersionRangeRegexProviderInterface $regexProvider,
         ComparatorVersionFactory $comparatorVersionFac,
-        VersionFactory $versionFac
+        VersionFactory $versionFac,
+        ComparatorFactory $comparatorFac
     ) {
         $this->regexProvider = $regexProvider;
         $this->comparatorVersionFac = $comparatorVersionFac;
         $this->versionFac = $versionFac;
+        $this->comparatorFac = $comparatorFac;
     }
 
 
@@ -127,8 +135,6 @@ class VersionRangeFactory
 
     public function getFromSingleArray($versionRangeArr)
     {
-        $comparatorFactory = new ComparatorFactory(); // TODO: Inject
-
         $versionRange = new VersionRange();
 
         // Tilde match
@@ -137,68 +143,68 @@ class VersionRangeFactory
             // Full version tilde match
             if (array_key_exists('tilde_patch', $versionRangeArr) && is_numeric($versionRangeArr['tilde_patch'])) {
                 $lower = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
-                $lower->setComparator($comparatorFactory->get('>='));
+                $lower->setComparator($this->comparatorFac->get('>='));
 
                 $upper = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
                 $upper->getVersion()->setMinor($upper->getVersion()->getMinor() + 1);
                 $upper->getVersion()->setPatch(0);
-                $upper->setComparator($comparatorFactory->get('<'));
+                $upper->setComparator($this->comparatorFac->get('<'));
 
             // Major & Minor tilde match
             } elseif (array_key_exists('tilde_minor', $versionRangeArr)
                     && is_numeric($versionRangeArr['tilde_minor'])) {
                 $lower = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
                 $lower->getVersion()->setPatch(0);
-                $lower->setComparator($comparatorFactory->get('>='));
+                $lower->setComparator($this->comparatorFac->get('>='));
 
                 $upper = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
                 $upper->getVersion()->setMajor($upper->getVersion()->getMajor() + 1);
                 $upper->getVersion()->setMinor(0);
                 $upper->getVersion()->setPatch(0);
-                $upper->setComparator($comparatorFactory->get('<'));
+                $upper->setComparator($this->comparatorFac->get('<'));
 
                 // Major tilde match
             } else {
                 $lower = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
                 $lower->getVersion()->setMinor(0);
                 $lower->getVersion()->setPatch(0);
-                $lower->setComparator($comparatorFactory->get('>='));
+                $lower->setComparator($this->comparatorFac->get('>='));
 
                 $upper = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
                 $upper->getVersion()->setMajor($upper->getVersion()->getMajor() + 1);
                 $upper->getVersion()->setMinor(0);
                 $upper->getVersion()->setPatch(0);
-                $upper->setComparator($comparatorFactory->get('<'));
+                $upper->setComparator($this->comparatorFac->get('<'));
             }
 
             // Label & patch - exact match
         } elseif (array_key_exists('tilde_patch', $versionRangeArr) && strlen($versionRangeArr['tilde_patch'])) {
             $lower = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
-            $lower->setComparator($comparatorFactory->get('='));
+            $lower->setComparator($this->comparatorFac->get('='));
 
             $upper = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
-            $upper->setComparator($comparatorFactory->get('='));
+            $upper->setComparator($this->comparatorFac->get('='));
 
             // Minor - range (minor inc by 1)
         } elseif (array_key_exists('tilde_minor', $versionRangeArr) && strlen($versionRangeArr['tilde_minor'])) {
             $lower = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
-            $lower->setComparator($comparatorFactory->get('>='));
+            $lower->setComparator($this->comparatorFac->get('>='));
 
             $upper = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
             $upper->getVersion()->setMinor($upper->getVersion()->getMinor() + 1);
             $upper->getVersion()->setPatch(0);
-            $upper->setComparator($comparatorFactory->get('<'));
+            $upper->setComparator($this->comparatorFac->get('<'));
 
             // Major - range (major inc by 1;
         } else {
             $lower = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
-            $lower->setComparator($comparatorFactory->get('>='));
+            $lower->setComparator($this->comparatorFac->get('>='));
 
             $upper = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
             $upper->getVersion()->setMajor($upper->getVersion()->getMajor() + 1);
             $upper->getVersion()->setMinor(0);
             $upper->getVersion()->setPatch(0);
-            $upper->setComparator($comparatorFactory->get('<'));
+            $upper->setComparator($this->comparatorFac->get('<'));
         }
 
         if (!is_null($lower->getComparator())) {

@@ -33,16 +33,6 @@ use ptlis\SemanticVersion\Exception\InvalidVersionRangeException;
 class VersionEngine
 {
     /**
-     * @var VersionRegex
-     */
-    private $regexProvider;
-
-    /**
-     * @var LabelFactory
-     */
-    private $labelFac;
-
-    /**
      * @var VersionFactory
      */
     private $versionFac;
@@ -63,14 +53,16 @@ class VersionEngine
      */
     public function __construct()
     {
-        $this->regexProvider = new VersionRegex();
-        $this->labelFac = new LabelFactory();
-        $this->versionFac = new VersionFactory($this->regexProvider, $this->labelFac);
-        $this->comparatorVersionFac = new ComparatorVersionFactory($this->regexProvider, $this->versionFac);
+        $regexProvider = new VersionRegex();
+        $labelFac = new LabelFactory();
+        $comparatorFac = new ComparatorFactory();
+        $this->versionFac = new VersionFactory($regexProvider, $labelFac);
+        $this->comparatorVersionFac = new ComparatorVersionFactory($regexProvider, $this->versionFac, $comparatorFac);
         $this->versionRangeFac = new VersionRangeFactory(
-            $this->regexProvider,
+            $regexProvider,
             $this->comparatorVersionFac,
-            $this->versionFac
+            $this->versionFac,
+            $comparatorFac
         );
     }
 
