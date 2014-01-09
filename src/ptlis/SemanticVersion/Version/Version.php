@@ -15,6 +15,7 @@
 
 namespace ptlis\SemanticVersion\Version;
 
+use ptlis\SemanticVersion\Exception\InvalidVersionException;
 use ptlis\SemanticVersion\Label\LabelInterface;
 use ptlis\SemanticVersion\Label\LabelNone;
 
@@ -76,17 +77,25 @@ class Version implements VersionInterface
 
 
     /**
+     * @throws InvalidVersionException
+     *
      * @param int|string $major
      *
      * @return Version
      */
     public function setMajor($major)
     {
-        if ($major === 'x' || $major === '*') {
-            $this->major = '*';
-            $this->setMinor('*');
+        $filteredMajor = $this->validateVersionPart($major);
+        if (false !== $this->validateVersionPart($major)) {
+            $this->major = $filteredMajor;
+
+            if ($filteredMajor === '*') {
+                $this->setMinor('*');
+            }
         } else {
-            $this->major = (int)$major;
+            throw new InvalidVersionException(
+                'Failed to set major version to invalid value "' . $major . '"'
+            );
         }
 
         return $this;
@@ -103,17 +112,25 @@ class Version implements VersionInterface
 
 
     /**
+     * @throws InvalidVersionException
+     *
      * @param int|string $minor
      *
      * @return Version
      */
     public function setMinor($minor)
     {
-        if ($minor === 'x' || $minor === '*') {
-            $this->minor = '*';
-            $this->setPatch('*');
+        $filteredMinor = $this->validateVersionPart($minor);
+        if (false !== $this->validateVersionPart($minor)) {
+            $this->minor = $filteredMinor;
+
+            if ($filteredMinor === '*') {
+                $this->setPatch('*');
+            }
         } else {
-            $this->minor = (int)$minor;
+            throw new InvalidVersionException(
+                'Failed to set minor version to invalid value "' . $minor . '"'
+            );
         }
 
         return $this;
@@ -130,16 +147,21 @@ class Version implements VersionInterface
 
 
     /**
+     * @throws InvalidVersionException
+     *
      * @param int|string $patch
      *
      * @return Version
      */
     public function setPatch($patch)
     {
-        if ($patch === 'x' || $patch === '*') {
-            $this->patch = '*';
+        $filteredPatch = $this->validateVersionPart($patch);
+        if (false !== $this->validateVersionPart($patch)) {
+            $this->patch = $filteredPatch;
         } else {
-            $this->patch = (int)$patch;
+            throw new InvalidVersionException(
+                'Failed to set patch version to invalid value "' . $patch . '"'
+            );
         }
 
         return $this;
@@ -152,6 +174,29 @@ class Version implements VersionInterface
     public function getPatch()
     {
         return $this->patch;
+    }
+
+
+    /**
+     * Validates the provided version part, on success returns the normalised value on failure returns false.
+     *
+     * @param $versionPart
+     *
+     * @return bool|int|string
+     */
+    private function validateVersionPart($versionPart)
+    {
+        $returnPart = false;
+
+        if ($versionPart === 'x' || $versionPart === '*') {
+            $returnPart = '*';
+        } elseif ((string)$versionPart === '0') {
+            $returnPart = 0;
+        } elseif (false !== filter_var(ltrim($versionPart, '0'), FILTER_VALIDATE_INT, ['min_range' => 0])) {
+            $returnPart = (int)$versionPart;
+        }
+
+        return $returnPart;
     }
 
 

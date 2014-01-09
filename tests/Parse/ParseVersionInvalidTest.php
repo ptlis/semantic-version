@@ -108,20 +108,6 @@ class ParseVersionInvalidTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testNonDigit()
-    {
-        $inStr = '1.foo.3';
-
-        $this->setExpectedException(
-            '\ptlis\SemanticVersion\Exception\InvalidVersionException',
-            'The version number "' . $inStr . '" could not be parsed.'
-        );
-
-        $engine = new VersionEngine();
-        $engine->parseVersion($inStr);
-    }
-
-
     public function testWildcardAndDigit()
     {
         $inStr = '1.2x.3';
@@ -181,20 +167,6 @@ class ParseVersionInvalidTest extends \PHPUnit_Framework_TestCase
     public function testMultipleWildcardOnly()
     {
         $inStr = '*x*';
-
-        $this->setExpectedException(
-            '\ptlis\SemanticVersion\Exception\InvalidVersionException',
-            'The version number "' . $inStr . '" could not be parsed.'
-        );
-
-        $engine = new VersionEngine();
-        $engine->parseVersion($inStr);
-    }
-
-
-    public function testLabelOmittedHyphen()
-    {
-        $inStr = '1.5.0rc.1';
 
         $this->setExpectedException(
             '\ptlis\SemanticVersion\Exception\InvalidVersionException',

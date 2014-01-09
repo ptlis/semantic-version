@@ -91,14 +91,21 @@ class VersionFactory
 
         $version = new Version();
 
-        $version->setMajor($versionArr[$prefix . 'major']);
+        try {
+            $version->setMajor($versionArr[$prefix . 'major']);
 
-        if ($minorPresent) {
-            $version->setMinor($versionArr[$prefix . 'minor']);
-        }
+            if ($minorPresent) {
+                $version->setMinor($versionArr[$prefix . 'minor']);
+            }
 
-        if ($patchPresent) {
-            $version->setPatch($versionArr[$prefix . 'patch']);
+            if ($patchPresent) {
+                $version->setPatch($versionArr[$prefix . 'patch']);
+            }
+        } catch (InvalidVersionException $e) {
+            throw new InvalidVersionException(
+                'The version number "' . $versionArr[0] . '" could not be parsed.',
+                $e
+            );
         }
 
         $labelName = null;

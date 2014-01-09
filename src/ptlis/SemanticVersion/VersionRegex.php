@@ -33,9 +33,9 @@ ComparatorVersionRegexProviderInterface
     private $versionRegex = "
         v*                                          # Optional 'v' prefix
         (?<major>[0-9]+|x|\*)                       # Major Version
-        (?:\.(?<minor>[0-9]+|x|\*)?)?               # Minor Version
-        (?:\.(?<patch>[0-9]+|x|\*)?)?               # Patch
-        (?:\-                                       # Label & number (with separator)
+        ((?:\.(?<minor>[0-9x\*]+))|(\.?))?          # Minor Version or trailing dot
+        ((?:\.(?<patch>[0-9x\*]+))|(\.?))?          # Patch or trailing dot
+        (?:\-?                                      # Label & number (with separator)
             (?<label_full>
                 (?<label>[a-z]+)                    # Label
                 \.?(?<label_num>[0-9]+)?            # Label Number - for precedence
