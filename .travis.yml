@@ -10,7 +10,4 @@ matrix:
     - php: hhvm
 
 before_script:
-    - composer install --dev
-
-script:
-    - ./bin/phpunit
+    - composer install --no-dev
