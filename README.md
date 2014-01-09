@@ -29,4 +29,9 @@ See the [Semantic Versioning](http://semver.org/) website for the specification 
 ## TODO
 
 * Sort
-* test for label omitting hypen
+* Pre-release labels that consist of numbers & periods.
+* test for changing 'none' label
+    * interface for 'none' label
+    * working
+    * no class
+    * invalid class (not impl interface)
