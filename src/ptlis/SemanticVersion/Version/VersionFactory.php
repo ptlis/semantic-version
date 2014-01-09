@@ -126,23 +126,49 @@ class VersionFactory
      */
     private function validateVersionArray(array $versionArr, $prefix)
     {
-        $majorPresent = array_key_exists($prefix . 'major', $versionArr);
-        $minorPresent = array_key_exists($prefix . 'minor', $versionArr) && strlen($versionArr[$prefix . 'minor']);
-        $patchPresent = array_key_exists($prefix . 'patch', $versionArr) && strlen($versionArr[$prefix . 'patch']);
-
         // Handle error case where major version is omitted or a wildcard but minor/patch is a number
-        if ((!$majorPresent || $versionArr[$prefix . 'major'] === '*' || $versionArr[$prefix . 'major'] === 'x')
-            && (($minorPresent && $versionArr[$prefix . 'minor'] !== '*' && $versionArr[$prefix . 'minor'] !== 'x')
-                || ($patchPresent && $versionArr[$prefix . 'patch'] !== '*' && $versionArr[$prefix . 'patch'] !== 'x'))
+        if ($this->omittedOrWildcard($versionArr, $prefix . 'major')
+            && ($this->presentNotWildcard($versionArr, $prefix . 'minor')
+                || $this->presentNotWildcard($versionArr, $prefix . 'patch'))
         ) {
             throw new InvalidVersionException('The version number "' . $versionArr[0] . '" could not be parsed.');
         }
 
         // Handle error case where minor version is omitted or a wildcard but patch is a number
-        if ((!$minorPresent || $versionArr[$prefix . 'minor'] === '*' || $versionArr[$prefix . 'minor'] === 'x')
-            && ($patchPresent && $versionArr[$prefix . 'patch'] !== '*' && $versionArr[$prefix . 'patch'] !== 'x')
+        if ($this->omittedOrWildcard($versionArr, $prefix . 'minor')
+            && $this->presentNotWildcard($versionArr, $prefix . 'patch')
         ) {
             throw new InvalidVersionException('The version number "' . $versionArr[0] . '" could not be parsed.');
         }
+    }
+
+
+    /**
+     * Returns true if the version value identified by key was omitted or is a wildcard.
+     *
+     * @param array     $versionArr
+     * @param string    $key
+     *
+     * @return bool
+     */
+    private function omittedOrWildcard($versionArr, $key)
+    {
+        return !(array_key_exists($key, $versionArr) && strlen($versionArr[$key]))
+            || ($versionArr[$key] === '*' || $versionArr[$key] === 'x');
+    }
+
+
+    /**
+     * Returns true if the version value identified by key was present and is not a wildcard.
+     *
+     * @param array     $versionArr
+     * @param string    $key
+     *
+     * @return bool
+     */
+    private function presentNotWildcard($versionArr, $key)
+    {
+        return array_key_exists($key, $versionArr) && strlen($versionArr[$key])
+            && $versionArr[$key] !== '*' && $versionArr[$key] !== 'x';
     }
 }
