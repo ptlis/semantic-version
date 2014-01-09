@@ -180,18 +180,43 @@ class VersionRange implements InRangeInterface
         $satisfied = false;
 
         // Upper & Lower set, both are satisfied by version
-        if (!is_null($this->lower) && $this->lower->isSatisfiedBy($version)
-                && !is_null($this->upper) && $this->upper->isSatisfiedBy($version)) {
+        if ($this->lowerSatisfiedBy($version) && $this->upperSatisfiedBy($version)) {
             $satisfied = true;
 
         // Lower set only, is satisfied by version
-        } elseif (is_null($this->upper) && !is_null($this->lower) && $this->lower->isSatisfiedBy($version)) {
+        } elseif (is_null($this->upper) && $this->lowerSatisfiedBy($version)) {
             $satisfied = true;
 
         // Upper set only, is satisfied by version
-        } elseif (is_null($this->lower) && !is_null($this->upper) && $this->upper->isSatisfiedBy($version)) {
+        } elseif (is_null($this->lower) && $this->upperSatisfiedBy($version)) {
             $satisfied = true;
         }
         return $satisfied;
+    }
+
+
+    /**
+     * Returns true if the upper comparator version is satisfied by the passed version.
+     *
+     * @param VersionInterface $version
+     *
+     * @return bool
+     */
+    private function lowerSatisfiedBy(VersionInterface $version)
+    {
+        return !is_null($this->lower) && $this->lower->isSatisfiedBy($version);
+    }
+
+
+    /**
+     * Returns true if the lower comparator version is satisfied by the passed version.
+     *
+     * @param VersionInterface $version
+     *
+     * @return bool
+     */
+    private function upperSatisfiedBy(VersionInterface $version)
+    {
+        return !is_null($this->upper) && $this->upper->isSatisfiedBy($version);
     }
 }
