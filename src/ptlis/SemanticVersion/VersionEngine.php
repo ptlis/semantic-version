@@ -67,7 +67,11 @@ class VersionEngine
         $this->labelFac = new LabelFactory();
         $this->versionFac = new VersionFactory($this->regexProvider, $this->labelFac);
         $this->comparatorVersionFac = new ComparatorVersionFactory($this->regexProvider, $this->versionFac);
-        $this->versionRangeFac = new VersionRangeFactory($this->regexProvider, $this->comparatorVersionFac, $this->versionFac);
+        $this->versionRangeFac = new VersionRangeFactory(
+            $this->regexProvider,
+            $this->comparatorVersionFac,
+            $this->versionFac
+        );
     }
 
 
