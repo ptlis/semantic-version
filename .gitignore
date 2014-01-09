@@ -8,7 +8,6 @@
 /vendor/
 /composer.phar
 /.idea/
-/composer.lock
 
 
 
