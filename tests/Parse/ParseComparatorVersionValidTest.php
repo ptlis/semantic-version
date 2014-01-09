@@ -402,13 +402,6 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
     }
 
-    // TODO: labels
-    // TODO: numbered labels
-
-
-
-
-
 
     public function testMajorWithPadding()
     {

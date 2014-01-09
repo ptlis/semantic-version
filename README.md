@@ -26,12 +26,9 @@ See the [Semantic Versioning](http://semver.org/) website for the specification 
     $boundingPair->getLower()... // As ComparatorVersion description above
 ```
 
+[![Build Status](https://travis-ci.org/ptlis/semantic-version.png?branch=master)](https://travis-ci.org/ptlis/semantic-version)
+
 ## TODO
 
 * Sort
 * Pre-release labels that consist of numbers & periods.
-* test for changing 'none' label
-    * interface for 'none' label
-    * working
-    * no class
-    * invalid class (not impl interface)
