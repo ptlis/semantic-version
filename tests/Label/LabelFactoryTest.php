@@ -20,6 +20,8 @@ namespace Label\tests;
 require_once 'InvalidLabel.php';
 require_once 'ReplacementWildcardLabel.php';
 require_once 'InvalidReplacementWildcardLabel.php';
+require_once 'ReplacementAbsentLabel.php';
+require_once 'InvalidReplacementAbsentLabel.php';
 
 use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;
@@ -27,6 +29,7 @@ use ptlis\SemanticVersion\Label\LabelDev;
 use ptlis\SemanticVersion\Label\LabelFactory;
 use ptlis\SemanticVersion\Label\LabelAbsent;
 use ptlis\SemanticVersion\Label\LabelRc;
+use tests\Label\ReplacementAbsentLabel;
 use tests\Label\ReplacementWildcardLabel;
 
 /**
@@ -122,11 +125,50 @@ class LabelFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException(
             '\RuntimeException',
-            'Wildcard labels must implement the ptlis\SemanticVersion\Label\WildcardLabelInterface interface'
+            'Wildcard labels must implement the ptlis\SemanticVersion\Label\LabelWildcardInterface interface'
         );
 
         $factory = new LabelFactory();
         $factory->setWildcardLabel($className);
+    }
+
+
+    public function testAbsentLabelClass()
+    {
+        $factory = new LabelFactory();
+        $factory->setAbsentLabel('tests\Label\ReplacementAbsentLabel');
+
+        $expectLabel = new ReplacementAbsentLabel();
+
+        $this->assertEquals($expectLabel, $factory->get(''));
+    }
+
+
+    public function testAbsentLabelClassDoesntExist()
+    {
+        $className = 'tests\Label\AbsentBoo';
+
+        $this->setExpectedException(
+            '\RuntimeException',
+            'The class "' . $className . '" does not exist'
+        );
+
+        $factory = new LabelFactory();
+        $factory->setAbsentLabel($className);
+    }
+
+
+    public function testAbsentLabelClassDoesntImplementInterface()
+    {
+        $className = 'tests\Label\InvalidReplacementAbsentLabel';
+
+        $this->setExpectedException(
+            '\RuntimeException',
+            'Absent labels must implement the ptlis\SemanticVersion\Label\LabelAbsentInterface interface'
+        );
+
+        $factory = new LabelFactory();
+        $factory->setAbsentLabel($className);
     }
 
 

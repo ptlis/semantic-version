@@ -120,13 +120,38 @@ class LabelFactory
             );
         }
 
-        if (!((new $class()) instanceof LabelInterface)) {
+        if (!((new $class()) instanceof LabelWildcardInterface)) {
             throw new \RuntimeException(
-                'Wildcard labels must implement the ptlis\SemanticVersion\Label\WildcardLabelInterface interface'
+                'Wildcard labels must implement the ptlis\SemanticVersion\Label\LabelWildcardInterface interface'
             );
         }
 
         $this->wildcardLabel = $class;
+    }
+
+
+    /**
+     * Set the label to use for label being absent.
+     *
+     * @throws \RuntimeException
+     *
+     * @param string $class
+     */
+    public function setAbsentLabel($class)
+    {
+        if (!class_exists($class)) {
+            throw new \RuntimeException(
+                'The class "' . $class . '" does not exist'
+            );
+        }
+
+        if (!((new $class()) instanceof LabelAbsentInterface)) {
+            throw new \RuntimeException(
+                'Absent labels must implement the ptlis\SemanticVersion\Label\LabelAbsentInterface interface'
+            );
+        }
+
+        $this->absentLabel = $class;
     }
 
 
