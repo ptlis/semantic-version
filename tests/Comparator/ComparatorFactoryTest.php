@@ -128,7 +128,7 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testClassDoesntExist()
     {
-        $className = 'ptlis\SemanticVersion\Label\Boo';
+        $className = 'ptlis\SemanticVersion\Comparator\Boo';
 
         $this->setExpectedException(
             '\RuntimeException',
@@ -140,7 +140,7 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testClassDoesntImplementInteface()
+    public function testClassDoesntImplementInterface()
     {
         $className = 'tests\Comparator\InvalidComparator';
 
