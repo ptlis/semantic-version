@@ -15,7 +15,9 @@
  * file that was distributed with this source code.
  */
 
-namespace tests;
+namespace tests\Comparator;
+
+require_once 'InvalidComparator.php';
 
 use ptlis\SemanticVersion\Comparator\ComparatorFactory;
 use ptlis\SemanticVersion\Comparator\EqualTo;
@@ -124,7 +126,7 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testInvalidClass()
+    public function testClassDoesntExist()
     {
         $className = 'ptlis\SemanticVersion\Label\Boo';
 
@@ -135,5 +137,19 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
 
         $factory = new ComparatorFactory();
         $factory->addType('boo', $className);
+    }
+
+
+    public function testClassDoesntImplementInteface()
+    {
+        $className = 'tests\Comparator\InvalidComparator';
+
+        $this->setExpectedException(
+            '\RuntimeException',
+            'Comparators must implement the ptlis\SemanticVersion\Comparator\ComparatorInterface interface'
+        );
+
+        $factory = new ComparatorFactory();
+        $factory->addType('invalid', $className);
     }
 }

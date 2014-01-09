@@ -52,7 +52,12 @@ class ComparatorFactory
             );
         }
 
-        // TODO: check for implements interface
+        if (!((new $class()) instanceof ComparatorInterface)) {
+            throw new \RuntimeException(
+                'Comparators must implement the ptlis\SemanticVersion\Comparator\ComparatorInterface interface'
+            );
+        }
+
 
         $this->comparatorList[$type] = $class;
     }
