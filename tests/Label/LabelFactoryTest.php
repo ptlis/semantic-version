@@ -15,7 +15,9 @@
  * file that was distributed with this source code.
  */
 
-namespace tests;
+namespace Label\tests;
+
+require_once 'InvalidLabel.php';
 
 use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;
@@ -95,7 +97,7 @@ class LabelFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testInvalidClass()
+    public function testClassDoesntExist()
     {
         $className = 'ptlis\SemanticVersion\Label\Boo';
 
@@ -106,5 +108,19 @@ class LabelFactoryTest extends \PHPUnit_Framework_TestCase
 
         $factory = new LabelFactory();
         $factory->addType('boo', $className);
+    }
+
+
+    public function testClassDoesntImplementInterface()
+    {
+        $className = 'tests\Label\InvalidLabel';
+
+        $this->setExpectedException(
+            '\RuntimeException',
+            'Labels must implement the ptlis\SemanticVersion\Label\LabelInterface interface'
+        );
+
+        $factory = new LabelFactory();
+        $factory->addType('invalid', $className);
     }
 }

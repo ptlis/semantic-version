@@ -53,7 +53,11 @@ class LabelFactory
             );
         }
 
-        // TODO: check for implements interface
+        if (!((new $class()) instanceof LabelInterface)) {
+            throw new \RuntimeException(
+                'Labels must implement the ptlis\SemanticVersion\Label\LabelInterface interface'
+            );
+        }
 
         $this->labelList[$type] = $class;
     }
