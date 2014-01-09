@@ -41,6 +41,8 @@ tools:
     sensiolabs_security_checker: true
     php_code_coverage:
         config_path: phpunit.xml
+        before_commands:
+            - "composer install --prefer-source"
     php_cpd:
         excluded_dirs:
             - tests/
