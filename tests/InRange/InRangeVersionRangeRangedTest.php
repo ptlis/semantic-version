@@ -21,7 +21,7 @@ use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
 use ptlis\SemanticVersion\Comparator\LessThan;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\Label\LabelBeta;
-use ptlis\SemanticVersion\Label\LabelNone;
+use ptlis\SemanticVersion\Label\LabelAbsent;
 use ptlis\SemanticVersion\Label\LabelRc;
 use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\BoundingPair\BoundingPair;
@@ -35,7 +35,7 @@ class InRangeBoundingPairRangedTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $lowerBound = new ComparatorVersion();
         $lowerBound
@@ -47,7 +47,7 @@ class InRangeBoundingPairRangedTest extends \PHPUnit_Framework_TestCase
             ->setMajor(3)
             ->setMinor(0)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $upperBound = new ComparatorVersion();
         $upperBound
@@ -64,7 +64,7 @@ class InRangeBoundingPairRangedTest extends \PHPUnit_Framework_TestCase
             ->setMajor(2)
             ->setMinor(0)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertTrue($versionRange->isSatisfiedBy($testVersion));
     }
@@ -77,7 +77,7 @@ class InRangeBoundingPairRangedTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $lowerBound = new ComparatorVersion();
         $lowerBound
@@ -89,7 +89,7 @@ class InRangeBoundingPairRangedTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(8)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $upperBound = new ComparatorVersion();
         $upperBound
@@ -106,7 +106,7 @@ class InRangeBoundingPairRangedTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(5)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertTrue($versionRange->isSatisfiedBy($testVersion));
     }
@@ -119,7 +119,7 @@ class InRangeBoundingPairRangedTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(5)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $lowerBound = new ComparatorVersion();
         $lowerBound
@@ -131,7 +131,7 @@ class InRangeBoundingPairRangedTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(9)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $upperBound = new ComparatorVersion();
         $upperBound
@@ -148,7 +148,7 @@ class InRangeBoundingPairRangedTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(6)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertTrue($versionRange->isSatisfiedBy($testVersion));
     }
@@ -173,7 +173,7 @@ class InRangeBoundingPairRangedTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $upperBound = new ComparatorVersion();
         $upperBound

@@ -18,7 +18,7 @@ namespace ptlis\SemanticVersion\Label;
 /**
  * Class representing the absence of a label.
  */
-class LabelNone implements LabelInterface
+class LabelAbsent implements LabelAbsentInterface
 {
     /**
      * No label.
@@ -43,20 +43,6 @@ class LabelNone implements LabelInterface
 
 
     /**
-     * Set the label version number;
-     *
-     * @param int|null $version
-     *
-     * @return LabelNone
-     */
-    public function setVersion($version)
-    {
-        $version;   // Be quiet phpmd
-        return $this;
-    }
-
-
-    /**
      * Absence of a label is the highest precedence.
      *
      * @return int
@@ -75,20 +61,6 @@ class LabelNone implements LabelInterface
     public function getBuildMetaData()
     {
         return '';
-    }
-
-
-    /**
-     * Set the build metadata.
-     *
-     * @param string $metadata
-     *
-     * @return LabelNone
-     */
-    public function setBuildMetaData($metadata)
-    {
-        $metadata;   // Be quiet phpmd
-        return $this;
     }
 
 

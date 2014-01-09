@@ -28,7 +28,7 @@ class LabelFactory
     /**
      * @var string
      */
-    private $noneLabel = 'ptlis\SemanticVersion\Label\LabelNone';
+    private $absentLabel = 'ptlis\SemanticVersion\Label\LabelAbsent';
 
 
     /**
@@ -148,13 +148,13 @@ class LabelFactory
                 $label = new $this->wildcardLabel();
                 $label->setName($name);
             }
+            $label->setVersion($version);
+            $label->setBuildMetaData($metadata);
 
         } else {
-            $label = new $this->noneLabel();
+            $label = new $this->absentLabel();
             $version = null;
         }
-        $label->setVersion($version);
-        $label->setBuildMetaData($metadata);
 
         return $label;
     }

@@ -25,7 +25,7 @@ use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;
 use ptlis\SemanticVersion\Label\LabelDev;
 use ptlis\SemanticVersion\Label\LabelFactory;
-use ptlis\SemanticVersion\Label\LabelNone;
+use ptlis\SemanticVersion\Label\LabelAbsent;
 use ptlis\SemanticVersion\Label\LabelRc;
 use tests\Label\ReplacementWildcardLabel;
 
@@ -58,11 +58,11 @@ class LabelFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testLabelNone()
+    public function testLabelAbsent()
     {
         $factory = new LabelFactory();
 
-        $this->assertEquals(new LabelNone(), $factory->get(''));
+        $this->assertEquals(new LabelAbsent(), $factory->get(''));
     }
 
 

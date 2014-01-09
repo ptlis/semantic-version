@@ -25,7 +25,7 @@ use ptlis\SemanticVersion\Comparator\LessThan;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;
-use ptlis\SemanticVersion\Label\LabelNone;
+use ptlis\SemanticVersion\Label\LabelAbsent;
 use ptlis\SemanticVersion\Label\LabelRc;
 use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\BoundingPair\BoundingPair;
@@ -48,7 +48,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel(new LabelNone());;
+            ->setLabel(new LabelAbsent());;
         $lowerComparatorVersion = new ComparatorVersion();
         $lowerComparatorVersion
             ->setComparator(new GreaterThan())
@@ -60,7 +60,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('2')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel(new LabelNone());;
+            ->setLabel(new LabelAbsent());;
         $upperComparatorVersion = new ComparatorVersion();
         $upperComparatorVersion
             ->setComparator(new LessOrEqualTo())
@@ -95,7 +95,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel(new LabelNone());;
+            ->setLabel(new LabelAbsent());;
         $lowerComparatorVersion = new ComparatorVersion();
         $lowerComparatorVersion
             ->setComparator(new GreaterThan())
@@ -107,7 +107,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('2')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel(new LabelNone());;
+            ->setLabel(new LabelAbsent());;
         $upperComparatorVersion = new ComparatorVersion();
         $upperComparatorVersion
             ->setComparator(new LessOrEqualTo())
@@ -139,7 +139,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel(new LabelNone());;
+            ->setLabel(new LabelAbsent());;
         $lowerComparatorVersion = new ComparatorVersion();
         $lowerComparatorVersion
             ->setComparator(new GreaterThan())
@@ -151,7 +151,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('1')
             ->setPatch('0')
-            ->setLabel(new LabelNone());;
+            ->setLabel(new LabelAbsent());;
         $upperComparatorVersion = new ComparatorVersion();
         $upperComparatorVersion
             ->setComparator(new LessOrEqualTo())
@@ -183,7 +183,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel(new LabelNone());;
+            ->setLabel(new LabelAbsent());;
         $lowerComparatorVersion = new ComparatorVersion();
         $lowerComparatorVersion
             ->setComparator(new GreaterThan())
@@ -195,7 +195,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('0')
             ->setPatch('5')
-            ->setLabel(new LabelNone());;
+            ->setLabel(new LabelAbsent());;
         $upperComparatorVersion = new ComparatorVersion();
         $upperComparatorVersion
             ->setComparator(new LessOrEqualTo())
@@ -227,7 +227,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel(new LabelNone());;
+            ->setLabel(new LabelAbsent());;
         $lowerComparatorVersion = new ComparatorVersion();
         $lowerComparatorVersion
             ->setComparator(new GreaterThan())
@@ -258,7 +258,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel(new LabelNone());;
+            ->setLabel(new LabelAbsent());;
         $upperComparatorVersion = new ComparatorVersion();
         $upperComparatorVersion
             ->setComparator(new LessOrEqualTo())
@@ -289,7 +289,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel(new LabelNone());;
+            ->setLabel(new LabelAbsent());;
         $lowerComparatorVersion = new ComparatorVersion();
         $lowerComparatorVersion
             ->setComparator(new GreaterOrEqualTo())
@@ -301,7 +301,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('2')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel(new LabelNone());;
+            ->setLabel(new LabelAbsent());;
         $upperComparatorVersion = new ComparatorVersion();
         $upperComparatorVersion
             ->setComparator(new LessThan())
@@ -333,7 +333,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel(new LabelNone());;
+            ->setLabel(new LabelAbsent());;
         $lowerComparatorVersion = new ComparatorVersion();
         $lowerComparatorVersion
             ->setComparator(new GreaterOrEqualTo())
@@ -345,7 +345,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('1')
             ->setPatch('0')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
         $upperComparatorVersion = new ComparatorVersion();
         $upperComparatorVersion
             ->setComparator(new LessThan())
@@ -377,7 +377,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('0')
             ->setPatch('5')
-            ->setLabel(new LabelNone());;
+            ->setLabel(new LabelAbsent());;
         $exactComparatorVersion = new ComparatorVersion();
         $exactComparatorVersion
             ->setComparator(new EqualTo())
@@ -441,7 +441,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
         $lowerComparatorVersion = new ComparatorVersion();
         $lowerComparatorVersion
             ->setComparator(new GreaterOrEqualTo())
@@ -453,7 +453,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('2')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
         $upperComparatorVersion = new ComparatorVersion();
         $upperComparatorVersion
             ->setComparator(new LessThan())
@@ -485,7 +485,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('7')
             ->setPatch('0')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
         $lowerComparatorVersion = new ComparatorVersion();
         $lowerComparatorVersion
             ->setComparator(new GreaterOrEqualTo())
@@ -497,7 +497,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('2')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
         $upperComparatorVersion = new ComparatorVersion();
         $upperComparatorVersion
             ->setComparator(new LessThan())
@@ -529,7 +529,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('7')
             ->setPatch('9')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
         $lowerComparatorVersion = new ComparatorVersion();
         $lowerComparatorVersion
             ->setComparator(new GreaterOrEqualTo())
@@ -541,7 +541,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('8')
             ->setPatch('0')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
         $upperComparatorVersion = new ComparatorVersion();
         $upperComparatorVersion
             ->setComparator(new LessThan())
@@ -573,7 +573,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
         $lowerComparatorVersion = new ComparatorVersion();
         $lowerComparatorVersion
             ->setComparator(new GreaterOrEqualTo())
@@ -585,7 +585,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('2')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
         $upperComparatorVersion = new ComparatorVersion();
         $upperComparatorVersion
             ->setComparator(new LessThan())
@@ -617,7 +617,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('7')
             ->setPatch('0')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
         $lowerComparatorVersion = new ComparatorVersion();
         $lowerComparatorVersion
             ->setComparator(new GreaterOrEqualTo())
@@ -629,7 +629,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('2')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
         $upperComparatorVersion = new ComparatorVersion();
         $upperComparatorVersion
             ->setComparator(new LessThan())
@@ -661,7 +661,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('5')
             ->setPatch('3')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
         $lowerComparatorVersion = new ComparatorVersion();
         $lowerComparatorVersion
             ->setComparator(new GreaterOrEqualTo())
@@ -673,7 +673,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('3')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
         $upperComparatorVersion = new ComparatorVersion();
         $upperComparatorVersion
             ->setComparator(new LessThan())
@@ -717,7 +717,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('3')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
         $upperComparatorVersion = new ComparatorVersion();
         $upperComparatorVersion
             ->setComparator(new LessThan())
@@ -761,7 +761,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('2')
             ->setMinor('0')
             ->setPatch('0')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
         $upperComparatorVersion = new ComparatorVersion();
         $upperComparatorVersion
             ->setComparator(new LessThan())

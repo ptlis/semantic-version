@@ -18,7 +18,7 @@ namespace ptlis\SemanticVersion\Label;
 /**
  * Abstract Class for Named labels.
  */
-abstract class AbstractNamedLabel implements LabelInterface
+abstract class AbstractNamedLabel implements LabelPresentInterface
 {
     /**
      * @var int

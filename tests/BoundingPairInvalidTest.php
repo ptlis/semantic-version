@@ -23,7 +23,7 @@ use ptlis\SemanticVersion\Comparator\GreaterThan;
 use ptlis\SemanticVersion\Comparator\LessOrEqualTo;
 use ptlis\SemanticVersion\Comparator\LessThan;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
-use ptlis\SemanticVersion\Label\LabelNone;
+use ptlis\SemanticVersion\Label\LabelAbsent;
 use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\BoundingPair\BoundingPair;
 
@@ -44,7 +44,7 @@ class BoundingPairInvalidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(15)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $lowerBound = new ComparatorVersion();
         $lowerBound
@@ -56,7 +56,7 @@ class BoundingPairInvalidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(2)
             ->setMinor(0)
             ->setPatch(15)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $upperBound = new ComparatorVersion();
         $upperBound
@@ -82,7 +82,7 @@ class BoundingPairInvalidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(15)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $lowerBound = new ComparatorVersion();
         $lowerBound
@@ -94,7 +94,7 @@ class BoundingPairInvalidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(2)
             ->setMinor(0)
             ->setPatch(15)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $upperBound = new ComparatorVersion();
         $upperBound
@@ -120,7 +120,7 @@ class BoundingPairInvalidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(15)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $lowerBound = new ComparatorVersion();
         $lowerBound
@@ -132,7 +132,7 @@ class BoundingPairInvalidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(2)
             ->setMinor(0)
             ->setPatch(15)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $upperBound = new ComparatorVersion();
         $upperBound
@@ -158,7 +158,7 @@ class BoundingPairInvalidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(15)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $lowerBound = new ComparatorVersion();
         $lowerBound
@@ -170,7 +170,7 @@ class BoundingPairInvalidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(2)
             ->setMinor(0)
             ->setPatch(15)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $upperBound = new ComparatorVersion();
         $upperBound
@@ -196,7 +196,7 @@ class BoundingPairInvalidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(15)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $lowerBound = new ComparatorVersion();
         $lowerBound
@@ -208,7 +208,7 @@ class BoundingPairInvalidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(2)
             ->setMinor(0)
             ->setPatch(15)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $upperBound = new ComparatorVersion();
         $upperBound

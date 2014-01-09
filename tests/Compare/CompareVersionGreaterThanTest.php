@@ -21,7 +21,7 @@ use ptlis\SemanticVersion\Comparator\GreaterThan;
 use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;
 use ptlis\SemanticVersion\Label\LabelDev;
-use ptlis\SemanticVersion\Label\LabelNone;
+use ptlis\SemanticVersion\Label\LabelAbsent;
 use ptlis\SemanticVersion\Label\LabelRc;
 use ptlis\SemanticVersion\Version\Version;
 
@@ -326,14 +326,14 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testGreaterThanLabelRcNone()
+    public function testGreaterThanLabelRcAbsent()
     {
         $version1 = new Version();
         $version1
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $version2 = new Version();
         $version2
@@ -348,7 +348,7 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testLessThanLabelRcNone()
+    public function testLessThanLabelRcAbsent()
     {
         $version1 = new Version();
         $version1
@@ -362,7 +362,7 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $greaterThan = new GreaterThan();
 
@@ -377,14 +377,14 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $version2 = new Version();
         $version2
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $greaterThan = new GreaterThan();
 

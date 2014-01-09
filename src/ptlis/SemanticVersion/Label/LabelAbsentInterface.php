@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Interface that wildcard version labels must implement.
+ * Interface that absent version labels must implement.
  *
  * PHP Version 5.4
  *
@@ -16,16 +16,8 @@
 namespace ptlis\SemanticVersion\Label;
 
 /**
- * Interface that wildcard version labels must implement.
+ * Interface that absent version labels must implement.
  */
-interface LabelWildcardInterface extends LabelPresentInterface
+interface LabelAbsentInterface extends LabelInterface
 {
-    /**
-     * Sets the label name.
-     *
-     * @param string $name
-     *
-     * @return mixed
-     */
-    public function setName($name);
 }

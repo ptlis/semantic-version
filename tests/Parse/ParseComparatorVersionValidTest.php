@@ -24,7 +24,7 @@ use ptlis\SemanticVersion\Comparator\LessOrEqualTo;
 use ptlis\SemanticVersion\Comparator\LessThan;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\Label\LabelDev;
-use ptlis\SemanticVersion\Label\LabelNone;
+use ptlis\SemanticVersion\Label\LabelAbsent;
 use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionEngine;
 
@@ -49,7 +49,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
@@ -74,7 +74,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
@@ -97,7 +97,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(7)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
@@ -120,7 +120,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(7)
             ->setPatch(9)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
@@ -143,7 +143,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
@@ -166,7 +166,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(7)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
@@ -189,7 +189,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(7)
             ->setPatch(9)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
@@ -212,7 +212,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
@@ -235,7 +235,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(7)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
@@ -258,7 +258,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(7)
             ->setPatch(9)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
@@ -281,7 +281,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
@@ -304,7 +304,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(7)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
@@ -327,7 +327,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(7)
             ->setPatch(9)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
@@ -350,7 +350,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
@@ -373,7 +373,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(7)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
@@ -396,7 +396,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(7)
             ->setPatch(9)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
@@ -426,7 +426,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
@@ -449,7 +449,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(5)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
@@ -472,7 +472,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(5)
             ->setPatch(3)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
@@ -495,7 +495,7 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(5)
             ->setPatch(3)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);

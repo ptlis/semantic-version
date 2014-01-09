@@ -20,7 +20,7 @@ namespace tests\Parse;
 use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;
 use ptlis\SemanticVersion\Label\LabelDev;
-use ptlis\SemanticVersion\Label\LabelNone;
+use ptlis\SemanticVersion\Label\LabelAbsent;
 use ptlis\SemanticVersion\Label\LabelRc;
 use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionEngine;
@@ -30,7 +30,7 @@ use ptlis\SemanticVersion\VersionEngine;
  */
 class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
 {
-    public function testAllFieldsLabelNone()
+    public function testAllFieldsLabelAbsent()
     {
         $inStr = '1.0.0';
 
@@ -44,7 +44,7 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);
@@ -168,7 +168,7 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);
@@ -189,7 +189,7 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(5)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);
@@ -210,7 +210,7 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(5)
             ->setPatch(3)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);
@@ -383,7 +383,7 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);
@@ -404,7 +404,7 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(5)
             ->setPatch(0)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);
@@ -425,7 +425,7 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(5)
             ->setPatch(3)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);
@@ -467,7 +467,7 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(5)
             ->setPatch('*')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);
@@ -488,7 +488,7 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor('*')
             ->setPatch('*')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);
@@ -509,7 +509,7 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor('*')
             ->setPatch('*')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);
@@ -530,7 +530,7 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('*')
             ->setMinor('*')
             ->setPatch('*')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);
@@ -551,7 +551,7 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('*')
             ->setMinor('*')
             ->setPatch('*')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);
@@ -572,7 +572,7 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('*')
             ->setMinor('*')
             ->setPatch('*')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);
@@ -593,7 +593,7 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('5')
             ->setPatch('*')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);
@@ -614,7 +614,7 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('*')
             ->setPatch('*')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);
@@ -635,7 +635,7 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('1')
             ->setMinor('*')
             ->setPatch('*')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);
@@ -656,7 +656,7 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('*')
             ->setMinor('*')
             ->setPatch('*')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);
@@ -677,7 +677,7 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('*')
             ->setMinor('*')
             ->setPatch('*')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);
@@ -698,7 +698,7 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMajor('*')
             ->setMinor('*')
             ->setPatch('*')
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAbsent());
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);

@@ -37,16 +37,6 @@ interface LabelInterface
 
 
     /**
-     * Set the label version number;
-     *
-     * @param int|null $version
-     *
-     * @return LabelInterface
-     */
-    public function setVersion($version);
-
-
-    /**
      * Get the precedence value for the label (eg alpha (1) -> beta (2) -> rc (3) etc); greater values are later.
      *
      * @return int
@@ -60,16 +50,6 @@ interface LabelInterface
      * @return string
      */
     public function getBuildMetaData();
-
-
-    /**
-     * Set the build metadata for the label.
-     *
-     * @param string $metadata
-     *
-     * @return LabelInterface
-     */
-    public function setBuildMetaData($metadata);
 
 
     /**

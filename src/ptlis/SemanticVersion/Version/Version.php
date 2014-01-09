@@ -17,7 +17,7 @@ namespace ptlis\SemanticVersion\Version;
 
 use ptlis\SemanticVersion\Exception\InvalidVersionException;
 use ptlis\SemanticVersion\Label\LabelInterface;
-use ptlis\SemanticVersion\Label\LabelNone;
+use ptlis\SemanticVersion\Label\LabelAbsent;
 
 /*
  * Entity to represent a semantic version number.
@@ -50,7 +50,7 @@ class Version implements VersionInterface
      */
     public function __construct()
     {
-        $this->label = new LabelNone();
+        $this->label = new LabelAbsent();
     }
 
 
