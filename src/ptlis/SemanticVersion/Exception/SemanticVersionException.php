@@ -20,6 +20,12 @@ namespace ptlis\SemanticVersion\Exception;
  */
 class SemanticVersionException extends \RuntimeException
 {
+    /**
+     * Constructor
+     *
+     * @param string     $message
+     * @param \Exception $previous
+     */
     public function __construct($message, \Exception $previous = null)
     {
         parent::__construct($message, null, $previous);

@@ -20,5 +20,10 @@ namespace ptlis\SemanticVersion\ComparatorVersion;
  */
 interface ComparatorVersionRegexProviderInterface
 {
+    /**
+     * Get the regex to parse a bound comparator version.
+     *
+     * @return mixed
+     */
     public function getComparatorVersion();
 }

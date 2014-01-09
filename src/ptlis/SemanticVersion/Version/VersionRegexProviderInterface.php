@@ -20,5 +20,10 @@ namespace ptlis\SemanticVersion\Version;
  */
 interface VersionRegexProviderInterface
 {
+    /**
+     * Get the regex to parse a semantic version number.
+     *
+     * @return mixed
+     */
     public function getVersion();
 }

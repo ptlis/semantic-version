@@ -165,6 +165,15 @@ ComparatorVersionRegexProviderInterface
     }
 
 
+    /**
+     * Prefixes a the named subpatterns in a regex.
+     *
+     * @param string $regex
+     * @param string $prefix
+     * @param array  $keyList
+     *
+     * @return string
+     */
     private function getPrefixedRegex($regex, $prefix, array $keyList)
     {
         $search = [];

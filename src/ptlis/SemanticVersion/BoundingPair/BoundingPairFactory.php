@@ -75,7 +75,7 @@ class BoundingPairFactory
      *
      * @throws InvalidBoundingPairException
      *
-     * @param $versionNo
+     * @param string $versionNo
      *
      * @return BoundingPair
      */

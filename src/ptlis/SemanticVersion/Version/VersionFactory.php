@@ -51,7 +51,7 @@ class VersionFactory
      *
      * @throws InvalidVersionException
      *
-     * @param $versionNo
+     * @param string $versionNo
      *
      * @return Version
      */
