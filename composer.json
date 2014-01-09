@@ -19,9 +19,7 @@
         "phpmd/phpmd":                          "@dev",
         "phpunit/phpunit":                      "3.7.*",
         "sebastian/phpcpd":                     "2.0.*",
-        "squizlabs/php_codesniffer":            "1.5.*",
-        "theseer/phpdox":                       "0.6.*",
-        "theseer/fxsl":                         "1.0.*@dev"
+        "squizlabs/php_codesniffer":            "1.5.*"
     },
     "autoload": {
         "psr-0": {
