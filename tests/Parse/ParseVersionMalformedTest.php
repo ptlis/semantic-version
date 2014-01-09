@@ -109,4 +109,25 @@ class ParseVersionMalformedTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);
     }
+
+
+    public function testWithWhitespace()
+    {
+        $inStr = '  1.5.3 ';
+
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
+
+        $expectStr = '1.5.3';
+        $expectVersion = new Version();
+
+        $expectVersion
+            ->setMajor(1)
+            ->setMinor(5)
+            ->setPatch(3)
+            ->setLabel(new LabelNone());
+
+        $this->assertSame($expectStr, $outVersion->__toString());
+        $this->assertEquals($expectVersion, $outVersion);
+    }
 }

@@ -68,6 +68,31 @@ class LabelNone implements LabelInterface
 
 
     /**
+     * Get the build metadata.
+     *
+     * @return string
+     */
+    public function getBuildMetaData()
+    {
+        return '';
+    }
+
+
+    /**
+     * Set the build metadata.
+     *
+     * @param string $metadata
+     *
+     * @return LabelNone
+     */
+    public function setBuildMetaData($metadata)
+    {
+        $metadata;   // Be quiet phpmd
+        return $this;
+    }
+
+
+    /**
      * Return a string representation of the label.
      *
      * @return string

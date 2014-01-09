@@ -25,15 +25,22 @@ abstract class AbstractNamedLabel implements LabelInterface
      */
     private $version = 0;
 
+    /**
+     * @var string
+     */
+    private $metadata;
+
 
     /**
      * Constructor
      *
      * @param int|null $version
+     * @param string|null $metadata
      */
-    public function __construct($version = null)
+    public function __construct($version = null, $metadata = null)
     {
         $this->version = $version;
+        $this->metadata = $metadata;
     }
 
 
@@ -64,6 +71,32 @@ abstract class AbstractNamedLabel implements LabelInterface
 
 
     /**
+     * Set the build metadata.
+     *
+     * @param string $metadata
+     *
+     * @return LabelDev
+     */
+    public function setBuildMetaData($metadata)
+    {
+        $this->metadata = $metadata;
+
+        return $this;
+    }
+
+
+    /**
+     * Set the build metadata.
+     *
+     * @return string
+     */
+    public function getBuildMetaData()
+    {
+        return $this->metadata;
+    }
+
+
+    /**
      * Return a string representation of the label.
      *
      * @return string|null
@@ -71,9 +104,15 @@ abstract class AbstractNamedLabel implements LabelInterface
     public function __toString()
     {
         if ($this->getVersion() > 0) {
-            return $this->getName() . '.' . $this->getVersion();
+            $string =  $this->getName() . '.' . $this->getVersion();
         } else {
-            return $this->getName();
+            $string =  $this->getName();
         }
+
+        if (strlen($this->metadata)) {
+            $string .= '+' . $this->metadata;
+        }
+
+        return $string;
     }
 }

@@ -39,6 +39,7 @@ ComparatorVersionRegexProviderInterface
             (?<label_full>
                 (?<label>[a-z]+)                    # Label
                 \.?(?<label_num>[0-9]+)?            # Label Number - for precedence
+                (\+(?<label_meta>[0-9a-z\-\.]+))?   # Build metadata
             )
         )?
     ";
@@ -103,7 +104,8 @@ ComparatorVersionRegexProviderInterface
             'patch',
             'label_full',
             'label',
-            'label_num'
+            'label_num',
+            'label_meta'
         ];
 
         $minComp            = $this->getPrefixedRegex($this->comparatorMinRegex, 'min_', ['comparator']);

@@ -11,6 +11,8 @@ class ReplacementWildcardLabel implements WildcardLabelInterface
 
     private $version;
 
+    private $metadata;
+
     /**
      * Get the label name (eg 'alpha')
      *
@@ -42,6 +44,29 @@ class ReplacementWildcardLabel implements WildcardLabelInterface
     {
         $this->version = $version;
     }
+
+
+    /**
+     * Set the build metadata.
+     *
+     * @param string $metadata
+     */
+    public function setBuildMetaData($metadata)
+    {
+        $this->metadata = $metadata;
+    }
+
+
+    /**
+     * Set the build metadata.
+     *
+     * @return string
+     */
+    public function getBuildMetaData()
+    {
+        return $this->metadata;
+    }
+
 
     /**
      * Get the precedence value for the lab (eg alpha (1) -> beta (2) -> rc (3) etc); greater values are later.

@@ -29,10 +29,14 @@ class LabelDev extends AbstractNamedLabel
      * Set the label name
      *
      * @param string $name
+     *
+     * @return LabelDev
      */
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
 

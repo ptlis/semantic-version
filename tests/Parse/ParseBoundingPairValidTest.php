@@ -23,6 +23,7 @@ use ptlis\SemanticVersion\Comparator\GreaterThan;
 use ptlis\SemanticVersion\Comparator\LessOrEqualTo;
 use ptlis\SemanticVersion\Comparator\LessThan;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
+use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;
 use ptlis\SemanticVersion\Label\LabelNone;
 use ptlis\SemanticVersion\Label\LabelRc;
@@ -714,6 +715,50 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
         $upperVersion = new Version();
         $upperVersion
             ->setMajor('3')
+            ->setMinor('0')
+            ->setPatch('0')
+            ->setLabel(new LabelNone());
+        $upperComparatorVersion = new ComparatorVersion();
+        $upperComparatorVersion
+            ->setComparator(new LessThan())
+            ->setVersion($upperVersion);
+
+        // Range
+        $expectBoundingPair = new BoundingPair();
+        $expectBoundingPair
+            ->setLower($lowerComparatorVersion)
+            ->setUpper($upperComparatorVersion);
+
+        $this->assertSame($expectStr, $outBoundingPair->__toString());
+        $this->assertEquals($expectBoundingPair, $outBoundingPair);
+    }
+
+
+    public function testBuildMetadata()
+    {
+        $inStr = '1.4.0-alpha.1+2014-01-13-2.0.0';
+
+        $engine  = new VersionEngine();
+        $outBoundingPair = $engine->parseBoundingPair($inStr);
+
+        $expectStr = '>=1.4.0-alpha.1+2014-01-13<2.0.0';
+
+        // Lower
+        $lowerVersion = new Version();
+        $lowerVersion
+            ->setMajor('1')
+            ->setMinor('4')
+            ->setPatch('0')
+            ->setLabel(new LabelAlpha(1, '2014-01-13'));
+        $lowerComparatorVersion = new ComparatorVersion();
+        $lowerComparatorVersion
+            ->setComparator(new GreaterOrEqualTo())
+            ->setVersion($lowerVersion);
+
+        // Upper
+        $upperVersion = new Version();
+        $upperVersion
+            ->setMajor('2')
             ->setMinor('0')
             ->setPatch('0')
             ->setLabel(new LabelNone());

@@ -84,6 +84,8 @@ class VersionFactory
         $labelPresent = array_key_exists($prefix . 'label', $versionArr) && strlen($versionArr[$prefix . 'label']);
         $labelNumPresent = array_key_exists($prefix . 'label_num', $versionArr)
             && strlen($versionArr[$prefix . 'label_num']);
+        $labelMetaPresent = array_key_exists($prefix . 'label_meta', $versionArr)
+            && strlen($versionArr[$prefix . 'label_meta']);
 
         $this->validateVersionArray($versionArr, $prefix);
 
@@ -101,16 +103,20 @@ class VersionFactory
 
         $labelName = null;
         $labelVersion = null;
+        $labelMetadata = null;
         if ($labelPresent) {
             $labelName = $versionArr[$prefix . 'label'];
 
-            $labelVersion = null;
             if ($labelNumPresent) {
                 $labelVersion = $versionArr[$prefix . 'label_num'];
             }
+
+            if ($labelMetaPresent) {
+                $labelMetadata = $versionArr[$prefix . 'label_meta'];
+            }
         }
 
-        $version->setLabel($this->labelFactory->get($labelName, $labelVersion));
+        $version->setLabel($this->labelFactory->get($labelName, $labelVersion, $labelMetadata));
 
         return $version;
     }

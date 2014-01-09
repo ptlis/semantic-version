@@ -428,21 +428,21 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testWithWhitespace()
+    public function testWithBuildMetadata()
     {
-        $inStr = '  1.5.3 ';
+        $inStr = '1.5.3-alpha.5+2014-01-09.1';
 
         $engine  = new VersionEngine();
         $outVersion = $engine->parseVersion($inStr);
 
-        $expectStr = '1.5.3';
+        $expectStr = '1.5.3-alpha.5+2014-01-09.1';
         $expectVersion = new Version();
 
         $expectVersion
             ->setMajor(1)
             ->setMinor(5)
             ->setPatch(3)
-            ->setLabel(new LabelNone());
+            ->setLabel(new LabelAlpha(5, '2014-01-09.1'));
 
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);

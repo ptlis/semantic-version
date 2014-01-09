@@ -23,6 +23,7 @@ use ptlis\SemanticVersion\Comparator\GreaterThan;
 use ptlis\SemanticVersion\Comparator\LessOrEqualTo;
 use ptlis\SemanticVersion\Comparator\LessThan;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
+use ptlis\SemanticVersion\Label\LabelDev;
 use ptlis\SemanticVersion\Label\LabelNone;
 use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionEngine;
@@ -495,6 +496,34 @@ class ParseComparatorVersionValidTest extends \PHPUnit_Framework_TestCase
             ->setMinor(5)
             ->setPatch(3)
             ->setLabel(new LabelNone());
+
+        $this->assertSame($expectStr, $outComparatorVersion->__toString());
+        $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
+    }
+
+
+    public function testWithMetadata()
+    {
+        $inStr = '>=1.5.3-dev.3+1.75';
+
+        $engine = new VersionEngine();
+        $outComparatorVersion = $engine->parseComparatorVersion($inStr);
+
+        $expectStr = '>=1.5.3-dev.3+1.75';
+        $expectComparatorVersion = new ComparatorVersion();
+        $expectComparatorVersion
+            ->setComparator(new GreaterOrEqualTo())
+            ->setVersion(new Version());
+        $expectLabel = new LabelDev();
+        $expectLabel
+            ->setName('dev')
+            ->setVersion(3)
+            ->setBuildMetaData('1.75');
+        $expectComparatorVersion->getVersion()
+            ->setMajor(1)
+            ->setMinor(5)
+            ->setPatch(3)
+            ->setLabel($expectLabel);
 
         $this->assertSame($expectStr, $outComparatorVersion->__toString());
         $this->assertEquals($expectComparatorVersion, $outComparatorVersion);
