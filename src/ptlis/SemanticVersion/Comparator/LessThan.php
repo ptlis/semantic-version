@@ -44,33 +44,23 @@ class LessThan extends AbstractComparator
     public function compare(VersionInterface $lVersion, VersionInterface $rVersion)
     {
         switch (true) {
-            case ($lVersion->getMajor() < $rVersion->getMajor()):
+            case $this->compareMajor($lVersion, $rVersion):
                 $lessThan = true;
                 break;
 
-            case ($lVersion->getMajor() == $rVersion->getMajor()
-                && $lVersion->getMinor() < $rVersion->getMinor()):
+            case $this->compareMinor($lVersion, $rVersion):
                 $lessThan = true;
                 break;
 
-            case ($lVersion->getMajor() == $rVersion->getMajor()
-                && $lVersion->getMinor() == $rVersion->getMinor()
-                && $lVersion->getPatch() < $rVersion->getPatch()):
+            case $this->comparePatch($lVersion, $rVersion):
                 $lessThan = true;
                 break;
 
-            case ($lVersion->getMajor() == $rVersion->getMajor()
-                && $lVersion->getMinor() == $rVersion->getMinor()
-                && $lVersion->getPatch() == $rVersion->getPatch()
-                && $lVersion->getLabel()->getPrecedence() < $rVersion->getLabel()->getPrecedence()):
+            case $this->compareLabel($lVersion, $rVersion):
                 $lessThan = true;
                 break;
 
-            case ($lVersion->getMajor() == $rVersion->getMajor()
-                && $lVersion->getMinor() == $rVersion->getMinor()
-                && $lVersion->getPatch() == $rVersion->getPatch()
-                && $lVersion->getLabel()->getPrecedence() == $rVersion->getLabel()->getPrecedence()
-                && $lVersion->getLabel()->getVersion() < $rVersion->getLabel()->getVersion()):
+            case $this->compareLabelVersion($lVersion, $rVersion):
                 $lessThan = true;
                 break;
 
@@ -80,5 +70,87 @@ class LessThan extends AbstractComparator
         }
 
         return $lessThan;
+    }
+
+
+    /**
+     * Returns true if left major is less than right major version.
+     *
+     * @param VersionInterface $lVersion
+     * @param VersionInterface $rVersion
+     *
+     * @return bool
+     */
+    private function compareMajor(VersionInterface $lVersion, VersionInterface $rVersion)
+    {
+        return $lVersion->getMajor() < $rVersion->getMajor();
+    }
+
+
+    /**
+     * Returns true if left & right major values match & left minor is less than right major version.
+     *
+     * @param VersionInterface $lVersion
+     * @param VersionInterface $rVersion
+     *
+     * @return bool
+     */
+    private function compareMinor(VersionInterface $lVersion, VersionInterface $rVersion)
+    {
+        return $lVersion->getMajor() == $rVersion->getMajor()
+            && $lVersion->getMinor() < $rVersion->getMinor();
+    }
+
+
+    /**
+     * Returns true if left & right major & minor values match & left patch is less than right patch version.
+     *
+     * @param VersionInterface $lVersion
+     * @param VersionInterface $rVersion
+     *
+     * @return bool
+     */
+    private function comparePatch(VersionInterface $lVersion, VersionInterface $rVersion)
+    {
+        return $lVersion->getMajor() == $rVersion->getMajor()
+            && $lVersion->getMinor() == $rVersion->getMinor()
+            && $lVersion->getPatch() < $rVersion->getPatch();
+    }
+
+
+    /**
+     * Returns true if left & right major, minor & patch values match & left label precedence is less than right label
+     * precedence.
+     *
+     * @param VersionInterface $lVersion
+     * @param VersionInterface $rVersion
+     *
+     * @return bool
+     */
+    private function compareLabel(VersionInterface $lVersion, VersionInterface $rVersion)
+    {
+        return $lVersion->getMajor() == $rVersion->getMajor()
+            && $lVersion->getMinor() == $rVersion->getMinor()
+            && $lVersion->getPatch() == $rVersion->getPatch()
+            && $lVersion->getLabel()->getPrecedence() < $rVersion->getLabel()->getPrecedence();
+    }
+
+
+    /**
+     * Returns true if left & right major, minor, patch & label precedence values match & left label version is less
+     * than right patch version.
+     *
+     * @param VersionInterface $lVersion
+     * @param VersionInterface $rVersion
+     *
+     * @return bool
+     */
+    private function compareLabelVersion(VersionInterface $lVersion, VersionInterface $rVersion)
+    {
+        return $lVersion->getMajor() == $rVersion->getMajor()
+            && $lVersion->getMinor() == $rVersion->getMinor()
+            && $lVersion->getPatch() == $rVersion->getPatch()
+            && $lVersion->getLabel()->getPrecedence() == $rVersion->getLabel()->getPrecedence()
+            && $lVersion->getLabel()->getVersion() < $rVersion->getLabel()->getVersion();
     }
 }
