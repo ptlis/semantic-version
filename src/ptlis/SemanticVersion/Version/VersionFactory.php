@@ -72,7 +72,7 @@ class VersionFactory
      *
      * @throws InvalidVersionException
      *
-     * @param array         $versionArr
+     * @param string[]       $versionArr
      * @param string|null   $prefix
      *
      * @return Version
@@ -134,7 +134,7 @@ class VersionFactory
      *
      * @throws InvalidVersionException
      *
-     * @param array         $versionArr
+     * @param string[]      $versionArr
      * @param string|null   $prefix
      */
     private function validateVersionArray(array $versionArr, $prefix)
@@ -160,7 +160,7 @@ class VersionFactory
     /**
      * Returns true if the version value identified by key was omitted or is a wildcard.
      *
-     * @param array     $versionArr
+     * @param string[]  $versionArr
      * @param string    $key
      *
      * @return bool
@@ -175,7 +175,7 @@ class VersionFactory
     /**
      * Returns true if the version value identified by key was present and is not a wildcard.
      *
-     * @param array     $versionArr
+     * @param string[]  $versionArr
      * @param string    $key
      *
      * @return bool

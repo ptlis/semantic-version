@@ -64,7 +64,7 @@ class ComparatorVersionFactory
      *
      * @throws InvalidComparatorVersionException
      *
-     * @param $versionNo
+     * @param string $versionNo
      *
      * @return ComparatorVersion
      */
@@ -87,7 +87,7 @@ class ComparatorVersionFactory
      *
      * @throws InvalidComparatorVersionException
      *
-     * @param array         $comparatorVersionArr
+     * @param string[]      $comparatorVersionArr
      * @param string|null   $prefix
      *
      * @return ComparatorVersion

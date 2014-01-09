@@ -85,7 +85,7 @@ class LabelFactory
      *
      * @throws \RuntimeException
      *
-     * @param array $labelList
+     * @param string[] $labelList
      */
     public function setTypeList(array $labelList)
     {

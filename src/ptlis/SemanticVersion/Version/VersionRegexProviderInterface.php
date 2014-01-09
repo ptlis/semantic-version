@@ -23,7 +23,7 @@ interface VersionRegexProviderInterface
     /**
      * Get the regex to parse a semantic version number.
      *
-     * @return mixed
+     * @return string
      */
     public function getVersion();
 }

@@ -23,7 +23,7 @@ interface BoundingPairRegexProviderInterface
     /**
      * Get the regex to parse a bound pair of comparator versions.
      *
-     * @return mixed
+     * @return string
      */
     public function getBoundingPair();
 }

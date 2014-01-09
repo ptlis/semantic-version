@@ -79,7 +79,7 @@ class ComparatorFactory
      *
      * @throws \RuntimeException
      *
-     * @param array $comparatorList
+     * @param string[] $comparatorList
      */
     public function setTypeList(array $comparatorList)
     {

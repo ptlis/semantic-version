@@ -23,7 +23,7 @@ interface ComparatorVersionRegexProviderInterface
     /**
      * Get the regex to parse a bound comparator version.
      *
-     * @return mixed
+     * @return string
      */
     public function getComparatorVersion();
 }

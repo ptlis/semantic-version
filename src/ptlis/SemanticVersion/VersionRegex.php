@@ -168,9 +168,9 @@ ComparatorVersionRegexProviderInterface
     /**
      * Prefixes a the named subpatterns in a regex.
      *
-     * @param string $regex
-     * @param string $prefix
-     * @param array  $keyList
+     * @param string   $regex
+     * @param string   $prefix
+     * @param string[] $keyList
      *
      * @return string
      */
