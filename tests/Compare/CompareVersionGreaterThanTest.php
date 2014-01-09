@@ -20,6 +20,7 @@ namespace tests\Compare;
 use ptlis\SemanticVersion\Comparator\GreaterThan;
 use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;
+use ptlis\SemanticVersion\Label\LabelDev;
 use ptlis\SemanticVersion\Label\LabelNone;
 use ptlis\SemanticVersion\Label\LabelRc;
 use ptlis\SemanticVersion\Version\Version;
@@ -184,6 +185,52 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(1);
+
+        $greaterThan = new GreaterThan();
+
+        $this->assertFalse($greaterThan->compare($version1, $version2));
+    }
+
+
+    public function testGreaterThanLabelDevAlpha()
+    {
+        $version1 = new Version();
+        $version1
+            ->setMajor(1)
+            ->setMinor(0)
+            ->setPatch(0)
+            ->setLabel(new LabelAlpha());
+
+        $label1 = new LabelDev();
+        $label1->setName('dev');
+        $version2 = new Version();
+        $version2
+            ->setMajor(1)
+            ->setMinor(0)
+            ->setPatch(0)
+            ->setLabel($label1);
+
+        $greaterThan = new GreaterThan();
+
+        $this->assertTrue($greaterThan->compare($version1, $version2));
+    }
+
+
+    public function testLessThanLabelDevAlpha()
+    {
+        $version1 = new Version();
+        $version1
+            ->setMajor(1)
+            ->setMinor(0)
+            ->setPatch(0)
+            ->setLabel(new LabelAlpha());
+
+        $version2 = new Version();
+        $version2
+            ->setMajor(1)
+            ->setMinor(0)
+            ->setPatch(0)
+            ->setLabel(new LabelBeta());
 
         $greaterThan = new GreaterThan();
 

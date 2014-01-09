@@ -131,11 +131,9 @@ class LabelFactory
         if (strlen($name)) {
             if (array_key_exists($name, $this->labelList)) {
                 $label = new $this->labelList[$name]();
-                $label->setBuildMetaData($metadata);
             } else {
                 $label = new $this->wildcardLabel();
                 $label->setName($name);
-                $label->setBuildMetaData($metadata);
             }
 
         } else {
@@ -143,6 +141,7 @@ class LabelFactory
             $version = null;
         }
         $label->setVersion($version);
+        $label->setBuildMetaData($metadata);
 
         return $label;
     }

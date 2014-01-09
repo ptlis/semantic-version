@@ -69,6 +69,28 @@ class CompareVersionTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    public function testEqualNumberLabelMetadata()
+    {
+        $version1 = new Version();
+        $version1
+            ->setMajor(1)
+            ->setMinor(0)
+            ->setPatch(0)
+            ->setLabel(new LabelAlpha(1, 'r501'));
+
+        $version2 = new Version();
+        $version2
+            ->setMajor(1)
+            ->setMinor(0)
+            ->setPatch(0)
+            ->setLabel(new LabelAlpha(1, 'r501'));
+
+        $equalTo = new EqualTo();
+
+        $this->assertTrue($equalTo->compare($version1, $version2));
+    }
+
+
     public function testNotEqualDifferentMajor()
     {
         $version1 = new Version();

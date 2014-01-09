@@ -57,6 +57,7 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectVersion->getLabel()->getName(), $outVersion->getLabel()->getName());
         $this->assertEquals($expectVersion->getLabel()->getVersion(), $outVersion->getLabel()->getVersion());
         $this->assertEquals($expectVersion->getLabel()->getPrecedence(), $outVersion->getLabel()->getPrecedence());
+        $this->assertEquals($expectVersion->getLabel()->getBuildMetaData(), $outVersion->getLabel()->getBuildMetaData());
     }
 
 
@@ -87,6 +88,7 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectVersion->getLabel()->getName(), $outVersion->getLabel()->getName());
         $this->assertEquals($expectVersion->getLabel()->getVersion(), $outVersion->getLabel()->getVersion());
         $this->assertEquals($expectVersion->getLabel()->getPrecedence(), $outVersion->getLabel()->getPrecedence());
+        $this->assertEquals($expectVersion->getLabel()->getBuildMetaData(), $outVersion->getLabel()->getBuildMetaData());
     }
 
 
@@ -117,6 +119,7 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectVersion->getLabel()->getName(), $outVersion->getLabel()->getName());
         $this->assertEquals($expectVersion->getLabel()->getVersion(), $outVersion->getLabel()->getVersion());
         $this->assertEquals($expectVersion->getLabel()->getPrecedence(), $outVersion->getLabel()->getPrecedence());
+        $this->assertEquals($expectVersion->getLabel()->getBuildMetaData(), $outVersion->getLabel()->getBuildMetaData());
     }
 
 
@@ -147,6 +150,7 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectVersion->getLabel()->getName(), $outVersion->getLabel()->getName());
         $this->assertEquals($expectVersion->getLabel()->getVersion(), $outVersion->getLabel()->getVersion());
         $this->assertEquals($expectVersion->getLabel()->getPrecedence(), $outVersion->getLabel()->getPrecedence());
+        $this->assertEquals($expectVersion->getLabel()->getBuildMetaData(), $outVersion->getLabel()->getBuildMetaData());
     }
 
 
