@@ -25,17 +25,17 @@ use ptlis\SemanticVersion\Label\LabelAbsent;
 class Version implements VersionInterface
 {
     /**
-     * @var int
+     * @var string
      */
     private $major;
 
     /**
-     * @var int
+     * @var string
      */
     private $minor = 0;
 
     /**
-     * @var int
+     * @var string
      */
     private $patch = 0;
 
@@ -104,7 +104,7 @@ class Version implements VersionInterface
 
 
     /**
-     * @return int|string
+     * @return string
      */
     public function getMajor()
     {
@@ -139,7 +139,7 @@ class Version implements VersionInterface
 
 
     /**
-     * @return int|string
+     * @return string
      */
     public function getMinor()
     {
@@ -170,7 +170,7 @@ class Version implements VersionInterface
 
 
     /**
-     * @return int|string
+     * @return string
      */
     public function getPatch()
     {
@@ -183,7 +183,7 @@ class Version implements VersionInterface
      *
      * @param $versionPart
      *
-     * @return bool|int|string
+     * @return bool|string
      */
     private function validateVersionPart($versionPart)
     {
@@ -192,7 +192,7 @@ class Version implements VersionInterface
         if ($versionPart === 'x' || $versionPart === '*') {
             $returnPart = '*';
         } elseif (0 !== preg_match('/^0+$/', $versionPart)) {
-            $returnPart = 0;
+            $returnPart = '0';
         } elseif (0 !== preg_match('/^[0-9]+$/', ltrim($versionPart, '0'))) {
             $returnPart = ltrim($versionPart, '0');
         }
