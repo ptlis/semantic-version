@@ -30,6 +30,8 @@ See the [Semantic Versioning](http://semver.org/) website for the specification 
 
 [![Code Coverage](https://scrutinizer-ci.com/g/ptlis/semantic-version/badges/coverage.png?s=fb09ca8f948767518b41f546f33b78fff81b9b71)](https://scrutinizer-ci.com/g/ptlis/semantic-version/)
 
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/ptlis/semantic-version/badges/quality-score.png?s=7651fefac69baed0a2a77d8196dddc48e39f35bd)](https://scrutinizer-ci.com/g/ptlis/semantic-version/)
+
 ## TODO
 
 * Version Collection wtih sorting
