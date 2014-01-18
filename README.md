@@ -32,5 +32,15 @@ See the [Semantic Versioning](http://semver.org/) website for the specification 
 
 ## TODO
 
-* Sort
-* Pre-release labels that consist of numbers & periods.
+* Version Collection wtih sorting
+
+
+## Known limitations
+
+There are a few areas where this library deviates from the specification when dealing with labels & build metadata; this is to due to how the parsing of version-ranges is handled.
+
+Example semantic versions which are valid but the library is unable to parse:
+
+* 1.0.0-0.3.7
+* 1.0.0-beta-17
+

@@ -176,4 +176,50 @@ class ParseVersionInvalidTest extends \PHPUnit_Framework_TestCase
         $engine = new VersionEngine();
         $engine->parseVersion($inStr);
     }
+
+
+    public function testDotInPlaceOfHyphen()
+    {
+        $inStr = '3.2.0.beta1';
+
+        $this->setExpectedException(
+            '\ptlis\SemanticVersion\Exception\InvalidVersionException',
+            'The version number "' . $inStr . '" could not be parsed.'
+        );
+
+        $engine = new VersionEngine();
+        $engine->parseVersion($inStr);
+    }
+
+
+    public function testHyphenInLabel()
+    {
+        // Note that this is a valid semantic version number per section 9, however a hyphen here is awkward to deal
+        // with when parsing a bounding pair version-range (ie 1.7.2-2.0.0)
+        $inStr = '1.0.0-beta-17';
+
+        $this->setExpectedException(
+            '\ptlis\SemanticVersion\Exception\InvalidVersionException',
+            'The version number "' . $inStr . '" could not be parsed.'
+        );
+
+        $engine = new VersionEngine();
+        $engine->parseVersion($inStr);
+    }
+
+
+    public function testNumberedLabel()
+    {
+        // Note that this is a valid semantic version number per section 9, however a hyphen here is awkward to deal
+        // with when parsing a bounding pair version-range (ie 1.7.2-2.0.0)
+        $inStr = '1.0.0-0.3.7';
+
+        $this->setExpectedException(
+            '\ptlis\SemanticVersion\Exception\InvalidVersionException',
+            'The version number "' . $inStr . '" could not be parsed.'
+        );
+
+        $engine = new VersionEngine();
+        $engine->parseVersion($inStr);
+    }
 }

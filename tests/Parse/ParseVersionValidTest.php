@@ -453,6 +453,27 @@ class ParseVersionValidTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    public function testWithBuildMetadataTwo()
+    {
+        $inStr = '1.0.0-beta+exp.sha.5114f85';
+
+        $engine  = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
+
+        $expectStr = '1.0.0-beta+exp.sha.5114f85';
+        $expectVersion = new Version();
+
+        $expectVersion
+            ->setMajor(1)
+            ->setMinor(0)
+            ->setPatch(0)
+            ->setLabel(new LabelBeta(null, 'exp.sha.5114f85'));
+
+        $this->assertSame($expectStr, $outVersion->__toString());
+        $this->assertEquals($expectVersion, $outVersion);
+    }
+
+
     public function testPatchWildcardX()
     {
         $inStr = '1.5.x';
