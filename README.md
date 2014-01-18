@@ -28,6 +28,8 @@ See the [Semantic Versioning](http://semver.org/) website for the specification 
 
 [![Build Status](https://travis-ci.org/ptlis/semantic-version.png?branch=master)](https://travis-ci.org/ptlis/semantic-version)
 
+[![Code Coverage](https://scrutinizer-ci.com/g/ptlis/semantic-version/badges/coverage.png?s=fb09ca8f948767518b41f546f33b78fff81b9b71)](https://scrutinizer-ci.com/g/ptlis/semantic-version/)
+
 ## TODO
 
 * Sort
