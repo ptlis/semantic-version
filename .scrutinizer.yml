@@ -3,7 +3,7 @@ filter:
         - src/
 
 tools:
-  external_code_coverage: true
+    external_code_coverage: true
     php_mess_detector:
         config:
             ruleset: build/phpmd.xml
