@@ -125,7 +125,11 @@
  </target>
 
  <target name="phpdox" description="Generate API documentation using phpDox">
+   <!--
+   Disabled due to problems with Jenkins & hhvm
+
    <exec executable="${basedir}/bin/phpdox"/>
+   -->
  </target>
 
  <target name="phpunit" description="Run unit tests with PHPUnit">
