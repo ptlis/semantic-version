@@ -64,7 +64,7 @@ abstract class AbstractNamedLabel implements LabelPresentInterface
      */
     public function setVersion($version)
     {
-        $this->version = (int)$version;
+        $this->version = $version;
 
         return $this;
     }

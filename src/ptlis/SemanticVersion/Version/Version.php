@@ -86,7 +86,8 @@ class Version implements VersionInterface
     public function setMajor($major)
     {
         $filteredMajor = $this->validateVersionPart($major);
-        if (false !== $this->validateVersionPart($major)) {
+
+        if (false !== $filteredMajor) {
             $this->major = $filteredMajor;
 
             if ($filteredMajor === '*') {
@@ -121,7 +122,7 @@ class Version implements VersionInterface
     public function setMinor($minor)
     {
         $filteredMinor = $this->validateVersionPart($minor);
-        if (false !== $this->validateVersionPart($minor)) {
+        if (false !== $filteredMinor) {
             $this->minor = $filteredMinor;
 
             if ($filteredMinor === '*') {
@@ -156,7 +157,7 @@ class Version implements VersionInterface
     public function setPatch($patch)
     {
         $filteredPatch = $this->validateVersionPart($patch);
-        if (false !== $this->validateVersionPart($patch)) {
+        if (false !== $filteredPatch) {
             $this->patch = $filteredPatch;
         } else {
             throw new InvalidVersionException(
@@ -192,8 +193,8 @@ class Version implements VersionInterface
             $returnPart = '*';
         } elseif ((string)$versionPart === '0') {
             $returnPart = 0;
-        } elseif (false !== filter_var(ltrim($versionPart, '0'), FILTER_VALIDATE_INT, ['min_range' => 0])) {
-            $returnPart = (int)$versionPart;
+        } elseif (0 !== preg_match('/^[0-9]+$/', ltrim($versionPart, '0'))) {
+            $returnPart = ltrim($versionPart, '0');
         }
 
         return $returnPart;

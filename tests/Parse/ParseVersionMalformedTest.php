@@ -195,4 +195,25 @@ class ParseVersionMalformedTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectStr, $outVersion->__toString());
         $this->assertEquals($expectVersion, $outVersion);
     }
+
+
+    public function testLongDigits()
+    {
+        $inStr = '201308091155';
+
+        $engine = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
+
+        $expectStr = '201308091155.0.0';
+        $expectVersion = new Version();
+
+        $expectVersion
+            ->setMajor(201308091155)
+            ->setMinor(0)
+            ->setPatch(0)
+            ->setLabel(new LabelAbsent());
+
+        $this->assertSame($expectStr, $outVersion->__toString());
+        $this->assertEquals($expectVersion, $outVersion);
+    }
 }
