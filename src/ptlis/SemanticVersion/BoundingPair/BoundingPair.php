@@ -28,12 +28,12 @@ use ptlis\SemanticVersion\Version\VersionInterface;
 class BoundingPair implements InRangeInterface
 {
     /**
-     * @var ComparatorVersion
+     * @var ComparatorVersion|null
      */
     private $upper;
 
     /**
-     * @var ComparatorVersion
+     * @var ComparatorVersion|null
      */
     private $lower;
 
@@ -41,7 +41,7 @@ class BoundingPair implements InRangeInterface
     /**
      * @throws InvalidBoundingPairException
      *
-     * @param ComparatorVersion $lower
+     * @param ComparatorVersion|null $lower
      *
      * @return BoundingPair
      */
@@ -72,7 +72,7 @@ class BoundingPair implements InRangeInterface
     /**
      * @throws InvalidBoundingPairException
      *
-     * @param ComparatorVersion $upper
+     * @param ComparatorVersion|null $upper
      *
      * @return BoundingPair
      */

@@ -26,7 +26,7 @@ abstract class AbstractNamedLabel implements LabelPresentInterface
     private $version = 0;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $metadata;
 
@@ -34,10 +34,10 @@ abstract class AbstractNamedLabel implements LabelPresentInterface
     /**
      * Constructor
      *
-     * @param int|null $version
-     * @param string|null $metadata
+     * @param int           $version
+     * @param string|null   $metadata
      */
-    public function __construct($version = null, $metadata = null)
+    public function __construct($version = 0, $metadata = null)
     {
         $this->version = $version;
         $this->metadata = $metadata;
@@ -88,7 +88,7 @@ abstract class AbstractNamedLabel implements LabelPresentInterface
     /**
      * Set the build metadata.
      *
-     * @return string
+     * @return string|null
      */
     public function getBuildMetaData()
     {
