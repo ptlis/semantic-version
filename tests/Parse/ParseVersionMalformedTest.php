@@ -50,6 +50,27 @@ class ParseVersionMalformedTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    public function testDoubleZero()
+    {
+        $inStr = '1.00.5';
+
+        $engine = new VersionEngine();
+        $outVersion = $engine->parseVersion($inStr);
+
+        $expectStr = '1.0.5';
+        $expectVersion = new Version();
+
+        $expectVersion
+            ->setMajor(1)
+            ->setMinor(0)
+            ->setPatch(5)
+            ->setLabel(new LabelAbsent());
+
+        $this->assertSame($expectStr, $outVersion->__toString());
+        $this->assertEquals($expectVersion, $outVersion);
+    }
+
+
     public function testTrailingMinorDot()
     {
         $inStr = '1.5.';

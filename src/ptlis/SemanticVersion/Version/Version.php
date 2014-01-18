@@ -191,7 +191,7 @@ class Version implements VersionInterface
 
         if ($versionPart === 'x' || $versionPart === '*') {
             $returnPart = '*';
-        } elseif ((string)$versionPart === '0') {
+        } elseif (0 !== preg_match('/^0+$/', $versionPart)) {
             $returnPart = 0;
         } elseif (0 !== preg_match('/^[0-9]+$/', ltrim($versionPart, '0'))) {
             $returnPart = ltrim($versionPart, '0');
