@@ -17,6 +17,7 @@ namespace ptlis\SemanticVersion\Collection;
 
 use ArrayIterator;
 use OutOfBoundsException;
+use ptlis\SemanticVersion\Comparator\ComparatorInterface;
 use ptlis\SemanticVersion\Comparator\EqualTo;
 use ptlis\SemanticVersion\Comparator\GreaterThan;
 use ptlis\SemanticVersion\Comparator\LessThan;
@@ -154,15 +155,7 @@ class VersionCollection implements SortableCollectionInterface
 
         usort(
             $newVersionList,
-            function ($lVersion, $rVersion) use ($lessThan, $equalTo) {
-                if ($equalTo->compare($lVersion, $rVersion)) {
-                    return 0;
-                } elseif ($lessThan->compare($lVersion, $rVersion)) {
-                    return -1;
-                } else {
-                    return 1;
-                }
-            }
+            $this->getCompareClosure($equalTo, $lessThan)
         );
 
         $newCollection = new VersionCollection();
@@ -186,20 +179,34 @@ class VersionCollection implements SortableCollectionInterface
 
         usort(
             $newVersionList,
-            function ($lVersion, $rVersion) use ($greaterThan, $equalTo) {
-                if ($equalTo->compare($lVersion, $rVersion)) {
-                    return 0;
-                } elseif ($greaterThan->compare($lVersion, $rVersion)) {
-                    return -1;
-                } else {
-                    return 1;
-                }
-            }
+            $this->getCompareClosure($equalTo, $greaterThan)
         );
 
         $newCollection = new VersionCollection();
         $newCollection->setList($newVersionList);
 
         return $newCollection;
+    }
+
+
+    /**
+     * Get closure for use in sorting.
+     *
+     * @param EqualTo             $equalTo
+     * @param ComparatorInterface $comparator
+     *
+     * @return callable
+     */
+    private function getCompareClosure(EqualTo $equalTo, ComparatorInterface $comparator)
+    {
+        return function ($lVersion, $rVersion) use ($comparator, $equalTo) {
+            if ($equalTo->compare($lVersion, $rVersion)) {
+                return 0;
+            } elseif ($comparator->compare($lVersion, $rVersion)) {
+                return -1;
+            } else {
+                return 1;
+            }
+        };
     }
 }
