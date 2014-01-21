@@ -209,4 +209,13 @@ class VersionCollection implements SortableCollectionInterface
             }
         };
     }
+
+
+    /**
+     * Returns a string representation of the version collection.
+     */
+    public function __toString()
+    {
+        return implode(', ', $this->versionList);
+    }
 }

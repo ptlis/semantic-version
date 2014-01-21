@@ -167,6 +167,44 @@ class VersionCollectionValidTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    public function testToString()
+    {
+        $version1 = new Version();
+        $version1
+            ->setMajor(3)
+            ->setMinor(0)
+            ->setPatch(5)
+            ->setLabel(new LabelAbsent());
+
+        $version2 = new Version();
+        $version2
+            ->setMajor(1)
+            ->setMinor(3)
+            ->setPatch(4)
+            ->setLabel(new LabelAbsent());
+
+        $version3 = new Version();
+        $version3
+            ->setMajor(4)
+            ->setMinor(1)
+            ->setPatch(0)
+            ->setLabel(new LabelBeta());
+
+        $collection = new VersionCollection();
+
+        $collection[] = $version1;
+        $collection[] = $version2;
+        $collection[] = $version3;
+
+
+        $this->assertSame(
+            '3.0.5, 1.3.4, 4.1.0-beta',
+            $collection->__toString()
+        );
+    }
+
+
+
     public function testIterator()
     {
         $version1 = new Version();

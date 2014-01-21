@@ -88,4 +88,14 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
      * @param string $offset    The offset to unset.
      */
     public function offsetUnset($offset);
+
+
+    /**
+     * Create string representation of collection.
+     *
+     * @link http://www.php.net/manual/en/language.oop5.magic.php#object.tostring
+     *
+     * @return mixed
+     */
+    public function __toString();
 }
