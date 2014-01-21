@@ -199,7 +199,7 @@ class VersionCollection implements SortableCollectionInterface
      */
     private function getCompareClosure(EqualTo $equalTo, ComparatorInterface $comparator)
     {
-        return function ($lVersion, $rVersion) use ($comparator, $equalTo) {
+        return function (VersionInterface $lVersion, VersionInterface $rVersion) use ($comparator, $equalTo) {
             if ($equalTo->compare($lVersion, $rVersion)) {
                 return 0;
             } elseif ($comparator->compare($lVersion, $rVersion)) {
