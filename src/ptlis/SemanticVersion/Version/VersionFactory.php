@@ -95,7 +95,7 @@ class VersionFactory
      * @throws InvalidVersionException
      *
      * @param VersionInterface $version
-     * @param array            $versionArr
+     * @param string[]         $versionArr
      * @param string           $prefix
      *
      * @return VersionInterface
@@ -127,7 +127,7 @@ class VersionFactory
      * Extracts the version label from the array & and into the version object.
      *
      * @param VersionInterface $version
-     * @param array            $versionArr
+     * @param string[]         $versionArr
      * @param string           $prefix
      *
      * @return VersionInterface

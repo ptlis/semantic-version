@@ -79,7 +79,7 @@ class Version implements VersionInterface
     /**
      * @throws InvalidVersionException
      *
-     * @param int|string $major
+     * @param string $major
      *
      * @return Version
      */
@@ -115,7 +115,7 @@ class Version implements VersionInterface
     /**
      * @throws InvalidVersionException
      *
-     * @param int|string $minor
+     * @param string $minor
      *
      * @return Version
      */
@@ -150,7 +150,7 @@ class Version implements VersionInterface
     /**
      * @throws InvalidVersionException
      *
-     * @param int|string $patch
+     * @param string $patch
      *
      * @return Version
      */
