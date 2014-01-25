@@ -158,7 +158,7 @@ class VersionFactory
     /**
      * Returns true if the element identified by $index has data.
      *
-     * @param array     $versionArr
+     * @param string[]  $versionArr
      * @param string    $index
      *
      * @return bool

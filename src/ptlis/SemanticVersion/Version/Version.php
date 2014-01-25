@@ -181,7 +181,7 @@ class Version implements VersionInterface
     /**
      * Validates the provided version part, on success returns the normalised value on failure returns false.
      *
-     * @param $versionPart
+     * @param string $versionPart
      *
      * @return string|false
      */

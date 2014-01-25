@@ -49,7 +49,7 @@ interface VersionInterface
     /**
      * Get the major version number; may be '*' for wildcard
      *
-     * @return int|string
+     * @return string
      */
     public function getMajor();
 
@@ -75,7 +75,7 @@ interface VersionInterface
     /**
      * Set the calculated patch number.
      *
-     * @param int|string $patch
+     * @param string $patch
      *
      * @return VersionInterface
      */
