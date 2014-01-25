@@ -24,6 +24,8 @@ interface SortableCollectionInterface extends CollectionInterface
      * Set the internal store to the provided values.
      *
      * @param array $versionList
+     *
+     * @return void
      */
     public function setList(array $versionList);
 

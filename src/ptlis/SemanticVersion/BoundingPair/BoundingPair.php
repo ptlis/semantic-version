@@ -15,9 +15,9 @@
 
 namespace ptlis\SemanticVersion\BoundingPair;
 
+use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\Comparator\EqualTo;
 use ptlis\SemanticVersion\Comparator\GreaterThan;
-use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\Exception\InvalidBoundingPairException;
 use ptlis\SemanticVersion\InRange\InRangeInterface;
 use ptlis\SemanticVersion\Version\VersionInterface;

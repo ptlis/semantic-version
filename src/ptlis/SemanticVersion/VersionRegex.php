@@ -15,9 +15,9 @@
 
 namespace ptlis\SemanticVersion;
 
+use ptlis\SemanticVersion\BoundingPair\BoundingPairRegexProviderInterface;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersionRegexProviderInterface;
 use ptlis\SemanticVersion\Version\VersionRegexProviderInterface;
-use ptlis\SemanticVersion\BoundingPair\BoundingPairRegexProviderInterface;
 
 /**
  * Utility class to provide regular expressions used when parsing version numbers, ranges etc.

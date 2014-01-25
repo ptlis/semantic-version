@@ -16,8 +16,8 @@
 namespace ptlis\SemanticVersion\Version;
 
 use ptlis\SemanticVersion\Exception\InvalidVersionException;
-use ptlis\SemanticVersion\Label\LabelInterface;
 use ptlis\SemanticVersion\Label\LabelAbsent;
+use ptlis\SemanticVersion\Label\LabelInterface;
 
 /*
  * Entity to represent a semantic version number.
@@ -183,7 +183,7 @@ class Version implements VersionInterface
      *
      * @param $versionPart
      *
-     * @return bool|string
+     * @return string|false
      */
     private function validateVersionPart($versionPart)
     {

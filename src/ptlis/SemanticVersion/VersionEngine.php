@@ -15,17 +15,17 @@
 
 namespace ptlis\SemanticVersion;
 
-use ptlis\SemanticVersion\Comparator\ComparatorFactory;
-use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
-use ptlis\SemanticVersion\Label\LabelFactory;
-use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersionFactory;
-use ptlis\SemanticVersion\Version\Version;
-use ptlis\SemanticVersion\Version\VersionFactory;
-use ptlis\SemanticVersion\BoundingPair\BoundingPairFactory;
 use ptlis\SemanticVersion\BoundingPair\BoundingPair;
+use ptlis\SemanticVersion\BoundingPair\BoundingPairFactory;
+use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
+use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersionFactory;
+use ptlis\SemanticVersion\Comparator\ComparatorFactory;
 use ptlis\SemanticVersion\Exception\InvalidComparatorVersionException;
 use ptlis\SemanticVersion\Exception\InvalidVersionException;
 use ptlis\SemanticVersion\Exception\InvalidBoundingPairException;
+use ptlis\SemanticVersion\Label\LabelFactory;
+use ptlis\SemanticVersion\Version\Version;
+use ptlis\SemanticVersion\Version\VersionFactory;
 
 /**
  * Simple class to provide version parsing with good defaults.

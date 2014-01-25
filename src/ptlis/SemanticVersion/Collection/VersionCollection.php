@@ -17,13 +17,13 @@ namespace ptlis\SemanticVersion\Collection;
 
 use ArrayIterator;
 use OutOfBoundsException;
+use Traversable;
 use ptlis\SemanticVersion\Comparator\ComparatorInterface;
 use ptlis\SemanticVersion\Comparator\EqualTo;
 use ptlis\SemanticVersion\Comparator\GreaterThan;
 use ptlis\SemanticVersion\Comparator\LessThan;
 use ptlis\SemanticVersion\Exception\SemanticVersionException;
 use ptlis\SemanticVersion\Version\VersionInterface;
-use Traversable;
 
 /**
  * Collection used to store versions.
@@ -195,7 +195,7 @@ class VersionCollection implements SortableCollectionInterface
      * @param EqualTo             $equalTo
      * @param ComparatorInterface $comparator
      *
-     * @return callable
+     * @return \Closure
      */
     private function getCompareClosure(EqualTo $equalTo, ComparatorInterface $comparator)
     {

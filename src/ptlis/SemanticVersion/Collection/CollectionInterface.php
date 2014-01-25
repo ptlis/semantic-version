@@ -15,9 +15,9 @@
 
 namespace ptlis\SemanticVersion\Collection;
 
+use ArrayAccess;
 use Countable;
 use IteratorAggregate;
-use ArrayAccess;
 use Traversable;
 
 /**
@@ -76,6 +76,8 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
      *
      * @param string $offset    The offset to assign the value to.
      * @param \Object $value    The object to store.
+     *
+     * @return void
      */
     public function offsetSet($offset, $value);
 
@@ -86,6 +88,8 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
      * @link http://php.net/manual/en/arrayaccess.offsetunset.php
      *
      * @param string $offset    The offset to unset.
+     *
+     * @return void
      */
     public function offsetUnset($offset);
 
@@ -95,7 +99,7 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
      *
      * @link http://www.php.net/manual/en/language.oop5.magic.php#object.tostring
      *
-     * @return mixed
+     * @return string
      */
     public function __toString();
 }

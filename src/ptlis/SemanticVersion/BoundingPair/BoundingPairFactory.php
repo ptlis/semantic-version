@@ -15,13 +15,13 @@
 
 namespace ptlis\SemanticVersion\BoundingPair;
 
+use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
+use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersionFactory;
 use ptlis\SemanticVersion\Comparator\ComparatorFactory;
 use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
 use ptlis\SemanticVersion\Comparator\LessThan;
-use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
-use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersionFactory;
-use ptlis\SemanticVersion\Exception\InvalidComparatorVersionException;
 use ptlis\SemanticVersion\Exception\InvalidBoundingPairException;
+use ptlis\SemanticVersion\Exception\InvalidComparatorVersionException;
 use ptlis\SemanticVersion\Version\VersionFactory;
 
 /**
