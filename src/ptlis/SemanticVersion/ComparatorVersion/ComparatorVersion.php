@@ -17,7 +17,6 @@ namespace ptlis\SemanticVersion\ComparatorVersion;
 
 use ptlis\SemanticVersion\Comparator\ComparatorInterface;
 use ptlis\SemanticVersion\InRange\InRangeInterface;
-use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\Version\VersionInterface;
 
 /**
@@ -35,7 +34,7 @@ class ComparatorVersion implements InRangeInterface
     /**
      * The Version entity.
      *
-     * @var Version
+     * @var VersionInterface
      */
     private $version;
 
@@ -63,11 +62,11 @@ class ComparatorVersion implements InRangeInterface
 
 
     /**
-     * @param Version $version
+     * @param VersionInterface $version
      *
      * @return $this
      */
-    public function setVersion($version)
+    public function setVersion(VersionInterface $version)
     {
         $this->version = $version;
 
@@ -76,7 +75,7 @@ class ComparatorVersion implements InRangeInterface
 
 
     /**
-     * @return Version
+     * @return VersionInterface
      */
     public function getVersion()
     {
