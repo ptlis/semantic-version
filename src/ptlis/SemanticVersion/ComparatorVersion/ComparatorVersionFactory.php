@@ -16,9 +16,11 @@
 namespace ptlis\SemanticVersion\ComparatorVersion;
 
 use ptlis\SemanticVersion\Comparator\ComparatorFactory;
+use ptlis\SemanticVersion\Comparator\ComparatorInterface;
 use ptlis\SemanticVersion\Exception\InvalidComparatorVersionException;
 use ptlis\SemanticVersion\Exception\InvalidVersionException;
 use ptlis\SemanticVersion\Version\VersionFactory;
+use ptlis\SemanticVersion\Version\VersionInterface;
 
 /**
  * Factory to create ComparatorVersions.
@@ -77,6 +79,25 @@ class ComparatorVersionFactory
                 'The comparator version "' . $versionNo . '" could not be parsed.'
             );
         }
+
+        return $comparatorVersion;
+    }
+
+
+    /**
+     * Get a ComparatorVersion object for a comparator/version pair.
+     *
+     * @param ComparatorInterface $comparator
+     * @param VersionInterface    $version
+     *
+     * @return ComparatorVersion
+     */
+    public function get(ComparatorInterface $comparator, VersionInterface $version)
+    {
+        $comparatorVersion = new ComparatorVersion();
+        $comparatorVersion
+            ->setComparator($comparator)
+            ->setVersion($version);
 
         return $comparatorVersion;
     }

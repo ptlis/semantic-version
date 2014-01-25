@@ -15,11 +15,8 @@
 
 namespace ptlis\SemanticVersion\BoundingPair;
 
-use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersionFactory;
 use ptlis\SemanticVersion\Comparator\ComparatorFactory;
-use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
-use ptlis\SemanticVersion\Comparator\LessThan;
 use ptlis\SemanticVersion\Exception\InvalidBoundingPairException;
 use ptlis\SemanticVersion\Exception\InvalidComparatorVersionException;
 use ptlis\SemanticVersion\Version\VersionFactory;
@@ -90,15 +87,15 @@ class BoundingPairFactory
                     $versionRange = $this->getFromSingleArray($matches);
 
                 } elseif (array_key_exists('min_hyphen_major', $matches) && strlen($matches['min_hyphen_major'])) {
-                    $lower = new ComparatorVersion();
-                    $lower
-                        ->setVersion($this->versionFac->getFromArray($matches, 'min_hyphen_'))
-                        ->setComparator(new GreaterOrEqualTo());
+                    $lower = $this->comparatorVersionFac->get(
+                        $this->comparatorFac->get('>='),
+                        $this->versionFac->getFromArray($matches, 'min_hyphen_')
+                    );
 
-                    $upper = new ComparatorVersion();
-                    $upper
-                        ->setVersion($this->versionFac->getFromArray($matches, 'max_hyphen_'))
-                        ->setComparator(new LessThan());
+                    $upper = $this->comparatorVersionFac->get(
+                        $this->comparatorFac->get('<'),
+                        $this->versionFac->getFromArray($matches, 'max_hyphen_')
+                    );
 
                     $versionRange->setLower($lower);
                     $versionRange->setUpper($upper);
