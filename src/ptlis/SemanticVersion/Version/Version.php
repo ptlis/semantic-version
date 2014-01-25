@@ -223,4 +223,13 @@ class Version implements VersionInterface
 
         return (string)$strVersion;
     }
+
+
+    /**
+     * Deep clone.
+     */
+    public function __clone()
+    {
+        $this->label = clone $this->label;
+    }
 }

@@ -214,4 +214,19 @@ class BoundingPair implements InRangeInterface
     {
         return is_null($this->upper) || (!is_null($this->upper) && $this->upper->isSatisfiedBy($version));
     }
+
+
+    /**
+     * Deep clone.
+     */
+    public function __clone()
+    {
+        if (!is_null($this->upper)) {
+            $this->upper = clone $this->upper;
+        }
+
+        if (!is_null($this->lower)) {
+            $this->lower = clone $this->lower;
+        }
+    }
 }

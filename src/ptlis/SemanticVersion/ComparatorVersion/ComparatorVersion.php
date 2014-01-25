@@ -106,4 +106,21 @@ class ComparatorVersion implements InRangeInterface
     {
         return $this->comparator->compare($version, $this->version);
     }
+
+
+    /**
+     * Deep clone.
+     *
+     * @todo tests
+     */
+    public function __clone()
+    {
+        if (!is_null($this->comparator)) {
+            $this->comparator = clone $this->comparator;
+        }
+
+        if (!is_null($this->version)) {
+            $this->version = clone $this->version;
+        }
+    }
 }
