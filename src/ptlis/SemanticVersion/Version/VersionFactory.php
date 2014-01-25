@@ -79,26 +79,37 @@ class VersionFactory
      */
     public function getFromArray(array $versionArr, $prefix = null)
     {
-        $minorPresent = array_key_exists($prefix . 'minor', $versionArr) && strlen($versionArr[$prefix . 'minor']);
-        $patchPresent = array_key_exists($prefix . 'patch', $versionArr) && strlen($versionArr[$prefix . 'patch']);
-        $labelPresent = array_key_exists($prefix . 'label', $versionArr) && strlen($versionArr[$prefix . 'label']);
-        $labelNumPresent = array_key_exists($prefix . 'label_num', $versionArr)
-            && strlen($versionArr[$prefix . 'label_num']);
-        $labelMetaPresent = array_key_exists($prefix . 'label_meta', $versionArr)
-            && strlen($versionArr[$prefix . 'label_meta']);
-
         $this->validateVersionArray($versionArr, $prefix);
 
         $version = new Version();
+        $version = $this->setVersionNumber($version, $versionArr, $prefix);
+        $version = $this->setVersionLabel($version, $versionArr, $prefix);
 
+        return $version;
+    }
+
+
+    /**
+     * Extracts the version number from the array & and into the version object.
+     *
+     * @throws InvalidVersionException
+     *
+     * @param VersionInterface $version
+     * @param array            $versionArr
+     * @param string           $prefix
+     *
+     * @return VersionInterface
+     */
+    private function setVersionNumber(VersionInterface $version, array $versionArr, $prefix)
+    {
         try {
             $version->setMajor($versionArr[$prefix . 'major']);
 
-            if ($minorPresent) {
+            if (array_key_exists($prefix . 'minor', $versionArr) && strlen($versionArr[$prefix . 'minor'])) {
                 $version->setMinor($versionArr[$prefix . 'minor']);
             }
 
-            if ($patchPresent) {
+            if (array_key_exists($prefix . 'patch', $versionArr) && strlen($versionArr[$prefix . 'patch'])) {
                 $version->setPatch($versionArr[$prefix . 'patch']);
             }
         } catch (InvalidVersionException $e) {
@@ -108,17 +119,32 @@ class VersionFactory
             );
         }
 
+        return $version;
+    }
+
+
+    /**
+     * Extracts the version label from the array & and into the version object.
+     *
+     * @param VersionInterface $version
+     * @param array            $versionArr
+     * @param string           $prefix
+     *
+     * @return VersionInterface
+     */
+    private function setVersionLabel(VersionInterface $version, array $versionArr, $prefix)
+    {
         $labelName = null;
         $labelVersion = null;
         $labelMetadata = null;
-        if ($labelPresent) {
+        if (array_key_exists($prefix . 'label', $versionArr) && strlen($versionArr[$prefix . 'label'])) {
             $labelName = $versionArr[$prefix . 'label'];
 
-            if ($labelNumPresent) {
+            if (array_key_exists($prefix . 'label_num', $versionArr) && strlen($versionArr[$prefix . 'label_num'])) {
                 $labelVersion = $versionArr[$prefix . 'label_num'];
             }
 
-            if ($labelMetaPresent) {
+            if (array_key_exists($prefix . 'label_meta', $versionArr) && strlen($versionArr[$prefix . 'label_meta'])) {
                 $labelMetadata = $versionArr[$prefix . 'label_meta'];
             }
         }
