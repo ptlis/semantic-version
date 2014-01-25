@@ -66,6 +66,58 @@ class BoundingPairValidTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    public function testLowerNull()
+    {
+        $lowerBound = null;
+
+        $upperVersion = new Version();
+        $upperVersion
+            ->setMajor(2)
+            ->setMinor(0)
+            ->setPatch(15)
+            ->setLabel(new LabelAbsent());
+
+        $upperBound = new ComparatorVersion();
+        $upperBound
+            ->setComparator(new LessThan())
+            ->setVersion($upperVersion);
+
+        $versionRange = new BoundingPair();
+        $versionRange
+            ->setLower($lowerBound)
+            ->setUpper($upperBound);
+
+        $this->assertSame($lowerBound, $versionRange->getLower());
+        $this->assertSame($upperBound, $versionRange->getUpper());
+    }
+
+
+    public function testUpperNull()
+    {
+        $lowerVersion = new Version();
+        $lowerVersion
+            ->setMajor(1)
+            ->setMinor(0)
+            ->setPatch(15)
+            ->setLabel(new LabelAbsent());
+
+        $lowerBound = new ComparatorVersion();
+        $lowerBound
+            ->setComparator(new GreaterThan())
+            ->setVersion($lowerVersion);
+
+        $upperBound = null;
+
+        $versionRange = new BoundingPair();
+        $versionRange
+            ->setLower($lowerBound)
+            ->setUpper($upperBound);
+
+        $this->assertSame($lowerBound, $versionRange->getLower());
+        $this->assertSame($upperBound, $versionRange->getUpper());
+    }
+
+
     public function testLowerAndUpperCompoundSetterEqual()
     {
         $lowerVersion = new Version();
