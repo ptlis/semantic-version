@@ -15,7 +15,7 @@
  * file that was distributed with this source code.
  */
 
-namespace tests;
+namespace tests\Version;
 
 use ptlis\SemanticVersion\Version\Version;
 

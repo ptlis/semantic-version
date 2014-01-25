@@ -15,7 +15,7 @@
  * file that was distributed with this source code.
  */
 
-namespace tests\Parse;
+namespace tests\Comparator;
 
 use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;

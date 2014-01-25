@@ -110,8 +110,6 @@ class ComparatorVersion implements InRangeInterface
 
     /**
      * Deep clone.
-     *
-     * @todo tests
      */
     public function __clone()
     {

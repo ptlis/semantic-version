@@ -15,7 +15,7 @@
  * file that was distributed with this source code.
  */
 
-namespace tests\Parse;
+namespace tests\Version;
 
 use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;

@@ -17,8 +17,6 @@
 
 namespace tests\Comparator;
 
-require_once 'InvalidComparator.php';
-
 use ptlis\SemanticVersion\Comparator\ComparatorFactory;
 use ptlis\SemanticVersion\Comparator\EqualTo;
 use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
