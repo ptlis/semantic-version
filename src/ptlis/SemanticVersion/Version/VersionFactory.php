@@ -105,11 +105,11 @@ class VersionFactory
         try {
             $version->setMajor($versionArr[$prefix . 'major']);
 
-            if (array_key_exists($prefix . 'minor', $versionArr) && strlen($versionArr[$prefix . 'minor'])) {
+            if ($this->dataAtIndex($versionArr, $prefix . 'minor')) {
                 $version->setMinor($versionArr[$prefix . 'minor']);
             }
 
-            if (array_key_exists($prefix . 'patch', $versionArr) && strlen($versionArr[$prefix . 'patch'])) {
+            if ($this->dataAtIndex($versionArr, $prefix . 'patch')) {
                 $version->setPatch($versionArr[$prefix . 'patch']);
             }
         } catch (InvalidVersionException $e) {
@@ -137,14 +137,14 @@ class VersionFactory
         $labelName = null;
         $labelVersion = null;
         $labelMetadata = null;
-        if (array_key_exists($prefix . 'label', $versionArr) && strlen($versionArr[$prefix . 'label'])) {
+        if ($this->dataAtIndex($versionArr, $prefix . 'label')) {
             $labelName = $versionArr[$prefix . 'label'];
 
-            if (array_key_exists($prefix . 'label_num', $versionArr) && strlen($versionArr[$prefix . 'label_num'])) {
+            if ($this->dataAtIndex($versionArr, $prefix . 'label_num')) {
                 $labelVersion = $versionArr[$prefix . 'label_num'];
             }
 
-            if (array_key_exists($prefix . 'label_meta', $versionArr) && strlen($versionArr[$prefix . 'label_meta'])) {
+            if ($this->dataAtIndex($versionArr, $prefix . 'label_meta')) {
                 $labelMetadata = $versionArr[$prefix . 'label_meta'];
             }
         }
@@ -152,6 +152,26 @@ class VersionFactory
         $version->setLabel($this->labelFactory->get($labelName, $labelVersion, $labelMetadata));
 
         return $version;
+    }
+
+
+    /**
+     * Returns true if the element identified by $index has data.
+     *
+     * @param array     $versionArr
+     * @param string    $index
+     *
+     * @return bool
+     */
+    private function dataAtIndex(array $versionArr, $index)
+    {
+        $valid = false;
+
+        if (array_key_exists($index, $versionArr) && strlen($versionArr[$index])) {
+            $valid = true;
+        }
+
+        return $valid;
     }
 
 
