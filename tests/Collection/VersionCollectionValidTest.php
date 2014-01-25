@@ -204,7 +204,6 @@ class VersionCollectionValidTest extends \PHPUnit_Framework_TestCase
     }
 
 
-
     public function testIterator()
     {
         $version1 = new Version();
@@ -675,5 +674,34 @@ class VersionCollectionValidTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(2, count($sortedCollection));
         $this->assertSame('3.1.0-rc.5', $sortedCollection[0]->__toString());
         $this->assertSame('3.1.0-rc.5', $sortedCollection[1]->__toString());
+    }
+
+
+    public function testClone()
+    {
+        $version1 = new Version();
+        $version1
+            ->setMajor(1)
+            ->setMinor(0)
+            ->setPatch(0)
+            ->setLabel(new LabelAbsent());
+
+        $collection1 = new VersionCollection();
+
+        $collection1[] = $version1;
+
+        $version2 = new Version();
+        $version2
+            ->setMajor(2)
+            ->setMinor(0)
+            ->setPatch(0)
+            ->setLabel(new LabelAbsent());
+
+        $collection2 = clone $collection1;
+        $collection2[] = $version2;
+
+
+        $this->assertSame(1, count($collection1));
+        $this->assertSame(2, count($collection2));
     }
 }

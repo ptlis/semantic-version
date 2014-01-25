@@ -218,4 +218,19 @@ class VersionCollection implements SortableCollectionInterface
     {
         return implode(', ', $this->versionList);
     }
+
+
+    /**
+     * Deep clone
+     */
+    public function __clone()
+    {
+        $newVersionList = [];
+
+        foreach ($this->versionList as $index => $version) {
+            $newVersionList[$index] = clone $version;
+        }
+
+        $this->versionList = $newVersionList;
+    }
 }
