@@ -47,14 +47,18 @@ class BoundingPair implements InRangeInterface
      */
     public function setLower(ComparatorVersion $lower = null)
     {
-        if (!is_null($this->upper) && (!$this->upper->isSatisfiedBy($lower->getVersion())
-                || !$lower->isSatisfiedBy($this->upper->getVersion()) )) {
+        if (is_null($lower)) {
+            $this->lower = null;
+
+        } elseif (is_null($this->upper) || ($this->upper->isSatisfiedBy($lower->getVersion())
+                && $lower->isSatisfiedBy($this->upper->getVersion()))) {
+            $this->lower = $lower;
+
+        } else {
             throw new InvalidBoundingPairException(
                 'The provided version is outside the bounds allowed by the upper bound.'
             );
         }
-
-        $this->lower = $lower;
 
         return $this;
     }
@@ -78,14 +82,18 @@ class BoundingPair implements InRangeInterface
      */
     public function setUpper(ComparatorVersion $upper = null)
     {
-        if (!is_null($this->lower) && (!$this->lower->isSatisfiedBy($upper->getVersion())
-                || !$upper->isSatisfiedBy($this->lower->getVersion()) )) {
+        if (is_null($upper)) {
+            $this->upper = null;
+
+        } elseif (is_null($this->lower) || ($this->lower->isSatisfiedBy($upper->getVersion())
+                && $upper->isSatisfiedBy($this->lower->getVersion()))) {
+            $this->upper = $upper;
+
+        } else {
             throw new InvalidBoundingPairException(
                 'The provided version is outside the bounds allowed by the lower bound.'
             );
         }
-
-        $this->upper = $upper;
 
         return $this;
     }
