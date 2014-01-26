@@ -237,8 +237,8 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
         $engine = new VersionEngine();
 
-        $boundingPairList[] = $engine->parseBoundingPair('>=1.0.0<2.0.0');
         $boundingPairList[] = $engine->parseBoundingPair('>=1.0.0<1.5.0');
+        $boundingPairList[] = $engine->parseBoundingPair('>=1.0.0<2.0.0');
 
         $collection = new BoundingPairCollection();
         $collection->setList($boundingPairList);
@@ -431,7 +431,204 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    // TODO: Omit upper, omit lower
+    public function testLowerDifferOmitOneUpper()
+    {
+        $boundingPairList = [];
+
+        $engine = new VersionEngine();
+
+        $boundingPairList[] = $engine->parseBoundingPair('>1.0.0<=2.0.0');
+        $boundingPairList[] = $engine->parseBoundingPair('>=1.0.0');
+
+        $collection = new BoundingPairCollection();
+        $collection->setList($boundingPairList);
+
+        $sortedCollection = $collection->getAscending();
+
+        $this->assertSame(2, count($sortedCollection));
+        $this->assertSame('>=1.0.0', $sortedCollection[0]->__toString());
+        $this->assertSame('>1.0.0<=2.0.0', $sortedCollection[1]->__toString());
+    }
+
+
+    public function testLowerIdenticalOmitOneUpperAscendingOne()
+    {
+        $boundingPairList = [];
+
+        $engine = new VersionEngine();
+
+        $boundingPairList[] = $engine->parseBoundingPair('>1.0.0<=2.0.0');
+        $boundingPairList[] = $engine->parseBoundingPair('>1.0.0');
+
+        $collection = new BoundingPairCollection();
+        $collection->setList($boundingPairList);
+
+        $sortedCollection = $collection->getAscending();
+
+        $this->assertSame(2, count($sortedCollection));
+        $this->assertSame('>1.0.0<=2.0.0', $sortedCollection[0]->__toString());
+        $this->assertSame('>1.0.0', $sortedCollection[1]->__toString());
+    }
+
+
+    public function testLowerIdenticalOmitOneUpperAscendingTwo()
+    {
+        $boundingPairList = [];
+
+        $engine = new VersionEngine();
+
+        $boundingPairList[] = $engine->parseBoundingPair('>1.0.0');
+        $boundingPairList[] = $engine->parseBoundingPair('>1.0.0<=2.0.0');
+
+        $collection = new BoundingPairCollection();
+        $collection->setList($boundingPairList);
+
+        $sortedCollection = $collection->getAscending();
+
+        $this->assertSame(2, count($sortedCollection));
+        $this->assertSame('>1.0.0<=2.0.0', $sortedCollection[0]->__toString());
+        $this->assertSame('>1.0.0', $sortedCollection[1]->__toString());
+    }
+
+
+    public function testLowerIdenticalOmitOneUpperDescendingOne()
+    {
+        $boundingPairList = [];
+
+        $engine = new VersionEngine();
+
+        $boundingPairList[] = $engine->parseBoundingPair('>1.0.0');
+        $boundingPairList[] = $engine->parseBoundingPair('>1.0.0<=2.0.0');
+
+        $collection = new BoundingPairCollection();
+        $collection->setList($boundingPairList);
+
+        $sortedCollection = $collection->getDescending();
+
+        $this->assertSame(2, count($sortedCollection));
+        $this->assertSame('>1.0.0', $sortedCollection[0]->__toString());
+        $this->assertSame('>1.0.0<=2.0.0', $sortedCollection[1]->__toString());
+    }
+
+
+    public function testLowerIdenticalOmitOneUpperDescendingTwo()
+    {
+        $boundingPairList = [];
+
+        $engine = new VersionEngine();
+
+        $boundingPairList[] = $engine->parseBoundingPair('>1.0.0<=2.0.0');
+        $boundingPairList[] = $engine->parseBoundingPair('>1.0.0');
+
+        $collection = new BoundingPairCollection();
+        $collection->setList($boundingPairList);
+
+        $sortedCollection = $collection->getDescending();
+
+        $this->assertSame(2, count($sortedCollection));
+        $this->assertSame('>1.0.0', $sortedCollection[0]->__toString());
+        $this->assertSame('>1.0.0<=2.0.0', $sortedCollection[1]->__toString());
+    }
+
+
+    public function testLowerDifferOmitTwoUpper()
+    {
+        $boundingPairList = [];
+
+        $engine = new VersionEngine();
+
+        $boundingPairList[] = $engine->parseBoundingPair('>1.0.0');
+        $boundingPairList[] = $engine->parseBoundingPair('>=1.0.0');
+
+        $collection = new BoundingPairCollection();
+        $collection->setList($boundingPairList);
+
+        $sortedCollection = $collection->getAscending();
+
+        $this->assertSame(2, count($sortedCollection));
+        $this->assertSame('>=1.0.0', $sortedCollection[0]->__toString());
+        $this->assertSame('>1.0.0', $sortedCollection[1]->__toString());
+    }
+
+
+    public function testLowerIdenticalOmitTwoUpper()
+    {
+        $boundingPairList = [];
+
+        $engine = new VersionEngine();
+
+        $boundingPairList[] = $engine->parseBoundingPair('>1.0.0');
+        $boundingPairList[] = $engine->parseBoundingPair('>1.0.0');
+
+        $collection = new BoundingPairCollection();
+        $collection->setList($boundingPairList);
+
+        $sortedCollection = $collection->getAscending();
+
+        $this->assertSame(2, count($sortedCollection));
+        $this->assertSame('>1.0.0', $sortedCollection[0]->__toString());
+        $this->assertSame('>1.0.0', $sortedCollection[1]->__toString());
+    }
+
+
+    public function testOmitOneLowerOne()
+    {
+        $boundingPairList = [];
+
+        $engine = new VersionEngine();
+
+        $boundingPairList[] = $engine->parseBoundingPair('>1.0.0<=2.0.0');
+        $boundingPairList[] = $engine->parseBoundingPair('<2.0.0');
+
+        $collection = new BoundingPairCollection();
+        $collection->setList($boundingPairList);
+
+        $sortedCollection = $collection->getAscending();
+
+        $this->assertSame(2, count($sortedCollection));
+        $this->assertSame('<2.0.0', $sortedCollection[0]->__toString());
+        $this->assertSame('>1.0.0<=2.0.0', $sortedCollection[1]->__toString());
+    }
+
+
+    public function testOmitOneLowerTwo()
+    {
+        $boundingPairList = [];
+
+        $engine = new VersionEngine();
+
+        $boundingPairList[] = $engine->parseBoundingPair('<2.0.0');
+        $boundingPairList[] = $engine->parseBoundingPair('>1.0.0<=2.0.0');
+
+        $collection = new BoundingPairCollection();
+        $collection->setList($boundingPairList);
+
+        $sortedCollection = $collection->getAscending();
+
+        $this->assertSame(2, count($sortedCollection));
+        $this->assertSame('<2.0.0', $sortedCollection[0]->__toString());
+        $this->assertSame('>1.0.0<=2.0.0', $sortedCollection[1]->__toString());
+    }
+
+
+    public function testOmitTwoLower()
+    {
+        $boundingPairList = [];
+
+        $engine = new VersionEngine();
+
+        $boundingPairList[] = $engine->parseBoundingPair('<=2.0.0');
+        $boundingPairList[] = $engine->parseBoundingPair('<2.0.0');
+
+        $collection = new BoundingPairCollection();
+        $collection->setList($boundingPairList);
+
+        $sortedCollection = $collection->getAscending();
+
+        $this->assertSame(2, count($sortedCollection));
+        $this->assertSame('<2.0.0', $sortedCollection[0]->__toString());
+        $this->assertSame('<=2.0.0', $sortedCollection[1]->__toString());
+    }
 
 
     public function testClone()
