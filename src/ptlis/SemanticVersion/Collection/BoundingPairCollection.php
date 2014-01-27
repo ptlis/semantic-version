@@ -153,7 +153,7 @@ class BoundingPairCollection implements CollectionInterface
 
         usort(
             $newBoundingPairList,
-            $this->getCompareClosure('ascending')
+            $this->getCompareClosure(1)
         );
 
         $newCollection = new BoundingPairCollection();
@@ -174,7 +174,7 @@ class BoundingPairCollection implements CollectionInterface
 
         usort(
             $newBoundingPairList,
-            $this->getCompareClosure('descending')
+            $this->getCompareClosure(-1)
         );
 
         $newCollection = new BoundingPairCollection();
@@ -187,19 +187,13 @@ class BoundingPairCollection implements CollectionInterface
     /**
      * Get closure for use in sorting.
      *
-     * @param string    $ordering
+     * @param int    $factor    1 for ascending, -1 for descending
      *
      * @return callable
      */
-    private function getCompareClosure($ordering)
+    private function getCompareClosure($factor)
     {
-        return function (BoundingPair $lPair, BoundingPair $rPair) use ($ordering) {
-
-            // Factor is used to invert return for descending sort
-            $factor = 1;
-            if ($ordering == 'descending') {
-                $factor = -1;
-            }
+        return function (BoundingPair $lPair, BoundingPair $rPair) use ($factor) {
 
             // Try comparing by lower version comparators
             $lowerResult = $this->compare(
