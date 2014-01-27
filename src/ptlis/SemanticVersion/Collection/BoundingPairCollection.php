@@ -174,11 +174,9 @@ class BoundingPairCollection implements CollectionInterface
     {
         $newBoundingPairList = $this->boundingPairList;
 
-        $equalTo = new EqualTo();
-
         usort(
             $newBoundingPairList,
-            $this->getCompareClosure($equalTo, 'descending')
+            $this->getCompareClosure('descending')
         );
 
         $newCollection = new BoundingPairCollection();
@@ -187,32 +185,46 @@ class BoundingPairCollection implements CollectionInterface
         return $newCollection;
     }
 
-    const MOVE_R_UP = 1;
-    const UNCHANGED = 0;
-    const MOVE_R_DOWN = -1;
-
 
     /**
      * Get closure for use in sorting.
      *
-     * @param EqualTo   $equalTo
      * @param string    $ordering
      *
      * @return callable
      */
-    private function getCompareClosure(EqualTo $equalTo, $ordering)
+    private function getCompareClosure($ordering)
     {
-        return function (BoundingPair $lPair, BoundingPair $rPair) use ($equalTo, $ordering) {
+        return function (BoundingPair $lPair, BoundingPair $rPair) use ($ordering) {
+
+            // Factor is used to invert return for descending sort
+            $factor = 1;
+            if ($ordering == 'descending') {
+                $factor = -1;
+            }
 
             // Try comparing by lower version comparators
-            $lowerResult = $this->compareLower($lPair, $rPair, $ordering);
-            if ($lowerResult !== static::UNCHANGED) {
+            $lowerResult = $this->compare(
+                new LessThan(),
+                1 * $factor,
+                -1 * $factor,
+                '>=',
+                $lPair->getLower(),
+                $rPair->getLower()
+            );
+            if ($lowerResult !== 0) {
                 return $lowerResult;
             }
 
             // Compare by upper version comparators
-            return $this->compareUpper($lPair, $rPair, $ordering);
-
+            return $this->compare(
+                new GreaterThan(),
+                -1 * $factor,
+                1 * $factor,
+                '<=',
+                $lPair->getUpper(),
+                $rPair->getUpper()
+            );
         };
     }
 
@@ -220,132 +232,66 @@ class BoundingPairCollection implements CollectionInterface
     /**
      * Compare lower ComparatorVersions of BoundingPairs.
      *
-     * @param BoundingPair $lPair
-     * @param BoundingPair $rPair
-     * @param string       $ordering
+     * @param ComparatorInterface       $comparator
+     * @param                           $rightLess
+     * @param                           $rightGreater
+     * @param string                    $symbol
+     * @param ComparatorVersion|null    $lComp
+     * @param ComparatorVersion|null    $rComp
      *
      * @return int
      */
-    private function compareLower(BoundingPair $lPair, BoundingPair $rPair, $ordering)
-    {
-        $lessThan = new LessThan();
-
-        // Factor is used to invert return for descending sort
-        $factor = 1;
-        if ($ordering == 'descending') {
-            $factor = -1;
-        }
+    private function compare(
+        ComparatorInterface $comparator,
+        $rightLess,
+        $rightGreater,
+        $symbol,
+        ComparatorVersion $lComp = null,
+        ComparatorVersion $rComp = null
+    ) {
 
         // Determine how to move the right value
-        $move = static::UNCHANGED;
+        $move = 0;
         switch (true) {
 
             // Both null so matching
-            case is_null($lPair->getLower()) && is_null($rPair->getLower()):
-                $move = static::UNCHANGED;
+            case is_null($lComp) && is_null($rComp):
+                $move = 0;
                 break;
 
-            // Right pair lower null, equivalent to version being less than than left
-            case is_null($rPair->getLower()):
-                $move = static::MOVE_R_UP * $factor;
+            // Right ComparatorVersion null, equivalent to version being less/greater than than left
+            case is_null($rComp):
+                $move = $rightLess;
                 break;
 
-            // Left pair lower null, equivalent to version being less than than right
-            case is_null($lPair->getLower()):
-                $move = static::MOVE_R_DOWN * $factor;
+            // Left ComparatorVersion null, equivalent to version being less/greater than than right
+            case is_null($lComp):
+                $move = $rightGreater;
                 break;
 
-            // The left & right lower comparator versions are identical
-            case $lPair->getLower()->__toString() === $rPair->getLower()->__toString():
-                $move = static::UNCHANGED;
+            // The left & right ComparatorVersions are identical
+            case $lComp->__toString() === $rComp->__toString():
+                $move = 0;
                 break;
 
-            // Right pair lower version less than left
-            case $lessThan->compare($rPair->getLower()->getVersion(), $lPair->getLower()->getVersion()):
-                $move = static::MOVE_R_UP * $factor;
+            // Right version less/greater than left
+            case $comparator->compare($rComp->getVersion(), $lComp->getVersion()):
+                $move = $rightLess;
                 break;
 
-            // Left pair lower version less than right
-            case $lessThan->compare($lPair->getLower()->getVersion(), $rPair->getLower()->getVersion()):
-                $move = static::MOVE_R_DOWN * $factor;
+            // Left version less/greater than right
+            case $comparator->compare($lComp->getVersion(), $rComp->getVersion()):
+                $move = $rightGreater;
                 break;
 
-            // Versions match, right comparator effectively lower
-            case $rPair->getLower()->getComparator()->getSymbol() === '>=':
-                $move = static::MOVE_R_UP * $factor;
+            // Versions match, right comparator effectively less/greater
+            case $rComp->getComparator()->getSymbol() === $symbol:
+                $move = $rightLess;
                 break;
 
-            // Versions match, left comparator effectively lower
-            case $lPair->getLower()->getComparator()->getSymbol() === '>=':
-                $move = static::MOVE_R_DOWN * $factor;
-                break;
-        }
-
-        return $move;
-    }
-
-
-    /**
-     * Compare upper ComparatorVersions of BoundingPairs.
-     *
-     * @param BoundingPair $lPair
-     * @param BoundingPair $rPair
-     * @param string       $ordering
-     *
-     * @return int
-     */
-    private function compareUpper(BoundingPair $lPair, BoundingPair $rPair, $ordering)
-    {
-        $greaterThan = new GreaterThan();
-
-        // Factor is used to invert return for descending sort
-        $factor = 1;
-        if ($ordering == 'descending') {
-            $factor = -1;
-        }
-
-        // Determine how to move the right value
-        $move = static::UNCHANGED;
-        switch (true) {
-
-            // Both null so matching
-            case is_null($lPair->getUpper()) && is_null($rPair->getUpper()):
-                $move = static::UNCHANGED;
-                break;
-
-            // Right pair upper null, equivalent to version being greater than than left
-            case is_null($rPair->getUpper()):
-                $move = static::MOVE_R_DOWN * $factor;
-                break;
-
-            // Left pair upper null, equivalent to version being greater than than right
-            case is_null($lPair->getUpper()):
-                $move = static::MOVE_R_UP * $factor;
-                break;
-
-            // The left & right upper comparator versions are identical
-            case $lPair->getUpper()->__toString() === $rPair->getUpper()->__toString():
-                $move = static::UNCHANGED;
-                break;
-
-            // Right pair upper version greater than left
-            case $greaterThan->compare($rPair->getUpper()->getVersion(), $lPair->getUpper()->getVersion()):
-                $move = static::MOVE_R_DOWN * $factor;
-                break;
-
-            // Left pair upper version greater than right
-            case $greaterThan->compare($lPair->getUpper()->getVersion(), $rPair->getUpper()->getVersion()):
-                $move = static::MOVE_R_UP * $factor;
-                break;
-
-            // Versions match, right comparator effectively lower
-            case $rPair->getUpper()->getComparator()->getSymbol() === '<':
-                $move = static::MOVE_R_UP * $factor;
-                break;
-
-            // Versions match, left comparator effectively lower
-            case $lPair->getUpper()->getComparator()->getSymbol() === '<':
-                $move = static::MOVE_R_DOWN * $factor;
+            // Versions match, left comparator effectively less/greater
+            case $lComp->getComparator()->getSymbol() === $symbol:
+                $move = $rightGreater;
                 break;
         }
 
