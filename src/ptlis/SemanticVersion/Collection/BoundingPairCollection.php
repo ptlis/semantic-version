@@ -151,11 +151,9 @@ class BoundingPairCollection implements CollectionInterface
     {
         $newBoundingPairList = $this->boundingPairList;
 
-        $equalTo = new EqualTo();
-
         usort(
             $newBoundingPairList,
-            $this->getCompareClosure($equalTo, 'ascending')
+            $this->getCompareClosure('ascending')
         );
 
         $newCollection = new BoundingPairCollection();
