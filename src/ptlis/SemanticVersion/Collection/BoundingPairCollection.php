@@ -246,8 +246,8 @@ class BoundingPairCollection implements CollectionInterface
         $move = 0;
         switch (true) {
 
-            // Both null so matching
-            case is_null($lComp) && is_null($rComp):
+            // The left & right ComparatorVersions are identical
+            case $this->comparatorIdentical($lComp, $rComp):
                 $move = 0;
                 break;
 
@@ -259,11 +259,6 @@ class BoundingPairCollection implements CollectionInterface
             // Left ComparatorVersion null, equivalent to version being less/greater than than right
             case is_null($lComp):
                 $move = $rightGreater;
-                break;
-
-            // The left & right ComparatorVersions are identical
-            case $lComp->__toString() === $rComp->__toString():
-                $move = 0;
                 break;
 
             // Right version less/greater than left
@@ -288,6 +283,27 @@ class BoundingPairCollection implements CollectionInterface
         }
 
         return $move;
+    }
+
+
+    /**
+     * Returns true of the comparator versions are identical
+     *
+     * @param ComparatorVersion|null $lComp
+     * @param ComparatorVersion|null $rComp
+     *
+     * @return bool
+     */
+    private function comparatorIdentical(ComparatorVersion $lComp = null, ComparatorVersion $rComp = null)
+    {
+        $identical = false;
+        if (is_null($lComp) && is_null($rComp)) {
+            $identical = true;
+        } elseif (!is_null($lComp) && !is_null($rComp) && $lComp->__toString() === $rComp->__toString()) {
+            $identical = true;
+        }
+
+        return $identical;
     }
 
 
