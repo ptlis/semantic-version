@@ -160,28 +160,28 @@ class BoundingPairFactory
 
             $upperArr['tilde_comparator'] = '<';
             $upperArr['tilde_minor']++;
-            $upperArr['tilde_patch'] = 0;
+            $upperArr['tilde_patch'] = '0';
 
         // Major & Minor tilde match
         } elseif (array_key_exists('tilde_minor', $tildeArr) && is_numeric($tildeArr['tilde_minor'])) {
             $lowerArr['tilde_comparator'] = '>=';
-            $lowerArr['tilde_patch'] = 0;
+            $lowerArr['tilde_patch'] = '0';
 
             $upperArr['tilde_comparator'] = '<';
             $upperArr['tilde_major']++;
-            $upperArr['tilde_minor'] = 0;
-            $upperArr['tilde_patch'] = 0;
+            $upperArr['tilde_minor'] = '0';
+            $upperArr['tilde_patch'] = '0';
 
         // Major tilde match
         } else {
             $lowerArr['tilde_comparator'] = '>=';
-            $lowerArr['tilde_patch'] = 0;
-            $lowerArr['tilde_minor'] = 0;
+            $lowerArr['tilde_patch'] = '0';
+            $lowerArr['tilde_minor'] = '0';
 
             $upperArr['tilde_comparator'] = '<';
             $upperArr['tilde_major']++;
-            $upperArr['tilde_minor'] = 0;
-            $upperArr['tilde_patch'] = 0;
+            $upperArr['tilde_minor'] = '0';
+            $upperArr['tilde_patch'] = '0';
         }
 
         $boundingPair = new BoundingPair();
@@ -246,22 +246,22 @@ class BoundingPairFactory
         // Minor - range (minor inc by 1)
         } elseif (array_key_exists('single_minor', $singleArr) && is_numeric($singleArr['single_minor'])) {
             $lowerArr['single_comparator'] = '>=';
-            $lowerArr['single_patch'] = 0;
+            $lowerArr['single_patch'] = '0';
 
             $upperArr['single_comparator'] = '<';
             $upperArr['single_minor']++;
-            $upperArr['single_patch'] = 0;
+            $upperArr['single_patch'] = '0';
 
         // Major - range (major inc by 1;
         } else {
             $lowerArr['single_comparator'] = '>=';
-            $lowerArr['single_minor'] = 0;
-            $lowerArr['single_patch'] = 0;
+            $lowerArr['single_minor'] = '0';
+            $lowerArr['single_patch'] = '0';
 
             $upperArr['single_comparator'] = '<';
             $upperArr['single_major']++;
-            $upperArr['single_minor'] = 0;
-            $upperArr['single_patch'] = 0;
+            $upperArr['single_minor'] = '0';
+            $upperArr['single_patch'] = '0';
         }
 
         $boundingPair = new BoundingPair();
