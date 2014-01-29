@@ -34,8 +34,7 @@ See the [Semantic Versioning](http://semver.org/) website for the specification 
 
 ## TODO
 
-* Version Collection wtih sorting
-
+* Collections - get comparators from factory? - probably require a factory of their own
 
 ## Known limitations
 
