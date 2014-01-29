@@ -16,10 +16,8 @@
 namespace ptlis\SemanticVersion\BoundingPair;
 
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersionFactory;
-use ptlis\SemanticVersion\Comparator\ComparatorFactory;
 use ptlis\SemanticVersion\Exception\InvalidBoundingPairException;
 use ptlis\SemanticVersion\Exception\InvalidComparatorVersionException;
-use ptlis\SemanticVersion\Version\VersionFactory;
 
 /**
  * Factory to create BoundingPairs.
@@ -36,34 +34,19 @@ class BoundingPairFactory
      */
     private $comparatorVersionFac;
 
-    /**
-     * @var VersionFactory
-     */
-    private $versionFac;
-
-    /**
-     * @var ComparatorFactory
-     */
-    private $comparatorFac;
 
     /**
      * Constructor
      *
      * @param BoundingPairRegexProviderInterface    $regexProvider
      * @param ComparatorVersionFactory              $comparatorVersionFac
-     * @param VersionFactory                        $versionFac
-     * @param ComparatorFactory                     $comparatorFac
      */
     public function __construct(
         BoundingPairRegexProviderInterface $regexProvider,
-        ComparatorVersionFactory $comparatorVersionFac,
-        VersionFactory $versionFac,
-        ComparatorFactory $comparatorFac
+        ComparatorVersionFactory $comparatorVersionFac
     ) {
         $this->regexProvider = $regexProvider;
         $this->comparatorVersionFac = $comparatorVersionFac;
-        $this->versionFac = $versionFac;
-        $this->comparatorFac = $comparatorFac;
     }
 
 
@@ -78,140 +61,219 @@ class BoundingPairFactory
      */
     public function parse($versionNo)
     {
+        $boundingPair = null;
+
         if (preg_match($this->regexProvider->getBoundingPair(), $versionNo, $matches)) {
-            $versionRange = new BoundingPair();
-
             try {
-
-                if (array_key_exists('tilde_major', $matches) && strlen($matches['tilde_major'])) {
-                    $versionRange = $this->getFromSingleArray($matches);
-
-                } elseif (array_key_exists('min_hyphen_major', $matches) && strlen($matches['min_hyphen_major'])) {
-                    $lower = $this->comparatorVersionFac->get(
-                        $this->comparatorFac->get('>='),
-                        $this->versionFac->getFromArray($matches, 'min_hyphen_')
-                    );
-
-                    $upper = $this->comparatorVersionFac->get(
-                        $this->comparatorFac->get('<'),
-                        $this->versionFac->getFromArray($matches, 'max_hyphen_')
-                    );
-
-                    $versionRange->setLower($lower);
-                    $versionRange->setUpper($upper);
-
-                } else {
-
-                    if (array_key_exists('min_major', $matches) && strlen($matches['min_major'])) {
-                        $versionRange->setLower($this->comparatorVersionFac->getFromArray($matches, 'min_'));
-                    }
-
-                    if (array_key_exists('max_major', $matches) && strlen($matches['max_major'])) {
-                        $versionRange->setUpper($this->comparatorVersionFac->getFromArray($matches, 'max_'));
-                    }
-                }
+                $boundingPair = $this->getFromArray($matches);
 
             } catch (InvalidComparatorVersionException $e) {
                 throw new InvalidBoundingPairException(
-                    'The bounding pair "' . $versionNo . '" could not be parsed.',
+                    'The bounding pair "' . $versionNo . '" could not be parsed.1',
                     $e
                 );
             }
-
-            if (is_null($versionRange->getLower()) && is_null($versionRange->getUpper())) {
-                throw new InvalidBoundingPairException('The bounding pair "' . $versionNo . '" could not be parsed.');
-            }
-
-        } else {
-            throw new InvalidBoundingPairException('The bounding pair "' . $versionNo . '" could not be parsed.');
         }
 
-        return $versionRange;
+        if (is_null($boundingPair) || (is_null($boundingPair->getLower()) && is_null($boundingPair->getUpper()))) {
+            throw new InvalidBoundingPairException('The bounding pair "' . $versionNo . '" could not be parsed.2');
+        }
+
+        return $boundingPair;
     }
 
 
-    public function getFromSingleArray($versionRangeArr)
+    /**
+     * Create a bounding pair from the provided array.
+     *
+     * @throws InvalidComparatorVersionException
+     *
+     * @param string[] $boundingPairArr
+     *
+     * @return BoundingPair
+     */
+    public function getFromArray(array $boundingPairArr)
     {
-        $versionRange = new BoundingPair();
-
         // Tilde match
-        if (array_key_exists('tilde', $versionRangeArr) && strlen($versionRangeArr['tilde'])) {
+        if (array_key_exists('tilde_major', $boundingPairArr) && strlen($boundingPairArr['tilde_major'])) {
+            $boundingPair = $this->getFromTildeArray($boundingPairArr);
 
-            // Full version tilde match
-            if (array_key_exists('tilde_patch', $versionRangeArr) && is_numeric($versionRangeArr['tilde_patch'])) {
-                $lower = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
-                $lower->setComparator($this->comparatorFac->get('>='));
+        // Single match
+        } elseif (array_key_exists('single_major', $boundingPairArr) && strlen($boundingPairArr['single_major'])) {
+            $boundingPair = $this->getFromSingleArray($boundingPairArr);
 
-                $upper = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
-                $upper->getVersion()->setMinor($upper->getVersion()->getMinor() + 1);
-                $upper->getVersion()->setPatch(0);
-                $upper->setComparator($this->comparatorFac->get('<'));
+        // Hyphenated range match
+        } elseif (array_key_exists('min_hyphen_major', $boundingPairArr)
+                && strlen($boundingPairArr['min_hyphen_major'])) {
+            $boundingPair = $this->getFromHyphenatedArray($boundingPairArr);
+
+        // Min-max match
+        } else {
+            $boundingPair = $this->getFromMinMaxArray($boundingPairArr);
+        }
+
+        return $boundingPair;
+    }
+
+
+    /**
+     * Create a bounding pair from the provided min-max array.
+     *
+     * @throws InvalidComparatorVersionException
+     *
+     * @param array $minMaxArray
+     *
+     * @return BoundingPair
+     */
+    private function getFromMinMaxArray(array $minMaxArray)
+    {
+        $boundingPair = new BoundingPair();
+
+        if (array_key_exists('min_major', $minMaxArray) && strlen($minMaxArray['min_major'])) {
+            $boundingPair->setLower($this->comparatorVersionFac->getFromArray($minMaxArray, 'min_'));
+        }
+
+        if (array_key_exists('max_major', $minMaxArray) && strlen($minMaxArray['max_major'])) {
+            $boundingPair->setUpper($this->comparatorVersionFac->getFromArray($minMaxArray, 'max_'));
+        }
+
+        return $boundingPair;
+    }
+
+
+    /**
+     * Create a bounding pair from the provided tilde array.
+     *
+     * @throws InvalidComparatorVersionException
+     *
+     * @param string[] $tildeArr
+     *
+     * @return BoundingPair
+     */
+    private function getFromTildeArray(array $tildeArr)
+    {
+        $upperArr = $tildeArr;
+        $lowerArr = $tildeArr;
+
+        // Full version tilde match
+        if (array_key_exists('tilde_patch', $tildeArr) && is_numeric($tildeArr['tilde_patch'])) {
+            $lowerArr['tilde_comparator'] = '>=';
+
+            $upperArr['tilde_comparator'] = '<';
+            $upperArr['tilde_minor']++;
+            $upperArr['tilde_patch'] = 0;
 
             // Major & Minor tilde match
-            } elseif (array_key_exists('tilde_minor', $versionRangeArr)
-                    && is_numeric($versionRangeArr['tilde_minor'])) {
-                $lower = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
-                $lower->getVersion()->setPatch(0);
-                $lower->setComparator($this->comparatorFac->get('>='));
+        } elseif (array_key_exists('tilde_minor', $tildeArr) && is_numeric($tildeArr['tilde_minor'])) {
+            $lowerArr['tilde_comparator'] = '>=';
+            $lowerArr['tilde_patch'] = 0;
 
-                $upper = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
-                $upper->getVersion()->setMajor($upper->getVersion()->getMajor() + 1);
-                $upper->getVersion()->setMinor(0);
-                $upper->getVersion()->setPatch(0);
-                $upper->setComparator($this->comparatorFac->get('<'));
+            $upperArr['tilde_comparator'] = '<';
+            $upperArr['tilde_major']++;
+            $upperArr['tilde_minor'] = 0;
+            $upperArr['tilde_patch'] = 0;
 
-                // Major tilde match
-            } else {
-                $lower = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
-                $lower->getVersion()->setMinor(0);
-                $lower->getVersion()->setPatch(0);
-                $lower->setComparator($this->comparatorFac->get('>='));
-
-                $upper = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
-                $upper->getVersion()->setMajor($upper->getVersion()->getMajor() + 1);
-                $upper->getVersion()->setMinor(0);
-                $upper->getVersion()->setPatch(0);
-                $upper->setComparator($this->comparatorFac->get('<'));
-            }
-
-            // Label & patch - exact match
-        } elseif (array_key_exists('tilde_patch', $versionRangeArr) && strlen($versionRangeArr['tilde_patch'])) {
-            $lower = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
-            $lower->setComparator($this->comparatorFac->get('='));
-
-            $upper = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
-            $upper->setComparator($this->comparatorFac->get('='));
-
-            // Minor - range (minor inc by 1)
-        } elseif (array_key_exists('tilde_minor', $versionRangeArr) && strlen($versionRangeArr['tilde_minor'])) {
-            $lower = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
-            $lower->setComparator($this->comparatorFac->get('>='));
-
-            $upper = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
-            $upper->getVersion()->setMinor($upper->getVersion()->getMinor() + 1);
-            $upper->getVersion()->setPatch(0);
-            $upper->setComparator($this->comparatorFac->get('<'));
-
-            // Major - range (major inc by 1;
+            // Major tilde match
         } else {
-            $lower = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
-            $lower->setComparator($this->comparatorFac->get('>='));
+            $lowerArr['tilde_comparator'] = '>=';
+            $lowerArr['tilde_patch'] = 0;
+            $lowerArr['tilde_minor'] = 0;
 
-            $upper = $this->comparatorVersionFac->getFromArray($versionRangeArr, 'tilde_');
-            $upper->getVersion()->setMajor($upper->getVersion()->getMajor() + 1);
-            $upper->getVersion()->setMinor(0);
-            $upper->getVersion()->setPatch(0);
-            $upper->setComparator($this->comparatorFac->get('<'));
+            $upperArr['tilde_comparator'] = '<';
+            $upperArr['tilde_major']++;
+            $upperArr['tilde_minor'] = 0;
+            $upperArr['tilde_patch'] = 0;
         }
 
-        if (!is_null($lower->getComparator())) {
-            $versionRange->setLower($lower);
+        $boundingPair = new BoundingPair();
+        $boundingPair
+            ->setLower(
+                $this->comparatorVersionFac->getFromArray($lowerArr, 'tilde_')
+            )
+            ->setUpper(
+                $this->comparatorVersionFac->getFromArray($upperArr, 'tilde_')
+            );
+
+        return $boundingPair;
+    }
+
+
+    /**
+     * Create a bounding pair for a hyphenated pair array.
+     *
+     * @throws InvalidComparatorVersionException
+     *
+     * @param string[] $boundingPairArr
+     *
+     * @return BoundingPair
+     */
+    private function getFromHyphenatedArray(array $boundingPairArr)
+    {
+        $boundingPair = new BoundingPair();
+
+        $boundingPairArr['min_hyphen_comparator'] = '>=';
+        $boundingPairArr['max_hyphen_comparator'] = '<';
+
+        $boundingPair
+            ->setLower(
+                $this->comparatorVersionFac->getFromArray($boundingPairArr, 'min_hyphen_')
+            )
+            ->setUpper(
+                $this->comparatorVersionFac->getFromArray($boundingPairArr, 'max_hyphen_')
+            );
+
+        return $boundingPair;
+    }
+
+
+    /**
+     * Get a bounding pair from the provided single version array.
+     *
+     * @param array $singleArr
+     *
+     * @return BoundingPair
+     */
+    private function getFromSingleArray(array $singleArr)
+    {
+        $upperArr = $singleArr;
+        $lowerArr = $singleArr;
+
+        // Fully qualified version
+        if (array_key_exists('single_patch', $singleArr) && is_numeric($singleArr['single_patch'])) {
+            $lowerArr['single_comparator'] = '=';
+
+            $upperArr['single_comparator'] = '=';
+
+        // Minor - range (minor inc by 1)
+        } elseif (array_key_exists('single_minor', $singleArr) && is_numeric($singleArr['single_minor'])) {
+            $lowerArr['single_comparator'] = '>=';
+            $lowerArr['single_patch'] = 0;
+
+            $upperArr['single_comparator'] = '<';
+            $upperArr['single_minor']++;
+            $upperArr['single_patch'] = 0;
+
+        // Major - range (major inc by 1;
+        } else {
+            $lowerArr['single_comparator'] = '>=';
+            $lowerArr['single_minor'] = 0;
+            $lowerArr['single_patch'] = 0;
+
+            $upperArr['single_comparator'] = '<';
+            $upperArr['single_major']++;
+            $upperArr['single_minor'] = 0;
+            $upperArr['single_patch'] = 0;
         }
 
-        if (!is_null($upper->getComparator())) {
-            $versionRange->setUpper($upper);
-        }
+        $boundingPair = new BoundingPair();
+        $boundingPair
+            ->setLower(
+                $this->comparatorVersionFac->getFromArray($lowerArr, 'single_')
+            )
+            ->setUpper(
+                $this->comparatorVersionFac->getFromArray($upperArr, 'single_')
+            );
 
-        return $versionRange;
+        return $boundingPair;
     }
 }

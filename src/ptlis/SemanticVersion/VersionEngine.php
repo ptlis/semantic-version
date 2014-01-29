@@ -45,7 +45,7 @@ class VersionEngine
     /**
      * @var BoundingPairFactory
      */
-    private $versionRangeFac;
+    private $boundingPairFac;
 
 
     /**
@@ -58,12 +58,7 @@ class VersionEngine
         $comparatorFac = new ComparatorFactory();
         $this->versionFac = new VersionFactory($regexProvider, $labelFac);
         $this->comparatorVersionFac = new ComparatorVersionFactory($regexProvider, $this->versionFac, $comparatorFac);
-        $this->versionRangeFac = new BoundingPairFactory(
-            $regexProvider,
-            $this->comparatorVersionFac,
-            $this->versionFac,
-            $comparatorFac
-        );
+        $this->boundingPairFac = new BoundingPairFactory($regexProvider, $this->comparatorVersionFac);
     }
 
 
@@ -108,6 +103,6 @@ class VersionEngine
      */
     public function parseBoundingPair($versionNo)
     {
-        return $this->versionRangeFac->parse($versionNo);
+        return $this->boundingPairFac->parse($versionNo);
     }
 }

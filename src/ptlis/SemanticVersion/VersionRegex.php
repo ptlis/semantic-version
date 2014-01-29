@@ -118,6 +118,8 @@ ComparatorVersionRegexProviderInterface
 
         $tilde              = $this->getPrefixedRegex($this->versionRegex, 'tilde_', $versionKeyList);
 
+        $single              = $this->getPrefixedRegex($this->versionRegex, 'single_', $versionKeyList);
+
         return "
             /^
                 (
@@ -156,9 +158,15 @@ ComparatorVersionRegexProviderInterface
 
                 (
                     \s*
-                    (?<tilde>~)?
+                    (?<tilde>~)
                     \s*
                     $tilde
+                    \s*
+                )?
+
+                (
+                    \s*
+                    $single
                     \s*
                 )?
             $/ix";
