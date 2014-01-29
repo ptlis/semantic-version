@@ -69,14 +69,14 @@ class BoundingPairFactory
 
             } catch (InvalidComparatorVersionException $e) {
                 throw new InvalidBoundingPairException(
-                    'The bounding pair "' . $versionNo . '" could not be parsed.1',
+                    'The bounding pair "' . $versionNo . '" could not be parsed.',
                     $e
                 );
             }
         }
 
         if (is_null($boundingPair) || (is_null($boundingPair->getLower()) && is_null($boundingPair->getUpper()))) {
-            throw new InvalidBoundingPairException('The bounding pair "' . $versionNo . '" could not be parsed.2');
+            throw new InvalidBoundingPairException('The bounding pair "' . $versionNo . '" could not be parsed.');
         }
 
         return $boundingPair;
@@ -95,16 +95,15 @@ class BoundingPairFactory
     public function getFromArray(array $boundingPairArr)
     {
         // Tilde match
-        if (array_key_exists('tilde_major', $boundingPairArr) && strlen($boundingPairArr['tilde_major'])) {
+        if ($this->hasArrayElement($boundingPairArr, 'tilde_major')) {
             $boundingPair = $this->getFromTildeArray($boundingPairArr);
 
         // Single match
-        } elseif (array_key_exists('single_major', $boundingPairArr) && strlen($boundingPairArr['single_major'])) {
+        } elseif ($this->hasArrayElement($boundingPairArr, 'single_major')) {
             $boundingPair = $this->getFromSingleArray($boundingPairArr);
 
         // Hyphenated range match
-        } elseif (array_key_exists('min_hyphen_major', $boundingPairArr)
-                && strlen($boundingPairArr['min_hyphen_major'])) {
+        } elseif ($this->hasArrayElement($boundingPairArr, 'min_hyphen_major')) {
             $boundingPair = $this->getFromHyphenatedArray($boundingPairArr);
 
         // Min-max match
@@ -129,11 +128,11 @@ class BoundingPairFactory
     {
         $boundingPair = new BoundingPair();
 
-        if (array_key_exists('min_major', $minMaxArray) && strlen($minMaxArray['min_major'])) {
+        if ($this->hasArrayElement($minMaxArray, 'min_major')) {
             $boundingPair->setLower($this->comparatorVersionFac->getFromArray($minMaxArray, 'min_'));
         }
 
-        if (array_key_exists('max_major', $minMaxArray) && strlen($minMaxArray['max_major'])) {
+        if ($this->hasArrayElement($minMaxArray, 'max_major')) {
             $boundingPair->setUpper($this->comparatorVersionFac->getFromArray($minMaxArray, 'max_'));
         }
 
@@ -163,7 +162,7 @@ class BoundingPairFactory
             $upperArr['tilde_minor']++;
             $upperArr['tilde_patch'] = 0;
 
-            // Major & Minor tilde match
+        // Major & Minor tilde match
         } elseif (array_key_exists('tilde_minor', $tildeArr) && is_numeric($tildeArr['tilde_minor'])) {
             $lowerArr['tilde_comparator'] = '>=';
             $lowerArr['tilde_patch'] = 0;
@@ -173,7 +172,7 @@ class BoundingPairFactory
             $upperArr['tilde_minor'] = 0;
             $upperArr['tilde_patch'] = 0;
 
-            // Major tilde match
+        // Major tilde match
         } else {
             $lowerArr['tilde_comparator'] = '>=';
             $lowerArr['tilde_patch'] = 0;
@@ -275,5 +274,19 @@ class BoundingPairFactory
             );
 
         return $boundingPair;
+    }
+
+
+    /**
+     * Check to ensure that a non-empty element exists for the given array key.
+     *
+     * @param string[] $arr
+     * @param string   $key
+     *
+     * @return bool
+     */
+    private function hasArrayElement(array $arr, $key)
+    {
+        return array_key_exists($key, $arr) && strlen($arr[$key]);
     }
 }
