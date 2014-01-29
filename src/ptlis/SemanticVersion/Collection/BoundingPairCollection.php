@@ -20,7 +20,6 @@ use OutOfBoundsException;
 use ptlis\SemanticVersion\BoundingPair\BoundingPair;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\Comparator\ComparatorInterface;
-use ptlis\SemanticVersion\Comparator\EqualTo;
 use ptlis\SemanticVersion\Comparator\GreaterThan;
 use ptlis\SemanticVersion\Comparator\LessThan;
 use ptlis\SemanticVersion\Exception\SemanticVersionException;
