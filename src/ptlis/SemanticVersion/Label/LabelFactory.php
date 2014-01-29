@@ -101,7 +101,7 @@ class LabelFactory
      */
     public function clearTypeList()
     {
-        $this->labelList = [];
+        $this->labelList = array();
     }
 
 

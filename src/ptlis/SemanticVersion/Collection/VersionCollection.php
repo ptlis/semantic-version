@@ -33,7 +33,7 @@ class VersionCollection implements SortableCollectionInterface
     /**
      * @var VersionInterface[]
      */
-    private $versionList = [];
+    private $versionList = array();
 
 
     /**
@@ -45,7 +45,7 @@ class VersionCollection implements SortableCollectionInterface
      */
     public function setList(array $versionList)
     {
-        $this->versionList = [];
+        $this->versionList = array();
         foreach ($versionList as $index => $version) {
             $this->offsetSet($index, $version);
         }
@@ -225,7 +225,7 @@ class VersionCollection implements SortableCollectionInterface
      */
     public function __clone()
     {
-        $newVersionList = [];
+        $newVersionList = array();
 
         foreach ($this->versionList as $index => $version) {
             $newVersionList[$index] = clone $version;

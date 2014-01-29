@@ -95,7 +95,7 @@ class ComparatorFactory
      */
     public function clearTypeList()
     {
-        $this->comparatorList = [];
+        $this->comparatorList = array();
     }
 
 

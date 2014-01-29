@@ -184,8 +184,8 @@ ComparatorVersionRegexProviderInterface
      */
     private function getPrefixedRegex($regex, $prefix, array $keyList)
     {
-        $search = [];
-        $replace = [];
+        $search = array();
+        $replace = array();
         foreach ($keyList as $key) {
             $search[] = '<' . $key . '>';
             $replace[] = '<' . $prefix . $key . '>';

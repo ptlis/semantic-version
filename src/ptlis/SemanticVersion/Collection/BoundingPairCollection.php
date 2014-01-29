@@ -34,7 +34,7 @@ class BoundingPairCollection implements CollectionInterface
     /**
      * @var BoundingPair[]
      */
-    private $boundingPairList = [];
+    private $boundingPairList = array();
 
 
     /**
@@ -46,7 +46,7 @@ class BoundingPairCollection implements CollectionInterface
      */
     public function setList(array $boundingPairList)
     {
-        $this->boundingPairList = [];
+        $this->boundingPairList = array();
         foreach ($boundingPairList as $index => $boundingPair) {
             $this->offsetSet($index, $boundingPair);
         }
