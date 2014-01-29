@@ -36,11 +36,11 @@ class LabelFactory
      *
      * @var array
      */
-    private $labelList = [
+    private $labelList = array(
         'alpha' => 'ptlis\SemanticVersion\Label\LabelAlpha',
         'beta'  => 'ptlis\SemanticVersion\Label\LabelBeta',
         'rc'    => 'ptlis\SemanticVersion\Label\LabelRc'
-    ];
+    );
 
 
     /**

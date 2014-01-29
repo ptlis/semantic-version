@@ -98,7 +98,7 @@ ComparatorVersionRegexProviderInterface
      */
     public function getBoundingPair()
     {
-        $versionKeyList = [
+        $versionKeyList = array(
             'major',
             'minor',
             'patch',
@@ -106,11 +106,11 @@ ComparatorVersionRegexProviderInterface
             'label',
             'label_num',
             'label_meta'
-        ];
+        );
 
-        $minComp            = $this->getPrefixedRegex($this->comparatorMinRegex, 'min_', ['comparator']);
+        $minComp            = $this->getPrefixedRegex($this->comparatorMinRegex, 'min_', array('comparator'));
         $minCompVersion     = $this->getPrefixedRegex($this->versionRegex, 'min_', $versionKeyList);
-        $maxComp            = $this->getPrefixedRegex($this->comparatorMaxRegex, 'max_', ['comparator']);
+        $maxComp            = $this->getPrefixedRegex($this->comparatorMaxRegex, 'max_', array('comparator'));
         $maxCompVersion     = $this->getPrefixedRegex($this->versionRegex, 'max_', $versionKeyList);
 
         $minHyphenVersion   = $this->getPrefixedRegex($this->versionRegex, 'min_hyphen_', $versionKeyList);

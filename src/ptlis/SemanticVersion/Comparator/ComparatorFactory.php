@@ -27,13 +27,13 @@ class ComparatorFactory
      *
      * @var array
      */
-    private $comparatorList = [
+    private $comparatorList = array(
         '='     => 'ptlis\SemanticVersion\Comparator\EqualTo',
         '>='    => 'ptlis\SemanticVersion\Comparator\GreaterOrEqualTo',
         '>'     => 'ptlis\SemanticVersion\Comparator\GreaterThan',
         '<='    => 'ptlis\SemanticVersion\Comparator\LessOrEqualTo',
         '<'     => 'ptlis\SemanticVersion\Comparator\LessThan',
-    ];
+    );
 
 
     /**
