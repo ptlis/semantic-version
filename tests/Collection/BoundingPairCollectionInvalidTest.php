@@ -50,7 +50,7 @@ class BoundingPairCollectionInvalidTest extends \PHPUnit_Framework_TestCase
             'A BoundingPairCollection may only store objects implementing BoundingPair.'
         );
 
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 

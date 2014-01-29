@@ -74,7 +74,7 @@ class VersionCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testAddBulk()
     {
-        $versionList = [];
+        $versionList = array();
 
         $version1 = new Version();
         $version1

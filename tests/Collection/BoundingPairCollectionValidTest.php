@@ -61,7 +61,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testAddBulk()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -78,7 +78,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testCount()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -94,7 +94,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testRemove()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -130,7 +130,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testToString()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -150,7 +150,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testIterator()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -169,7 +169,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testSortAscendingMajor()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -191,7 +191,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testSortDescendingMajor()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -213,7 +213,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testMatchIdentical()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -233,7 +233,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testMatchLowerAscending()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -253,7 +253,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testMatchLowerDescending()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -273,7 +273,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testMatchLessThanLessOrEqualToAscendingOne()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -293,7 +293,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testMatchLessThanLessOrEqualToAscendingTwo()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -313,7 +313,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testMatchLessThanLessOrEqualToDescendingOne()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -333,7 +333,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testMatchLessThanLessOrEqualToDescendingTwo()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -353,7 +353,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testMatchGreaterThanGreaterOrEqualToAscendingOne()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -373,7 +373,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testMatchGreaterThanGreaterOrEqualToAscendingTwo()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -393,7 +393,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testMatchGreaterThanGreaterOrEqualToDescendingOne()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -413,7 +413,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testMatchGreaterThanGreaterOrEqualToDescendingTwo()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -433,7 +433,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testLowerDifferOmitOneUpper()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -453,7 +453,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testLowerIdenticalOmitOneUpperAscendingOne()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -473,7 +473,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testLowerIdenticalOmitOneUpperAscendingTwo()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -493,7 +493,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testLowerIdenticalOmitOneUpperDescendingOne()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -513,7 +513,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testLowerIdenticalOmitOneUpperDescendingTwo()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -533,7 +533,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testLowerDifferOmitTwoUpper()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -553,7 +553,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testLowerIdenticalOmitTwoUpper()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -573,7 +573,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testOmitOneLowerOne()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -593,7 +593,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testOmitOneLowerTwo()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 
@@ -613,7 +613,7 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
 
     public function testOmitTwoLower()
     {
-        $boundingPairList = [];
+        $boundingPairList = array();
 
         $engine = new VersionEngine();
 

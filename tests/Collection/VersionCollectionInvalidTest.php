@@ -49,7 +49,7 @@ class VersionCollectionInvalidTest extends \PHPUnit_Framework_TestCase
             'A VersionCollection may only store objects implementing VersionInterface.'
         );
 
-        $versionList = [];
+        $versionList = array();
 
         $version1 = new Version();
         $version1
