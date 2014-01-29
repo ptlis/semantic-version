@@ -72,7 +72,7 @@ class LabelFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCustomLabelListValid()
     {
         $factory = new LabelFactory();
-        $factory->setTypeList(['=' => 'ptlis\SemanticVersion\Label\LabelAlpha']);
+        $factory->setTypeList(array('=' => 'ptlis\SemanticVersion\Label\LabelAlpha'));
 
         $expectLabel = new LabelDev();
         $expectLabel->setName('beta');

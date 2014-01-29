@@ -86,7 +86,7 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCustomComparatorListValid()
     {
         $factory = new ComparatorFactory();
-        $factory->setTypeList(['=' => 'ptlis\SemanticVersion\Comparator\EqualTo']);
+        $factory->setTypeList(array('=' => 'ptlis\SemanticVersion\Comparator\EqualTo'));
 
         $this->assertEquals(new EqualTo(), $factory->get('='));
     }
@@ -102,7 +102,7 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
         );
 
         $factory = new ComparatorFactory();
-        $factory->setTypeList(['=' => 'ptlis\SemanticVersion\Comparator\EqualTo']);
+        $factory->setTypeList(array('=' => 'ptlis\SemanticVersion\Comparator\EqualTo'));
 
         $factory->get($comparatorStr);
     }
