@@ -82,10 +82,6 @@ class VersionFactory
      */
     public function get($major, $minor = null, $patch = null, LabelInterface $label = null)
     {
-        if (!strlen($major)) {
-            throw new InvalidVersionException('The provided options are invalid.');
-        }
-
         if (!strlen($minor)) {
             $minor = 0;
             $patch = 0;

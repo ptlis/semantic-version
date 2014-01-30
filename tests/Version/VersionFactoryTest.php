@@ -75,7 +75,7 @@ class ComparatorVersionFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException(
             'ptlis\SemanticVersion\Exception\InvalidVersionException',
-            'The provided options are invalid.'
+            'Failed to set major version to invalid value ""'
         );
 
         $versionFac = new VersionFactory(new VersionRegex(), new LabelFactory());
