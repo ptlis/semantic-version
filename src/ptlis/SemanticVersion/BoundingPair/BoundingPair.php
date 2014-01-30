@@ -16,7 +16,6 @@
 namespace ptlis\SemanticVersion\BoundingPair;
 
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
-use ptlis\SemanticVersion\Comparator\EqualTo;
 use ptlis\SemanticVersion\Comparator\GreaterThan;
 use ptlis\SemanticVersion\Exception\InvalidBoundingPairException;
 use ptlis\SemanticVersion\InRange\InRangeInterface;
@@ -118,20 +117,14 @@ class BoundingPair implements InRangeInterface
      */
     public function setUpperLower(ComparatorVersion $version1, ComparatorVersion $version2)
     {
-        $equalTo = new EqualTo();
         $greaterThan = new GreaterThan();
 
-        // If the versions are equal it doesn't matter
-        if ($equalTo->compare($version1->getVersion(), $version2->getVersion())) {
-            $upper = $version1;
-            $lower = $version2;
-
         // $version1 is greater
-        } elseif ($greaterThan->compare($version1->getVersion(), $version2->getVersion())) {
+        if ($greaterThan->compare($version1->getVersion(), $version2->getVersion())) {
             $upper = $version1;
             $lower = $version2;
 
-        // $version2 is greater
+        // $version2 is greater or versions are equal
         } else {
             $upper = $version2;
             $lower = $version1;
