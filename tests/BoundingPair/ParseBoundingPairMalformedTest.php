@@ -17,8 +17,8 @@
 
 namespace tests\ParseBoundPair;
 
-use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
-use ptlis\SemanticVersion\Comparator\LessOrEqualTo;
+use ptlis\SemanticVersion\Version\Comparator\GreaterOrEqualTo;
+use ptlis\SemanticVersion\Version\Comparator\LessOrEqualTo;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\Label\LabelAbsent;
 use ptlis\SemanticVersion\Label\LabelRc;

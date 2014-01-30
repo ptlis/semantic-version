@@ -19,7 +19,7 @@ use ptlis\SemanticVersion\BoundingPair\BoundingPair;
 use ptlis\SemanticVersion\BoundingPair\BoundingPairFactory;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersionFactory;
-use ptlis\SemanticVersion\Comparator\ComparatorFactory;
+use ptlis\SemanticVersion\Version\Comparator\ComparatorFactory;
 use ptlis\SemanticVersion\Exception\InvalidBoundingPairException;
 use ptlis\SemanticVersion\Exception\InvalidComparatorVersionException;
 use ptlis\SemanticVersion\Exception\InvalidVersionException;

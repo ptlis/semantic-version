@@ -17,7 +17,7 @@
 
 namespace tests\Comparator;
 
-use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
+use ptlis\SemanticVersion\Version\Comparator\GreaterOrEqualTo;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\Label\LabelAbsent;
 use ptlis\SemanticVersion\Label\LabelRc;

@@ -16,9 +16,9 @@
 namespace ptlis\SemanticVersion\Collection;
 
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
-use ptlis\SemanticVersion\Comparator\ComparatorInterface;
-use ptlis\SemanticVersion\Comparator\GreaterThan;
-use ptlis\SemanticVersion\Comparator\LessThan;
+use ptlis\SemanticVersion\Version\Comparator\ComparatorInterface;
+use ptlis\SemanticVersion\Version\Comparator\GreaterThan;
+use ptlis\SemanticVersion\Version\Comparator\LessThan;
 
 /**
  * Sort functionality for BoundingPairCollection

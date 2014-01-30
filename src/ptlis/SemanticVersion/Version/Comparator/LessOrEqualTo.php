@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Interface that comparators must implement.
+ * Less than or equal comparator.
  *
  * PHP Version 5.3
  *
@@ -13,36 +13,39 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Comparator;
+namespace ptlis\SemanticVersion\Version\Comparator;
 
 use ptlis\SemanticVersion\Version\VersionInterface;
 
 /**
- * Interface that comparators must implement.
+ * Less than or equal comparator.
  */
-interface ComparatorInterface
+class LessOrEqualTo extends AbstractComparator
 {
-    /**
-     * Return a string representation of the comparator.
-     *
-     * @return string
-     */
-    public function __toString();
-
     /**
      * Retrieve the comparator's symbol.
      *
      * @return string
      */
-    public static function getSymbol();
+    public static function getSymbol()
+    {
+        return '<=';
+    }
+
 
     /**
-     * Compare the provided versions using the appropriate method for the comparator.
+     * Return true if the left version is less or equal to the right version.
      *
      * @param VersionInterface $lVersion
      * @param VersionInterface $rVersion
      *
      * @return boolean
      */
-    public function compare(VersionInterface $lVersion, VersionInterface $rVersion);
+    public function compare(VersionInterface $lVersion, VersionInterface $rVersion)
+    {
+        $lessThan = new LessThan();
+        $equalTo = new EqualTo();
+
+        return ($lessThan->compare($lVersion, $rVersion) || $equalTo->compare($lVersion, $rVersion));
+    }
 }

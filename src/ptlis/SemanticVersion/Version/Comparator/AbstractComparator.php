@@ -13,7 +13,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Comparator;
+namespace ptlis\SemanticVersion\Version\Comparator;
 
 /**
  * Abstract class for comparators.

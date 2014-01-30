@@ -17,7 +17,7 @@
 
 namespace tests\Compare;
 
-use ptlis\SemanticVersion\Comparator\EqualTo;
+use ptlis\SemanticVersion\Version\Comparator\EqualTo;
 use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;
 use ptlis\SemanticVersion\Version\Version;

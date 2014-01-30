@@ -15,8 +15,8 @@
 
 namespace tests\ComparatorVersion;
 
-use ptlis\SemanticVersion\Comparator\EqualTo;
-use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
+use ptlis\SemanticVersion\Version\Comparator\EqualTo;
+use ptlis\SemanticVersion\Version\Comparator\GreaterOrEqualTo;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\Version\Version;
 

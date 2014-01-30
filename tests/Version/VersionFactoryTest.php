@@ -17,7 +17,7 @@
 
 namespace tests\Version;
 
-use ptlis\SemanticVersion\Comparator\ComparatorFactory;
+use ptlis\SemanticVersion\Version\Comparator\ComparatorFactory;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersionFactory;
 use ptlis\SemanticVersion\Label\LabelFactory;
 use ptlis\SemanticVersion\Version\VersionFactory;

@@ -17,11 +17,11 @@
 
 namespace tests\ParseBoundPair;
 
-use ptlis\SemanticVersion\Comparator\EqualTo;
-use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
-use ptlis\SemanticVersion\Comparator\GreaterThan;
-use ptlis\SemanticVersion\Comparator\LessOrEqualTo;
-use ptlis\SemanticVersion\Comparator\LessThan;
+use ptlis\SemanticVersion\Version\Comparator\EqualTo;
+use ptlis\SemanticVersion\Version\Comparator\GreaterOrEqualTo;
+use ptlis\SemanticVersion\Version\Comparator\GreaterThan;
+use ptlis\SemanticVersion\Version\Comparator\LessOrEqualTo;
+use ptlis\SemanticVersion\Version\Comparator\LessThan;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;

@@ -17,7 +17,7 @@
 
 namespace tests\InRange;
 
-use ptlis\SemanticVersion\Comparator\GreaterThan;
+use ptlis\SemanticVersion\Version\Comparator\GreaterThan;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;

@@ -15,7 +15,7 @@
 
 namespace ptlis\SemanticVersion\ComparatorVersion;
 
-use ptlis\SemanticVersion\Comparator\ComparatorInterface;
+use ptlis\SemanticVersion\Version\Comparator\ComparatorInterface;
 use ptlis\SemanticVersion\InRange\InRangeInterface;
 use ptlis\SemanticVersion\Version\VersionInterface;
 

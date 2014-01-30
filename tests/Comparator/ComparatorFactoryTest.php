@@ -17,12 +17,12 @@
 
 namespace tests\Comparator;
 
-use ptlis\SemanticVersion\Comparator\ComparatorFactory;
-use ptlis\SemanticVersion\Comparator\EqualTo;
-use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
-use ptlis\SemanticVersion\Comparator\GreaterThan;
-use ptlis\SemanticVersion\Comparator\LessOrEqualTo;
-use ptlis\SemanticVersion\Comparator\LessThan;
+use ptlis\SemanticVersion\Version\Comparator\ComparatorFactory;
+use ptlis\SemanticVersion\Version\Comparator\EqualTo;
+use ptlis\SemanticVersion\Version\Comparator\GreaterOrEqualTo;
+use ptlis\SemanticVersion\Version\Comparator\GreaterThan;
+use ptlis\SemanticVersion\Version\Comparator\LessOrEqualTo;
+use ptlis\SemanticVersion\Version\Comparator\LessThan;
 
 /**
  * Tests to ensure correct behaviour of ComparatorFactory.
@@ -86,7 +86,7 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCustomComparatorListValid()
     {
         $factory = new ComparatorFactory();
-        $factory->setTypeList(array('=' => 'ptlis\SemanticVersion\Comparator\EqualTo'));
+        $factory->setTypeList(array('=' => 'ptlis\SemanticVersion\Version\Comparator\EqualTo'));
 
         $this->assertEquals(new EqualTo(), $factory->get('='));
     }
@@ -102,7 +102,7 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
         );
 
         $factory = new ComparatorFactory();
-        $factory->setTypeList(array('=' => 'ptlis\SemanticVersion\Comparator\EqualTo'));
+        $factory->setTypeList(array('=' => 'ptlis\SemanticVersion\Version\Comparator\EqualTo'));
 
         $factory->get($comparatorStr);
     }
@@ -126,7 +126,7 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testClassDoesntExist()
     {
-        $className = 'ptlis\SemanticVersion\Comparator\Boo';
+        $className = 'ptlis\SemanticVersion\Version\Comparator\Boo';
 
         $this->setExpectedException(
             '\RuntimeException',
@@ -144,7 +144,7 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException(
             '\RuntimeException',
-            'Comparators must implement the ptlis\SemanticVersion\Comparator\ComparatorInterface interface'
+            'Comparators must implement the ptlis\SemanticVersion\Version\Comparator\ComparatorInterface interface'
         );
 
         $factory = new ComparatorFactory();

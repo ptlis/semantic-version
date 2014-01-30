@@ -18,7 +18,7 @@
 namespace tests\Collection;
 
 use ptlis\SemanticVersion\Collection\BoundingPairCollection;
-use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
+use ptlis\SemanticVersion\Version\Comparator\GreaterOrEqualTo;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\Label\LabelAbsent;
 use ptlis\SemanticVersion\Version\Version;

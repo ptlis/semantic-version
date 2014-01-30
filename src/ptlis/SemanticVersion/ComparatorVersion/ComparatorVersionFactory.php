@@ -15,8 +15,8 @@
 
 namespace ptlis\SemanticVersion\ComparatorVersion;
 
-use ptlis\SemanticVersion\Comparator\ComparatorFactory;
-use ptlis\SemanticVersion\Comparator\ComparatorInterface;
+use ptlis\SemanticVersion\Version\Comparator\ComparatorFactory;
+use ptlis\SemanticVersion\Version\Comparator\ComparatorInterface;
 use ptlis\SemanticVersion\Exception\InvalidComparatorVersionException;
 use ptlis\SemanticVersion\Exception\InvalidVersionException;
 use ptlis\SemanticVersion\Version\VersionFactory;
