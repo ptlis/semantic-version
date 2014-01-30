@@ -28,9 +28,9 @@ class BoundingPairSort
     /**
      * Compare lower ComparatorVersions from BoundingPair.
      *
-     * @param int               $factor
-     * @param ComparatorVersion $lComp
-     * @param ComparatorVersion $rComp
+     * @param int                       $factor
+     * @param ComparatorVersion|null    $lComp
+     * @param ComparatorVersion|null    $rComp
      *
      * @return int
      */
@@ -50,9 +50,9 @@ class BoundingPairSort
     /**
      * Compare upper ComparatorVersions from BoundingPair.
      *
-     * @param int               $factor
-     * @param ComparatorVersion $lComp
-     * @param ComparatorVersion $rComp
+     * @param int                       $factor
+     * @param ComparatorVersion|null    $lComp
+     * @param ComparatorVersion|null    $rComp
      *
      * @return int
      */
