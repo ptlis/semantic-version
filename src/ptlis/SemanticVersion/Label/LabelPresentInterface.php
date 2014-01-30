@@ -3,7 +3,7 @@
 /**
  * Interface that present version labels must implement.
  *
- * PHP Version 5.4
+ * PHP Version 5.3
  *
  * @copyright   (c) 2014 brian ridley
  * @author      brian ridley <ptlis@ptlis.net>

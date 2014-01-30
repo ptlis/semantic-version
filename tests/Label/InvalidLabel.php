@@ -3,7 +3,7 @@
 /**
  * Invalid label (does not implement LabelInterface) - used for tests.
  *
- * PHP Version 5.4
+ * PHP Version 5.3
  *
  * Based off the tests for vierbergenlars\SemVar https://github.com/vierbergenlars/php-semver/
  *

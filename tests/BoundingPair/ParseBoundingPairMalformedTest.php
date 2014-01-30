@@ -3,7 +3,7 @@
 /**
  * Tests to ensure correct parsing of malformed bounding pairs.
  *
- * PHP Version 5.4
+ * PHP Version 5.3
  *
  * Based off the tests for vierbergenlars\SemVar https://github.com/vierbergenlars/php-semver/
  *

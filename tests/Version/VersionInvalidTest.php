@@ -3,7 +3,7 @@
 /**
  * Tests to ensure correct error handling for invalid Versions.
  *
- * PHP Version 5.4
+ * PHP Version 5.3
  *
  * Based off the tests for vierbergenlars\SemVar https://github.com/vierbergenlars/php-semver/
  *
