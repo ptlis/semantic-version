@@ -18,10 +18,6 @@ namespace ptlis\SemanticVersion\Collection;
 use ArrayIterator;
 use OutOfBoundsException;
 use ptlis\SemanticVersion\BoundingPair\BoundingPair;
-use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
-use ptlis\SemanticVersion\Comparator\ComparatorInterface;
-use ptlis\SemanticVersion\Comparator\GreaterThan;
-use ptlis\SemanticVersion\Comparator\LessThan;
 use ptlis\SemanticVersion\Exception\SemanticVersionException;
 use Traversable;
 
@@ -192,117 +188,19 @@ class BoundingPairCollection implements CollectionInterface
      */
     private function getCompareClosure($factor)
     {
-        return function (BoundingPair $lPair, BoundingPair $rPair) use ($factor) {
+        $sort = new BoundingPairSort();
+
+        return function (BoundingPair $lPair, BoundingPair $rPair) use ($sort, $factor) {
 
             // Try comparing by lower version comparators
-            $lowerResult = $this->compare(
-                new LessThan(),
-                1 * $factor,
-                -1 * $factor,
-                '>=',
-                $lPair->getLower(),
-                $rPair->getLower()
-            );
+            $lowerResult = $sort->compareLower($factor, $lPair->getLower(), $rPair->getLower());
             if ($lowerResult !== 0) {
                 return $lowerResult;
             }
 
             // Compare by upper version comparators
-            return $this->compare(
-                new GreaterThan(),
-                -1 * $factor,
-                1 * $factor,
-                '<=',
-                $lPair->getUpper(),
-                $rPair->getUpper()
-            );
+            return $sort->compareUpper($factor, $lPair->getUpper(), $rPair->getUpper());
         };
-    }
-
-
-    /**
-     * Compare lower ComparatorVersions of BoundingPairs.
-     *
-     * @param ComparatorInterface       $comparator
-     * @param                           $rightLess
-     * @param                           $rightGreater
-     * @param string                    $symbol
-     * @param ComparatorVersion|null    $lComp
-     * @param ComparatorVersion|null    $rComp
-     *
-     * @return int
-     */
-    private function compare(
-        ComparatorInterface $comparator,
-        $rightLess,
-        $rightGreater,
-        $symbol,
-        ComparatorVersion $lComp = null,
-        ComparatorVersion $rComp = null
-    ) {
-
-        // Determine how to move the right value
-        $move = 0;
-        switch (true) {
-
-            // The left & right ComparatorVersions are identical
-            case $this->comparatorIdentical($lComp, $rComp):
-                $move = 0;
-                break;
-
-            // Right ComparatorVersion null, equivalent to version being less/greater than than left
-            case is_null($rComp):
-                $move = $rightLess;
-                break;
-
-            // Left ComparatorVersion null, equivalent to version being less/greater than than right
-            case is_null($lComp):
-                $move = $rightGreater;
-                break;
-
-            // Right version less/greater than left
-            case $comparator->compare($rComp->getVersion(), $lComp->getVersion()):
-                $move = $rightLess;
-                break;
-
-            // Left version less/greater than right
-            case $comparator->compare($lComp->getVersion(), $rComp->getVersion()):
-                $move = $rightGreater;
-                break;
-
-            // Versions match, right comparator effectively less/greater
-            case $rComp->getComparator()->getSymbol() === $symbol:
-                $move = $rightLess;
-                break;
-
-            // Versions match, left comparator effectively less/greater
-            case $lComp->getComparator()->getSymbol() === $symbol:
-                $move = $rightGreater;
-                break;
-        }
-
-        return $move;
-    }
-
-
-    /**
-     * Returns true of the comparator versions are identical
-     *
-     * @param ComparatorVersion|null $lComp
-     * @param ComparatorVersion|null $rComp
-     *
-     * @return bool
-     */
-    private function comparatorIdentical(ComparatorVersion $lComp = null, ComparatorVersion $rComp = null)
-    {
-        $identical = false;
-        if (is_null($lComp) && is_null($rComp)) {
-            $identical = true;
-        } elseif (!is_null($lComp) && !is_null($rComp) && $lComp->__toString() === $rComp->__toString()) {
-            $identical = true;
-        }
-
-        return $identical;
     }
 
 
