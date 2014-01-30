@@ -86,6 +86,15 @@ class VersionFactory
             throw new InvalidVersionException('The provided options are invalid.');
         }
 
+        if (!strlen($minor)) {
+            $minor = 0;
+            $patch = 0;
+        }
+
+        if (!strlen($patch)) {
+            $patch = 0;
+        }
+
         if (is_null($label)) {
             $label = $this->labelFactory->get('');
         }

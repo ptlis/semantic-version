@@ -28,19 +28,33 @@ use ptlis\SemanticVersion\VersionRegex;
  */
 class ComparatorVersionFactoryTest extends \PHPUnit_Framework_TestCase
 {
-    public function testValidFactoryGet()
+    public function testValidFactoryGetOne()
     {
-        $regexProvider = new VersionRegex();
-        $comparatorFac = new ComparatorFactory();
-        $versionFac = new VersionFactory($regexProvider, new LabelFactory());
-        $comVerFac = new ComparatorVersionFactory($regexProvider, $versionFac, $comparatorFac);
+        $versionFac = new VersionFactory(new VersionRegex(), new LabelFactory());
 
-        $comparatorVersion = $comVerFac->get(
-            $comparatorFac->get('<='),
-            $versionFac->get(1, 5, 0)
-        );
+        $version = $versionFac->get(1, 5, 0);
 
-        $this->assertEquals('<=1.5.0', $comparatorVersion->__toString());
+        $this->assertEquals('1.5.0', $version->__toString());
+    }
+
+
+    public function testValidFactoryGetTwo()
+    {
+        $versionFac = new VersionFactory(new VersionRegex(), new LabelFactory());
+
+        $version = $versionFac->get(1);
+
+        $this->assertEquals('1.0.0', $version->__toString());
+    }
+
+
+    public function testValidFactoryGetThree()
+    {
+        $versionFac = new VersionFactory(new VersionRegex(), new LabelFactory());
+
+        $version = $versionFac->get(1, 7);
+
+        $this->assertEquals('1.7.0', $version->__toString());
     }
 
 
