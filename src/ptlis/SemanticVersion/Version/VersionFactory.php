@@ -17,6 +17,7 @@ namespace ptlis\SemanticVersion\Version;
 
 use ptlis\SemanticVersion\Exception\InvalidVersionException;
 use ptlis\SemanticVersion\Label\LabelFactory;
+use ptlis\SemanticVersion\Label\LabelInterface;
 
 /**
  * Factory to create Versions.
@@ -62,6 +63,39 @@ class VersionFactory
         } else {
             throw new InvalidVersionException('The version number "' . $versionNo . '" could not be parsed.');
         }
+
+        return $version;
+    }
+
+
+    /**
+     * Get a Version object for the provided options.
+     *
+     * @throws InvalidVersionException
+     *
+     * @param int                   $major
+     * @param int|null              $minor
+     * @param int|null              $patch
+     * @param LabelInterface|null   $label
+     *
+     * @return Version
+     */
+    public function get($major, $minor = null, $patch = null, LabelInterface $label = null)
+    {
+        if (!strlen($major)) {
+            throw new InvalidVersionException('The provided options are invalid.');
+        }
+
+        if (is_null($label)) {
+            $label = $this->labelFactory->get('');
+        }
+
+        $version = new Version();
+        $version
+            ->setMajor($major)
+            ->setMinor($minor)
+            ->setPatch($patch)
+            ->setLabel($label);
 
         return $version;
     }
