@@ -15,7 +15,7 @@
  * file that was distributed with this source code.
  */
 
-namespace tests\Comparator;
+namespace tests\Version\Comparator;
 
 use ptlis\SemanticVersion\Version\Comparator\ComparatorFactory;
 use ptlis\SemanticVersion\Version\Comparator\EqualTo;
@@ -140,7 +140,7 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testClassDoesntImplementInterface()
     {
-        $className = 'tests\Comparator\InvalidComparator';
+        $className = 'tests\Version\Comparator\InvalidComparator';
 
         $this->setExpectedException(
             '\RuntimeException',

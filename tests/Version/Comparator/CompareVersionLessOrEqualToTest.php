@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Tests to ensure correct handling of version number greater than version.
+ * Tests to ensure correct handling of version number less or equal to version.
  *
  * PHP Version 5.3
  *
@@ -15,20 +15,19 @@
  * file that was distributed with this source code.
  */
 
-namespace tests\Compare;
+namespace tests\Version\Comparator;
 
-use ptlis\SemanticVersion\Version\Comparator\GreaterThan;
+use ptlis\SemanticVersion\Version\Comparator\LessOrEqualTo;
 use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;
-use ptlis\SemanticVersion\Label\LabelDev;
 use ptlis\SemanticVersion\Label\LabelAbsent;
 use ptlis\SemanticVersion\Label\LabelRc;
 use ptlis\SemanticVersion\Version\Version;
 
 /**
- * Tests to ensure correct handling of version number greater than version.
+ * Tests to ensure correct handling of version number less than version.
  */
-class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
+class CompareVersionLessOrEqualToTest extends \PHPUnit_Framework_TestCase
 {
     public function testGreaterThanMajor()
     {
@@ -40,9 +39,9 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
         $version2
             ->setMajor(1);
 
-        $greaterThan = new GreaterThan();
+        $lessOrEqualTo = new LessOrEqualTo();
 
-        $this->assertTrue($greaterThan->compare($version1, $version2));
+        $this->assertFalse($lessOrEqualTo->compare($version1, $version2));
     }
 
 
@@ -56,9 +55,9 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
         $version2
             ->setMajor(2);
 
-        $greaterThan = new GreaterThan();
+        $lessOrEqualTo = new LessOrEqualTo();
 
-        $this->assertFalse($greaterThan->compare($version1, $version2));
+        $this->assertTrue($lessOrEqualTo->compare($version1, $version2));
     }
 
 
@@ -72,9 +71,9 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
         $version2
             ->setMajor(1);
 
-        $greaterThan = new GreaterThan();
+        $lessOrEqualTo = new LessOrEqualTo();
 
-        $this->assertFalse($greaterThan->compare($version1, $version2));
+        $this->assertTrue($lessOrEqualTo->compare($version1, $version2));
     }
 
 
@@ -83,16 +82,16 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
         $version1 = new Version();
         $version1
             ->setMajor(1)
-            ->setMinor(1);
+            ->setMinor(5);
 
         $version2 = new Version();
         $version2
             ->setMajor(1)
-            ->setMinor(0);
+            ->setMinor(3);
 
-        $greaterThan = new GreaterThan();
+        $lessOrEqualTo = new LessOrEqualTo();
 
-        $this->assertTrue($greaterThan->compare($version1, $version2));
+        $this->assertFalse($lessOrEqualTo->compare($version1, $version2));
     }
 
 
@@ -101,16 +100,16 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
         $version1 = new Version();
         $version1
             ->setMajor(1)
-            ->setMinor(0);
+            ->setMinor(3);
 
         $version2 = new Version();
         $version2
             ->setMajor(1)
-            ->setMinor(1);
+            ->setMinor(5);
 
-        $greaterThan = new GreaterThan();
+        $lessOrEqualTo = new LessOrEqualTo();
 
-        $this->assertFalse($greaterThan->compare($version1, $version2));
+        $this->assertTrue($lessOrEqualTo->compare($version1, $version2));
     }
 
 
@@ -119,16 +118,16 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
         $version1 = new Version();
         $version1
             ->setMajor(1)
-            ->setMinor(0);
+            ->setMinor(3);
 
         $version2 = new Version();
         $version2
             ->setMajor(1)
-            ->setMinor(0);
+            ->setMinor(3);
 
-        $greaterThan = new GreaterThan();
+        $lessOrEqualTo = new LessOrEqualTo();
 
-        $this->assertFalse($greaterThan->compare($version1, $version2));
+        $this->assertTrue($lessOrEqualTo->compare($version1, $version2));
     }
 
 
@@ -137,18 +136,18 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
         $version1 = new Version();
         $version1
             ->setMajor(1)
-            ->setMinor(0)
-            ->setPatch(1);
+            ->setMinor(5)
+            ->setPatch(7);
 
         $version2 = new Version();
         $version2
             ->setMajor(1)
-            ->setMinor(0)
-            ->setPatch(0);
+            ->setMinor(5)
+            ->setPatch(3);
 
-        $greaterThan = new GreaterThan();
+        $lessOrEqualTo = new LessOrEqualTo();
 
-        $this->assertTrue($greaterThan->compare($version1, $version2));
+        $this->assertFalse($lessOrEqualTo->compare($version1, $version2));
     }
 
 
@@ -157,18 +156,18 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
         $version1 = new Version();
         $version1
             ->setMajor(1)
-            ->setMinor(0)
-            ->setPatch(0);
+            ->setMinor(5)
+            ->setPatch(3);
 
         $version2 = new Version();
         $version2
             ->setMajor(1)
-            ->setMinor(0)
-            ->setPatch(1);
+            ->setMinor(5)
+            ->setPatch(7);
 
-        $greaterThan = new GreaterThan();
+        $lessOrEqualTo = new LessOrEqualTo();
 
-        $this->assertFalse($greaterThan->compare($version1, $version2));
+        $this->assertTrue($lessOrEqualTo->compare($version1, $version2));
     }
 
 
@@ -177,64 +176,18 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
         $version1 = new Version();
         $version1
             ->setMajor(1)
-            ->setMinor(0)
-            ->setPatch(1);
+            ->setMinor(5)
+            ->setPatch(7);
 
         $version2 = new Version();
         $version2
             ->setMajor(1)
-            ->setMinor(0)
-            ->setPatch(1);
+            ->setMinor(5)
+            ->setPatch(7);
 
-        $greaterThan = new GreaterThan();
+        $lessOrEqualTo = new LessOrEqualTo();
 
-        $this->assertFalse($greaterThan->compare($version1, $version2));
-    }
-
-
-    public function testGreaterThanLabelDevAlpha()
-    {
-        $version1 = new Version();
-        $version1
-            ->setMajor(1)
-            ->setMinor(0)
-            ->setPatch(0)
-            ->setLabel(new LabelAlpha());
-
-        $label1 = new LabelDev();
-        $label1->setName('dev');
-        $version2 = new Version();
-        $version2
-            ->setMajor(1)
-            ->setMinor(0)
-            ->setPatch(0)
-            ->setLabel($label1);
-
-        $greaterThan = new GreaterThan();
-
-        $this->assertTrue($greaterThan->compare($version1, $version2));
-    }
-
-
-    public function testLessThanLabelDevAlpha()
-    {
-        $version1 = new Version();
-        $version1
-            ->setMajor(1)
-            ->setMinor(0)
-            ->setPatch(0)
-            ->setLabel(new LabelAlpha());
-
-        $version2 = new Version();
-        $version2
-            ->setMajor(1)
-            ->setMinor(0)
-            ->setPatch(0)
-            ->setLabel(new LabelBeta());
-
-        $greaterThan = new GreaterThan();
-
-        $this->assertFalse($greaterThan->compare($version1, $version2));
+        $this->assertTrue($lessOrEqualTo->compare($version1, $version2));
     }
 
 
@@ -254,9 +207,9 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
             ->setPatch(0)
             ->setLabel(new LabelAlpha());
 
-        $greaterThan = new GreaterThan();
+        $lessOrEqualTo = new LessOrEqualTo();
 
-        $this->assertTrue($greaterThan->compare($version1, $version2));
+        $this->assertFalse($lessOrEqualTo->compare($version1, $version2));
     }
 
 
@@ -269,16 +222,16 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
             ->setPatch(0)
             ->setLabel(new LabelAlpha());
 
-        $version2 = new Version();
+        $version2 = new Version(new LabelAlpha());
         $version2
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(0)
             ->setLabel(new LabelBeta());
 
-        $greaterThan = new GreaterThan();
+        $lessOrEqualTo = new LessOrEqualTo();
 
-        $this->assertFalse($greaterThan->compare($version1, $version2));
+        $this->assertTrue($lessOrEqualTo->compare($version1, $version2));
     }
 
 
@@ -298,9 +251,9 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
             ->setPatch(0)
             ->setLabel(new LabelBeta());
 
-        $greaterThan = new GreaterThan();
+        $lessOrEqualTo = new LessOrEqualTo();
 
-        $this->assertTrue($greaterThan->compare($version1, $version2));
+        $this->assertFalse($lessOrEqualTo->compare($version1, $version2));
     }
 
 
@@ -320,9 +273,9 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
             ->setPatch(0)
             ->setLabel(new LabelRc());
 
-        $greaterThan = new GreaterThan();
+        $lessOrEqualTo = new LessOrEqualTo();
 
-        $this->assertFalse($greaterThan->compare($version1, $version2));
+        $this->assertTrue($lessOrEqualTo->compare($version1, $version2));
     }
 
 
@@ -342,9 +295,9 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
             ->setPatch(0)
             ->setLabel(new LabelRc());
 
-        $greaterThan = new GreaterThan();
+        $lessOrEqualTo = new LessOrEqualTo();
 
-        $this->assertTrue($greaterThan->compare($version1, $version2));
+        $this->assertFalse($lessOrEqualTo->compare($version1, $version2));
     }
 
 
@@ -364,13 +317,13 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
             ->setPatch(0)
             ->setLabel(new LabelAbsent());
 
-        $greaterThan = new GreaterThan();
+        $lessOrEqualTo = new LessOrEqualTo();
 
-        $this->assertFalse($greaterThan->compare($version1, $version2));
+        $this->assertTrue($lessOrEqualTo->compare($version1, $version2));
     }
 
 
-    public function testEqualToLabel()
+    public function testEqualToLabelAbsent()
     {
         $version1 = new Version();
         $version1
@@ -386,9 +339,9 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
             ->setPatch(0)
             ->setLabel(new LabelAbsent());
 
-        $greaterThan = new GreaterThan();
+        $lessOrEqualTo = new LessOrEqualTo();
 
-        $this->assertFalse($greaterThan->compare($version1, $version2));
+        $this->assertTrue($lessOrEqualTo->compare($version1, $version2));
     }
 
 
@@ -408,9 +361,9 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
             ->setPatch(0)
             ->setLabel(new LabelRc());
 
-        $greaterThan = new GreaterThan();
+        $lessOrEqualTo = new LessOrEqualTo();
 
-        $this->assertTrue($greaterThan->compare($version1, $version2));
+        $this->assertFalse($lessOrEqualTo->compare($version1, $version2));
     }
 
 
@@ -430,9 +383,9 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
             ->setPatch(0)
             ->setLabel(new LabelRc(2));
 
-        $greaterThan = new GreaterThan();
+        $lessOrEqualTo = new LessOrEqualTo();
 
-        $this->assertFalse($greaterThan->compare($version1, $version2));
+        $this->assertTrue($lessOrEqualTo->compare($version1, $version2));
     }
 
 
@@ -443,17 +396,17 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(0)
-            ->setLabel(new LabelRc());
+            ->setLabel(new LabelRc(2));
 
         $version2 = new Version();
         $version2
             ->setMajor(1)
             ->setMinor(0)
             ->setPatch(0)
-            ->setLabel(new LabelRc());
+            ->setLabel(new LabelRc(2));
 
-        $greaterThan = new GreaterThan();
+        $lessOrEqualTo = new LessOrEqualTo();
 
-        $this->assertFalse($greaterThan->compare($version1, $version2));
+        $this->assertTrue($lessOrEqualTo->compare($version1, $version2));
     }
 }
