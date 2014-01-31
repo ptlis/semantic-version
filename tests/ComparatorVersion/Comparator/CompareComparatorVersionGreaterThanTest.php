@@ -30,6 +30,20 @@ use ptlis\SemanticVersion\Version\Version;
  */
 class CompareComparatorVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
 {
+    public function testGetSymbol()
+    {
+        $greaterThan = new CompVerGreaterThan();
+        $this->assertSame('>', $greaterThan->getSymbol());
+    }
+
+
+    public function testToString()
+    {
+        $greaterThan = new CompVerGreaterThan();
+        $this->assertSame('>', $greaterThan->__toString());
+    }
+
+
     public function testEqual()
     {
         $version1 = new Version();
@@ -54,7 +68,6 @@ class CompareComparatorVersionGreaterThanTest extends \PHPUnit_Framework_TestCas
 
         $greaterThan = new CompVerGreaterThan();
 
-        $this->assertSame('>', $greaterThan->getSymbol());
         $this->assertFalse($greaterThan->compare($comparatorVersion1, $comparatorVersion2));
     }
 
