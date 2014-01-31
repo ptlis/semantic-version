@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Abstract class for comparators.
+ * Abstract class for Version comparators.
  *
  * PHP Version 5.3
  *
@@ -16,7 +16,7 @@
 namespace ptlis\SemanticVersion\Version\Comparator;
 
 /**
- * Abstract class for comparators.
+ * Abstract class for Version comparators.
  */
 abstract class AbstractComparator implements ComparatorInterface
 {
