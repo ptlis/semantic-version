@@ -28,7 +28,7 @@ use ptlis\SemanticVersion\Version\Version;
 /**
  * Tests to ensure correct handling of ComparatorVersion LessThan comparator.
  */
-class CompareVersionLessThanTest extends \PHPUnit_Framework_TestCase
+class CompareComparatorVersionLessThanTest extends \PHPUnit_Framework_TestCase
 {
     public function testEqual()
     {

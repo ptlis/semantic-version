@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Tests to ensure correct handling of ComparatorVersion GreaterOrEqualTo comparator.
+ * Tests to ensure correct handling of ComparatorVersion equality comparator.
  *
  * PHP Version 5.3
  *
@@ -18,14 +18,15 @@
 namespace tests\ComparatorVersion\Comparator;
 
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
-use ptlis\SemanticVersion\ComparatorVersion\Comparator\GreaterOrEqualTo as CompVerGreaterOrEqualTo;
+use ptlis\SemanticVersion\ComparatorVersion\Comparator\EqualTo as CompVerEqualTo;
 use ptlis\SemanticVersion\Version\Comparator\GreaterThan as VersionGreaterThan;
+use ptlis\SemanticVersion\Version\Comparator\LessThan as VersionLessThan;
 use ptlis\SemanticVersion\Version\Version;
 
 /**
- * Tests to ensure correct handling of ComparatorVersion GreaterOrEqualTo comparator.
+ * Tests to ensure correct handling of ComparatorVersion equality comparator.
  */
-class CompareVersionGreaterOrEqualToTest extends \PHPUnit_Framework_TestCase
+class CompareComparatorVersionEqualityTest extends \PHPUnit_Framework_TestCase
 {
     public function testEqual()
     {
@@ -49,14 +50,14 @@ class CompareVersionGreaterOrEqualToTest extends \PHPUnit_Framework_TestCase
             ->setComparator(new VersionGreaterThan())
             ->setVersion($version2);
 
-        $greaterOrEqualTo = new CompVerGreaterOrEqualTo();
+        $equalTo = new CompVerEqualTo();
 
-        $this->assertSame('>=', $greaterOrEqualTo->getSymbol());
-        $this->assertTrue($greaterOrEqualTo->compare($comparatorVersion1, $comparatorVersion2));
+        $this->assertSame('=', $equalTo->getSymbol());
+        $this->assertTrue($equalTo->compare($comparatorVersion1, $comparatorVersion2));
     }
 
 
-    public function testLessThanVersion()
+    public function testNotEqualComparator()
     {
         $version1 = new Version();
         $version1
@@ -71,25 +72,25 @@ class CompareVersionGreaterOrEqualToTest extends \PHPUnit_Framework_TestCase
         $version2 = new Version();
         $version2
             ->setMajor(1)
-            ->setMinor(1)
+            ->setMinor(0)
             ->setPatch(0);
         $comparatorVersion2 = new ComparatorVersion();
         $comparatorVersion2
-            ->setComparator(new VersionGreaterThan())
+            ->setComparator(new VersionLessThan())
             ->setVersion($version2);
 
-        $greaterOrEqualTo = new CompVerGreaterOrEqualTo();
+        $equalTo = new CompVerEqualTo();
 
-        $this->assertFalse($greaterOrEqualTo->compare($comparatorVersion1, $comparatorVersion2));
+        $this->assertFalse($equalTo->compare($comparatorVersion1, $comparatorVersion2));
     }
 
 
-    public function testGreaterThanVersion()
+    public function testNotEqualVersion()
     {
         $version1 = new Version();
         $version1
             ->setMajor(1)
-            ->setMinor(1)
+            ->setMinor(0)
             ->setPatch(0);
         $comparatorVersion1 = new ComparatorVersion();
         $comparatorVersion1
@@ -99,15 +100,15 @@ class CompareVersionGreaterOrEqualToTest extends \PHPUnit_Framework_TestCase
         $version2 = new Version();
         $version2
             ->setMajor(1)
-            ->setMinor(0)
+            ->setMinor(5)
             ->setPatch(0);
         $comparatorVersion2 = new ComparatorVersion();
         $comparatorVersion2
             ->setComparator(new VersionGreaterThan())
             ->setVersion($version2);
 
-        $greaterOrEqualTo = new CompVerGreaterOrEqualTo();
+        $equalTo = new CompVerEqualTo();
 
-        $this->assertTrue($greaterOrEqualTo->compare($comparatorVersion1, $comparatorVersion2));
+        $this->assertFalse($equalTo->compare($comparatorVersion1, $comparatorVersion2));
     }
 }
