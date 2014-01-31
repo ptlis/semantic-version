@@ -25,7 +25,7 @@ use ptlis\SemanticVersion\Version\Version;
 /**
  * Tests to ensure correct handling of version number equality version.
  */
-class CompareVersionEqualityTest extends \PHPUnit_Framework_TestCase
+class CompareVersionEqualToTest extends \PHPUnit_Framework_TestCase
 {
     public function testEqualNumberOnly()
     {
