@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Interface that comparators must implement.
+ * Interface that version comparators must implement.
  *
  * PHP Version 5.3
  *
@@ -18,7 +18,7 @@ namespace ptlis\SemanticVersion\Version\Comparator;
 use ptlis\SemanticVersion\Version\VersionInterface;
 
 /**
- * Interface that comparators must implement.
+ * Interface that version comparators must implement.
  */
 interface ComparatorInterface
 {

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Equality comparator.
+ * Version equality comparator.
  *
  * PHP Version 5.3
  *
@@ -18,7 +18,7 @@ namespace ptlis\SemanticVersion\Version\Comparator;
 use ptlis\SemanticVersion\Version\VersionInterface;
 
 /**
- * Equality comparator.
+ * Version equality comparator.
  */
 class EqualTo extends AbstractComparator
 {
