@@ -159,7 +159,7 @@ class BoundingPairFactory
             $lowerArr['tilde_comparator'] = '>=';
 
             $upperArr['tilde_comparator'] = '<';
-            $upperArr['tilde_minor']++;
+            $upperArr['tilde_minor'] = $this->stringPlusOne($upperArr['tilde_minor']);
             $upperArr['tilde_patch'] = '0';
 
         // Major & Minor tilde match
@@ -168,7 +168,7 @@ class BoundingPairFactory
             $lowerArr['tilde_patch'] = '0';
 
             $upperArr['tilde_comparator'] = '<';
-            $upperArr['tilde_major']++;
+            $upperArr['tilde_major'] = $this->stringPlusOne($upperArr['tilde_major']);
             $upperArr['tilde_minor'] = '0';
             $upperArr['tilde_patch'] = '0';
 
@@ -179,7 +179,7 @@ class BoundingPairFactory
             $lowerArr['tilde_minor'] = '0';
 
             $upperArr['tilde_comparator'] = '<';
-            $upperArr['tilde_major']++;
+            $upperArr['tilde_major'] = $this->stringPlusOne($upperArr['tilde_major']);
             $upperArr['tilde_minor'] = '0';
             $upperArr['tilde_patch'] = '0';
         }
@@ -249,7 +249,7 @@ class BoundingPairFactory
             $lowerArr['single_patch'] = '0';
 
             $upperArr['single_comparator'] = '<';
-            $upperArr['single_minor']++;
+            $upperArr['single_minor'] = $this->stringPlusOne($upperArr['single_minor']);
             $upperArr['single_patch'] = '0';
 
         // Major - range (major inc by 1;
@@ -259,7 +259,7 @@ class BoundingPairFactory
             $lowerArr['single_patch'] = '0';
 
             $upperArr['single_comparator'] = '<';
-            $upperArr['single_major']++;
+            $upperArr['single_major'] = $this->stringPlusOne($upperArr['single_major']);
             $upperArr['single_minor'] = '0';
             $upperArr['single_patch'] = '0';
         }
@@ -288,5 +288,22 @@ class BoundingPairFactory
     private function hasArrayElement(array $arr, $key)
     {
         return array_key_exists($key, $arr) && strlen($arr[$key]);
+    }
+
+
+    /**
+     * Safely increment a number stored as a string by one, returning a string representation of the new number.
+     *
+     * @todo Test for integer overflow - possibly not here
+     *
+     * @param string $val
+     *
+     * @return string
+     */
+    private function stringPlusOne($val)
+    {
+        $intVal = intval($val);
+        $intVal++;
+        return strval($intVal);
     }
 }
