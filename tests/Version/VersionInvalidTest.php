@@ -69,4 +69,48 @@ class VersionInvalidTest extends \PHPUnit_Framework_TestCase
             ->setMinor(0)
             ->setPatch($patch);
     }
+
+
+    public function testMaxInt()
+    {
+        // 32bit
+        if (PHP_INT_SIZE === 4) {
+            $major = "2147483647";
+
+        // 64bit
+        } else {
+            $major = "9223372036854775807";
+        }
+
+        $this->setExpectedException(
+            '\ptlis\SemanticVersion\Exception\InvalidVersionException',
+            'Major version number is larger than PHP\'s max int "' . $major . '"'
+        );
+
+        $version = new Version();
+        $version
+            ->setMajor($major);
+    }
+
+
+    public function testAboveMaxInt()
+    {
+        // 32bit
+        if (PHP_INT_SIZE === 4) {
+            $major = "2147483648";
+
+        // 64bit
+        } else {
+            $major = "9223372036854775808";
+        }
+
+        $this->setExpectedException(
+            '\ptlis\SemanticVersion\Exception\InvalidVersionException',
+            'Major version number is larger than PHP\'s max int "' . $major . '"'
+        );
+
+        $version = new Version();
+        $version
+            ->setMajor($major);
+    }
 }

@@ -86,8 +86,14 @@ class Version implements VersionInterface
     public function setMajor($major)
     {
         $filteredMajor = $this->validateVersionPart($major);
-
         if (false !== $filteredMajor) {
+
+            if (!$this->maxIntCheck($filteredMajor)) {
+                throw new InvalidVersionException(
+                    'Major version number is larger than PHP\'s max int "' . $major . '"'
+                );
+            }
+
             $this->major = $filteredMajor;
 
             if ($filteredMajor === '*') {
@@ -123,6 +129,13 @@ class Version implements VersionInterface
     {
         $filteredMinor = $this->validateVersionPart($minor);
         if (false !== $filteredMinor) {
+
+            if (!$this->maxIntCheck($filteredMinor)) {
+                throw new InvalidVersionException(
+                    'Minor version number is larger than PHP\'s max int "' . $minor . '"'
+                );
+            }
+
             $this->minor = $filteredMinor;
 
             if ($filteredMinor === '*') {
@@ -158,7 +171,15 @@ class Version implements VersionInterface
     {
         $filteredPatch = $this->validateVersionPart($patch);
         if (false !== $filteredPatch) {
+
+            if (!$this->maxIntCheck($filteredPatch)) {
+                throw new InvalidVersionException(
+                    'Minor version number is larger than PHP\'s max int "' . $patch . '"'
+                );
+            }
+
             $this->patch = $filteredPatch;
+
         } else {
             throw new InvalidVersionException(
                 'Failed to set patch version to invalid value "' . $patch . '"'
@@ -198,6 +219,27 @@ class Version implements VersionInterface
         }
 
         return $returnPart;
+    }
+
+
+    /**
+     * Test to ensure that the version part is less than PHP's max int.
+     *
+     * @param string $versionPart
+     *
+     * @return boolean
+     */
+    private function maxIntCheck($versionPart)
+    {
+        $valid = true;
+
+        // Value must be less than PHP's maximum integer size.
+        if (($versionPart !== '*' || $versionPart !== 'x')
+                && (intval($versionPart) != $versionPart || intval($versionPart) === PHP_INT_MAX)) {
+            $valid = false;
+        }
+
+        return $valid;
     }
 
 

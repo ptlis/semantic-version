@@ -41,4 +41,23 @@ class VersionValidTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(0, $versionOne->getLabel()->getVersion());
         $this->assertSame(5, $versionTwo->getLabel()->getVersion());
     }
+
+
+    public function testBelowMaxInt()
+    {
+        // 32bit
+        if (PHP_INT_SIZE === 4) {
+            $major = "2147483646";
+
+        // 64bit
+        } else {
+            $major = "9223372036854775806";
+        }
+
+        $version = new Version();
+        $version
+            ->setMajor($major);
+
+        $this->assertSame($major .'.0.0', $version->__toString());
+    }
 }
