@@ -446,8 +446,8 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
         $sortedCollection = $collection->getAscending();
 
         $this->assertSame(2, count($sortedCollection));
-        $this->assertSame('>=1.0.0', $sortedCollection[0]->__toString());
-        $this->assertSame('>1.0.0<=2.0.0', $sortedCollection[1]->__toString());
+        $this->assertSame('>1.0.0<=2.0.0', $sortedCollection[0]->__toString());
+        $this->assertSame('>=1.0.0', $sortedCollection[1]->__toString());
     }
 
 
