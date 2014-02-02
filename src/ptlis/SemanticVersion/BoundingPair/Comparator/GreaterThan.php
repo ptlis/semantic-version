@@ -56,10 +56,68 @@ class GreaterThan extends AbstractComparator
 
 
     /**
+     * Compare the upper ComparatorVersions to find whether the left one is greater.
+     *
+     * @param ComparatorVersion|null $lCompVersion
+     * @param ComparatorVersion|null $rCompVersion
+     *
+     * @return int
+     */
+    private function compareUpper(ComparatorVersion $lCompVersion = null, ComparatorVersion $rCompVersion = null)
+    {
+        $greater = 0;
+
+        // Left null (effectively infinite version)
+        if ($this->leftOnlyNull($lCompVersion, $rCompVersion)) {
+            $greater = 1;
+
+        // Right null (effectively infinite version)
+        } elseif ($this->rightOnlyNull($lCompVersion, $rCompVersion)) {
+            $greater = -1;
+
+        // Neither null, left is greater
+        } elseif ($this->nullSafeGreaterThan($lCompVersion, $rCompVersion)) {
+            $greater = 1;
+        }
+
+        return $greater;
+    }
+
+
+    /**
+     * Compare the upper ComparatorVersions to find whether the left one is greater.
+     *
+     * @param ComparatorVersion|null $lCompVersion
+     * @param ComparatorVersion|null $rCompVersion
+     *
+     * @return int
+     */
+    private function compareLower(ComparatorVersion $lCompVersion = null, ComparatorVersion $rCompVersion = null)
+    {
+        $greater = 0;
+
+        // Left null (effectively negative infinite version)
+        if ($this->leftOnlyNull($lCompVersion, $rCompVersion)) {
+            $greater = -1;
+
+        // Right null (effectively negative infinite version)
+        } elseif ($this->rightOnlyNull($lCompVersion, $rCompVersion)) {
+            $greater = 1;
+
+        // Neither null, left is greater
+        } elseif ($this->nullSafeGreaterThan($lCompVersion, $rCompVersion)) {
+            $greater = 1;
+        }
+
+        return $greater;
+    }
+
+
+    /**
      * Returns true if the left ComparatorVersion only is null (null being equivalent to infinite version number)
      *
-     * @param ComparatorVersion $lCompVersion
-     * @param ComparatorVersion $rCompVersion
+     * @param ComparatorVersion|null $lCompVersion
+     * @param ComparatorVersion|null $rCompVersion
      *
      * @return boolean
      */
@@ -75,63 +133,42 @@ class GreaterThan extends AbstractComparator
 
 
     /**
-     * Compare the upper ComparatorVersions to find whether the left one is greater.
+     * Returns true if the right ComparatorVersion only is null (null being equivalent to infinite version number)
      *
-     * @param ComparatorVersion $lCompVersion
-     * @param ComparatorVersion $rCompVersion
+     * @param ComparatorVersion|null $lCompVersion
+     * @param ComparatorVersion|null $rCompVersion
      *
-     * @return int
+     * @return boolean
      */
-    private function compareUpper(ComparatorVersion $lCompVersion = null, ComparatorVersion $rCompVersion = null)
+    private function rightOnlyNull(ComparatorVersion $lCompVersion = null, ComparatorVersion $rCompVersion = null)
     {
-        $compGreaterThan = new CompGreaterThan();
-
-        $greater = 0;
-
-        // Left null (effectively infinite version)
-        if ($this->leftOnlyNull($lCompVersion, $rCompVersion)) {
-            $greater = 1;
-
-        // Right null (effectively infinite version)
-        } elseif (!is_null($lCompVersion) && is_null($rCompVersion)) {
-            $greater = -1;
-
-        // Neither null, left is greater
-        } elseif ($compGreaterThan->compare($lCompVersion, $rCompVersion)) {
-            $greater = 1;
+        $null = false;
+        if (!is_null($lCompVersion) && is_null($rCompVersion)) {
+            $null = true;
         }
 
-        return $greater;
+        return $null;
     }
 
 
     /**
-     * Compare the upper ComparatorVersions to find whether the left one is greater.
+     * Returns true if neither ComparatorVersion is null & the left is greater than the right.
      *
      * @param ComparatorVersion $lCompVersion
      * @param ComparatorVersion $rCompVersion
      *
-     * @return int
+     * @return boolean
      */
-    private function compareLower(ComparatorVersion $lCompVersion = null, ComparatorVersion $rCompVersion = null)
+    private function nullSafeGreaterThan(ComparatorVersion $lCompVersion = null, ComparatorVersion $rCompVersion = null)
     {
         $compGreaterThan = new CompGreaterThan();
 
-        $greater = 0;
-
-        // Left null (effectively negative infinite version)
-        if ($this->leftOnlyNull($lCompVersion, $rCompVersion)) {
-            $greater = -1;
-
-        // Right null (effectively negative infinite version)
-        } elseif (!is_null($lCompVersion) && is_null($rCompVersion)) {
-            $greater = 1;
-
-        // Neither null, left is greater
-        } elseif ($compGreaterThan->compare($lCompVersion, $rCompVersion)) {
-            $greater = 1;
+        $null = false;
+        if (!is_null($lCompVersion) && !is_null($rCompVersion)
+                && $compGreaterThan->compare($lCompVersion, $rCompVersion)) {
+            $null = true;
         }
 
-        return $greater;
+        return $null;
     }
 }
