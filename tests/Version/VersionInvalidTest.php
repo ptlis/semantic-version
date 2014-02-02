@@ -71,7 +71,7 @@ class VersionInvalidTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testMaxInt()
+    public function testMajorMaxInt()
     {
         // 32bit
         if (PHP_INT_SIZE === 4) {
@@ -93,7 +93,7 @@ class VersionInvalidTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testAboveMaxInt()
+    public function testMajorAboveMaxInt()
     {
         // 32bit
         if (PHP_INT_SIZE === 4) {
@@ -112,5 +112,99 @@ class VersionInvalidTest extends \PHPUnit_Framework_TestCase
         $version = new Version();
         $version
             ->setMajor($major);
+    }
+
+
+    public function testMinorMaxInt()
+    {
+        // 32bit
+        if (PHP_INT_SIZE === 4) {
+            $minor = "2147483647";
+
+        // 64bit
+        } else {
+            $minor = "9223372036854775807";
+        }
+
+        $this->setExpectedException(
+            '\ptlis\SemanticVersion\Exception\InvalidVersionException',
+            'Minor version number is larger than PHP\'s max int "' . $minor . '"'
+        );
+
+        $version = new Version();
+        $version
+            ->setMajor(1)
+            ->setMinor($minor);
+    }
+
+
+    public function testMinorAboveMaxInt()
+    {
+        // 32bit
+        if (PHP_INT_SIZE === 4) {
+            $minor = "2147483648";
+
+        // 64bit
+        } else {
+            $minor = "9223372036854775808";
+        }
+
+        $this->setExpectedException(
+            '\ptlis\SemanticVersion\Exception\InvalidVersionException',
+            'Minor version number is larger than PHP\'s max int "' . $minor . '"'
+        );
+
+        $version = new Version();
+        $version
+            ->setMajor(1)
+            ->setMinor($minor);
+    }
+
+
+    public function testPatchMaxInt()
+    {
+        // 32bit
+        if (PHP_INT_SIZE === 4) {
+            $patch = "2147483647";
+
+        // 64bit
+        } else {
+            $patch = "9223372036854775807";
+        }
+
+        $this->setExpectedException(
+            '\ptlis\SemanticVersion\Exception\InvalidVersionException',
+            'Patch version number is larger than PHP\'s max int "' . $patch . '"'
+        );
+
+        $version = new Version();
+        $version
+            ->setMajor(1)
+            ->setMinor(0)
+            ->setPatch($patch);
+    }
+
+
+    public function testPatchAboveMaxInt()
+    {
+        // 32bit
+        if (PHP_INT_SIZE === 4) {
+            $patch = "2147483648";
+
+        // 64bit
+        } else {
+            $patch = "9223372036854775808";
+        }
+
+        $this->setExpectedException(
+            '\ptlis\SemanticVersion\Exception\InvalidVersionException',
+            'Patch version number is larger than PHP\'s max int "' . $patch . '"'
+        );
+
+        $version = new Version();
+        $version
+            ->setMajor(1)
+            ->setMinor(0)
+            ->setPatch($patch);
     }
 }

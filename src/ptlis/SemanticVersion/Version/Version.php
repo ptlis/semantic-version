@@ -174,7 +174,7 @@ class Version implements VersionInterface
 
             if (!$this->maxIntCheck($filteredPatch)) {
                 throw new InvalidVersionException(
-                    'Minor version number is larger than PHP\'s max int "' . $patch . '"'
+                    'Patch version number is larger than PHP\'s max int "' . $patch . '"'
                 );
             }
 
