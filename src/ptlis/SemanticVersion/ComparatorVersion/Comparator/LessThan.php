@@ -84,7 +84,7 @@ class LessThan extends AbstractComparator
      * @param VersionComparatorInterface $lComp
      * @param VersionComparatorInterface $rComp
      *
-     * @return bool
+     * @return integer
      */
     private function compareComparators(VersionComparatorInterface $lComp, VersionComparatorInterface $rComp)
     {
