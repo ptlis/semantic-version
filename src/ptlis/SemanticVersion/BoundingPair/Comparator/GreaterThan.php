@@ -154,8 +154,8 @@ class GreaterThan extends AbstractComparator
     /**
      * Returns true if neither ComparatorVersion is null & the left is greater than the right.
      *
-     * @param ComparatorVersion $lCompVersion
-     * @param ComparatorVersion $rCompVersion
+     * @param ComparatorVersion|null $lCompVersion
+     * @param ComparatorVersion|null $rCompVersion
      *
      * @return boolean
      */
