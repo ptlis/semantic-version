@@ -22,6 +22,7 @@ use ptlis\SemanticVersion\BoundingPair\Comparator\EqualTo;
 use ptlis\SemanticVersion\BoundingPair\Comparator\GreaterThan;
 use ptlis\SemanticVersion\BoundingPair\Comparator\LessThan;
 use ptlis\SemanticVersion\Exception\SemanticVersionException;
+use ptlis\SemanticVersion\Version\VersionInterface;
 use Traversable;
 
 /**
@@ -214,5 +215,26 @@ class BoundingPairCollection implements CollectionInterface
     public function __toString()
     {
         return implode(', ', $this->boundingPairList);
+    }
+
+
+    /**
+     * Returns true if the provided version satisfies the requirements encoded in the VersionCollection.
+     *
+     * @param VersionInterface $compareVersion
+     *
+     * @return boolean
+     */
+    public function isSatisfiedBy(VersionInterface $compareVersion)
+    {
+        $satisfied = false;
+
+        foreach ($this->boundingPairList as $boundingPair) {
+            if ($boundingPair->isSatisfiedBy($compareVersion)) {
+                $satisfied = true;
+            }
+        }
+
+        return $satisfied;
     }
 }

@@ -18,6 +18,7 @@ namespace ptlis\SemanticVersion\Collection;
 use ArrayAccess;
 use Countable;
 use IteratorAggregate;
+use ptlis\SemanticVersion\InRange\InRangeInterface;
 use Traversable;
 
 /**
@@ -25,7 +26,7 @@ use Traversable;
  *
  * @todo Implement inRangeInterface?
  */
-interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
+interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess, InRangeInterface
 {
     /**
      * Return count of elements.

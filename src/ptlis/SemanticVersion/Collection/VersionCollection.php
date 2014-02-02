@@ -233,4 +233,26 @@ class VersionCollection implements SortableCollectionInterface
 
         $this->versionList = $newVersionList;
     }
+
+
+    /**
+     * Returns true if the provided version satisfies the requirements encoded in the VersionCollection.
+     *
+     * @param VersionInterface $compareVersion
+     *
+     * @return boolean
+     */
+    public function isSatisfiedBy(VersionInterface $compareVersion)
+    {
+        $satisfied = false;
+
+        $equalTo = new EqualTo();
+        foreach ($this->versionList as $version) {
+            if ($equalTo->compare($compareVersion, $version)) {
+                $satisfied = true;
+            }
+        }
+
+        return $satisfied;
+    }
 }

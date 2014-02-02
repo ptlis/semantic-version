@@ -650,4 +650,40 @@ class BoundingPairCollectionValidTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(1, count($collection1));
         $this->assertSame(2, count($collection2));
     }
+
+
+    public function testInRange()
+    {
+        $boundingPairList = array();
+
+        $engine = new VersionEngine();
+
+        $boundingPairList[] = $engine->parseBoundingPair('>1.0.0<=2.0.0');
+        $boundingPairList[] = $engine->parseBoundingPair('>=3.5.0<=4.0.0');
+
+        $collection = new BoundingPairCollection();
+        $collection->setList($boundingPairList);
+
+        $version = $engine->parseVersion('1.5.0');
+
+        $this->assertTrue($collection->isSatisfiedBy($version));
+    }
+
+
+    public function testNotInRange()
+    {
+        $boundingPairList = array();
+
+        $engine = new VersionEngine();
+
+        $boundingPairList[] = $engine->parseBoundingPair('>1.0.0<=2.0.0');
+        $boundingPairList[] = $engine->parseBoundingPair('>=3.5.0<=4.0.0');
+
+        $collection = new BoundingPairCollection();
+        $collection->setList($boundingPairList);
+
+        $version = $engine->parseVersion('0.8.5');
+
+        $this->assertFalse($collection->isSatisfiedBy($version));
+    }
 }

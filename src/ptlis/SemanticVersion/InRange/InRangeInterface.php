@@ -23,7 +23,7 @@ use ptlis\SemanticVersion\Version\VersionInterface;
 interface InRangeInterface
 {
     /**
-     * Returns true if the provided version satisfies the requirements of the bounding pair.
+     * Returns true if the provided version satisfies the requirements encoded in the class.
      *
      * @param VersionInterface $version
      *

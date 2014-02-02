@@ -704,4 +704,84 @@ class VersionCollectionValidTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(1, count($collection1));
         $this->assertSame(2, count($collection2));
     }
+
+
+    public function testInRange()
+    {
+        $version1 = new Version();
+        $version1
+            ->setMajor(3)
+            ->setMinor(0)
+            ->setPatch(5)
+            ->setLabel(new LabelAbsent());
+
+        $version2 = new Version();
+        $version2
+            ->setMajor(1)
+            ->setMinor(3)
+            ->setPatch(4)
+            ->setLabel(new LabelAbsent());
+
+        $version3 = new Version();
+        $version3
+            ->setMajor(4)
+            ->setMinor(1)
+            ->setPatch(0)
+            ->setLabel(new LabelBeta());
+
+        $collection = new VersionCollection();
+
+        $collection[] = $version1;
+        $collection[] = $version2;
+        $collection[] = $version3;
+
+        $testVersion = new Version();
+        $testVersion
+            ->setMajor(1)
+            ->setMinor(3)
+            ->setPatch(4)
+            ->setLabel(new LabelAbsent());
+
+        $this->assertTrue($collection->isSatisfiedBy($testVersion));
+    }
+
+
+    public function testNotInRange()
+    {
+        $version1 = new Version();
+        $version1
+            ->setMajor(3)
+            ->setMinor(0)
+            ->setPatch(5)
+            ->setLabel(new LabelAbsent());
+
+        $version2 = new Version();
+        $version2
+            ->setMajor(1)
+            ->setMinor(3)
+            ->setPatch(4)
+            ->setLabel(new LabelAbsent());
+
+        $version3 = new Version();
+        $version3
+            ->setMajor(4)
+            ->setMinor(1)
+            ->setPatch(0)
+            ->setLabel(new LabelBeta());
+
+        $collection = new VersionCollection();
+
+        $collection[] = $version1;
+        $collection[] = $version2;
+        $collection[] = $version3;
+
+        $testVersion = new Version();
+        $testVersion
+            ->setMajor(1)
+            ->setMinor(3)
+            ->setPatch(5)
+            ->setLabel(new LabelAbsent());
+
+        $this->assertFalse($collection->isSatisfiedBy($testVersion));
+    }
 }
