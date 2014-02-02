@@ -22,6 +22,8 @@ use Traversable;
 
 /**
  * Interface that collections must implement.
+ *
+ * @todo Implement inRangeInterface?
  */
 interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
 {

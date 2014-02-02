@@ -18,6 +18,9 @@ namespace ptlis\SemanticVersion\Collection;
 use ArrayIterator;
 use OutOfBoundsException;
 use ptlis\SemanticVersion\BoundingPair\BoundingPair;
+use ptlis\SemanticVersion\BoundingPair\Comparator\EqualTo;
+use ptlis\SemanticVersion\BoundingPair\Comparator\GreaterThan;
+use ptlis\SemanticVersion\BoundingPair\Comparator\LessThan;
 use ptlis\SemanticVersion\Exception\SemanticVersionException;
 use Traversable;
 
@@ -148,7 +151,20 @@ class BoundingPairCollection implements CollectionInterface
 
         usort(
             $newBoundingPairList,
-            $this->getCompareClosure(1)
+            function (BoundingPair $lPair, BoundingPair $rPair) {
+                $equalTo = new EqualTo();
+                $greaterThan = new GreaterThan();
+
+                if ($equalTo->compare($lPair, $rPair)) {
+                    return 0;
+
+                } elseif ($greaterThan->compare($lPair, $rPair)) {
+                    return 1;
+
+                } else {
+                    return -1;
+                }
+            }
         );
 
         $newCollection = new BoundingPairCollection();
@@ -169,38 +185,26 @@ class BoundingPairCollection implements CollectionInterface
 
         usort(
             $newBoundingPairList,
-            $this->getCompareClosure(-1)
+            function (BoundingPair $lPair, BoundingPair $rPair) {
+                $equalTo = new EqualTo();
+                $lessThan = new LessThan();
+
+                if ($equalTo->compare($lPair, $rPair)) {
+                    return 0;
+
+                } elseif ($lessThan->compare($lPair, $rPair)) {
+                    return 1;
+
+                } else {
+                    return -1;
+                }
+            }
         );
 
         $newCollection = new BoundingPairCollection();
         $newCollection->setList($newBoundingPairList);
 
         return $newCollection;
-    }
-
-
-    /**
-     * Get closure for use in sorting.
-     *
-     * @param int    $factor    1 for ascending, -1 for descending
-     *
-     * @return callable
-     */
-    private function getCompareClosure($factor)
-    {
-        $sort = new BoundingPairSort();
-
-        return function (BoundingPair $lPair, BoundingPair $rPair) use ($sort, $factor) {
-
-            // Try comparing by lower version comparators
-            $lowerResult = $sort->compareLower($factor, $lPair->getLower(), $rPair->getLower());
-            if ($lowerResult !== 0) {
-                return $lowerResult;
-            }
-
-            // Compare by upper version comparators
-            return $sort->compareUpper($factor, $lPair->getUpper(), $rPair->getUpper());
-        };
     }
 
 
