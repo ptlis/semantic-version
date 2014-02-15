@@ -15,7 +15,7 @@
  * file that was distributed with this source code.
  */
 
-namespace tests\InRange;
+namespace ptlis\SemanticVersion\Test\InRange;
 
 use ptlis\SemanticVersion\Version\Comparator\LessOrEqualTo;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;

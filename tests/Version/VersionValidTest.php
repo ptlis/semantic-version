@@ -15,7 +15,7 @@
  * file that was distributed with this source code.
  */
 
-namespace tests\Version;
+namespace ptlis\SemanticVersion\Test\Version;
 
 use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Version\Version;

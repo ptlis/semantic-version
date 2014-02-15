@@ -15,7 +15,7 @@
  * file that was distributed with this source code.
  */
 
-namespace tests\Collection;
+namespace ptlis\SemanticVersion\Test\Collection;
 
 use ptlis\SemanticVersion\Collection\VersionCollection;
 use ptlis\SemanticVersion\Label\LabelAbsent;

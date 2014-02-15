@@ -15,7 +15,7 @@
  * file that was distributed with this source code.
  */
 
-namespace tests\BoundingPair\Comparator;
+namespace ptlis\SemanticVersion\Test\BoundingPair\Comparator;
 
 use ptlis\SemanticVersion\BoundingPair\Comparator\LessThan as BoundingPairLessThan;
 use ptlis\SemanticVersion\VersionEngine;

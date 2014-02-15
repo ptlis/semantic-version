@@ -15,7 +15,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Label\tests;
+namespace ptlis\SemanticVersion\Test\Label;
 
 require_once 'InvalidLabel.php';
 require_once 'ReplacementWildcardLabel.php';

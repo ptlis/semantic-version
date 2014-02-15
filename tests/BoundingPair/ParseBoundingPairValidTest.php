@@ -15,7 +15,7 @@
  * file that was distributed with this source code.
  */
 
-namespace tests\ParseBoundPair;
+namespace ptlis\SemanticVersion\Test\ParseBoundPair;
 
 use ptlis\SemanticVersion\Version\Comparator\EqualTo;
 use ptlis\SemanticVersion\Version\Comparator\GreaterOrEqualTo;

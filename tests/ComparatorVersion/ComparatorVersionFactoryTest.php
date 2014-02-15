@@ -15,7 +15,7 @@
  * file that was distributed with this source code.
  */
 
-namespace tests\ComparatorVersion;
+namespace ptlis\SemanticVersion\Test\ComparatorVersion;
 
 use ptlis\SemanticVersion\Version\Comparator\ComparatorFactory;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersionFactory;

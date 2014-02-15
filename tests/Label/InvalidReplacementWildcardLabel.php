@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\Label;
+namespace ptlis\SemanticVersion\Test\Label;
 
 class InvalidReplacementWildcardLabel
 {
