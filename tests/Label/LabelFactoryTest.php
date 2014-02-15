@@ -17,20 +17,12 @@
 
 namespace ptlis\SemanticVersion\Test\Label;
 
-require_once 'InvalidLabel.php';
-require_once 'ReplacementWildcardLabel.php';
-require_once 'InvalidReplacementWildcardLabel.php';
-require_once 'ReplacementAbsentLabel.php';
-require_once 'InvalidReplacementAbsentLabel.php';
-
 use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;
 use ptlis\SemanticVersion\Label\LabelDev;
 use ptlis\SemanticVersion\Label\LabelFactory;
 use ptlis\SemanticVersion\Label\LabelAbsent;
 use ptlis\SemanticVersion\Label\LabelRc;
-use tests\Label\ReplacementAbsentLabel;
-use tests\Label\ReplacementWildcardLabel;
 
 /**
  * Tests to ensure correct behaviour of ComparatorFactory.
@@ -96,7 +88,7 @@ class LabelFactoryTest extends \PHPUnit_Framework_TestCase
     public function testWildcardLabelClass()
     {
         $factory = new LabelFactory();
-        $factory->setWildcardLabel('tests\Label\ReplacementWildcardLabel');
+        $factory->setWildcardLabel('ptlis\SemanticVersion\Test\Label\ReplacementWildcardLabel');
 
         $expectLabel = new ReplacementWildcardLabel();
         $expectLabel->setName('foobar');
@@ -107,7 +99,7 @@ class LabelFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testWildcardLabelClassDoesntExist()
     {
-        $className = 'tests\Label\WildcardBoo';
+        $className = 'ptlis\SemanticVersion\Test\Label\WildcardBoo';
 
         $this->setExpectedException(
             '\RuntimeException',
@@ -121,7 +113,7 @@ class LabelFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testWildcardLabelClassDoesntImplementInterface()
     {
-        $className = 'tests\Label\InvalidReplacementWildcardLabel';
+        $className = 'ptlis\SemanticVersion\Test\Label\InvalidReplacementWildcardLabel';
 
         $this->setExpectedException(
             '\RuntimeException',
@@ -136,7 +128,7 @@ class LabelFactoryTest extends \PHPUnit_Framework_TestCase
     public function testAbsentLabelClass()
     {
         $factory = new LabelFactory();
-        $factory->setAbsentLabel('tests\Label\ReplacementAbsentLabel');
+        $factory->setAbsentLabel('ptlis\SemanticVersion\Test\Label\ReplacementAbsentLabel');
 
         $expectLabel = new ReplacementAbsentLabel();
 
@@ -146,7 +138,7 @@ class LabelFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testAbsentLabelClassDoesntExist()
     {
-        $className = 'tests\Label\AbsentBoo';
+        $className = 'ptlis\SemanticVersion\Test\Label\AbsentBoo';
 
         $this->setExpectedException(
             '\RuntimeException',
@@ -160,7 +152,7 @@ class LabelFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testAbsentLabelClassDoesntImplementInterface()
     {
-        $className = 'tests\Label\InvalidReplacementAbsentLabel';
+        $className = 'ptlis\SemanticVersion\Test\Label\InvalidReplacementAbsentLabel';
 
         $this->setExpectedException(
             '\RuntimeException',
@@ -188,7 +180,7 @@ class LabelFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testClassDoesntImplementInterface()
     {
-        $className = 'tests\Label\InvalidLabel';
+        $className = 'ptlis\SemanticVersion\Test\Label\InvalidLabel';
 
         $this->setExpectedException(
             '\RuntimeException',

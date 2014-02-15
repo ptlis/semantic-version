@@ -140,7 +140,7 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testClassDoesntImplementInterface()
     {
-        $className = 'tests\Version\Comparator\InvalidComparator';
+        $className = 'ptlis\SemanticVersion\Test\Version\Comparator\InvalidComparator';
 
         $this->setExpectedException(
             '\RuntimeException',
