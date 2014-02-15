@@ -22,8 +22,10 @@ use ptlis\SemanticVersion\Version\VersionRegexProviderInterface;
 /**
  * Utility class to provide regular expressions used when parsing version numbers, ranges etc.
  */
-class VersionRegex implements VersionRegexProviderInterface, BoundingPairRegexProviderInterface,
-ComparatorVersionRegexProviderInterface
+class VersionRegex implements
+    VersionRegexProviderInterface,
+    BoundingPairRegexProviderInterface,
+    ComparatorVersionRegexProviderInterface
 {
     /**
      * Base regex for parsing semantic version numbers.
