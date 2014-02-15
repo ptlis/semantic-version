@@ -22,8 +22,9 @@
         "squizlabs/php_codesniffer":            "1.5.*"
     },
     "autoload": {
-        "psr-0": {
-            "ptlis\\SemanticVersion": "src/"
+        "psr-4": {
+            "ptlis\\SemanticVersion\\": "src/",
+            "ptlis\\SemanticVersion\\Test\\": "tests/"
         }
     },
     "config": {
