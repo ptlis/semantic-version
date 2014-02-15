@@ -1,6 +1,6 @@
 # SemanticVersion
 
-A modular, extensible library providing APIs to support parsing & manipulating with semantic version numbers, comparators, ranges & collections.
+A modular, extensible library for PHP >= 5.3 providing APIs to support parsing & manipulation of semantic version numbers, comparators, ranges & collections.
 
 The [Semantic Versioning Specification](http://semver.org/) describes the semantics and precedence rules used when parsing & manipulating version numbers etc.
 
@@ -16,16 +16,18 @@ The [Semantic Versioning Specification](http://semver.org/) describes the semant
     $engine = new VersionEngine();
 
     $version = $engine->parseVersion('1.5.0-rc.1');
-    echo $version->getMajor();  // 1
-    echo $version->getMinor();  // 5
-    echo $version->getPatch();  // 0
+    echo $version->getMajor();  // '1'
+    echo $version->getMinor();  // '5'
+    echo $version->getPatch();  // '0'
     echo $version->getLabel()->getName();  // 'rc'
-    echo $version->getLabel()->getVersion();  // 1
-    echo $version->getLabel()->getPrecedence();  // 3
+    echo $version->getLabel()->getVersion();  // '1'
+    echo $version->getLabel()->getPrecedence();  // '3'
+    echo $version;  // '1.5.0-rc.1'
 
     $comparatorVersion = $engine->parseComparatorVersion('>=2.0.0');
     echo $comparatorVersion->getComparator()->getSymbol(); // '>='
     $comparatorVersion->getVersion()... // As Version description above
+    echo $comparatorVersion; // '>=2.0.0'
 
     $boundingPair = $engine->parseBoundingPair('>=1.0.0<2.0.0');
     $boundingPair->getUpper()... // As ComparatorVersion description above
