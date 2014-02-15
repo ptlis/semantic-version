@@ -42,6 +42,8 @@ class BoundingPairCollection implements CollectionInterface
      * @throws SemanticVersionException
      *
      * @param BoundingPair[] $boundingPairList
+     *
+     * @return BoundingPairCollection
      */
     public function setList(array $boundingPairList)
     {
@@ -49,6 +51,8 @@ class BoundingPairCollection implements CollectionInterface
         foreach ($boundingPairList as $index => $boundingPair) {
             $this->offsetSet($index, $boundingPair);
         }
+
+        return $this;
     }
 
 
@@ -148,6 +152,7 @@ class BoundingPairCollection implements CollectionInterface
      */
     public function getAscending()
     {
+        // TODO: do we need to create a clone of the objects in here?
         $newBoundingPairList = $this->boundingPairList;
 
         usort(
