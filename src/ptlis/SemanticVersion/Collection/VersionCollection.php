@@ -42,13 +42,14 @@ class VersionCollection implements SortableCollectionInterface
      * @throws SemanticVersionException
      *
      * @param VersionInterface[] $versionList
+     *
+     * @return VersionCollection
      */
     public function setList(array $versionList)
     {
-        $this->versionList = array();
-        foreach ($versionList as $index => $version) {
-            $this->offsetSet($index, $version);
-        }
+        $this->versionList = $versionList;
+
+        return $this;
     }
 
 
