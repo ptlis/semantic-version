@@ -47,7 +47,10 @@ class VersionCollection implements SortableCollectionInterface
      */
     public function setList(array $versionList)
     {
-        $this->versionList = $versionList;
+        $this->versionList = array();
+        foreach ($versionList as $index => $version) {
+            $this->offsetSet($index, $version);
+        }
 
         return $this;
     }
