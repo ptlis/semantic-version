@@ -25,7 +25,7 @@ interface SortableCollectionInterface extends CollectionInterface
      *
      * @param array $versionList
      *
-     * @return void
+     * @return SortableCollectionInterface
      */
     public function setList(array $versionList);
 
@@ -33,7 +33,7 @@ interface SortableCollectionInterface extends CollectionInterface
     /**
      * Returns a new sorted collection.
      *
-     * @return SortableCollectionInterface with elements in ascending order
+     * @return SortableCollectionInterface New instance with elements in ascending order
      */
     public function getAscending();
 
@@ -41,7 +41,7 @@ interface SortableCollectionInterface extends CollectionInterface
     /**
      * Returns a new sorted collection.
      *
-     * @return SortableCollectionInterface with elements in descending order
+     * @return SortableCollectionInterface New instance with elements in descending order
      */
     public function getDescending();
 }
