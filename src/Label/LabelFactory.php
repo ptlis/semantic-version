@@ -158,9 +158,9 @@ class LabelFactory
     /**
      * Get a label class from the name.
      *
-     * @param string    $name
-     * @param int|null  $version
-     * @param string    $metadata
+     * @param string        $name
+     * @param int|null      $version
+     * @param string|null   $metadata
      *
      * @return LabelInterface
      */
@@ -178,7 +178,6 @@ class LabelFactory
 
         } else {
             $label = new $this->absentLabel();
-            $version = null;
         }
 
         return $label;
