@@ -43,30 +43,48 @@ class LessThan extends AbstractComparator
      */
     public function compare(VersionInterface $lVersion, VersionInterface $rVersion)
     {
-        switch (true) {
-            case $this->compareMajor($lVersion, $rVersion):
-                $lessThan = true;
-                break;
+        $lessThan = false;
+        if ($this->compareVersionNumber($lVersion, $rVersion) || $this->compareFullLabel($lVersion, $rVersion)) {
+            $lessThan = true;
+        }
 
-            case $this->compareMinor($lVersion, $rVersion):
-                $lessThan = true;
-                break;
+        return $lessThan;
+    }
 
-            case $this->comparePatch($lVersion, $rVersion):
-                $lessThan = true;
-                break;
 
-            case $this->compareLabel($lVersion, $rVersion):
-                $lessThan = true;
-                break;
+    /**
+     * Returns true if left version number is less than right version number.
+     *
+     * @param VersionInterface $lVersion
+     * @param VersionInterface $rVersion
+     *
+     * @return bool
+     */
+    private function compareVersionNumber(VersionInterface $lVersion, VersionInterface $rVersion)
+    {
+        $lessThan = false;
+        if ($this->compareMajor($lVersion, $rVersion) || $this->compareMinor($lVersion, $rVersion)
+                || $this->comparePatch($lVersion, $rVersion)) {
+            $lessThan = true;
+        }
 
-            case $this->compareLabelVersion($lVersion, $rVersion):
-                $lessThan = true;
-                break;
+        return $lessThan;
+    }
 
-            default:
-                $lessThan = false;
-                break;
+
+    /**
+     * Returns true if left label is less than right version label.
+     *
+     * @param VersionInterface $lVersion
+     * @param VersionInterface $rVersion
+     *
+     * @return bool
+     */
+    private function compareFullLabel(VersionInterface $lVersion, VersionInterface $rVersion)
+    {
+        $lessThan = false;
+        if ($this->compareLabel($lVersion, $rVersion) || $this->compareLabelVersion($lVersion, $rVersion)) {
+            $lessThan = true;
         }
 
         return $lessThan;
