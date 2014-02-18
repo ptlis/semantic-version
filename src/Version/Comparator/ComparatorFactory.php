@@ -52,7 +52,7 @@ class ComparatorFactory
             );
         }
 
-        if (!((new $class()) instanceof ComparatorInterface)) {
+        if (!is_subclass_of($class, 'ptlis\SemanticVersion\Version\Comparator\ComparatorInterface')) {
             throw new \RuntimeException(
                 'Comparators must implement the ptlis\SemanticVersion\Version\Comparator\ComparatorInterface interface'
             );

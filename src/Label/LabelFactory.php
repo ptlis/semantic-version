@@ -59,7 +59,7 @@ class LabelFactory
             );
         }
 
-        if (!((new $class()) instanceof LabelInterface)) {
+        if (!is_subclass_of($class, 'ptlis\SemanticVersion\Label\LabelInterface')) {
             throw new \RuntimeException(
                 'Labels must implement the ptlis\SemanticVersion\Label\LabelInterface interface'
             );
@@ -120,7 +120,7 @@ class LabelFactory
             );
         }
 
-        if (!((new $class()) instanceof LabelWildcardInterface)) {
+        if (!is_subclass_of($class, 'ptlis\SemanticVersion\Label\LabelWildcardInterface')) {
             throw new \RuntimeException(
                 'Wildcard labels must implement the ptlis\SemanticVersion\Label\LabelWildcardInterface interface'
             );
@@ -145,7 +145,7 @@ class LabelFactory
             );
         }
 
-        if (!((new $class()) instanceof LabelAbsentInterface)) {
+        if (!is_subclass_of($class, 'ptlis\SemanticVersion\Label\LabelAbsentInterface')) {
             throw new \RuntimeException(
                 'Absent labels must implement the ptlis\SemanticVersion\Label\LabelAbsentInterface interface'
             );
