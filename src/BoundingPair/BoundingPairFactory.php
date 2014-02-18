@@ -155,7 +155,7 @@ class BoundingPairFactory
         $lowerArr = $tildeArr;
 
         // Full version tilde match
-        if (array_key_exists('tilde_patch', $tildeArr) && is_numeric($tildeArr['tilde_patch'])) {
+        if ($this->hasNumericElement($tildeArr, 'tilde_patch')) {
             $lowerArr['tilde_comparator'] = '>=';
 
             $upperArr['tilde_comparator'] = '<';
@@ -163,7 +163,7 @@ class BoundingPairFactory
             $upperArr['tilde_patch'] = '0';
 
         // Major & Minor tilde match
-        } elseif (array_key_exists('tilde_minor', $tildeArr) && is_numeric($tildeArr['tilde_minor'])) {
+        } elseif ($this->hasNumericElement($tildeArr, 'tilde_minor')) {
             $lowerArr['tilde_comparator'] = '>=';
             $lowerArr['tilde_patch'] = '0';
 
@@ -238,13 +238,13 @@ class BoundingPairFactory
         $lowerArr = $singleArr;
 
         // Fully qualified version
-        if (array_key_exists('single_patch', $singleArr) && is_numeric($singleArr['single_patch'])) {
+        if ($this->hasNumericElement($singleArr, 'single_patch')) {
             $lowerArr['single_comparator'] = '=';
 
             $upperArr['single_comparator'] = '=';
 
         // Minor - range (minor inc by 1)
-        } elseif (array_key_exists('single_minor', $singleArr) && is_numeric($singleArr['single_minor'])) {
+        } elseif ($this->hasNumericElement($singleArr, 'single_minor')) {
             $lowerArr['single_comparator'] = '>=';
             $lowerArr['single_patch'] = '0';
 
@@ -288,6 +288,20 @@ class BoundingPairFactory
     private function hasArrayElement(array $arr, $key)
     {
         return array_key_exists($key, $arr) && strlen($arr[$key]);
+    }
+
+
+    /**
+     * Check to ensure that a numeric element exists for the given array key.
+     *
+     * @param string[] $arr
+     * @param string   $key
+     *
+     * @return bool
+     */
+    private function hasNumericElement(array $arr, $key)
+    {
+        return $this->hasArrayElement($arr, $key) && is_numeric($arr[$key]);
     }
 
 
