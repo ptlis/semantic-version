@@ -85,24 +85,12 @@ class Version implements VersionInterface
      */
     public function setMajor($major)
     {
-        $filteredMajor = $this->validateVersionPart($major);
-        if (false !== $filteredMajor) {
+        $filteredMajor = $this->normalizeVersionPart($major, 'major');
 
-            if (!$this->maxIntCheck($filteredMajor)) {
-                throw new InvalidVersionException(
-                    'Major version number is larger than PHP\'s max int "' . $major . '"'
-                );
-            }
+        $this->major = $filteredMajor;
 
-            $this->major = $filteredMajor;
-
-            if ($filteredMajor === '*') {
-                $this->setMinor('*');
-            }
-        } else {
-            throw new InvalidVersionException(
-                'Failed to set major version to invalid value "' . $major . '"'
-            );
+        if ($filteredMajor === '*') {
+            $this->setMinor('*');
         }
 
         return $this;
@@ -127,24 +115,12 @@ class Version implements VersionInterface
      */
     public function setMinor($minor)
     {
-        $filteredMinor = $this->validateVersionPart($minor);
-        if (false !== $filteredMinor) {
+        $filteredMinor = $this->normalizeVersionPart($minor, 'minor');
 
-            if (!$this->maxIntCheck($filteredMinor)) {
-                throw new InvalidVersionException(
-                    'Minor version number is larger than PHP\'s max int "' . $minor . '"'
-                );
-            }
+        $this->minor = $filteredMinor;
 
-            $this->minor = $filteredMinor;
-
-            if ($filteredMinor === '*') {
-                $this->setPatch('*');
-            }
-        } else {
-            throw new InvalidVersionException(
-                'Failed to set minor version to invalid value "' . $minor . '"'
-            );
+        if ($filteredMinor === '*') {
+            $this->setPatch('*');
         }
 
         return $this;
@@ -169,22 +145,9 @@ class Version implements VersionInterface
      */
     public function setPatch($patch)
     {
-        $filteredPatch = $this->validateVersionPart($patch);
-        if (false !== $filteredPatch) {
+        $filteredPatch = $this->normalizeVersionPart($patch, 'patch');
 
-            if (!$this->maxIntCheck($filteredPatch)) {
-                throw new InvalidVersionException(
-                    'Patch version number is larger than PHP\'s max int "' . $patch . '"'
-                );
-            }
-
-            $this->patch = $filteredPatch;
-
-        } else {
-            throw new InvalidVersionException(
-                'Failed to set patch version to invalid value "' . $patch . '"'
-            );
-        }
+        $this->patch = $filteredPatch;
 
         return $this;
     }
@@ -202,20 +165,34 @@ class Version implements VersionInterface
     /**
      * Validates the provided version part, on success returns the normalised value on failure returns false.
      *
+     * @throws InvalidVersionException
+     *
      * @param string $versionPart
+     * @param string $partName
      *
      * @return string|false
      */
-    private function validateVersionPart($versionPart)
+    private function normalizeVersionPart($versionPart, $partName)
     {
-        $returnPart = false;
-
         if ($versionPart === 'x' || $versionPart === '*') {
             $returnPart = '*';
+
         } elseif (0 !== preg_match('/^0+$/', $versionPart)) {
             $returnPart = '0';
+
         } elseif (0 !== preg_match('/^[0-9]+$/', ltrim($versionPart, '0'))) {
             $returnPart = ltrim($versionPart, '0');
+
+        } else {
+            throw new InvalidVersionException(
+                'Failed to set ' . $partName . ' version to invalid value "' . $versionPart . '"'
+            );
+        }
+
+        if (!$this->maxIntCheck($versionPart)) {
+            throw new InvalidVersionException(
+                ucwords($partName) . ' version number is larger than PHP\'s max int "' . $versionPart . '"'
+            );
         }
 
         return $returnPart;
