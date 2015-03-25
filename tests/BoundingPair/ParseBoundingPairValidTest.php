@@ -281,37 +281,25 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
         $engine  = new VersionEngine();
         $outBoundingPair = $engine->parseBoundingPair($inStr);
 
-        $expectStr = '>=1.0.0<2.0.0';
+        $expectStr = '=1.0.0';
 
         // Lower
-        $lowerVersion = new Version();
-        $lowerVersion
+        $version = new Version();
+        $version
             ->setMajor('1')
             ->setMinor('0')
             ->setPatch('0')
             ->setLabel(new LabelAbsent());
-        $lowerComparatorVersion = new ComparatorVersion();
-        $lowerComparatorVersion
-            ->setComparator(new GreaterOrEqualTo())
-            ->setVersion($lowerVersion);
-
-        // Upper
-        $upperVersion = new Version();
-        $upperVersion
-            ->setMajor('2')
-            ->setMinor('0')
-            ->setPatch('0')
-            ->setLabel(new LabelAbsent());
-        $upperComparatorVersion = new ComparatorVersion();
-        $upperComparatorVersion
-            ->setComparator(new LessThan())
-            ->setVersion($upperVersion);
+        $comparatorVersion = new ComparatorVersion();
+        $comparatorVersion
+            ->setComparator(new EqualTo())
+            ->setVersion($version);
 
         // Range
         $expectBoundingPair = new BoundingPair();
         $expectBoundingPair
-            ->setLower($lowerComparatorVersion)
-            ->setUpper($upperComparatorVersion);
+            ->setLower($comparatorVersion)
+            ->setUpper($comparatorVersion);
 
         $this->assertSame($expectStr, $outBoundingPair->__toString());
         $this->assertEquals($expectBoundingPair, $outBoundingPair);
@@ -320,42 +308,30 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
 
     public function testSingleMajorMinorPartial()
     {
-        $inStr = '1.0';
+        $inStr = '1.3';
 
         $engine  = new VersionEngine();
         $outBoundingPair = $engine->parseBoundingPair($inStr);
 
-        $expectStr = '>=1.0.0<1.1.0';
+        $expectStr = '=1.3.0';
 
-        // Lower
-        $lowerVersion = new Version();
-        $lowerVersion
+        // Exact
+        $exactVersion = new Version();
+        $exactVersion
             ->setMajor('1')
-            ->setMinor('0')
+            ->setMinor('3')
             ->setPatch('0')
             ->setLabel(new LabelAbsent());
-        $lowerComparatorVersion = new ComparatorVersion();
-        $lowerComparatorVersion
-            ->setComparator(new GreaterOrEqualTo())
-            ->setVersion($lowerVersion);
-
-        // Upper
-        $upperVersion = new Version();
-        $upperVersion
-            ->setMajor('1')
-            ->setMinor('1')
-            ->setPatch('0')
-            ->setLabel(new LabelAbsent());
-        $upperComparatorVersion = new ComparatorVersion();
-        $upperComparatorVersion
-            ->setComparator(new LessThan())
-            ->setVersion($upperVersion);
+        $exactComparatorVersion = new ComparatorVersion();
+        $exactComparatorVersion
+            ->setComparator(new EqualTo())
+            ->setVersion($exactVersion);
 
         // Range
         $expectBoundingPair = new BoundingPair();
         $expectBoundingPair
-            ->setLower($lowerComparatorVersion)
-            ->setUpper($upperComparatorVersion);
+            ->setLower($exactComparatorVersion)
+            ->setUpper($exactComparatorVersion);
 
         $this->assertSame($expectStr, $outBoundingPair->__toString());
         $this->assertEquals($expectBoundingPair, $outBoundingPair);

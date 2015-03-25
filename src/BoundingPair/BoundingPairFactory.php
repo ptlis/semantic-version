@@ -234,43 +234,23 @@ class BoundingPairFactory
      */
     private function getFromSingleArray(array $singleArr)
     {
-        $upperArr = $singleArr;
-        $lowerArr = $singleArr;
+        $singleArr['single_comparator'] = '=';
 
-        // Fully qualified version
-        if ($this->hasNumericElement($singleArr, 'single_patch')) {
-            $lowerArr['single_comparator'] = '=';
+        if (!$this->hasNumericElement($singleArr, 'single_patch')) {
+            $singleArr['single_patch'] = '0';
+        }
 
-            $upperArr['single_comparator'] = '=';
-
-        // Minor - range (minor inc by 1)
-        } elseif ($this->hasNumericElement($singleArr, 'single_minor')) {
-            $lowerArr['single_comparator'] = '>=';
-            $lowerArr['single_patch'] = '0';
-
-            $upperArr['single_comparator'] = '<';
-            $upperArr['single_minor'] = $this->stringPlusOne($upperArr['single_minor']);
-            $upperArr['single_patch'] = '0';
-
-        // Major - range (major inc by 1;
-        } else {
-            $lowerArr['single_comparator'] = '>=';
-            $lowerArr['single_minor'] = '0';
-            $lowerArr['single_patch'] = '0';
-
-            $upperArr['single_comparator'] = '<';
-            $upperArr['single_major'] = $this->stringPlusOne($upperArr['single_major']);
-            $upperArr['single_minor'] = '0';
-            $upperArr['single_patch'] = '0';
+        if (!$this->hasNumericElement($singleArr, 'single_minor')) {
+            $singleArr['single_minor'] = '0';
         }
 
         $boundingPair = new BoundingPair();
         $boundingPair
             ->setLower(
-                $this->comparatorVersionFac->getFromArray($lowerArr, 'single_')
+                $this->comparatorVersionFac->getFromArray($singleArr, 'single_')
             )
             ->setUpper(
-                $this->comparatorVersionFac->getFromArray($upperArr, 'single_')
+                $this->comparatorVersionFac->getFromArray($singleArr, 'single_')
             );
 
         return $boundingPair;
