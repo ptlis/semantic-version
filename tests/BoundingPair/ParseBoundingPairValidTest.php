@@ -281,7 +281,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
         $engine  = new VersionEngine();
         $outBoundingPair = $engine->parseBoundingPair($inStr);
 
-        $expectStr = '=1.0.0';
+        $expectStr = '1.0.0';
 
         // Lower
         $version = new Version();
@@ -313,7 +313,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
         $engine  = new VersionEngine();
         $outBoundingPair = $engine->parseBoundingPair($inStr);
 
-        $expectStr = '=1.3.0';
+        $expectStr = '1.3.0';
 
         // Exact
         $exactVersion = new Version();
@@ -345,7 +345,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
         $engine  = new VersionEngine();
         $outBoundingPair = $engine->parseBoundingPair($inStr);
 
-        $expectStr = '=1.0.5';
+        $expectStr = '1.0.5';
 
         // Exact
         $exactVersion = new Version();
@@ -377,7 +377,7 @@ class ParseBoundingPairValidTest extends \PHPUnit_Framework_TestCase
         $engine  = new VersionEngine();
         $outBoundingPair = $engine->parseBoundingPair($inStr);
 
-        $expectStr = '=1.0.5-rc.2';
+        $expectStr = '1.0.5-rc.2';
 
         // Exact
         $exactVersion = new Version();

@@ -154,7 +154,7 @@ class BoundingPair implements InRangeInterface
 
         if (!is_null($this->lower) && !is_null($this->upper)
                 && $this->lower->__toString() == $this->upper->__toString()) {
-            $strRange = $this->lower->__toString();
+            $strRange = $this->lower->getVersion()->__toString();
         } else {
             if (!is_null($this->lower)) {
                 $strRange .= $this->lower->__toString();
