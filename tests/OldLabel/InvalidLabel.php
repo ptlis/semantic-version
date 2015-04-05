@@ -15,7 +15,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Test\Label;
+namespace ptlis\SemanticVersion\Test\OldLabel;
 
 class InvalidLabel
 {

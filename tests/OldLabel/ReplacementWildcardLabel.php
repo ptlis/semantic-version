@@ -1,6 +1,6 @@
 <?php
 
-namespace ptlis\SemanticVersion\Test\Label;
+namespace ptlis\SemanticVersion\Test\OldLabel;
 
 use ptlis\SemanticVersion\Label\LabelInterface;
 use ptlis\SemanticVersion\Label\LabelWildcardInterface;
