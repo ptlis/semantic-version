@@ -21,11 +21,6 @@ use ptlis\SemanticVersion\Version\Label\LabelInterface;
 interface VersionInterface extends SatisfiedByVersionInterface
 {
     /**
-     * @return LabelInterface
-     */
-    public function getLabel();
-
-    /**
      * Get the major version number.
      *
      * @return int
@@ -45,6 +40,11 @@ interface VersionInterface extends SatisfiedByVersionInterface
      * @return int
      */
     public function getPatch();
+
+    /**
+     * @return LabelInterface
+     */
+    public function getLabel();
 
     /**
      * Returns a string representation of the version number.
