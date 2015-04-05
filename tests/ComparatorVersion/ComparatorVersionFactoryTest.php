@@ -17,10 +17,10 @@
 
 namespace ptlis\SemanticVersion\Test\ComparatorVersion;
 
-use ptlis\SemanticVersion\Version\Comparator\ComparatorFactory;
+use ptlis\SemanticVersion\OldVersion\Comparator\ComparatorFactory;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersionFactory;
 use ptlis\SemanticVersion\Label\LabelFactory;
-use ptlis\SemanticVersion\Version\VersionFactory;
+use ptlis\SemanticVersion\OldVersion\VersionFactory;
 use ptlis\SemanticVersion\VersionRegex;
 
 /**

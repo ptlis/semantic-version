@@ -18,12 +18,12 @@ namespace ptlis\SemanticVersion\Collection;
 use ArrayIterator;
 use OutOfBoundsException;
 use Traversable;
-use ptlis\SemanticVersion\Version\Comparator\ComparatorInterface;
-use ptlis\SemanticVersion\Version\Comparator\EqualTo;
-use ptlis\SemanticVersion\Version\Comparator\GreaterThan;
-use ptlis\SemanticVersion\Version\Comparator\LessThan;
+use ptlis\SemanticVersion\OldVersion\Comparator\ComparatorInterface;
+use ptlis\SemanticVersion\OldVersion\Comparator\EqualTo;
+use ptlis\SemanticVersion\OldVersion\Comparator\GreaterThan;
+use ptlis\SemanticVersion\OldVersion\Comparator\LessThan;
 use ptlis\SemanticVersion\Exception\SemanticVersionException;
-use ptlis\SemanticVersion\Version\VersionInterface;
+use ptlis\SemanticVersion\OldVersion\VersionInterface;
 
 /**
  * Collection used to store versions.

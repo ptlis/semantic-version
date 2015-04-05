@@ -18,7 +18,7 @@
 namespace ptlis\SemanticVersion\Test\Version;
 
 use ptlis\SemanticVersion\Label\LabelAlpha;
-use ptlis\SemanticVersion\Version\Version;
+use ptlis\SemanticVersion\OldVersion\Version;
 
 /**
  * Tests to validate correct use of Version classes.

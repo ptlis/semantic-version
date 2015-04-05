@@ -19,8 +19,8 @@ namespace ptlis\SemanticVersion\Test\ComparatorVersion\Comparator;
 
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\ComparatorVersion\Comparator\GreaterOrEqualTo as CompVerGreaterOrEqualTo;
-use ptlis\SemanticVersion\Version\Comparator\GreaterThan as VersionGreaterThan;
-use ptlis\SemanticVersion\Version\Version;
+use ptlis\SemanticVersion\OldVersion\Comparator\GreaterThan as VersionGreaterThan;
+use ptlis\SemanticVersion\OldVersion\Version;
 
 /**
  * Tests to ensure correct handling of ComparatorVersion GreaterOrEqualTo comparator.

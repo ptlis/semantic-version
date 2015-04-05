@@ -15,7 +15,7 @@
 
 namespace ptlis\SemanticVersion\InRange;
 
-use ptlis\SemanticVersion\Version\VersionInterface;
+use ptlis\SemanticVersion\OldVersion\VersionInterface;
 
 /**
  * Interface used to see if a version satisfies the requirements of the bounding pair.

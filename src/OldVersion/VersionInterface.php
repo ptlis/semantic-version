@@ -13,7 +13,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Version;
+namespace ptlis\SemanticVersion\OldVersion;
 
 use ptlis\SemanticVersion\Label\LabelInterface;
 

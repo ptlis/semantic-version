@@ -15,13 +15,13 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Test\Version\Comparator;
+namespace ptlis\SemanticVersion\Test\OldVersion\Comparator;
 
-use ptlis\SemanticVersion\Version\Comparator\GreaterOrEqualTo;
+use ptlis\SemanticVersion\OldVersion\Comparator\GreaterOrEqualTo;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\Label\LabelAbsent;
 use ptlis\SemanticVersion\Label\LabelRc;
-use ptlis\SemanticVersion\Version\Version;
+use ptlis\SemanticVersion\OldVersion\Version;
 use ptlis\SemanticVersion\VersionEngine;
 
 /**

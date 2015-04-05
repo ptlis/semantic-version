@@ -22,7 +22,7 @@ use ptlis\SemanticVersion\BoundingPair\Comparator\EqualTo;
 use ptlis\SemanticVersion\BoundingPair\Comparator\GreaterThan;
 use ptlis\SemanticVersion\BoundingPair\Comparator\LessThan;
 use ptlis\SemanticVersion\Exception\SemanticVersionException;
-use ptlis\SemanticVersion\Version\VersionInterface;
+use ptlis\SemanticVersion\OldVersion\VersionInterface;
 use Traversable;
 
 /**

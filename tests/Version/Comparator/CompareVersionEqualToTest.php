@@ -15,12 +15,12 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Test\Version\Comparator;
+namespace ptlis\SemanticVersion\Test\OldVersion\Comparator;
 
-use ptlis\SemanticVersion\Version\Comparator\EqualTo;
+use ptlis\SemanticVersion\OldVersion\Comparator\EqualTo;
 use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;
-use ptlis\SemanticVersion\Version\Version;
+use ptlis\SemanticVersion\OldVersion\Version;
 
 /**
  * Tests to ensure correct handling of version number equality version.

@@ -15,10 +15,10 @@
 
 namespace ptlis\SemanticVersion\Test\ComparatorVersion;
 
-use ptlis\SemanticVersion\Version\Comparator\EqualTo;
-use ptlis\SemanticVersion\Version\Comparator\GreaterOrEqualTo;
+use ptlis\SemanticVersion\OldVersion\Comparator\EqualTo;
+use ptlis\SemanticVersion\OldVersion\Comparator\GreaterOrEqualTo;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
-use ptlis\SemanticVersion\Version\Version;
+use ptlis\SemanticVersion\OldVersion\Version;
 
 /**
  * Tests to ensure correct behaviour in valid uses of comparator versions.

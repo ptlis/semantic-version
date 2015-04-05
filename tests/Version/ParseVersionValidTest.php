@@ -22,7 +22,7 @@ use ptlis\SemanticVersion\Label\LabelBeta;
 use ptlis\SemanticVersion\Label\LabelDev;
 use ptlis\SemanticVersion\Label\LabelAbsent;
 use ptlis\SemanticVersion\Label\LabelRc;
-use ptlis\SemanticVersion\Version\Version;
+use ptlis\SemanticVersion\OldVersion\Version;
 use ptlis\SemanticVersion\VersionEngine;
 
 /**

@@ -19,7 +19,7 @@ namespace ptlis\SemanticVersion\Test\Collection;
 
 use ptlis\SemanticVersion\Collection\BoundingPairCollection;
 use ptlis\SemanticVersion\Label\LabelAbsent;
-use ptlis\SemanticVersion\Version\Version;
+use ptlis\SemanticVersion\OldVersion\Version;
 use ptlis\SemanticVersion\VersionEngine;
 use StdClass;
 

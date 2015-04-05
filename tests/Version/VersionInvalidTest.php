@@ -17,7 +17,7 @@
 
 namespace ptlis\SemanticVersion\Test\Version;
 
-use ptlis\SemanticVersion\Version\Version;
+use ptlis\SemanticVersion\OldVersion\Version;
 
 /**
  * Tests to ensure correct error handling for invalid Versions.

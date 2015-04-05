@@ -15,9 +15,9 @@
 
 namespace ptlis\SemanticVersion\ComparatorVersion;
 
-use ptlis\SemanticVersion\Version\Comparator\ComparatorInterface;
+use ptlis\SemanticVersion\OldVersion\Comparator\ComparatorInterface;
 use ptlis\SemanticVersion\InRange\InRangeInterface;
-use ptlis\SemanticVersion\Version\VersionInterface;
+use ptlis\SemanticVersion\OldVersion\VersionInterface;
 
 /**
  * Entity to represent a semantic version number with a comparator.

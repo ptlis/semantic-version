@@ -16,9 +16,9 @@
 namespace ptlis\SemanticVersion\ComparatorVersion\Comparator;
 
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
-use ptlis\SemanticVersion\Version\Comparator\ComparatorInterface as VersionComparatorInterface;
-use ptlis\SemanticVersion\Version\Comparator\EqualTo as VersionEqualTo;
-use ptlis\SemanticVersion\Version\Comparator\LessThan as VersionLessThan;
+use ptlis\SemanticVersion\OldVersion\Comparator\ComparatorInterface as VersionComparatorInterface;
+use ptlis\SemanticVersion\OldVersion\Comparator\EqualTo as VersionEqualTo;
+use ptlis\SemanticVersion\OldVersion\Comparator\LessThan as VersionLessThan;
 
 /**
  * ComparatorVersion less than comparator.

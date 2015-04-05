@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Interface class for regex provider to be used by factory to parse a version number.
+ * Abstract class for Version comparators.
  *
  * PHP Version 5.3
  *
@@ -13,17 +13,20 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Version;
+namespace ptlis\SemanticVersion\OldVersion\Comparator;
 
 /**
- * Interface class for regex provider to be used by factory to parse a version number.
+ * Abstract class for Version comparators.
  */
-interface VersionRegexProviderInterface
+abstract class AbstractComparator implements ComparatorInterface
 {
     /**
-     * Get the regex to parse a semantic version number.
+     * Return the string representation of the comparator
      *
      * @return string
      */
-    public function getVersion();
+    public function __toString()
+    {
+        return $this::getSymbol();
+    }
 }

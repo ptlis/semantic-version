@@ -13,7 +13,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Version\Comparator;
+namespace ptlis\SemanticVersion\OldVersion\Comparator;
 
 use ptlis\SemanticVersion\Exception\InvalidComparatorException;
 
@@ -28,11 +28,11 @@ class ComparatorFactory
      * @var array
      */
     private $comparatorList = array(
-        '='     => 'ptlis\SemanticVersion\Version\Comparator\EqualTo',
-        '>='    => 'ptlis\SemanticVersion\Version\Comparator\GreaterOrEqualTo',
-        '>'     => 'ptlis\SemanticVersion\Version\Comparator\GreaterThan',
-        '<='    => 'ptlis\SemanticVersion\Version\Comparator\LessOrEqualTo',
-        '<'     => 'ptlis\SemanticVersion\Version\Comparator\LessThan',
+        '='     => 'ptlis\SemanticVersion\OldVersion\Comparator\EqualTo',
+        '>='    => 'ptlis\SemanticVersion\OldVersion\Comparator\GreaterOrEqualTo',
+        '>'     => 'ptlis\SemanticVersion\OldVersion\Comparator\GreaterThan',
+        '<='    => 'ptlis\SemanticVersion\OldVersion\Comparator\LessOrEqualTo',
+        '<'     => 'ptlis\SemanticVersion\OldVersion\Comparator\LessThan',
     );
 
 
@@ -52,9 +52,9 @@ class ComparatorFactory
             );
         }
 
-        if (!is_subclass_of($class, 'ptlis\SemanticVersion\Version\Comparator\ComparatorInterface')) {
+        if (!is_subclass_of($class, 'ptlis\SemanticVersion\OldVersion\Comparator\ComparatorInterface')) {
             throw new \RuntimeException(
-                'Comparators must implement the ptlis\SemanticVersion\Version\Comparator\ComparatorInterface interface'
+                'Comparators must implement the ptlis\SemanticVersion\OldVersion\Comparator\ComparatorInterface interface'
             );
         }
 

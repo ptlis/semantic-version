@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Version greater than comparator.
+ * Version less than or equal comparator.
  *
  * PHP Version 5.3
  *
@@ -13,14 +13,14 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Version\Comparator;
+namespace ptlis\SemanticVersion\OldVersion\Comparator;
 
-use ptlis\SemanticVersion\Version\VersionInterface;
+use ptlis\SemanticVersion\OldVersion\VersionInterface;
 
 /**
- * Version greater than comparator.
+ * Version less than or equal comparator.
  */
-class GreaterThan extends AbstractComparator
+class LessOrEqualTo extends AbstractComparator
 {
     /**
      * Retrieve the comparator's symbol.
@@ -29,12 +29,12 @@ class GreaterThan extends AbstractComparator
      */
     public static function getSymbol()
     {
-        return '>';
+        return '<=';
     }
 
 
     /**
-     * Return true if the left version is greater than right version.
+     * Return true if the left version is less or equal to the right version.
      *
      * @param VersionInterface $lVersion
      * @param VersionInterface $rVersion
@@ -44,7 +44,8 @@ class GreaterThan extends AbstractComparator
     public function compare(VersionInterface $lVersion, VersionInterface $rVersion)
     {
         $lessThan = new LessThan();
+        $equalTo = new EqualTo();
 
-        return $lessThan->compare($rVersion, $lVersion);
+        return ($lessThan->compare($lVersion, $rVersion) || $equalTo->compare($lVersion, $rVersion));
     }
 }

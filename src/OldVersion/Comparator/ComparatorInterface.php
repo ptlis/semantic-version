@@ -13,9 +13,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Version\Comparator;
+namespace ptlis\SemanticVersion\OldVersion\Comparator;
 
-use ptlis\SemanticVersion\Version\VersionInterface;
+use ptlis\SemanticVersion\OldVersion\VersionInterface;
 
 /**
  * Interface that version comparators must implement.

@@ -16,10 +16,10 @@
 namespace ptlis\SemanticVersion\BoundingPair;
 
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
-use ptlis\SemanticVersion\Version\Comparator\GreaterThan;
+use ptlis\SemanticVersion\OldVersion\Comparator\GreaterThan;
 use ptlis\SemanticVersion\Exception\InvalidBoundingPairException;
 use ptlis\SemanticVersion\InRange\InRangeInterface;
-use ptlis\SemanticVersion\Version\VersionInterface;
+use ptlis\SemanticVersion\OldVersion\VersionInterface;
 
 /**
  * Entity to represent a semantic version number range.

@@ -19,13 +19,13 @@ use ptlis\SemanticVersion\BoundingPair\BoundingPair;
 use ptlis\SemanticVersion\BoundingPair\BoundingPairFactory;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersionFactory;
-use ptlis\SemanticVersion\Version\Comparator\ComparatorFactory;
+use ptlis\SemanticVersion\OldVersion\Comparator\ComparatorFactory;
 use ptlis\SemanticVersion\Exception\InvalidBoundingPairException;
 use ptlis\SemanticVersion\Exception\InvalidComparatorVersionException;
 use ptlis\SemanticVersion\Exception\InvalidVersionException;
 use ptlis\SemanticVersion\Label\LabelFactory;
-use ptlis\SemanticVersion\Version\Version;
-use ptlis\SemanticVersion\Version\VersionFactory;
+use ptlis\SemanticVersion\OldVersion\Version;
+use ptlis\SemanticVersion\OldVersion\VersionFactory;
 
 /**
  * Simple class to provide version parsing with good defaults.

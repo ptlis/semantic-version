@@ -15,14 +15,14 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Test\Version\Comparator;
+namespace ptlis\SemanticVersion\Test\OldVersion\Comparator;
 
-use ptlis\SemanticVersion\Version\Comparator\ComparatorFactory;
-use ptlis\SemanticVersion\Version\Comparator\EqualTo;
-use ptlis\SemanticVersion\Version\Comparator\GreaterOrEqualTo;
-use ptlis\SemanticVersion\Version\Comparator\GreaterThan;
-use ptlis\SemanticVersion\Version\Comparator\LessOrEqualTo;
-use ptlis\SemanticVersion\Version\Comparator\LessThan;
+use ptlis\SemanticVersion\OldVersion\Comparator\ComparatorFactory;
+use ptlis\SemanticVersion\OldVersion\Comparator\EqualTo;
+use ptlis\SemanticVersion\OldVersion\Comparator\GreaterOrEqualTo;
+use ptlis\SemanticVersion\OldVersion\Comparator\GreaterThan;
+use ptlis\SemanticVersion\OldVersion\Comparator\LessOrEqualTo;
+use ptlis\SemanticVersion\OldVersion\Comparator\LessThan;
 
 /**
  * Tests to ensure correct behaviour of ComparatorFactory.
@@ -86,7 +86,7 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCustomComparatorListValid()
     {
         $factory = new ComparatorFactory();
-        $factory->setTypeList(array('=' => 'ptlis\SemanticVersion\Version\Comparator\EqualTo'));
+        $factory->setTypeList(array('=' => 'ptlis\SemanticVersion\OldVersion\Comparator\EqualTo'));
 
         $this->assertEquals(new EqualTo(), $factory->get('='));
     }
@@ -102,7 +102,7 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
         );
 
         $factory = new ComparatorFactory();
-        $factory->setTypeList(array('=' => 'ptlis\SemanticVersion\Version\Comparator\EqualTo'));
+        $factory->setTypeList(array('=' => 'ptlis\SemanticVersion\OldVersion\Comparator\EqualTo'));
 
         $factory->get($comparatorStr);
     }
@@ -126,7 +126,7 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testClassDoesntExist()
     {
-        $className = 'ptlis\SemanticVersion\Version\Comparator\Boo';
+        $className = 'ptlis\SemanticVersion\OldVersion\Comparator\Boo';
 
         $this->setExpectedException(
             '\RuntimeException',
@@ -140,11 +140,11 @@ class ComparatorFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testClassDoesntImplementInterface()
     {
-        $className = 'ptlis\SemanticVersion\Test\Version\Comparator\InvalidComparator';
+        $className = 'ptlis\SemanticVersion\Test\OldVersion\Comparator\InvalidComparator';
 
         $this->setExpectedException(
             '\RuntimeException',
-            'Comparators must implement the ptlis\SemanticVersion\Version\Comparator\ComparatorInterface interface'
+            'Comparators must implement the ptlis\SemanticVersion\OldVersion\Comparator\ComparatorInterface interface'
         );
 
         $factory = new ComparatorFactory();

@@ -17,11 +17,11 @@
 
 namespace ptlis\SemanticVersion\Test\InRange;
 
-use ptlis\SemanticVersion\Version\Comparator\GreaterThan;
+use ptlis\SemanticVersion\OldVersion\Comparator\GreaterThan;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;
-use ptlis\SemanticVersion\Version\Version;
+use ptlis\SemanticVersion\OldVersion\Version;
 use ptlis\SemanticVersion\BoundingPair\BoundingPair;
 
 class InRangeBoundingPairGreaterThanTest extends \PHPUnit_Framework_TestCase

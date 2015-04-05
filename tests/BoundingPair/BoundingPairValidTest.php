@@ -17,13 +17,13 @@
 
 namespace ptlis\SemanticVersion\Test\BoundingPair;
 
-use ptlis\SemanticVersion\Version\Comparator\EqualTo;
-use ptlis\SemanticVersion\Version\Comparator\GreaterThan;
-use ptlis\SemanticVersion\Version\Comparator\LessThan;
+use ptlis\SemanticVersion\OldVersion\Comparator\EqualTo;
+use ptlis\SemanticVersion\OldVersion\Comparator\GreaterThan;
+use ptlis\SemanticVersion\OldVersion\Comparator\LessThan;
 use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
 use ptlis\SemanticVersion\Label\LabelAbsent;
 use ptlis\SemanticVersion\Label\LabelAlpha;
-use ptlis\SemanticVersion\Version\Version;
+use ptlis\SemanticVersion\OldVersion\Version;
 use ptlis\SemanticVersion\BoundingPair\BoundingPair;
 
 /**

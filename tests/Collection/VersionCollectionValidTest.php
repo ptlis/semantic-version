@@ -22,7 +22,7 @@ use ptlis\SemanticVersion\Label\LabelAbsent;
 use ptlis\SemanticVersion\Label\LabelAlpha;
 use ptlis\SemanticVersion\Label\LabelBeta;
 use ptlis\SemanticVersion\Label\LabelRc;
-use ptlis\SemanticVersion\Version\Version;
+use ptlis\SemanticVersion\OldVersion\Version;
 
 /**
  * Tests to validate correct use of VersionCollection.
@@ -234,7 +234,7 @@ class VersionCollectionValidTest extends \PHPUnit_Framework_TestCase
         $collection[] = $version3;
 
         foreach ($collection as $version) {
-            $this->assertInstanceOf('\ptlis\SemanticVersion\Version\VersionInterface', $version);
+            $this->assertInstanceOf('\ptlis\SemanticVersion\OldVersion\VersionInterface', $version);
         }
     }
 
