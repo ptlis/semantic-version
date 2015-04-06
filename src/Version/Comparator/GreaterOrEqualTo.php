@@ -16,31 +16,34 @@ namespace ptlis\SemanticVersion\Version\Comparator;
 use ptlis\SemanticVersion\Version\VersionInterface;
 
 /**
- * Interface that version comparators must implement.
+ * Version greater than equal or comparator.
  */
-interface ComparatorInterface
+class GreaterOrEqualTo extends AbstractComparator
 {
     /**
      * Retrieve the comparator's symbol.
      *
      * @return string
      */
-    public static function getSymbol();
+    public static function getSymbol()
+    {
+        return '>=';
+    }
+
 
     /**
-     * Compare the provided versions using the appropriate method for the comparator.
+     * Return true if the left version is greater or equal to the right version.
      *
      * @param VersionInterface $lVersion
      * @param VersionInterface $rVersion
      *
      * @return boolean
      */
-    public function compare(VersionInterface $lVersion, VersionInterface $rVersion);
+    public function compare(VersionInterface $lVersion, VersionInterface $rVersion)
+    {
+        $greaterThan = new GreaterThan();
+        $equalTo = new EqualTo();
 
-    /**
-     * Return a string representation of the comparator.
-     *
-     * @return string
-     */
-    public function __toString();
+        return ($greaterThan->compare($lVersion, $rVersion) || $equalTo->compare($lVersion, $rVersion));
+    }
 }
