@@ -14,6 +14,14 @@
 namespace ptlis\SemanticVersion\Test\Parse;
 
 use ptlis\SemanticVersion\Parse\Token;
+use ptlis\SemanticVersion\Version\Comparator\EqualTo;
+use ptlis\SemanticVersion\Version\Comparator\GreaterOrEqualTo;
+use ptlis\SemanticVersion\Version\Comparator\GreaterThan;
+use ptlis\SemanticVersion\Version\Comparator\LessOrEqualTo;
+use ptlis\SemanticVersion\Version\Comparator\LessThan;
+use ptlis\SemanticVersion\Version\Label\Label;
+use ptlis\SemanticVersion\Version\Label\LabelAlpha;
+use ptlis\SemanticVersion\Version\Version;
 
 class TestDataProvider extends \PHPUnit_Framework_TestCase
 {
@@ -24,12 +32,18 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                 '1',
                 array(
                     new Token(Token::DIGITS, '1')
+                ),
+                array(
+                    new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                 )
             ),
             array(
                 'v1',
                 array(
                     new Token(Token::DIGITS, '1')
+                ),
+                array(
+                    new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                 )
             ),
             array(
@@ -38,6 +52,9 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DIGITS, '1'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '2')
+                ),
+                array(
+                    new Version(1, 2, 0, new Label(Label::PRECEDENCE_ABSENT))
                 )
             ),
             array(
@@ -48,6 +65,23 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DIGITS, '15'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '1')
+                ),
+                array(
+                    new Version(1, 15, 1, new Label(Label::PRECEDENCE_ABSENT))
+                )
+            ),
+            array(
+                '1.*',
+                array(
+                    new Token(Token::DIGITS, '1'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::WILDCARD_DIGITS, '*')
+                ),
+                array(
+                    new GreaterOrEqualTo(),
+                    new Version(1, 0, 0),
+                    new LessThan(),
+                    new Version(2, 0, 0)
                 )
             ),
             array(
@@ -58,62 +92,12 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DIGITS, '5'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::WILDCARD_DIGITS, '*')
-                )
-            ),
-            array(
-                '1.0.7-3.1.18',
+                ),
                 array(
-                    new Token(Token::DIGITS, '1'),
-                    new Token(Token::DOT_SEPARATOR, '.'),
-                    new Token(Token::DIGITS, '0'),
-                    new Token(Token::DOT_SEPARATOR, '.'),
-                    new Token(Token::DIGITS, '7'),
-
-                    new Token(Token::DASH_SEPARATOR, '-'),
-
-                    new Token(Token::DIGITS, '3'),
-                    new Token(Token::DOT_SEPARATOR, '.'),
-                    new Token(Token::DIGITS, '1'),
-                    new Token(Token::DOT_SEPARATOR, '.'),
-                    new Token(Token::DIGITS, '18')
-                )
-            ),
-            array(
-                '1.8.3-alpha.7',
-                array(
-                    new Token(Token::DIGITS, '1'),
-                    new Token(Token::DOT_SEPARATOR, '.'),
-                    new Token(Token::DIGITS, '8'),
-                    new Token(Token::DOT_SEPARATOR, '.'),
-                    new Token(Token::DIGITS, '3'),
-
-                    new Token(Token::DASH_SEPARATOR, '-'),
-
-                    new Token(Token::LABEL_STRING, 'alpha'),
-                    new Token(Token::DOT_SEPARATOR, '.'),
-                    new Token(Token::DIGITS, '7')
-                )
-            ),
-            array(
-                '~1.7.4',
-                array(
-                    new Token(Token::TILDE_RANGE, '~'),
-                    new Token(Token::DIGITS, '1'),
-                    new Token(Token::DOT_SEPARATOR, '.'),
-                    new Token(Token::DIGITS, '7'),
-                    new Token(Token::DOT_SEPARATOR, '.'),
-                    new Token(Token::DIGITS, '4'),
-                )
-            ),
-            array(
-                '^3.1.0',
-                array(
-                    new Token(Token::CARET_RANGE, '^'),
-                    new Token(Token::DIGITS, '3'),
-                    new Token(Token::DOT_SEPARATOR, '.'),
-                    new Token(Token::DIGITS, '1'),
-                    new Token(Token::DOT_SEPARATOR, '.'),
-                    new Token(Token::DIGITS, '0'),
+                    new GreaterOrEqualTo(),
+                    new Version(1, 5, 0),
+                    new LessThan(),
+                    new Version(1, 6, 0)
                 )
             ),
             array(
@@ -124,6 +108,10 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DIGITS, '2'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '0')
+                ),
+                array(
+                    new GreaterThan(),
+                    new Version(2, 0)
                 )
             ),
             array(
@@ -136,6 +124,10 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DIGITS, '2'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '1')
+                ),
+                array(
+                    new GreaterOrEqualTo(),
+                    new Version(1, 2, 1)
                 )
             ),
             array(
@@ -148,6 +140,10 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DIGITS, '0'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '5')
+                ),
+                array(
+                    new LessThan(),
+                    new Version(4, 0, 5)
                 )
             ),
             array(
@@ -160,6 +156,10 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DIGITS, '0'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '1')
+                ),
+                array(
+                    new EqualTo(),
+                    new Version(1, 0, 1)
                 )
             ),
             array(
@@ -180,6 +180,104 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DIGITS, '0'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '0')
+                ),
+                array(
+                    new GreaterOrEqualTo(),
+                    new Version(1, 0, 1),
+                    new LessThan(),
+                    new Version(2, 0, 0),
+                )
+            ),
+            array(
+                '~1.7',
+                array(
+                    new Token(Token::TILDE_RANGE, '~'),
+                    new Token(Token::DIGITS, '1'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '7')
+                ),
+                array(
+                    new GreaterOrEqualTo(),
+                    new Version(1, 7, 0),
+                    new LessThan(),
+                    new Version(2, 0, 0),
+                )
+            ),
+            array(
+                '~1.7.4',
+                array(
+                    new Token(Token::TILDE_RANGE, '~'),
+                    new Token(Token::DIGITS, '1'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '7'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '4'),
+                ),
+                array(
+                    new GreaterOrEqualTo(),
+                    new Version(1, 7, 4),
+                    new LessThan(),
+                    new Version(1, 8, 0),
+                )
+            ),
+            array(
+                '^3.1.0',
+                array(
+                    new Token(Token::CARET_RANGE, '^'),
+                    new Token(Token::DIGITS, '3'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '1'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '0'),
+                ),
+                array(
+                    new GreaterOrEqualTo(),
+                    new Version(3, 1, 0),
+                    new LessThan(),
+                    new Version(4, 0, 0),
+                )
+            ),
+            array(
+                '1.0.7-3.1.18',
+                array(
+                    new Token(Token::DIGITS, '1'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '0'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '7'),
+
+                    new Token(Token::DASH_SEPARATOR, '-'),
+
+                    new Token(Token::DIGITS, '3'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '1'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '18')
+                ),
+                array(
+                    new GreaterOrEqualTo(),
+                    new Version(1, 0, 7),
+                    new LessOrEqualTo(),
+                    new Version(3, 1, 18)
+                )
+            ),
+            array(
+                '1.8.3-alpha.7',
+                array(
+                    new Token(Token::DIGITS, '1'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '8'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '3'),
+
+                    new Token(Token::DASH_SEPARATOR, '-'),
+
+                    new Token(Token::LABEL_STRING, 'alpha'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '7')
+                ),
+                array(
+                    new Version(1, 8, 3, new LabelAlpha(7)),
                 )
             )
         );
