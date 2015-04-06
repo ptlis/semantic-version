@@ -21,13 +21,33 @@ use ptlis\SemanticVersion\Version\Comparator\LessOrEqualTo;
 use ptlis\SemanticVersion\Version\Comparator\LessThan;
 use ptlis\SemanticVersion\Version\Label\LabelAlpha;
 use ptlis\SemanticVersion\Version\Label\LabelBeta;
+use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 use ptlis\SemanticVersion\Version\Label\LabelDev;
 use ptlis\SemanticVersion\Version\Label\LabelInterface;
 use ptlis\SemanticVersion\Version\Label\LabelRc;
 use ptlis\SemanticVersion\Version\Version;
 
+/**
+ * Parser accepting array of tokens and returning an array of comparators & versions.
+ */
 class VersionParser
 {
+    /**
+     * @var LabelBuilder
+     */
+    private $labelBuilder;
+
+
+    /**
+     * Constructor.
+     *
+     * @param LabelBuilder $labelBuilder
+     */
+    public function __construct(LabelBuilder $labelBuilder)
+    {
+        $this->labelBuilder = $labelBuilder;
+    }
+
     /**
      * Parse the token list, returning ...?
      *
@@ -304,36 +324,22 @@ class VersionParser
     /**
      * Get a Label instance from label tokens.
      *
+     * @todo Handle build metadata
+     *
      * @param Token[] $labelTokenList
      *
      * @return LabelInterface
      */
     private function getLabelFromTokens(array $labelTokenList)
     {
-        $name = $labelTokenList[0]->getValue();
-        $version = null;
+
+        $builder = $this->labelBuilder->setName($labelTokenList[0]->getValue());
+
         if (3 === count($labelTokenList)) {
-            $version = $labelTokenList[2]->getValue();
+            $builder = $builder->setVersion($labelTokenList[2]->getValue());
         }
 
-        // TODO: move to builder
-        $label = null;
-        switch ($name) {
-            case 'alpha':
-                $label = new LabelAlpha($version);
-                break;
-            case 'beta':
-                $label = new LabelBeta($version);
-                break;
-            case 'rc':
-                $label = new LabelRc($version);
-                break;
-            default:
-                $label = new LabelDev($name, $version);
-                break;
-        }
-
-        return $label;
+        return $builder->build();
     }
 
     /**

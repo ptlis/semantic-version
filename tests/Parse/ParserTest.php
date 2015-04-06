@@ -15,6 +15,7 @@ namespace ptlis\SemanticVersion\Test\Parse;
 
 use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Parse\VersionParser;
+use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 
 class ParserTest extends TestDataProvider
 {
@@ -27,7 +28,7 @@ class ParserTest extends TestDataProvider
      */
     public function testParse($version, $tokenList, $expectedValueList)
     {
-        $parser = new VersionParser();
+        $parser = new VersionParser(new LabelBuilder());
 
         $valueList = $parser->parse($tokenList);
 
