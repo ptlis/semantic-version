@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Test\Comparator;
+namespace ptlis\SemanticVersion\Test\Version\Comparator;
 
 use ptlis\SemanticVersion\Version\Comparator\GreaterThan;
 use ptlis\SemanticVersion\Version\Label\LabelAlpha;

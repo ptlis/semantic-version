@@ -3,7 +3,7 @@
 /**
  * PHP Version 5.3
  *
- * @copyright   (c) 2015 brian ridley
+ * @copyright   (c) 2014-2015 brian ridley
  * @author      brian ridley <ptlis@ptlis.net>
  * @license     http://opensource.org/licenses/MIT MIT
  *
@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Test\Label;
+namespace ptlis\SemanticVersion\Test\Version\Label;
 
 use ptlis\SemanticVersion\Version\Label\Label;
 
