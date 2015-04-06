@@ -85,6 +85,20 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                 )
             ),
             array(
+                '4.x',
+                array(
+                    new Token(Token::DIGITS, '4'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::WILDCARD_DIGITS, 'x')
+                ),
+                array(
+                    new GreaterOrEqualTo(),
+                    new Version(4, 0, 0),
+                    new LessThan(),
+                    new Version(5, 0, 0)
+                )
+            ),
+            array(
                 '1.5.*',
                 array(
                     new Token(Token::DIGITS, '1'),
@@ -98,6 +112,22 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Version(1, 5, 0),
                     new LessThan(),
                     new Version(1, 6, 0)
+                )
+            ),
+            array(
+                '1.3.x',
+                array(
+                    new Token(Token::DIGITS, '1'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '3'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::WILDCARD_DIGITS, 'x')
+                ),
+                array(
+                    new GreaterOrEqualTo(),
+                    new Version(1, 3, 0),
+                    new LessThan(),
+                    new Version(1, 4, 0)
                 )
             ),
             array(

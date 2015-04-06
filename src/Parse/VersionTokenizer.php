@@ -141,7 +141,8 @@ class VersionTokenizer
             '.' => Token::DOT_SEPARATOR,
             '~' => Token::TILDE_RANGE,
             '^' => Token::CARET_RANGE,
-            '*' => Token::WILDCARD_DIGITS
+            '*' => Token::WILDCARD_DIGITS,
+            'x' => Token::WILDCARD_DIGITS
         );
 
         $token = null;
