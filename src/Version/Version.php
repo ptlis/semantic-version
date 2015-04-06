@@ -58,9 +58,9 @@ class Version implements VersionInterface
             $label = new Label(Label::PRECEDENCE_ABSENT);
         }
 
-        $this->major = $major;
-        $this->minor = $minor;
-        $this->patch = $patch;
+        $this->major = intval($major);
+        $this->minor = intval($minor);
+        $this->patch = intval($patch);
         $this->label = $label;
     }
 
