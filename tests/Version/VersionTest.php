@@ -16,7 +16,7 @@ namespace ptlis\SemanticVersion\Test\Version;
 use ptlis\SemanticVersion\Version\Label\Label;
 use ptlis\SemanticVersion\Version\Version;
 
-class LabelTest extends \PHPUnit_Framework_TestCase
+class VersionTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreate()
     {
