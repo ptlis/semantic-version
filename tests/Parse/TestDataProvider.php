@@ -25,6 +25,12 @@ use ptlis\SemanticVersion\Version\Version;
 
 class TestDataProvider extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Test data, built to follow the specification used by composer:
+     * https://getcomposer.org/doc/01-basic-usage.md#package-versions
+     *
+     * @return array
+     */
     public function tokenProvider()
     {
         return array(
@@ -287,7 +293,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                 array(
                     new GreaterOrEqualTo(),
                     new Version(1, 0, 7),
-                    new LessOrEqualTo(),
+                    new LessThan(),
                     new Version(3, 1, 18)
                 )
             ),
