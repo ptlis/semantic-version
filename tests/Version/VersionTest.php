@@ -14,6 +14,7 @@
 namespace ptlis\SemanticVersion\Test\Version;
 
 use ptlis\SemanticVersion\Version\Label\Label;
+use ptlis\SemanticVersion\Version\Label\LabelAbsent;
 use ptlis\SemanticVersion\Version\Version;
 
 class VersionTest extends \PHPUnit_Framework_TestCase
@@ -75,7 +76,7 @@ class VersionTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals(
-            new Label(Label::PRECEDENCE_ABSENT),
+            new LabelAbsent(),
             $version->getLabel()
         );
     }

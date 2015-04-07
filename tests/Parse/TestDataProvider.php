@@ -20,6 +20,7 @@ use ptlis\SemanticVersion\Version\Comparator\GreaterThan;
 use ptlis\SemanticVersion\Version\Comparator\LessOrEqualTo;
 use ptlis\SemanticVersion\Version\Comparator\LessThan;
 use ptlis\SemanticVersion\Version\Label\Label;
+use ptlis\SemanticVersion\Version\Label\LabelAbsent;
 use ptlis\SemanticVersion\Version\Label\LabelAlpha;
 use ptlis\SemanticVersion\Version\Version;
 
@@ -40,7 +41,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DIGITS, '1')
                 ),
                 array(
-                    new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    new Version(1, 0, 0, new LabelAbsent())
                 )
             ),
             array(
@@ -49,7 +50,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DIGITS, '1')
                 ),
                 array(
-                    new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    new Version(1, 0, 0, new LabelAbsent())
                 )
             ),
             array(
@@ -60,7 +61,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DIGITS, '2')
                 ),
                 array(
-                    new Version(1, 2, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    new Version(1, 2, 0, new LabelAbsent())
                 )
             ),
             array(
@@ -73,7 +74,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DIGITS, '1')
                 ),
                 array(
-                    new Version(1, 15, 1, new Label(Label::PRECEDENCE_ABSENT))
+                    new Version(1, 15, 1, new LabelAbsent())
                 )
             ),
             array(
@@ -295,6 +296,42 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Version(1, 0, 7),
                     new LessThan(),
                     new Version(3, 1, 18)
+                )
+            ),
+            array(
+                '1.0-2.0',
+                array(
+                    new Token(Token::DIGITS, '1'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '0'),
+
+                    new Token(Token::DASH_SEPARATOR, '-'),
+
+                    new Token(Token::DIGITS, '2'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '0')
+                ),
+                array(
+                    new GreaterOrEqualTo(),
+                    new Version(1, 0, 0),
+                    new LessThan(),
+                    new Version(2, 1, 0)
+                )
+            ),
+            array(
+                '1-2',
+                array(
+                    new Token(Token::DIGITS, '1'),
+
+                    new Token(Token::DASH_SEPARATOR, '-'),
+
+                    new Token(Token::DIGITS, '2'),
+                ),
+                array(
+                    new GreaterOrEqualTo(),
+                    new Version(1, 0, 0),
+                    new LessThan(),
+                    new Version(3, 0, 0)
                 )
             ),
             array(

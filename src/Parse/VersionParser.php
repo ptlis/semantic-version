@@ -117,11 +117,13 @@ class VersionParser
             }
         }
 
+        // Handle upper bounds for hyphenated ranges
         if ($inRange) {
             $resultList[] = new LessThan();
-        }
+            $resultList[] = $this->getUpperVersionForHyphenRange($versionTokenList, $labelTokenList);
 
-        if (count($versionTokenList)) {
+        // Otherwise handle simple or wildcard version number
+        } elseif ($versionTokenList) {
 
             if (Token::WILDCARD_DIGITS === $versionTokenList[count($versionTokenList) - 1]->getType()) {
                 $resultList = array_merge(
@@ -131,10 +133,54 @@ class VersionParser
             } else {
                 $resultList[] = $this->getVersionFromTokens($versionTokenList, $labelTokenList);
             }
-
         }
 
         return $resultList;
+    }
+
+    /**
+     * @todo Return VersionRange instances?
+     *
+     * Hyphenated ranges are implemented as described @ https://getcomposer.org/doc/01-basic-usage.md#package-versions
+     *
+     * @param Token[] $tokenList
+     * @param Token[] $labelTokenList
+     *
+     * @return array of Versions and comparators
+     */
+    private function getUpperVersionForHyphenRange(array $tokenList, array $labelTokenList)
+    {
+        $major = 0;
+        $minor = 0;
+        $patch = 0;
+
+        switch (count($tokenList)) {
+            case 1:
+                $major = $tokenList[0]->getValue() + 1;
+                break;
+
+            case 3:
+                $major = $tokenList[0]->getValue();
+                $minor = $tokenList[2]->getValue() + 1;
+                break;
+
+            case 5:
+                $major = $tokenList[0]->getValue();
+                $minor = $tokenList[2]->getValue();
+                $patch = $tokenList[4]->getValue();
+                break;
+
+            default:
+                throw new \RuntimeException('Invalid version'); // TODO: Handle earlier in validation step
+                break;
+        }
+
+        return new Version(
+            $major,
+            $minor,
+            $patch,
+            $this->getLabelFromTokens($labelTokenList)
+        );
     }
 
     /**
@@ -269,11 +315,14 @@ class VersionParser
      */
     private function getLabelFromTokens(array $labelTokenList)
     {
+        $builder = $this->labelBuilder;
 
-        $builder = $this->labelBuilder->setName($labelTokenList[0]->getValue());
+        if (count($labelTokenList)) {
+            $builder = $builder->setName($labelTokenList[0]->getValue());
 
-        if (3 === count($labelTokenList)) {
-            $builder = $builder->setVersion($labelTokenList[2]->getValue());
+            if (3 === count($labelTokenList)) {
+                $builder = $builder->setVersion($labelTokenList[2]->getValue());
+            }
         }
 
         return $builder->build();

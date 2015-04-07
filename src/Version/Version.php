@@ -13,7 +13,7 @@
 
 namespace ptlis\SemanticVersion\Version;
 
-use ptlis\SemanticVersion\Version\Label\Label;
+use ptlis\SemanticVersion\Version\Label\LabelAbsent;
 use ptlis\SemanticVersion\Version\Label\LabelInterface;
 
 /**
@@ -55,7 +55,7 @@ class Version implements VersionInterface
     public function __construct($major, $minor = 0, $patch = 0, LabelInterface $label = null)
     {
         if (is_null($label)) {
-            $label = new Label(Label::PRECEDENCE_ABSENT);
+            $label = new LabelAbsent();
         }
 
         $this->major = intval($major);
@@ -119,7 +119,7 @@ class Version implements VersionInterface
         );
 
         // Only include the label portion if not absent
-        if (Label::PRECEDENCE_ABSENT !== $this->label->getPrecedence()) {
+        if (LabelInterface::PRECEDENCE_ABSENT !== $this->label->getPrecedence()) {
             $strVersion .= '-' . $this->label;
         }
 
