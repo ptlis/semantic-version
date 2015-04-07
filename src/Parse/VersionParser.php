@@ -19,16 +19,14 @@ use ptlis\SemanticVersion\Version\Comparator\GreaterOrEqualTo;
 use ptlis\SemanticVersion\Version\Comparator\GreaterThan;
 use ptlis\SemanticVersion\Version\Comparator\LessOrEqualTo;
 use ptlis\SemanticVersion\Version\Comparator\LessThan;
-use ptlis\SemanticVersion\Version\Label\LabelAlpha;
-use ptlis\SemanticVersion\Version\Label\LabelBeta;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
-use ptlis\SemanticVersion\Version\Label\LabelDev;
 use ptlis\SemanticVersion\Version\Label\LabelInterface;
-use ptlis\SemanticVersion\Version\Label\LabelRc;
 use ptlis\SemanticVersion\Version\Version;
 
 /**
  * Parser accepting array of tokens and returning an array of comparators & versions.
+ *
+ * @todo Correctly validate versions
  */
 class VersionParser
 {
@@ -49,9 +47,7 @@ class VersionParser
     }
 
     /**
-     * Parse the token list, returning ...?
-     *
-     * @throws \RuntimeException
+     * @todo Return VersionRange instances?
      *
      * @param Token[] $tokenList
      *
@@ -59,234 +55,175 @@ class VersionParser
      */
     public function parse(array $tokenList)
     {
-        $valueTypeList = array();
+        $tokenClusterList = $this->clusterTokens($tokenList);
+
+        $resultList = array();
+
+        foreach ($tokenClusterList as $tokenCluster) {
+            $resultList = array_merge(
+                $resultList,
+                $this->parseCluster($tokenCluster)
+            );
+        }
+
+        return $resultList;
+    }
+
+    /**
+     * @param Token[] $tokenList
+     */
+    private function parseCluster(array $tokenList)
+    {
+        $versionTokenList = array();
+        $labelTokenList = array();
+
+        $inLabel = false;
+        $inRange = false;
+
+        // Parse versions beginning with comparator, caret or tilde
+        $resultList = $this->getRangedVersion($tokenList);
+
+        // If no tokens were found then we have either a simple version or a hyphenated range
+        if (!count($resultList)) {
+            for ($i = 0; $i < count($tokenList); $i++) {
+                $currentToken = $tokenList[$i];
+
+                // Special handling for dash separator - may be label or version range
+                if (Token::DASH_SEPARATOR === $currentToken->getType()) {
+
+                    // Peek ahead - if not a label then we're dealing with the first part of a hyphenated range
+                    if ($i + 1 < count($tokenList) && Token::LABEL_STRING !== $tokenList[$i + 1]->getType()) {
+
+                        $resultList[] = new GreaterOrEqualTo();
+
+                        // TODO: Check for final wildcard...
+                        $resultList[] = $this->getVersionFromTokens($versionTokenList, $labelTokenList);
+                        $inRange = true;
+                        $versionTokenList = array();
+                        $labelTokenList = array();
+
+                    } else {
+                        $inLabel = true;
+                    }
+
+                // Otherwise accumulate version tokens
+                } else {
+                    if (!$inLabel) {
+                        $versionTokenList[] = $currentToken;
+                    } else {
+                        $labelTokenList[] = $currentToken;
+                    }
+                }
+            }
+        }
+
+        if ($inRange) {
+            $resultList[] = new LessThan();
+        }
+
+        if (count($versionTokenList)) {
+
+            if (Token::WILDCARD_DIGITS === $versionTokenList[count($versionTokenList) - 1]->getType()) {
+                $resultList = array_merge(
+                    $resultList,
+                    $this->getWildcardVersionFromTokens($versionTokenList)
+                );
+            } else {
+                $resultList[] = $this->getVersionFromTokens($versionTokenList, $labelTokenList);
+            }
+
+        }
+
+        return $resultList;
+    }
+
+    /**
+     * @todo Return VersionRange instances?
+     *
+     * @param Token[] $tokenList
+     *
+     * @return array of Versions and comparators
+     */
+    private function getRangedVersion(array $tokenList)
+    {
+        $resultList = array();
+
+        // Tilde range
+        if (Token::TILDE_RANGE === $tokenList[0]->getType()) {
+            $resultList = $this->getTildeVersionFromTokens(
+                array_slice($tokenList, 1)
+            );
+
+        // Caret range
+        } elseif (Token::CARET_RANGE === $tokenList[0]->getType()) {
+            $resultList = $this->getCaretVersionFromTokens(
+                array_slice($tokenList, 1)
+            );
+
+        // Any comparator
+        } elseif (!is_null($this->getComparatorByTokenType($tokenList[0]))) {
+            $resultList[] = $this->getComparatorByTokenType($tokenList[0]);
+            $resultList[] = $this->getVersionFromTokens(
+                array_slice($tokenList, 1)
+            );
+        }
+
+        return $resultList;
+    }
+
+    /**
+     * Splits the array of tokens into smaller arrays, each one containing the tokens for a single version constraint.
+     *
+     * @param Token[] $tokenList
+     *
+     * @return Token[][] $tokenList
+     */
+    public function clusterTokens(array $tokenList)
+    {
+        $tokenClusterList = array();
+
+        // Stores tokens not yet parcelled out
+        $tokenAccumulator = array();
+
+        $addClusteredTokens = function($accumulatedTokenList) use (&$tokenClusterList) {
+            if (count($accumulatedTokenList)) {
+                $tokenClusterList[] = $accumulatedTokenList;
+            }
+        };
 
         for ($i = 0; $i < count($tokenList); $i++) {
             $currentToken = $tokenList[$i];
 
             switch (true) {
 
-                // Beginning of version component
-                case Token::DIGITS === $currentToken->getType():
-
-                    $versionTokenList = $this->getMatchingTokens(
-                        array_slice($tokenList, $i),
-                        array(
-                            Token::DOT_SEPARATOR,
-                            Token::DIGITS,
-                            Token::WILDCARD_DIGITS
-                        )
-                    );
-
-                    if (!$this->validVersionTokens($versionTokenList)) {
-                        throw new \RuntimeException('Invalid version string');
-                    }
-
-                    // Skip the number of tokens returned
-                    $i += count($versionTokenList);
-
-                    // Handle wildcard version
-                    if (Token::WILDCARD_DIGITS === $versionTokenList[count($versionTokenList) - 1]->getType()) {
-
-                        $valueTypeList = array_merge(
-                            $valueTypeList,
-                            $this->getWildcardVersionFromTokens($versionTokenList)
-                        );
-
-                    // Otherwise
-                    } else {
-
-                        // Now look for range or label separator
-                        if ($i < count($tokenList) && Token::DASH_SEPARATOR === $tokenList[$i]->getType()) {
-
-                            // Attempt to get a second token list
-                            $secondVersionTokenList = $this->getMatchingTokens(
-                                array_slice($tokenList, $i + 1),
-                                array(
-                                    Token::DOT_SEPARATOR,
-                                    Token::DIGITS
-                                )
-                            );
-
-                            // If tokens are returned then it's a range separator
-                            if (count($secondVersionTokenList)) {
-                                $valueTypeList[] = new GreaterOrEqualTo();
-                                $valueTypeList[] = $this->getVersionFromTokens($versionTokenList);
-                                $valueTypeList[] = new LessOrEqualTo();
-                                $valueTypeList[] = $this->getVersionFromTokens($secondVersionTokenList);
-
-                                // Skip the number of tokens returned
-                                $i += count($secondVersionTokenList) + 1;
-
-                            // If no tokens are returned then it's a label separator
-                            } else {
-                                // Get label token list
-                                $labelTokenList = $this->getMatchingTokens(
-                                    array_slice($tokenList, $i + 1),
-                                    array(
-                                        Token::DOT_SEPARATOR,
-                                        Token::DIGITS,
-                                        Token::LABEL_STRING
-                                    )
-                                );
-
-
-                                $valueTypeList[] = $this->getVersionFromTokens($versionTokenList, $labelTokenList);
-
-                                // Skip the number of tokens returned
-                                $i += count($labelTokenList) + 1;
-
-                                // TODO: Handle build metadata
-                            }
-
-                        // Simple version number
-                        } else {
-                            $valueTypeList[] = $this->getVersionFromTokens($versionTokenList);
-                        }
-                    }
+                // Terminating digit wildcard
+                case Token::WILDCARD_DIGITS === $currentToken->getType():
+                    $tokenAccumulator[] = $currentToken;
+                    $addClusteredTokens($tokenAccumulator);
+                    $tokenAccumulator = array();
                     break;
 
-                // Is comparator
+                // Beginning caret, tilde or comparator
+                case in_array($currentToken->getType(), array(Token::TILDE_RANGE, Token::CARET_RANGE)):
                 case !is_null($this->getComparatorByTokenType($currentToken)):
-
-                    $versionTokenList = $this->getMatchingTokens(
-                        array_slice($tokenList, $i + 1),
-                        array(
-                            Token::DOT_SEPARATOR,
-                            Token::DIGITS
-                        )
-                    );
-
-                    if (!$this->validVersionTokens($versionTokenList)) {
-                        throw new \RuntimeException('Invalid version string');
-                    }
-
-                    $valueTypeList[] = $this->getComparatorByTokenType($currentToken);
-                    $valueTypeList[] = $this->getVersionFromTokens($versionTokenList);
-
-                    // Skip the number of version tokens returned
-                    $i += count($versionTokenList); // TODO: +1 ?
+                    $addClusteredTokens($tokenAccumulator);
+                    $tokenAccumulator = array();
+                    $tokenAccumulator[] = $currentToken;
                     break;
 
-                // Beginning of tilde range
-                case Token::TILDE_RANGE === $currentToken->getType():
-
-                    $versionTokenList = $this->getMatchingTokens(
-                        array_slice($tokenList, $i + 1),
-                        array(
-                            Token::DOT_SEPARATOR,
-                            Token::DIGITS
-                        )
-                    );
-
-                    if (!$this->validVersionTokens($versionTokenList)) {
-                        throw new \RuntimeException('Invalid version string');
-                    }
-
-                    $valueTypeList = array_merge(
-                        $valueTypeList,
-                        $this->getTildeVersionFromTokens($versionTokenList)
-                    );
-
-                    // Skip the number of version tokens returned
-                    $i += count($versionTokenList); // TODO: +1 ?
+                // Any other case simply accumulate the token
+                default:
+                    $tokenAccumulator[] = $currentToken;
                     break;
 
-                // Beginning of caret range
-                case Token::CARET_RANGE === $currentToken->getType():
-
-                    $versionTokenList = $this->getMatchingTokens(
-                        array_slice($tokenList, $i + 1),
-                        array(
-                            Token::DOT_SEPARATOR,
-                            Token::DIGITS
-                        )
-                    );
-
-                    $valueTypeList = array_merge(
-                        $valueTypeList,
-                        $this->getCaretVersionFromTokens($versionTokenList)
-                    );
-
-                    // Skip the number of version tokens returned
-                    $i += count($versionTokenList); // TODO: +1 ?
-                    break;
+                // TODO: OR & AND
             }
         }
 
-       return $valueTypeList;
-    }
+        // Add any remaining tokens
+        $addClusteredTokens($tokenAccumulator);
 
-    /**
-     * Get an array of tokens matching the provided list.
-     *
-     * @param Token[] $tokenList
-     * @param string[] $tokensToMatch
-     *
-     * @return Token[]
-     */
-    private function getMatchingTokens(array $tokenList, array $tokensToMatch)
-    {
-        $matchingTokenList = array();
-
-        foreach ($tokenList as $token) {
-            if (in_array($token->getType(), $tokensToMatch)) {
-                $matchingTokenList[] = $token;
-            } else {
-                break;
-            }
-        }
-
-        return $matchingTokenList;
-    }
-
-    /**
-     * Returns true version tokens are in a valid configuration.
-     *
-     * @param Token[] $tokenList
-     *
-     * @return bool
-     */
-    private function validVersionTokens(array $tokenList)
-    {
-        $valid = true;
-
-        // Odd numbers only, token list must be less no greater than 5 (3 digit tokens separated by 2 dots)
-        if (0 !== (count($tokenList) % 2) && count($tokenList) <= 5) {
-            $lastToken = Token::DOT_SEPARATOR;
-            for ($i = 0; $i < count($tokenList); $i++) {
-
-                if (!$this->validSubsequentVersionToken($lastToken, $tokenList[$i]->getType())) {
-                    $valid = false;
-                    break;
-                }
-
-                $lastToken = $tokenList[$i]->getType();
-            }
-        } else {
-            $valid = false;
-        }
-
-        return $valid;
-    }
-
-    /**
-     * Returns true if the current token is allowed following the last token.
-     *
-     * @param string $lastToken
-     * @param string $currentToken
-     *
-     * @return bool
-     */
-    private function validSubsequentVersionToken($lastToken, $currentToken)
-    {
-        $digitTokenList = array(
-            Token::DIGITS,
-            Token::WILDCARD_DIGITS
-        );
-
-        return (Token::DOT_SEPARATOR === $lastToken && in_array($currentToken, $digitTokenList))
-            || (in_array($lastToken, $digitTokenList) && Token::DOT_SEPARATOR === $currentToken);
+        return $tokenClusterList;
     }
 
     /**
