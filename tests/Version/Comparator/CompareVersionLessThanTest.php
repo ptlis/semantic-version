@@ -87,10 +87,6 @@ class CompareVersionLessThanTest extends \PHPUnit_Framework_TestCase
                 new Version(1, 0, 1)
             ),
             array(
-                new Version(1, 0, 1, new LabelAbsent()),
-                new Version(1, 0, 1, new LabelDev('flibble'))
-            ),
-            array(
                 new Version(1, 0, 1, new LabelDev('flibble')),
                 new Version(1, 0, 1, new LabelAlpha())
             ),
@@ -105,6 +101,10 @@ class CompareVersionLessThanTest extends \PHPUnit_Framework_TestCase
             array(
                 new Version(1, 0, 1, new LabelRc(2)),
                 new Version(1, 0, 1, new LabelRc(4))
+            ),
+            array(
+                new Version(1, 0, 1, new LabelRc(4)),
+                new Version(1, 0, 1, new LabelAbsent())
             )
         );
     }
@@ -137,10 +137,6 @@ class CompareVersionLessThanTest extends \PHPUnit_Framework_TestCase
                 new Version(1, 0, 1)
             ),
             array(
-                new Version(1, 0, 1, new LabelDev('flibble')),
-                new Version(1, 0, 1, new LabelAbsent())
-            ),
-            array(
                 new Version(1, 0, 1, new LabelAlpha()),
                 new Version(1, 0, 1, new LabelDev('flibble'))
             ),
@@ -162,6 +158,10 @@ class CompareVersionLessThanTest extends \PHPUnit_Framework_TestCase
             ),
             array(
                 new Version(1, 0, 1, new LabelRc(5)),
+                new Version(1, 0, 1, new LabelRc(5))
+            ),
+            array(
+                new Version(1, 0, 1, new LabelAbsent()),
                 new Version(1, 0, 1, new LabelRc(5))
             )
         );

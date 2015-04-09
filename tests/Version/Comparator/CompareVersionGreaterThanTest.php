@@ -87,10 +87,6 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
                 new Version(1, 0, 0)
             ),
             array(
-                new Version(1, 0, 0, new LabelDev('test')),
-                new Version(1, 0, 0, new LabelAbsent())
-            ),
-            array(
                 new Version(1, 0, 0, new LabelAlpha()),
                 new Version(1, 0, 0, new LabelDev('test'))
             ),
@@ -104,6 +100,10 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
             ),
             array(
                 new Version(1, 0, 0, new LabelRc(2)),
+                new Version(1, 0, 0, new LabelRc())
+            ),
+            array(
+                new Version(1, 0, 0, new LabelAbsent()),
                 new Version(1, 0, 0, new LabelRc())
             )
         );
@@ -137,10 +137,6 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
                 new Version(1, 0, 1)
             ),
             array(
-                new Version(1, 0, 0, new LabelAbsent()),
-                new Version(1, 0, 0, new LabelDev('test'))
-            ),
-            array(
                 new Version(1, 0, 0, new LabelDev('test')),
                 new Version(1, 0, 0, new LabelAlpha())
             ),
@@ -164,6 +160,10 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
                 new Version(1, 0, 0, new LabelRc(2)),
                 new Version(1, 0, 0, new LabelRc(2))
             ),
+            array(
+                new Version(1, 0, 0, new LabelRc(2)),
+                new Version(1, 0, 0, new LabelAbsent())
+            )
         );
     }
 }
