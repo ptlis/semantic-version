@@ -25,28 +25,39 @@ class Label implements LabelInterface
     private $precedence;
 
     /**
-     * @var string
-     */
-    private $name;
-
-    /**
      * @var int|null
      */
     private $version;
+
+    /**
+     * @var string
+     */
+    private $name;
 
 
     /**
      * Constructor.
      *
      * @param int $precedence
-     * @param string $name
      * @param int|null $version
+     * @param string $name
      */
-    public function __construct($precedence, $name = '', $version = null)
+    public function __construct($precedence, $version = null, $name = '')
     {
+        $precedenceToNameMap = array(
+            self::PRECEDENCE_ALPHA => 'alpha',
+            self::PRECEDENCE_BETA => 'beta',
+            self::PRECEDENCE_RC => 'rc'
+        );
+
         $this->precedence = $precedence;
-        $this->name = $name;
         $this->version = $version;
+
+        if (array_key_exists($precedence, $precedenceToNameMap)) {
+            $this->name = $precedenceToNameMap[$precedence];
+        } else {
+            $this->name = $name;
+        }
     }
 
     /**
@@ -62,7 +73,7 @@ class Label implements LabelInterface
      */
     public function getName()
     {
-        return $this->name;
+        return strval($this->name);
     }
 
     /**

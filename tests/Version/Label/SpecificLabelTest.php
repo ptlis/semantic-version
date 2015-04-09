@@ -34,7 +34,7 @@ class SpecificLabelTest extends \PHPUnit_Framework_TestCase
 
     public function testDev()
     {
-        $label = new Label(Label::PRECEDENCE_DEV, 'bob');
+        $label = new Label(Label::PRECEDENCE_DEV, null, 'bob');
 
         $this->assertEquals(
             strval($label),
@@ -49,7 +49,7 @@ class SpecificLabelTest extends \PHPUnit_Framework_TestCase
 
     public function testDevWithVersion()
     {
-        $label = new Label(Label::PRECEDENCE_DEV, 'bob', 3);
+        $label = new Label(Label::PRECEDENCE_DEV, 3, 'bob');
 
         $this->assertEquals(
             strval($label),
@@ -59,7 +59,7 @@ class SpecificLabelTest extends \PHPUnit_Framework_TestCase
 
     public function testAlpha()
     {
-        $label = new Label(Label::PRECEDENCE_ALPHA, 'alpha');
+        $label = new Label(Label::PRECEDENCE_ALPHA);
 
         $this->assertEquals(
             strval($label),
@@ -74,7 +74,7 @@ class SpecificLabelTest extends \PHPUnit_Framework_TestCase
 
     public function testAlphaWithVersion()
     {
-        $label = new Label(Label::PRECEDENCE_ALPHA, 'alpha', 5);
+        $label = new Label(Label::PRECEDENCE_ALPHA, 5);
 
         $this->assertEquals(
             strval($label),
@@ -84,7 +84,7 @@ class SpecificLabelTest extends \PHPUnit_Framework_TestCase
 
     public function testBeta()
     {
-        $label = new Label(Label::PRECEDENCE_BETA, 'beta');
+        $label = new Label(Label::PRECEDENCE_BETA);
 
         $this->assertEquals(
             strval($label),
@@ -99,7 +99,7 @@ class SpecificLabelTest extends \PHPUnit_Framework_TestCase
 
     public function testBetaWithVersion()
     {
-        $label = new Label(Label::PRECEDENCE_BETA, 'beta', 2);
+        $label = new Label(Label::PRECEDENCE_BETA, 2);
 
         $this->assertEquals(
             strval($label),
@@ -109,7 +109,7 @@ class SpecificLabelTest extends \PHPUnit_Framework_TestCase
 
     public function testRc()
     {
-        $label = new Label(Label::PRECEDENCE_RC, 'rc');
+        $label = new Label(Label::PRECEDENCE_RC);
 
         $this->assertEquals(
             strval($label),
@@ -124,7 +124,7 @@ class SpecificLabelTest extends \PHPUnit_Framework_TestCase
 
     public function testRcWithVersion()
     {
-        $label = new Label(Label::PRECEDENCE_RC, 'rc', 2);
+        $label = new Label(Label::PRECEDENCE_RC, 2);
 
         $this->assertEquals(
             strval($label),

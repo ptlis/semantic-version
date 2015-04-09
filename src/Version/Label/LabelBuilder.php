@@ -90,11 +90,11 @@ class LabelBuilder
 
         // Alpha, Beta & RC standard labels
         } elseif (array_key_exists($this->name, $labelMap)) {
-            $label = new Label($labelMap[$this->name], $this->name, $this->version);
+            $label = new Label($labelMap[$this->name], $this->version);
 
         // Anything else is a miscellaneous 'dev' label
         } else {
-            $label = new Label(Label::PRECEDENCE_DEV, $this->name, $this->version);
+            $label = new Label(Label::PRECEDENCE_DEV, $this->version, $this->name);
         }
 
         return $label;

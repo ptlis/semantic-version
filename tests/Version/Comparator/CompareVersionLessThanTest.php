@@ -83,23 +83,23 @@ class CompareVersionLessThanTest extends \PHPUnit_Framework_TestCase
                 new Version(1, 0, 1)
             ),
             array(
-                new Version(1, 0, 1, new Label(Label::PRECEDENCE_DEV, 'flibble')),
-                new Version(1, 0, 1, new Label(Label::PRECEDENCE_ALPHA, 'alpha'))
+                new Version(1, 0, 1, new Label(Label::PRECEDENCE_DEV, null, 'flibble')),
+                new Version(1, 0, 1, new Label(Label::PRECEDENCE_ALPHA))
             ),
             array(
-                new Version(1, 0, 1, new Label(Label::PRECEDENCE_ALPHA, 'alpha')),
-                new Version(1, 0, 1, new Label(Label::PRECEDENCE_BETA, 'beta'))
+                new Version(1, 0, 1, new Label(Label::PRECEDENCE_ALPHA)),
+                new Version(1, 0, 1, new Label(Label::PRECEDENCE_BETA))
             ),
             array(
-                new Version(1, 0, 1, new Label(Label::PRECEDENCE_BETA, 'beta')),
-                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC, 'rc'))
+                new Version(1, 0, 1, new Label(Label::PRECEDENCE_BETA)),
+                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC))
             ),
             array(
-                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC, 'rc', 2)),
-                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC, 'rc', 4))
+                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC, 2)),
+                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC, 4))
             ),
             array(
-                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC, 'rc', 4)),
+                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC, 4)),
                 new Version(1, 0, 1, new Label(Label::PRECEDENCE_ABSENT))
             )
         );
@@ -133,32 +133,32 @@ class CompareVersionLessThanTest extends \PHPUnit_Framework_TestCase
                 new Version(1, 0, 1)
             ),
             array(
-                new Version(1, 0, 1, new Label(Label::PRECEDENCE_ALPHA, 'alpha')),
-                new Version(1, 0, 1, new Label(Label::PRECEDENCE_DEV, 'flibble'))
+                new Version(1, 0, 1, new Label(Label::PRECEDENCE_ALPHA)),
+                new Version(1, 0, 1, new Label(Label::PRECEDENCE_DEV, null, 'flibble'))
             ),
             array(
-                new Version(1, 0, 1, new Label(Label::PRECEDENCE_BETA, 'beta')),
-                new Version(1, 0, 1, new Label(Label::PRECEDENCE_ALPHA, 'alpha'))
+                new Version(1, 0, 1, new Label(Label::PRECEDENCE_BETA)),
+                new Version(1, 0, 1, new Label(Label::PRECEDENCE_ALPHA))
             ),
             array(
-                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC, 'rc')),
-                new Version(1, 0, 1, new Label(Label::PRECEDENCE_BETA, 'beta'))
+                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC)),
+                new Version(1, 0, 1, new Label(Label::PRECEDENCE_BETA))
             ),
             array(
-                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC, 'rc')),
-                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC, 'rc'))
+                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC)),
+                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC))
             ),
             array(
-                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC, 'rc', 4)),
-                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC, 'rc', 2))
+                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC, 4)),
+                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC, 2))
             ),
             array(
-                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC, 'rc', 5)),
-                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC, 'rc', 5))
+                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC, 5)),
+                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC, 5))
             ),
             array(
                 new Version(1, 0, 1, new Label(Label::PRECEDENCE_ABSENT)),
-                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC, 'rc', 5))
+                new Version(1, 0, 1, new Label(Label::PRECEDENCE_RC, 5))
             )
         );
     }

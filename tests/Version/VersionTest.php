@@ -24,7 +24,7 @@ class VersionTest extends \PHPUnit_Framework_TestCase
             1,
             0,
             5,
-            new Label(Label::PRECEDENCE_ALPHA, 'alpha', 1)
+            new Label(Label::PRECEDENCE_ALPHA, 1)
         );
 
         $this->assertEquals(
@@ -43,7 +43,7 @@ class VersionTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals(
-            new Label(Label::PRECEDENCE_ALPHA, 'alpha', 1),
+            new Label(Label::PRECEDENCE_ALPHA, 1),
             $version->getLabel()
         );
 

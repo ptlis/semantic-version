@@ -347,7 +347,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DIGITS, '7')
                 ),
                 array(
-                    new Version(1, 8, 3, new Label(Label::PRECEDENCE_ALPHA, 'alpha', 7)),
+                    new Version(1, 8, 3, new Label(Label::PRECEDENCE_ALPHA, 7)),
                 )
             )
         );

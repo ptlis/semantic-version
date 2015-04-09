@@ -83,24 +83,24 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
                 new Version(1, 0, 0)
             ),
             array(
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha')),
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_DEV, 'test'))
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA)),
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_DEV, null, 'test'))
             ),
             array(
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_BETA, 'beta')),
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha'))
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_BETA)),
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA))
             ),
             array(
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC, 'rc')),
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_BETA, 'beta'))
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC)),
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_BETA))
             ),
             array(
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC, 'rc', 2)),
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC, 'rc'))
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC, 2)),
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC))
             ),
             array(
                 new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT)),
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC, 'rc'))
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC))
             )
         );
     }
@@ -133,31 +133,31 @@ class CompareVersionGreaterThanTest extends \PHPUnit_Framework_TestCase
                 new Version(1, 0, 1)
             ),
             array(
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_DEV, 'test')),
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha'))
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_DEV, null, 'test')),
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA))
             ),
             array(
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha')),
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_BETA, 'beta'))
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA)),
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_BETA))
             ),
             array(
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_BETA, 'beta')),
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC, 'rc'))
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_BETA)),
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC))
             ),
             array(
                 new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT)),
                 new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
             ),
             array(
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC, 'rc')),
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC, 'rc', 2))
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC)),
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC, 2))
             ),
             array(
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC, 'rc', 2)),
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC, 'rc', 2))
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC, 2)),
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC, 2))
             ),
             array(
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC, 'rc', 2)),
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC, 2)),
                 new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
             )
         );

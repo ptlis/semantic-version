@@ -21,7 +21,6 @@ class LabelTest extends \PHPUnit_Framework_TestCase
     {
         $label = new Label(
             Label::PRECEDENCE_RC,
-            'rc',
             '1'
         );
 

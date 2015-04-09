@@ -75,12 +75,12 @@ class CompareVersionEqualToTest extends \PHPUnit_Framework_TestCase
                 new Version(1, 0, 0)
             ),
             array(
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha', 1)),
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha', 1))
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 1)),
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 1))
             ),
             array(
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha', 1)),
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha', 1))
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 1)),
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 1))
             )
         );
     }
@@ -102,15 +102,15 @@ class CompareVersionEqualToTest extends \PHPUnit_Framework_TestCase
             ),
             array(
                 new Version(1, 0, 0),
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha'))
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA))
             ),
             array(
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha')),
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha', 1))
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA)),
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 1))
             ),
             array(
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha')),
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_BETA, 'beta'))
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA)),
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_BETA))
             )
         );
     }
