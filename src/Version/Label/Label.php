@@ -12,6 +12,7 @@
  */
 
 namespace ptlis\SemanticVersion\Version\Label;
+use Symfony\Component\Yaml\Exception\RuntimeException;
 
 /**
  * Value types for labels in version numbers.
@@ -33,11 +34,6 @@ class Label implements LabelInterface
      */
     private $version;
 
-    /**
-     * @var string
-     */
-    private $buildMetadata;
-
 
     /**
      * Constructor.
@@ -45,14 +41,12 @@ class Label implements LabelInterface
      * @param int $precedence
      * @param string $name
      * @param int|null $version
-     * @param string $buildMetadata
      */
-    public function __construct($precedence, $name = '', $version = null, $buildMetadata = '')
+    public function __construct($precedence, $name = '', $version = null)
     {
         $this->precedence = $precedence;
         $this->name = $name;
         $this->version = $version;
-        $this->buildMetadata = $buildMetadata;
     }
 
     /**
@@ -82,24 +76,12 @@ class Label implements LabelInterface
     /**
      * {@inheritDoc}
      */
-    public function getBuildMetadata()
-    {
-        return $this->buildMetadata;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function __toString()
     {
         $string =  $this->getName();
 
         if ($this->getVersion() > 0) {
             $string .= '.' . $this->getVersion();
-        }
-
-        if (strlen($this->getBuildMetadata())) {
-            $string .= '+' . $this->getBuildMetadata();
         }
 
         return $string;

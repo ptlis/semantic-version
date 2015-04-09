@@ -28,24 +28,17 @@ class LabelBuilder
      */
     private $version;
 
-    /**
-     * @var string
-     */
-    private $buildMetadata;
-
 
     /**
      * Constructor.
      *
      * @param string $name
      * @param int|null $version
-     * @param string $buildMetadata
      */
-    public function __construct($name = '', $version = null, $buildMetadata = '')
+    public function __construct($name = '', $version = null)
     {
         $this->name = $name;
         $this->version = $version;
-        $this->buildMetadata = $buildMetadata;
     }
 
     /**
@@ -59,8 +52,7 @@ class LabelBuilder
     {
         return new LabelBuilder(
             $name,
-            $this->version,
-            $this->buildMetadata
+            $this->version
         );
     }
 
@@ -75,24 +67,7 @@ class LabelBuilder
     {
         return new LabelBuilder(
             $this->name,
-            $version,
-            $this->buildMetadata
-        );
-    }
-
-    /**
-     * Set build metadata.
-     *
-     * @param string $buildMetadata
-     *
-     * @return $this
-     */
-    public function setBuildMetadata($buildMetadata)
-    {
-        return new LabelBuilder(
-            $this->name,
-            $this->version,
-            $buildMetadata
+            $version
         );
     }
 
@@ -115,11 +90,11 @@ class LabelBuilder
 
         // Alpha, Beta & RC standard labels
         } elseif (array_key_exists($this->name, $labelMap)) {
-            $label = new Label($labelMap[$this->name], $this->name, $this->version, $this->buildMetadata);
+            $label = new Label($labelMap[$this->name], $this->name, $this->version);
 
         // Anything else is a miscellaneous 'dev' label
         } else {
-            $label = new Label(Label::PRECEDENCE_DEV, $this->name, $this->version, $this->buildMetadata);
+            $label = new Label(Label::PRECEDENCE_DEV, $this->name, $this->version);
         }
 
         return $label;

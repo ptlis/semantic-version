@@ -67,15 +67,6 @@ interface LabelInterface
     public function getVersion();
 
     /**
-     * Get the build metadata for the label.
-     *
-     * See Section 10 @ http://semver.org/ for details of what constitutes build metadata
-     *
-     * @return string
-     */
-    public function getBuildMetaData();
-
-    /**
      * Return a string representation of the label.
      *
      * @return string

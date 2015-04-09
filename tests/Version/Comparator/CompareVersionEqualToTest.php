@@ -79,8 +79,8 @@ class CompareVersionEqualToTest extends \PHPUnit_Framework_TestCase
                 new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha', 1))
             ),
             array(
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha', 1, 'r501')),
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha', 1, 'r501'))
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha', 1)),
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha', 1))
             )
         );
     }
@@ -111,10 +111,6 @@ class CompareVersionEqualToTest extends \PHPUnit_Framework_TestCase
             array(
                 new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha')),
                 new Version(1, 0, 0, new Label(Label::PRECEDENCE_BETA, 'beta'))
-            ),
-            array(
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha', 1, 'bob')),
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha', 1, 'wibble'))
             )
         );
     }

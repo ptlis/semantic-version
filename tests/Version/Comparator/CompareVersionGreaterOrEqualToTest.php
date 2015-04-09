@@ -154,10 +154,10 @@ class CompareVersionGreaterOrEqualToTest extends \PHPUnit_Framework_TestCase
             ),
             array(
                 new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC, 'rc', 'rc')),
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC, 'rc', 'rc', 2))
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC, 'rc', 2))
             ),
             array(
-                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC, 'rc', 'rc', 2)),
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC, 'rc', 2)),
                 new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
             ),
         );

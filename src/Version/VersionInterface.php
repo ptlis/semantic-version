@@ -17,6 +17,8 @@ use ptlis\SemanticVersion\Version\Label\LabelInterface;
 
 /**
  * Interface class for version number value types.
+ *
+ * @todo add method to get build metadata.
  */
 interface VersionInterface extends SatisfiedByVersionInterface
 {
