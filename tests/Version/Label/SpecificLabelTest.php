@@ -13,18 +13,13 @@
 
 namespace ptlis\SemanticVersion\Test\Version\Label;
 
-use ptlis\SemanticVersion\Version\Label\LabelAbsent;
-use ptlis\SemanticVersion\Version\Label\LabelAlpha;
-use ptlis\SemanticVersion\Version\Label\LabelBeta;
-use ptlis\SemanticVersion\Version\Label\LabelDev;
-use ptlis\SemanticVersion\Version\Label\LabelInterface;
-use ptlis\SemanticVersion\Version\Label\LabelRc;
+use ptlis\SemanticVersion\Version\Label\Label;
 
 class SpecificLabelTest extends \PHPUnit_Framework_TestCase
 {
     public function testAbsent()
     {
-        $label = new LabelAbsent();
+        $label = new Label(Label::PRECEDENCE_ABSENT);
 
         $this->assertEquals(
             strval($label),
@@ -32,14 +27,14 @@ class SpecificLabelTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals(
-            LabelInterface::PRECEDENCE_ABSENT,
+            Label::PRECEDENCE_ABSENT,
             $label->getPrecedence()
         );
     }
 
     public function testDev()
     {
-        $label = new LabelDev('bob');
+        $label = new Label(Label::PRECEDENCE_DEV, 'bob');
 
         $this->assertEquals(
             strval($label),
@@ -47,14 +42,14 @@ class SpecificLabelTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals(
-            LabelInterface::PRECEDENCE_DEV,
+            Label::PRECEDENCE_DEV,
             $label->getPrecedence()
         );
     }
 
     public function testDevWithVersion()
     {
-        $label = new LabelDev('bob', 3);
+        $label = new Label(Label::PRECEDENCE_DEV, 'bob', 3);
 
         $this->assertEquals(
             strval($label),
@@ -64,7 +59,7 @@ class SpecificLabelTest extends \PHPUnit_Framework_TestCase
 
     public function testAlpha()
     {
-        $label = new LabelAlpha();
+        $label = new Label(Label::PRECEDENCE_ALPHA, 'alpha');
 
         $this->assertEquals(
             strval($label),
@@ -72,14 +67,14 @@ class SpecificLabelTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals(
-            LabelInterface::PRECEDENCE_ALPHA,
+            Label::PRECEDENCE_ALPHA,
             $label->getPrecedence()
         );
     }
 
     public function testAlphaWithVersion()
     {
-        $label = new LabelAlpha(5);
+        $label = new Label(Label::PRECEDENCE_ALPHA, 'alpha', 5);
 
         $this->assertEquals(
             strval($label),
@@ -89,7 +84,7 @@ class SpecificLabelTest extends \PHPUnit_Framework_TestCase
 
     public function testBeta()
     {
-        $label = new LabelBeta();
+        $label = new Label(Label::PRECEDENCE_BETA, 'beta');
 
         $this->assertEquals(
             strval($label),
@@ -97,14 +92,14 @@ class SpecificLabelTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals(
-            LabelInterface::PRECEDENCE_BETA,
+            Label::PRECEDENCE_BETA,
             $label->getPrecedence()
         );
     }
 
     public function testBetaWithVersion()
     {
-        $label = new LabelBeta(2);
+        $label = new Label(Label::PRECEDENCE_BETA, 'beta', 2);
 
         $this->assertEquals(
             strval($label),
@@ -114,7 +109,7 @@ class SpecificLabelTest extends \PHPUnit_Framework_TestCase
 
     public function testRc()
     {
-        $label = new LabelRc();
+        $label = new Label(Label::PRECEDENCE_RC, 'rc');
 
         $this->assertEquals(
             strval($label),
@@ -122,14 +117,14 @@ class SpecificLabelTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals(
-            LabelInterface::PRECEDENCE_RC,
+            Label::PRECEDENCE_RC,
             $label->getPrecedence()
         );
     }
 
     public function testRcWithVersion()
     {
-        $label = new LabelRc(2);
+        $label = new Label(Label::PRECEDENCE_RC, 'rc', 2);
 
         $this->assertEquals(
             strval($label),

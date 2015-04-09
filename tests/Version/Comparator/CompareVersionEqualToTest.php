@@ -14,8 +14,7 @@
 namespace ptlis\SemanticVersion\Test\Version\Comparator;
 
 use ptlis\SemanticVersion\Version\Comparator\EqualTo;
-use ptlis\SemanticVersion\Version\Label\LabelAlpha;
-use ptlis\SemanticVersion\Version\Label\LabelBeta;
+use ptlis\SemanticVersion\Version\Label\Label;
 use ptlis\SemanticVersion\Version\Version;
 
 /**
@@ -76,12 +75,12 @@ class CompareVersionEqualToTest extends \PHPUnit_Framework_TestCase
                 new Version(1, 0, 0)
             ),
             array(
-                new Version(1, 0, 0, new LabelAlpha(1)),
-                new Version(1, 0, 0, new LabelAlpha(1))
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha', 1)),
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha', 1))
             ),
             array(
-                new Version(1, 0, 0, new LabelAlpha(1, 'r501')),
-                new Version(1, 0, 0, new LabelAlpha(1, 'r501'))
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha', 1, 'r501')),
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha', 1, 'r501'))
             )
         );
     }
@@ -103,19 +102,19 @@ class CompareVersionEqualToTest extends \PHPUnit_Framework_TestCase
             ),
             array(
                 new Version(1, 0, 0),
-                new Version(1, 0, 0, new LabelAlpha())
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha'))
             ),
             array(
-                new Version(1, 0, 0, new LabelAlpha()),
-                new Version(1, 0, 0, new LabelAlpha(1))
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha')),
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha', 1))
             ),
             array(
-                new Version(1, 0, 0, new LabelAlpha()),
-                new Version(1, 0, 0, new LabelBeta())
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha')),
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_BETA, 'beta'))
             ),
             array(
-                new Version(1, 0, 0, new LabelAlpha(1, 'bob')),
-                new Version(1, 0, 0, new LabelAlpha(1, 'wibble'))
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha', 1, 'bob')),
+                new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 'alpha', 1, 'wibble'))
             )
         );
     }

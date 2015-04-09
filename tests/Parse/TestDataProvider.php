@@ -17,11 +17,8 @@ use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Version\Comparator\EqualTo;
 use ptlis\SemanticVersion\Version\Comparator\GreaterOrEqualTo;
 use ptlis\SemanticVersion\Version\Comparator\GreaterThan;
-use ptlis\SemanticVersion\Version\Comparator\LessOrEqualTo;
 use ptlis\SemanticVersion\Version\Comparator\LessThan;
 use ptlis\SemanticVersion\Version\Label\Label;
-use ptlis\SemanticVersion\Version\Label\LabelAbsent;
-use ptlis\SemanticVersion\Version\Label\LabelAlpha;
 use ptlis\SemanticVersion\Version\Version;
 
 class TestDataProvider extends \PHPUnit_Framework_TestCase
@@ -41,7 +38,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DIGITS, '1')
                 ),
                 array(
-                    new Version(1, 0, 0, new LabelAbsent())
+                    new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                 )
             ),
             array(
@@ -50,7 +47,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DIGITS, '1')
                 ),
                 array(
-                    new Version(1, 0, 0, new LabelAbsent())
+                    new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                 )
             ),
             array(
@@ -61,7 +58,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DIGITS, '2')
                 ),
                 array(
-                    new Version(1, 2, 0, new LabelAbsent())
+                    new Version(1, 2, 0, new Label(Label::PRECEDENCE_ABSENT))
                 )
             ),
             array(
@@ -74,7 +71,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DIGITS, '1')
                 ),
                 array(
-                    new Version(1, 15, 1, new LabelAbsent())
+                    new Version(1, 15, 1, new Label(Label::PRECEDENCE_ABSENT))
                 )
             ),
             array(
@@ -350,7 +347,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DIGITS, '7')
                 ),
                 array(
-                    new Version(1, 8, 3, new LabelAlpha(7)),
+                    new Version(1, 8, 3, new Label(Label::PRECEDENCE_ALPHA, 'alpha', 7)),
                 )
             )
         );

@@ -103,28 +103,23 @@ class LabelBuilder
      */
     public function build()
     {
-        $label = null;
+        $labelMap = array(
+            'alpha' => Label::PRECEDENCE_ALPHA,
+            'beta' => Label::PRECEDENCE_BETA,
+            'rc' => Label::PRECEDENCE_RC
+        );
 
-        switch ($this->name) {
-            case '':
-                $label = new LabelAbsent();
-                break;
+        // No Label present
+        if (!strlen($this->name)) {
+            $label = new Label(Label::PRECEDENCE_ABSENT);
 
-            case 'alpha':
-                $label = new LabelAlpha($this->version, $this->buildMetadata);
-                break;
+        // Alpha, Beta & RC standard labels
+        } elseif (array_key_exists($this->name, $labelMap)) {
+            $label = new Label($labelMap[$this->name], $this->name, $this->version, $this->buildMetadata);
 
-            case 'beta':
-                $label = new LabelBeta($this->version, $this->buildMetadata);
-                break;
-
-            case 'rc':
-                $label = new LabelRc($this->version, $this->buildMetadata);
-                break;
-
-            default:
-                $label = new LabelDev($this->name, $this->version, $this->buildMetadata);
-                break;
+        // Anything else is a miscellaneous 'dev' label
+        } else {
+            $label = new Label(Label::PRECEDENCE_DEV, $this->name, $this->version, $this->buildMetadata);
         }
 
         return $label;
