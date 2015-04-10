@@ -22,6 +22,10 @@ use ptlis\SemanticVersion\Version\Comparator\LessThan;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 use ptlis\SemanticVersion\Version\Label\LabelInterface;
 use ptlis\SemanticVersion\Version\Version;
+use ptlis\SemanticVersion\Version\VersionInterface;
+use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
+use ptlis\SemanticVersion\VersionRange\LogicalAnd;
+use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 
 /**
  * Parser accepting array of tokens and returning an array of comparators & versions.
@@ -66,7 +70,48 @@ class VersionParser
             );
         }
 
-        return $resultList;
+        return $this->hydrateRanges($resultList);
+    }
+
+    /**
+     * Hydrate a version list from Version & Comparator instances.
+     *
+     * @param array $resultList
+     *
+     * @return VersionRangeInterface
+     */
+    private function hydrateRanges(array $resultList)
+    {
+        $range = null;
+
+        if (count($resultList) == 1) {
+            $range = new ComparatorVersion(new EqualTo(), $resultList[0]);
+
+        } elseif (count($resultList) >= 2) {
+            $comparator = $resultList[0];
+            $version = $resultList[1];
+
+            // Invalid version range
+            if (!($comparator instanceof ComparatorInterface) || !($version instanceof VersionInterface)) {
+                throw new \RuntimeException('Invalid version range');
+            }
+
+            $leftRange = new ComparatorVersion($comparator, $version);
+
+            // TODO: handle and/or
+
+            $continueList = array_slice($resultList, 2);
+            if (count($continueList)) {
+                $rightRange = $this->hydrateRanges($continueList);
+
+                $range = new LogicalAnd($leftRange, $rightRange);
+
+            } else {
+                $range = $leftRange;
+            }
+        }
+
+        return $range;
     }
 
     /**

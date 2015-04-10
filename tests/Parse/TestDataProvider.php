@@ -20,6 +20,8 @@ use ptlis\SemanticVersion\Version\Comparator\GreaterThan;
 use ptlis\SemanticVersion\Version\Comparator\LessThan;
 use ptlis\SemanticVersion\Version\Label\Label;
 use ptlis\SemanticVersion\Version\Version;
+use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
+use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 
 class TestDataProvider extends \PHPUnit_Framework_TestCase
 {
@@ -37,7 +39,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                 array(
                     new Token(Token::DIGITS, '1')
                 ),
-                array(
+                new ComparatorVersion(
+                    new EqualTo(),
                     new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                 )
             ),
@@ -46,7 +49,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                 array(
                     new Token(Token::DIGITS, '1')
                 ),
-                array(
+                new ComparatorVersion(
+                    new EqualTo(),
                     new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                 )
             ),
@@ -57,7 +61,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '2')
                 ),
-                array(
+                new ComparatorVersion(
+                    new EqualTo(),
                     new Version(1, 2, 0, new Label(Label::PRECEDENCE_ABSENT))
                 )
             ),
@@ -70,7 +75,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '1')
                 ),
-                array(
+                new ComparatorVersion(
+                    new EqualTo(),
                     new Version(1, 15, 1, new Label(Label::PRECEDENCE_ABSENT))
                 )
             ),
@@ -81,11 +87,15 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::WILDCARD_DIGITS, '*')
                 ),
-                array(
-                    new GreaterOrEqualTo(),
-                    new Version(1, 0, 0),
-                    new LessThan(),
-                    new Version(2, 0, 0)
+                new LogicalAnd(
+                    new ComparatorVersion(
+                        new GreaterOrEqualTo(),
+                        new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    ),
+                    new ComparatorVersion(
+                        new LessThan(),
+                        new Version(2, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    )
                 )
             ),
             array(
@@ -95,11 +105,15 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::WILDCARD_DIGITS, 'x')
                 ),
-                array(
-                    new GreaterOrEqualTo(),
-                    new Version(4, 0, 0),
-                    new LessThan(),
-                    new Version(5, 0, 0)
+                new LogicalAnd(
+                    new ComparatorVersion(
+                        new GreaterOrEqualTo(),
+                        new Version(4, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    ),
+                    new ComparatorVersion(
+                        new LessThan(),
+                        new Version(5, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    )
                 )
             ),
             array(
@@ -111,11 +125,15 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::WILDCARD_DIGITS, '*')
                 ),
-                array(
-                    new GreaterOrEqualTo(),
-                    new Version(1, 5, 0),
-                    new LessThan(),
-                    new Version(1, 6, 0)
+                new LogicalAnd(
+                    new ComparatorVersion(
+                        new GreaterOrEqualTo(),
+                        new Version(1, 5, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    ),
+                    new ComparatorVersion(
+                        new LessThan(),
+                        new Version(1, 6, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    )
                 )
             ),
             array(
@@ -127,11 +145,15 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::WILDCARD_DIGITS, 'x')
                 ),
-                array(
-                    new GreaterOrEqualTo(),
-                    new Version(1, 3, 0),
-                    new LessThan(),
-                    new Version(1, 4, 0)
+                new LogicalAnd(
+                    new ComparatorVersion(
+                        new GreaterOrEqualTo(),
+                        new Version(1, 3, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    ),
+                    new ComparatorVersion(
+                        new LessThan(),
+                        new Version(1, 4, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    )
                 )
             ),
             array(
@@ -143,9 +165,9 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '0')
                 ),
-                array(
+                new ComparatorVersion(
                     new GreaterThan(),
-                    new Version(2, 0)
+                    new Version(2, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                 )
             ),
             array(
@@ -159,9 +181,9 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '1')
                 ),
-                array(
+                new ComparatorVersion(
                     new GreaterOrEqualTo(),
-                    new Version(1, 2, 1)
+                    new Version(1, 2, 1, new Label(Label::PRECEDENCE_ABSENT))
                 )
             ),
             array(
@@ -175,9 +197,9 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '5')
                 ),
-                array(
+                new ComparatorVersion(
                     new LessThan(),
-                    new Version(4, 0, 5)
+                    new Version(4, 0, 5, new Label(Label::PRECEDENCE_ABSENT))
                 )
             ),
             array(
@@ -191,9 +213,9 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '1')
                 ),
-                array(
+                new ComparatorVersion(
                     new EqualTo(),
-                    new Version(1, 0, 1)
+                    new Version(1, 0, 1, new Label(Label::PRECEDENCE_ABSENT))
                 )
             ),
             array(
@@ -215,11 +237,15 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '0')
                 ),
-                array(
-                    new GreaterOrEqualTo(),
-                    new Version(1, 0, 1),
-                    new LessThan(),
-                    new Version(2, 0, 0),
+                new LogicalAnd(
+                    new ComparatorVersion(
+                        new GreaterOrEqualTo(),
+                        new Version(1, 0, 1, new Label(Label::PRECEDENCE_ABSENT))
+                    ),
+                    new ComparatorVersion(
+                        new LessThan(),
+                        new Version(2, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    )
                 )
             ),
             array(
@@ -230,11 +256,15 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '7')
                 ),
-                array(
-                    new GreaterOrEqualTo(),
-                    new Version(1, 7, 0),
-                    new LessThan(),
-                    new Version(2, 0, 0),
+                new LogicalAnd(
+                    new ComparatorVersion(
+                        new GreaterOrEqualTo(),
+                        new Version(1, 7, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    ),
+                    new ComparatorVersion(
+                        new LessThan(),
+                        new Version(2, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    )
                 )
             ),
             array(
@@ -247,11 +277,15 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '4'),
                 ),
-                array(
-                    new GreaterOrEqualTo(),
-                    new Version(1, 7, 4),
-                    new LessThan(),
-                    new Version(1, 8, 0),
+                new LogicalAnd(
+                    new ComparatorVersion(
+                        new GreaterOrEqualTo(),
+                        new Version(1, 7, 4, new Label(Label::PRECEDENCE_ABSENT))
+                    ),
+                    new ComparatorVersion(
+                        new LessThan(),
+                        new Version(1, 8, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    )
                 )
             ),
             array(
@@ -264,11 +298,15 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '0'),
                 ),
-                array(
-                    new GreaterOrEqualTo(),
-                    new Version(3, 1, 0),
-                    new LessThan(),
-                    new Version(4, 0, 0),
+                new LogicalAnd(
+                    new ComparatorVersion(
+                        new GreaterOrEqualTo(),
+                        new Version(3, 1, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    ),
+                    new ComparatorVersion(
+                        new LessThan(),
+                        new Version(4, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    )
                 )
             ),
             array(
@@ -288,11 +326,15 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '18')
                 ),
-                array(
-                    new GreaterOrEqualTo(),
-                    new Version(1, 0, 7),
-                    new LessThan(),
-                    new Version(3, 1, 18)
+                new LogicalAnd(
+                    new ComparatorVersion(
+                        new GreaterOrEqualTo(),
+                        new Version(1, 0, 7, new Label(Label::PRECEDENCE_ABSENT))
+                    ),
+                    new ComparatorVersion(
+                        new LessThan(),
+                        new Version(3, 1, 18, new Label(Label::PRECEDENCE_ABSENT))
+                    )
                 )
             ),
             array(
@@ -308,11 +350,15 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '0')
                 ),
-                array(
-                    new GreaterOrEqualTo(),
-                    new Version(1, 0, 0),
-                    new LessThan(),
-                    new Version(2, 1, 0)
+                new LogicalAnd(
+                    new ComparatorVersion(
+                        new GreaterOrEqualTo(),
+                        new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    ),
+                    new ComparatorVersion(
+                        new LessThan(),
+                        new Version(2, 1, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    )
                 )
             ),
             array(
@@ -324,11 +370,15 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
 
                     new Token(Token::DIGITS, '2'),
                 ),
-                array(
-                    new GreaterOrEqualTo(),
-                    new Version(1, 0, 0),
-                    new LessThan(),
-                    new Version(3, 0, 0)
+                new LogicalAnd(
+                    new ComparatorVersion(
+                        new GreaterOrEqualTo(),
+                        new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    ),
+                    new ComparatorVersion(
+                        new LessThan(),
+                        new Version(3, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    )
                 )
             ),
             array(
@@ -346,8 +396,9 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '7')
                 ),
-                array(
-                    new Version(1, 8, 3, new Label(Label::PRECEDENCE_ALPHA, 7)),
+                new ComparatorVersion(
+                    new EqualTo(),
+                    new Version(1, 8, 3, new Label(Label::PRECEDENCE_ALPHA, 7))
                 )
             )
         );
