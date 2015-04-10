@@ -11,7 +11,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Version;
+namespace ptlis\SemanticVersion\VersionRange;
+
+use ptlis\SemanticVersion\Version\SatisfiedByVersionInterface;
 
 /**
  * Interface class for version range value types.
