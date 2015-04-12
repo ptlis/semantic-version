@@ -55,7 +55,7 @@ class BuildRange
 
     /**
      * Accepts an array of ComparatorVersions & logical operators in reverse polish notation & returns a single
-     *  instance of a class implementig VersionRangeInterface.
+     *  instance of a class implementing VersionRangeInterface.
      *
      * @param array $resultList
      *

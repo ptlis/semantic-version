@@ -12,7 +12,6 @@
  */
 
 namespace ptlis\SemanticVersion\Version\Label;
-use Symfony\Component\Yaml\Exception\RuntimeException;
 
 /**
  * Value types for labels in version numbers.

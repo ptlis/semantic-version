@@ -182,7 +182,6 @@ class VersionParser
      */
     private function getUpperVersionForHyphenRange(array $tokenList, array $labelTokenList)
     {
-        $major = 0;
         $minor = 0;
         $patch = 0;
 
