@@ -82,6 +82,16 @@ class Token
      */
     const LESS_THAN_EQUAL = 'comparator-less-than-equal-to';
 
+    /**
+     * Logical and between two constraints.
+     */
+    const LOGICAL_AND = 'and';
+
+    /**
+     * Logical or between to constraints.
+     */
+    const LOGICAL_OR = 'or';
+
 
     /**
      * @var string

@@ -22,6 +22,7 @@ use ptlis\SemanticVersion\Version\Label\Label;
 use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\LogicalAnd;
+use ptlis\SemanticVersion\VersionRange\LogicalOr;
 
 class TestDataProvider extends \PHPUnit_Framework_TestCase
 {
@@ -78,6 +79,19 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                 new ComparatorVersion(
                     new EqualTo(),
                     new Version(1, 15, 1, new Label(Label::PRECEDENCE_ABSENT))
+                )
+            ),
+            array(
+                '> 5.4',
+                array(
+                    new Token(Token::GREATER_THAN, '>'),
+                    new Token(Token::DIGITS, '5'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '4')
+                ),
+                new ComparatorVersion(
+                    new GreaterThan(),
+                    new Version(5, 4, 0, new Label(Label::PRECEDENCE_ABSENT))
                 )
             ),
             array(
@@ -228,6 +242,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DIGITS, '0'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '1'),
+
+                    new Token(Token::LOGICAL_AND, ''),
 
                     new Token(Token::LESS_THAN, '<'),
 
@@ -399,6 +415,135 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                 new ComparatorVersion(
                     new EqualTo(),
                     new Version(1, 8, 3, new Label(Label::PRECEDENCE_ALPHA, 7))
+                )
+            ),
+            array(
+                '>=1.7.0 <1.9',
+                array(
+                    new Token(Token::GREATER_THAN_EQUAL, '>='),
+                    new Token(Token::DIGITS, '1'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '7'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '0'),
+
+                    new Token(Token::LOGICAL_AND, ''),
+
+                    new Token(Token::LESS_THAN, '<'),
+                    new Token(Token::DIGITS, '1'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '9')
+                ),
+                new LogicalAnd(
+                    new ComparatorVersion(
+                        new GreaterOrEqualTo(),
+                        new Version(1, 7, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    ),
+                    new ComparatorVersion(
+                        new LessThan(),
+                        new Version(1, 9, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    )
+                )
+            ),
+            array(
+                '>=1.7.0 && <1.9',
+                array(
+                    new Token(Token::GREATER_THAN_EQUAL, '>='),
+                    new Token(Token::DIGITS, '1'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '7'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '0'),
+
+                    new Token(Token::LOGICAL_AND, '&&'),
+
+                    new Token(Token::LESS_THAN, '<'),
+                    new Token(Token::DIGITS, '1'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '9')
+                ),
+                new LogicalAnd(
+                    new ComparatorVersion(
+                        new GreaterOrEqualTo(),
+                        new Version(1, 7, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    ),
+                    new ComparatorVersion(
+                        new LessThan(),
+                        new Version(1, 9, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    )
+                )
+            ),
+            array(
+                '1.7.6 || >1.9',
+                array(
+                    new Token(Token::DIGITS, '1'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '7'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '6'),
+
+                    new Token(Token::LOGICAL_OR, '||'),
+
+                    new Token(Token::GREATER_THAN, '>'),
+                    new Token(Token::DIGITS, '1'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '9')
+                ),
+                new LogicalOr(
+                    new ComparatorVersion(
+                        new EqualTo(),
+                        new Version(1, 7, 6, new Label(Label::PRECEDENCE_ABSENT))
+                    ),
+                    new ComparatorVersion(
+                        new GreaterThan(),
+                        new Version(1, 9, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    )
+                )
+            ),
+            array(
+                '>1.5 < 4 || >=5 <6',
+                array(
+                    new Token(Token::GREATER_THAN, '>'),
+                    new Token(Token::DIGITS, '1'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '5'),
+
+                    new Token(Token::LOGICAL_AND, ''),
+
+                    new Token(Token::LESS_THAN, '<'),
+                    new Token(Token::DIGITS, '4'),
+
+                    new Token(Token::LOGICAL_OR, '||'),
+
+                    new Token(Token::GREATER_THAN_EQUAL, '>='),
+                    new Token(Token::DIGITS, '5'),
+
+                    new Token(Token::LOGICAL_AND, ''),
+
+                    new Token(Token::LESS_THAN, '<'),
+                    new Token(Token::DIGITS, '6')
+                ),
+                new LogicalOr(
+                    new LogicalAnd(
+                        new ComparatorVersion(
+                            new GreaterThan(),
+                            new Version(1, 5, 0, new Label(Label::PRECEDENCE_ABSENT))
+                        ),
+                        new ComparatorVersion(
+                            new LessThan(),
+                            new Version(4, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
+                        )
+                    ),
+                    new LogicalAnd(
+                        new ComparatorVersion(
+                            new GreaterOrEqualTo(),
+                            new Version(5, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
+                        ),
+                        new ComparatorVersion(
+                            new LessThan(),
+                            new Version(6, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
+                        )
+                    )
                 )
             )
         );

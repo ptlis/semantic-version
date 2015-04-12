@@ -21,12 +21,15 @@ class VersionTokenizer
     /**
      * Accepts a version string & returns an array of tokenized values.
      *
+     * @todo Handle build metadata ('+' at end of version followed by [0-9a-z-]+
+     *
      * @param string $versionString
      *
      * @return string[]
      */
     function tokenize($versionString)
     {
+        /** @var Token[] $tokenList */
         $tokenList = array();
         $digitAccumulator = '';
         $stringAccumulator = '';
@@ -55,6 +58,12 @@ class VersionTokenizer
                     $this->conditionallyAddToken(Token::LABEL_STRING, $stringAccumulator, $tokenList);
 
                     $token = $this->getComparatorToken($i, $versionString);
+
+                    if (count($tokenList) && in_array($tokenList[count($tokenList) -1]->getType(), array(Token::DIGITS, Token::WILDCARD_DIGITS))) {
+
+                        $tokenList[] = new Token(Token::LOGICAL_AND, '');
+                    }
+
                     $tokenList[] = $token;
 
                     if (strlen($token->getValue()) > 1) {
@@ -67,6 +76,47 @@ class VersionTokenizer
                 case $this->isPrefixedV($i, $versionString):
                     // Do nothing
                     // TODO: Should we store this for correct reverse transformation?
+                    break;
+
+                // Spaces, pipes, ampersands and commas may contextually be logical AND/OR
+                case $this->possibleLogicalOperator($chr):
+
+                    // Handle preceding digits or labels
+                    $this->conditionallyAddToken(Token::DIGITS, $digitAccumulator, $tokenList);
+                    $this->conditionallyAddToken(Token::LABEL_STRING, $stringAccumulator, $tokenList);
+
+                    $operatorTokenList = array(
+                        Token::GREATER_THAN,
+                        Token::GREATER_THAN_EQUAL,
+                        Token::LESS_THAN,
+                        Token::LESS_THAN_EQUAL,
+                        Token::EQUAL_TO
+                    );
+
+                    // No previous tokens, or previous token was not a comparator
+                    if (
+                        !count($tokenList)
+                        || !in_array($tokenList[count($tokenList)-1]->getType(), $operatorTokenList)
+                    ) {
+                        $possibleOperator = trim($chr);
+
+                        for ($j = $i + 1; $j < strlen($versionString); $j++) {
+                            $operatorChr = $this->getCharacter($j, $versionString);
+
+                            if ($this->possibleLogicalOperator($operatorChr)) {
+                                $possibleOperator .= trim($operatorChr);
+                            } else {
+                                if (!strlen($possibleOperator) || '&&' === $possibleOperator) {
+                                    $tokenList[] = new Token(Token::LOGICAL_AND, $possibleOperator);
+                                } else {
+                                    $tokenList[] = new Token(Token::LOGICAL_OR, $possibleOperator);
+                                }
+                                $i = $j - 1;
+                                break;
+                            }
+                        }
+                    }
+
                     break;
 
                 // Start accumulating on the first non-digit & continue until we reach a separator
@@ -86,6 +136,18 @@ class VersionTokenizer
         $this->conditionallyAddToken(Token::LABEL_STRING, $stringAccumulator, $tokenList);
 
         return $tokenList;
+    }
+
+    /**
+     * Returns true if the character is an AND comparator
+     *
+     * @param string $chr
+     *
+     * @return bool
+     */
+    private function possibleLogicalOperator($chr)
+    {
+        return in_array($chr, array(',', '|', '&')) || ctype_space($chr);
     }
 
     /**

@@ -24,7 +24,6 @@ use ptlis\SemanticVersion\Version\Label\LabelInterface;
 use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\Version\VersionInterface;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
-use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 
 /**
@@ -51,11 +50,11 @@ class VersionParser
     }
 
     /**
-     * @todo Return VersionRange instances?
+     *
      *
      * @param Token[] $tokenList
      *
-     * @return array of Versions and comparators
+     * @return VersionRangeInterface
      */
     public function parse(array $tokenList)
     {
@@ -70,48 +69,25 @@ class VersionParser
             );
         }
 
-        return $this->hydrateRanges($resultList);
-    }
+        // Parse out ComparatorVersions vs Logical operators
+        $realResultList = array();
+        for ($i = 0; $i < count($resultList); $i++) {
 
-    /**
-     * Hydrate a version list from Version & Comparator instances.
-     *
-     * @param array $resultList
-     *
-     * @return VersionRangeInterface
-     */
-    private function hydrateRanges(array $resultList)
-    {
-        $range = null;
+            // Version number only - effectively equals
+            if ($resultList[$i] instanceof VersionInterface) {
+                $realResultList[] = new ComparatorVersion(new EqualTo(), $resultList[$i]);
 
-        if (count($resultList) == 1) {
-            $range = new ComparatorVersion(new EqualTo(), $resultList[0]);
-
-        } elseif (count($resultList) >= 2) {
-            $comparator = $resultList[0];
-            $version = $resultList[1];
-
-            // Invalid version range
-            if (!($comparator instanceof ComparatorInterface) || !($version instanceof VersionInterface)) {
-                throw new \RuntimeException('Invalid version range');
-            }
-
-            $leftRange = new ComparatorVersion($comparator, $version);
-
-            // TODO: handle and/or
-
-            $continueList = array_slice($resultList, 2);
-            if (count($continueList)) {
-                $rightRange = $this->hydrateRanges($continueList);
-
-                $range = new LogicalAnd($leftRange, $rightRange);
+            } elseif ($resultList[$i] instanceof ComparatorInterface) {
+                $realResultList[] = new ComparatorVersion($resultList[$i], $resultList[$i + 1]);
+                $i++;
 
             } else {
-                $range = $leftRange;
+                $realResultList[] = $resultList[$i];
             }
         }
+        $buildRange = new BuildRange();
 
-        return $range;
+        return $buildRange->run($realResultList);
     }
 
     /**
@@ -133,8 +109,17 @@ class VersionParser
             for ($i = 0; $i < count($tokenList); $i++) {
                 $currentToken = $tokenList[$i];
 
+                // Do nothing to logical tokens
+                if (in_array($currentToken->getType(), array(Token::LOGICAL_OR, Token::LOGICAL_AND))) {
+
+                    if (count($versionTokenList)) {
+                        $resultList[] = $this->getVersionFromTokens($versionTokenList, $labelTokenList);
+                    }
+
+                    $resultList[] = $currentToken;
+
                 // Special handling for dash separator - may be label or version range
-                if (Token::DASH_SEPARATOR === $currentToken->getType()) {
+                } elseif (Token::DASH_SEPARATOR === $currentToken->getType()) {
 
                     // Peek ahead - if not a label then we're dealing with the first part of a hyphenated range
                     if ($i + 1 < count($tokenList) && Token::LABEL_STRING !== $tokenList[$i + 1]->getType()) {
@@ -164,6 +149,8 @@ class VersionParser
 
         // Handle upper bounds for hyphenated ranges
         if ($inRange) {
+            // Fake token (TODO: Concrete type?)
+            $resultList[] = new Token(Token::LOGICAL_AND, '');
             $resultList[] = new LessThan();
             $resultList[] = $this->getUpperVersionForHyphenRange($versionTokenList, $labelTokenList);
 
@@ -302,12 +289,16 @@ class VersionParser
                     $tokenAccumulator[] = $currentToken;
                     break;
 
+                case in_array($currentToken->getType(), array(Token::LOGICAL_AND, Token::LOGICAL_OR)):
+                    $addClusteredTokens($tokenAccumulator);
+                    $addClusteredTokens(array($currentToken));
+                    $tokenAccumulator = array();
+                    break;
+
                 // Any other case simply accumulate the token
                 default:
                     $tokenAccumulator[] = $currentToken;
                     break;
-
-                // TODO: OR & AND
             }
         }
 
@@ -390,6 +381,8 @@ class VersionParser
             $resultList[] = new Version(
                 $tokenList[0]->getValue()
             );
+            // Fake token (TODO: Concrete type?)
+            $resultList[] = new Token(Token::LOGICAL_AND, '');
             $resultList[] = new LessThan();
             $resultList[] = new Version(
                 $tokenList[0]->getValue() + 1
@@ -402,6 +395,8 @@ class VersionParser
                 $tokenList[0]->getValue(),
                 $tokenList[2]->getValue()
             );
+            // Fake token (TODO: Concrete type?)
+            $resultList[] = new Token(Token::LOGICAL_AND, '');
             $resultList[] = new LessThan();
             $resultList[] = new Version(
                 $tokenList[0]->getValue(),
@@ -430,6 +425,8 @@ class VersionParser
                 $tokenList[0]->getValue(),
                 $tokenList[2]->getValue()
             );
+            // Fake token (TODO: Concrete type?)
+            $resultList[] = new Token(Token::LOGICAL_AND, '');
             $resultList[] = new LessThan();
             $resultList[] = new Version(
                 $tokenList[0]->getValue() + 1
@@ -443,6 +440,8 @@ class VersionParser
                 $tokenList[2]->getValue(),
                 $tokenList[4]->getValue()
             );
+            // Fake token (TODO: Concrete type?)
+            $resultList[] = new Token(Token::LOGICAL_AND, '');
             $resultList[] = new LessThan();
             $resultList[] = new Version(
                 $tokenList[0]->getValue(),
@@ -475,6 +474,8 @@ class VersionParser
             $tokenList[2]->getValue(),
             $patch
         );
+        // Fake token (TODO: Concrete type?)
+        $resultList[] = new Token(Token::LOGICAL_AND, '');
         $resultList[] = new LessThan();
         $resultList[] = new Version(
             $tokenList[0]->getValue() + 1

@@ -16,9 +16,9 @@ namespace ptlis\SemanticVersion\VersionRange;
 use ptlis\SemanticVersion\Version\VersionInterface;
 
 /**
- * Version range with a left & right value - both must be true to fulfill the isSatisfiedBy requirement.
+ * Version range with a left & right value - either may true to fulfill the isSatisfiedBy requirement.
  */
-class LogicalAnd implements VersionRangeInterface
+class LogicalOr implements VersionRangeInterface
 {
     /**
      * @var VersionRangeInterface
@@ -48,7 +48,7 @@ class LogicalAnd implements VersionRangeInterface
      */
     public function isSatisfiedBy(VersionInterface $version)
     {
-        return $this->leftRange->isSatisfiedBy($version) && $this->rightRange->isSatisfiedBy($version);
+        return $this->leftRange->isSatisfiedBy($version) || $this->rightRange->isSatisfiedBy($version);
     }
 
 
@@ -57,7 +57,7 @@ class LogicalAnd implements VersionRangeInterface
      */
     public function __toString()
     {
-        return $this->leftRange . '&&' . $this->rightRange;
+        return $this->leftRange . '||' . $this->rightRange;
     }
 
 }
