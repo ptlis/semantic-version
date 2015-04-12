@@ -60,7 +60,6 @@ class VersionTokenizer
                     $this->addImplicitAnd($tokenList);
 
                     $tokenList[] = $token;
-
                     break;
 
                 // Skip the 'v' character if immediately preceding a digit
@@ -70,7 +69,7 @@ class VersionTokenizer
                     break;
 
                 // Spaces, pipes, ampersands and commas may contextually be logical AND/OR
-                case $this->possibleLogicalOperator($chr):
+                case $this->isPossibleLogicalOperator($chr):
 
                     // Handle preceding digits or labels
                     $this->conditionallyAddToken(Token::DIGITS, $digitAccumulator, $tokenList);
@@ -94,7 +93,7 @@ class VersionTokenizer
                         for ($j = $i + 1; $j < strlen($versionString); $j++) {
                             $operatorChr = $this->getCharacter($j, $versionString);
 
-                            if ($this->possibleLogicalOperator($operatorChr)) {
+                            if ($this->isPossibleLogicalOperator($operatorChr)) {
                                 $possibleOperator .= trim($operatorChr);
                             } else {
                                 if (!strlen($possibleOperator) || '&&' === $possibleOperator) {
@@ -153,7 +152,7 @@ class VersionTokenizer
      *
      * @return bool
      */
-    private function possibleLogicalOperator($chr)
+    private function isPossibleLogicalOperator($chr)
     {
         return in_array($chr, array(',', '|', '&')) || ctype_space($chr);
     }
@@ -253,21 +252,8 @@ class VersionTokenizer
         $chr = $this->getCharacter($index, $versionString);
 
         return 'v' === $chr
-            && $this->hasAnotherCharacter($index, $versionString)
+            && $index + 1 < strlen($versionString)
             && is_numeric($this->getCharacter($index + 1, $versionString));
-    }
-
-    /**
-     * Returns true if there are more characters to read after $index.
-     *
-     * @param int $index
-     * @param string $versionString
-     *
-     * @return bool
-     */
-    private function hasAnotherCharacter($index, $versionString)
-    {
-        return strlen($this->getCharacter($index + 1, $versionString));
     }
 
     /**
