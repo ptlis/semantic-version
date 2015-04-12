@@ -51,24 +51,15 @@ class VersionTokenizer
                     break;
 
                 // Comparator token types
-                case !is_null($this->getComparatorToken($i, $versionString)):
+                case !is_null($token = $this->getComparatorToken($i, $versionString)):
 
                     // Handle preceding digits or labels
                     $this->conditionallyAddToken(Token::DIGITS, $digitAccumulator, $tokenList);
                     $this->conditionallyAddToken(Token::LABEL_STRING, $stringAccumulator, $tokenList);
 
-                    $token = $this->getComparatorToken($i, $versionString);
-
-                    if (count($tokenList) && in_array($tokenList[count($tokenList) -1]->getType(), array(Token::DIGITS, Token::WILDCARD_DIGITS))) {
-
-                        $tokenList[] = new Token(Token::LOGICAL_AND, '');
-                    }
+                    $this->addImplicitAnd($tokenList);
 
                     $tokenList[] = $token;
-
-                    if (strlen($token->getValue()) > 1) {
-                        $i++;
-                    }
 
                     break;
 
@@ -139,6 +130,23 @@ class VersionTokenizer
     }
 
     /**
+     * Add an implicit AND between a version & the comparator of a subsequent version.
+     *
+     * @param Token[] $tokenList
+     */
+    private function addImplicitAnd(array &$tokenList)
+    {
+        $digitTokenList = array(
+            Token::DIGITS,
+            Token::WILDCARD_DIGITS
+        );
+
+        if (count($tokenList) && in_array($tokenList[count($tokenList) -1]->getType(), $digitTokenList)) {
+            $tokenList[] = new Token(Token::LOGICAL_AND, '');
+        }
+    }
+
+    /**
      * Returns true if the character is an AND comparator
      *
      * @param string $chr
@@ -158,7 +166,7 @@ class VersionTokenizer
      *
      * @return Token|null
      */
-    private function getComparatorToken($index, $versionString)
+    private function getComparatorToken(&$index, $versionString)
     {
         $comparatorMap = array(
             '>' => Token::GREATER_THAN,
@@ -170,19 +178,17 @@ class VersionTokenizer
 
         $chr = substr($versionString, $index, 1);
 
-        $comparator = '';
-        if (array_key_exists($chr, $comparatorMap)) {
-            $nextChr = $this->getCharacter($index + 1, $versionString);
-
-            $comparator = $chr;
-            // We have a '<' or '>' and the next token is '=' - create a compound comparator
-            if (('<' === $chr || '>' === $chr) && '=' === $nextChr) {
-                $comparator .= $nextChr;
-            }
-        }
-
         $token = null;
-        if (array_key_exists($comparator, $comparatorMap)) {
+        if (array_key_exists($chr, $comparatorMap)) {
+            $comparator = $chr;
+
+            // We have a '<=' or '=>'
+            $nextChr = $this->getCharacter($index + 1, $versionString);
+            if (array_key_exists($chr . $nextChr, $comparatorMap)) {
+                $comparator .= $nextChr;
+                $index++;
+            }
+
             $token = new Token($comparatorMap[$comparator], $comparator);
         }
 
