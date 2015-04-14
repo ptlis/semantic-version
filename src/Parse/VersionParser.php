@@ -107,57 +107,6 @@ class VersionParser
         // Stores tokens not yet parcelled out
         $tokenAccumulator = array();
 
-        $that = $this;
-        $addClusteredTokens = function($accumulatedTokenList) use (&$tokenClusterList, $that) {
-            $accumulatedTokenCount = count($accumulatedTokenList);
-
-            if ($accumulatedTokenCount) {
-
-                switch (true) {
-                    case !is_null($comparator = $that->comparatorFactory->getFromToken($accumulatedTokenList[0])):
-                        $tokenClusterList[] = $comparator;
-                        break;
-
-                    case Token::DIGITS === $accumulatedTokenList[0]->getType():
-
-                        $hyphenated = false;
-
-                        for ($i = 0; $i < count($accumulatedTokenList); $i++) {
-                            if (Token::DASH_SEPARATOR === $accumulatedTokenList[$i]->getType()) {
-                                $hyphenated = true;
-                                break;
-                            }
-                        }
-
-                        if ($hyphenated) {
-                            $tokenClusterList[] = $that->versionRangeParser->getFromHyphenatedTokens($accumulatedTokenList);
-
-                        } elseif (Token::WILDCARD_DIGITS === $accumulatedTokenList[$accumulatedTokenCount - 1]->getType()) {
-                            $tokenClusterList[] = $that->versionRangeParser->getFromWildcardTokens(
-                                $accumulatedTokenList
-                            );
-
-                        } else {
-                            $tokenClusterList[] = $that->versionRangeParser->getVersionFromTokens($accumulatedTokenList);
-                        }
-
-                        break;
-
-                    case Token::TILDE_RANGE === $accumulatedTokenList[0]->getType():
-                        $tokenClusterList[] = $that->versionRangeParser->getFromTildeTokens(array_slice($accumulatedTokenList, 1));
-                        break;
-
-                    case Token::CARET_RANGE === $accumulatedTokenList[0]->getType():
-                        $tokenClusterList[] = $that->versionRangeParser->getFromCaretTokens(array_slice($accumulatedTokenList, 1));
-                        break;
-
-                    default:
-                        $tokenClusterList[] = $accumulatedTokenList[0];
-                        break;
-                }
-            }
-        };
-
         for ($i = 0; $i < count($tokenList); $i++) {
             $currentToken = $tokenList[$i];
 
@@ -166,22 +115,34 @@ class VersionParser
                 // Terminating digit wildcard
                 case Token::WILDCARD_DIGITS === $currentToken->getType():
                     $tokenAccumulator[] = $currentToken;
-                    $addClusteredTokens($tokenAccumulator);
+                    $tokenClusterList = array_merge(
+                        $tokenClusterList,
+                        $this->processClusteredTokenList($tokenAccumulator)
+                    );
                     $tokenAccumulator = array();
                     break;
 
                 // Beginning caret or tilde range
                 case in_array($currentToken->getType(), array(Token::TILDE_RANGE, Token::CARET_RANGE)):
-                    $addClusteredTokens($tokenAccumulator);
+                    $tokenClusterList = array_merge(
+                        $tokenClusterList,
+                        $this->processClusteredTokenList($tokenAccumulator)
+                    );
                     $tokenAccumulator = array();
                     $tokenAccumulator[] = $currentToken;
                     break;
 
                 // Comparator or logical operator
-                case !is_null($that->comparatorFactory->getFromToken($currentToken)):
+                case !is_null($this->comparatorFactory->getFromToken($currentToken)):
                 case in_array($currentToken->getType(), array(Token::LOGICAL_AND, Token::LOGICAL_OR)):
-                    $addClusteredTokens($tokenAccumulator);
-                    $addClusteredTokens(array($currentToken));
+                    $tokenClusterList = array_merge(
+                        $tokenClusterList,
+                        $this->processClusteredTokenList($tokenAccumulator)
+                    );
+                    $tokenClusterList = array_merge(
+                        $tokenClusterList,
+                        $this->processClusteredTokenList(array($currentToken))
+                    );
                     $tokenAccumulator = array();
                     break;
 
@@ -193,7 +154,72 @@ class VersionParser
         }
 
         // Add any remaining tokens
-        $addClusteredTokens($tokenAccumulator);
+        $tokenClusterList = array_merge(
+            $tokenClusterList,
+            $this->processClusteredTokenList($tokenAccumulator)
+        );
+
+        return $tokenClusterList;
+    }
+
+    /**
+     * Process a cluster of tokens building version ranges.
+     *
+     * @param Token[] $tokenList
+     *
+     * @return mixed
+     */
+    private function processClusteredTokenList(array $tokenList)
+    {
+        $accumulatedTokenCount = count($tokenList);
+
+        $tokenClusterList = array();
+
+        if ($accumulatedTokenCount) {
+
+            switch (true) {
+                case !is_null($comparator = $this->comparatorFactory->getFromToken($tokenList[0])):
+                    $tokenClusterList[] = $comparator;
+                    break;
+
+                case Token::DIGITS === $tokenList[0]->getType():
+
+                    $hyphenated = false;
+
+                    for ($i = 0; $i < count($tokenList); $i++) {
+                        if (Token::DASH_SEPARATOR === $tokenList[$i]->getType()) {
+                            $hyphenated = true;
+                            break;
+                        }
+                    }
+
+                    if ($hyphenated) {
+                        $tokenClusterList[] = $this->versionRangeParser->getFromHyphenatedTokens($tokenList);
+
+                    } elseif (Token::WILDCARD_DIGITS === $tokenList[$accumulatedTokenCount - 1]->getType()) {
+                        $tokenClusterList[] = $this->versionRangeParser->getFromWildcardTokens(
+                            $tokenList
+                        );
+
+                    } else {
+                        $tokenClusterList[] = $this->versionRangeParser->getVersionFromTokens($tokenList);
+                    }
+
+                    break;
+
+                case Token::TILDE_RANGE === $tokenList[0]->getType():
+                    $tokenClusterList[] = $this->versionRangeParser->getFromTildeTokens(array_slice($tokenList, 1));
+                    break;
+
+                case Token::CARET_RANGE === $tokenList[0]->getType():
+                    $tokenClusterList[] = $this->versionRangeParser->getFromCaretTokens(array_slice($tokenList, 1));
+                    break;
+
+                default:
+                    $tokenClusterList[] = $tokenList[0];
+                    break;
+            }
+        }
 
         return $tokenClusterList;
     }
