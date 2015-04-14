@@ -20,6 +20,7 @@ use ptlis\SemanticVersion\Version\Label\LabelInterface;
 use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\Version\VersionInterface;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
+use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 
 /**
@@ -87,14 +88,13 @@ class VersionParser
     }
 
     /**
-     * @todo Return VersionRange instances?
      *
      * Hyphenated ranges are implemented as described @ https://getcomposer.org/doc/01-basic-usage.md#package-versions
      *
      * @param Token[] $tokenList
      * @param Token[] $labelTokenList
      *
-     * @return array of Versions and comparators
+     * @return VersionRangeInterface
      */
     private function getUpperVersionForHyphenRange(array $tokenList, array $labelTokenList = array())
     {
@@ -125,7 +125,7 @@ class VersionParser
                 break;
         }
 
-        return array(
+        return new ComparatorVersion(
             $comparator,
             new Version(
                 $major,
@@ -139,12 +139,12 @@ class VersionParser
 
     /**
      * @param Token[] $tokenList
+     *
+     * @return VersionRangeInterface
      */
     private function parseHyphenated($tokenList)
     {
         $chunkedList = $this->chunkOnHyphen($tokenList);
-
-        $resultList = array();
 
         switch (count($chunkedList)) {
             // Simple range or version with label
@@ -152,16 +152,18 @@ class VersionParser
 
                 // Version with label
                 if (Token::LABEL_STRING === $chunkedList[1][0]->getType()) {
-                    $resultList[] = $this->comparatorFactory->get('=');
-                    $resultList[] = $this->getVersionFromTokens($chunkedList[0], $chunkedList[1]);
+                    $range = new ComparatorVersion(
+                        $this->comparatorFactory->get('='),
+                        $this->getVersionFromTokens($chunkedList[0], $chunkedList[1])
+                    );
 
                 // Version range
                 } else {
-                    $resultList[] = $this->comparatorFactory->get('>=');
-                    $resultList[] = $this->getVersionFromTokens($chunkedList[0]);
-                    $resultList[] = new Token(Token::LOGICAL_AND, '');
-                    $resultList = array_merge(
-                        $resultList,
+                    $range = new LogicalAnd(
+                        new ComparatorVersion(
+                            $this->comparatorFactory->get('>='),
+                            $this->getVersionFromTokens($chunkedList[0])
+                        ),
                         $this->getUpperVersionForHyphenRange($chunkedList[1])
                     );
                 }
@@ -172,21 +174,21 @@ class VersionParser
             case 3:
                 // Label belongs to left version
                 if (Token::LABEL_STRING === $chunkedList[1][0]->getType()) {
-                    $resultList[] = $this->comparatorFactory->get('>=');
-                    $resultList[] = $this->getVersionFromTokens($chunkedList[0], $chunkedList[1]);
-                    $resultList[] = new Token(Token::LOGICAL_AND, '');
-                    $resultList = array_merge(
-                        $resultList,
+                    $range = new LogicalAnd(
+                        new ComparatorVersion(
+                            $this->comparatorFactory->get('>='),
+                            $this->getVersionFromTokens($chunkedList[0], $chunkedList[1])
+                        ),
                         $this->getUpperVersionForHyphenRange($chunkedList[2])
                     );
 
                 // Label belongs to right version
                 } else {
-                    $resultList[] = $this->comparatorFactory->get('>=');
-                    $resultList[] = $this->getVersionFromTokens($chunkedList[0]);
-                    $resultList[] = new Token(Token::LOGICAL_AND, '');
-                    $resultList = array_merge(
-                        $resultList,
+                    $range = new LogicalAnd(
+                        new ComparatorVersion(
+                            $this->comparatorFactory->get('>='),
+                            $this->getVersionFromTokens($chunkedList[0])
+                        ),
                         $this->getUpperVersionForHyphenRange($chunkedList[1], $chunkedList[2])
                     );
                 }
@@ -195,17 +197,17 @@ class VersionParser
 
             // Range where both versions have label
             case 4:
-                $resultList[] = $this->comparatorFactory->get('>=');
-                $resultList[] = $this->getVersionFromTokens($chunkedList[0], $chunkedList[1]);
-                $resultList[] = new Token(Token::LOGICAL_AND, '');
-                $resultList = array_merge(
-                    $resultList,
+                $range = new LogicalAnd(
+                    new ComparatorVersion(
+                        $this->comparatorFactory->get('>='),
+                        $this->getVersionFromTokens($chunkedList[0], $chunkedList[1])
+                    ),
                     $this->getUpperVersionForHyphenRange($chunkedList[2], $chunkedList[3])
                 );
                 break;
         }
 
-        return $resultList;
+        return $range;
     }
 
     /**
@@ -266,16 +268,10 @@ class VersionParser
                         }
 
                         if ($hyphenated) {
-                            $tokenClusterList = array_merge(
-                                $tokenClusterList,
-                                $that->parseHyphenated($accumulatedTokenList)
-                            );
+                            $tokenClusterList[] = $that->parseHyphenated($accumulatedTokenList);
 
                         } elseif (Token::WILDCARD_DIGITS === $accumulatedTokenList[$accumulatedTokenCount - 1]->getType()) {
-                            $tokenClusterList = array_merge(
-                                $tokenClusterList,
-                                $that->getWildcardVersionFromTokens($accumulatedTokenList)
-                            );
+                            $tokenClusterList[] = $that->getWildcardVersionFromTokens($accumulatedTokenList);
 
                         } else {
                             $tokenClusterList[] = $that->getVersionFromTokens($accumulatedTokenList);
@@ -284,17 +280,11 @@ class VersionParser
                         break;
 
                     case Token::TILDE_RANGE === $accumulatedTokenList[0]->getType():
-                        $tokenClusterList = array_merge(
-                            $tokenClusterList,
-                            $that->getTildeVersionFromTokens(array_slice($accumulatedTokenList, 1))
-                        );
+                        $tokenClusterList[] = $that->getTildeVersionFromTokens(array_slice($accumulatedTokenList, 1));
                         break;
 
                     case Token::CARET_RANGE === $accumulatedTokenList[0]->getType():
-                        $tokenClusterList = array_merge(
-                            $tokenClusterList,
-                            $that->getCaretVersionFromTokens(array_slice($accumulatedTokenList, 1))
-                        );
+                        $tokenClusterList[] = $that->getCaretVersionFromTokens(array_slice($accumulatedTokenList, 1));
                         break;
 
                     default:
@@ -405,42 +395,12 @@ class VersionParser
      *
      * @param Token[] $tokenList
      *
-     * @return array Version and Comparator instances.
+     * @return VersionRangeInterface
      */
     private function getWildcardVersionFromTokens(array $tokenList)
     {
-        $resultList = array();
-
-        // Minor wildcard
-        if (3 === count($tokenList)) {
-            $resultList[] = $this->comparatorFactory->get('>=');
-            $resultList[] = new Version(
-                $tokenList[0]->getValue()
-            );
-            // Fake token (TODO: Concrete type?)
-            $resultList[] = new Token(Token::LOGICAL_AND, '');
-            $resultList[] = $this->comparatorFactory->get('<');
-            $resultList[] = new Version(
-                $tokenList[0]->getValue() + 1
-            );
-
-        // Patch wildcard
-        } else {
-            $resultList[] = $this->comparatorFactory->get('>=');
-            $resultList[] = new Version(
-                $tokenList[0]->getValue(),
-                $tokenList[2]->getValue()
-            );
-            // Fake token (TODO: Concrete type?)
-            $resultList[] = new Token(Token::LOGICAL_AND, '');
-            $resultList[] = $this->comparatorFactory->get('<');
-            $resultList[] = new Version(
-                $tokenList[0]->getValue(),
-                $tokenList[2]->getValue() + 1
-            );
-        }
-
-        return $resultList;
+        // Semantically identical to tilde version range
+        return $this->getTildeVersionFromTokens($tokenList);
     }
 
     /**
@@ -448,44 +408,38 @@ class VersionParser
      *
      * @param Token[] $tokenList
      *
-     * @return array Version and comparator instances.
+     * @return VersionRangeInterface
      */
     private function getTildeVersionFromTokens(array $tokenList)
     {
-        $resultList = array();
-
         // Upto Minor version
         if (3 === count($tokenList)) {
-            $resultList[] = $this->comparatorFactory->get('>=');
-            $resultList[] = new Version(
-                $tokenList[0]->getValue(),
-                $tokenList[2]->getValue()
-            );
-            // Fake token (TODO: Concrete type?)
-            $resultList[] = new Token(Token::LOGICAL_AND, '');
-            $resultList[] = $this->comparatorFactory->get('<');
-            $resultList[] = new Version(
-                $tokenList[0]->getValue() + 1
+            $range = new LogicalAnd(
+                new ComparatorVersion(
+                    $this->comparatorFactory->get('>='),
+                    new Version($tokenList[0]->getValue(), $tokenList[2]->getValue())
+                ),
+                new ComparatorVersion(
+                    $this->comparatorFactory->get('<'),
+                    new Version($tokenList[0]->getValue() + 1)
+                )
             );
 
         // Upto Major version
         } else {
-            $resultList[] = $this->comparatorFactory->get('>=');
-            $resultList[] = new Version(
-                $tokenList[0]->getValue(),
-                $tokenList[2]->getValue(),
-                $tokenList[4]->getValue()
-            );
-            // Fake token (TODO: Concrete type?)
-            $resultList[] = new Token(Token::LOGICAL_AND, '');
-            $resultList[] = $this->comparatorFactory->get('<');
-            $resultList[] = new Version(
-                $tokenList[0]->getValue(),
-                $tokenList[2]->getValue() + 1
+            $range = new LogicalAnd(
+                new ComparatorVersion(
+                    $this->comparatorFactory->get('>='),
+                    new Version($tokenList[0]->getValue(), $tokenList[2]->getValue(), $tokenList[4]->getValue())
+                ),
+                new ComparatorVersion(
+                    $this->comparatorFactory->get('<'),
+                    new Version($tokenList[0]->getValue(), $tokenList[2]->getValue() + 1)
+                )
             );
         }
 
-        return $resultList;
+        return $range;
     }
 
     /**
@@ -493,30 +447,24 @@ class VersionParser
      *
      * @param Token[] $tokenList
      *
-     * @return array Version and comparator instances.
+     * @return VersionRangeInterface
      */
     private function getCaretVersionFromTokens(array $tokenList)
     {
-        $resultList = array();
-
         $patch = 0;
         if (5 === count($tokenList)) {
             $patch = $tokenList[4]->getValue();
         }
 
-        $resultList[] = $this->comparatorFactory->get('>=');
-        $resultList[] = new Version(
-            $tokenList[0]->getValue(),
-            $tokenList[2]->getValue(),
-            $patch
+        return new LogicalAnd(
+            new ComparatorVersion(
+                $this->comparatorFactory->get('>='),
+                new Version($tokenList[0]->getValue(), $tokenList[2]->getValue(), $patch)
+            ),
+            new ComparatorVersion(
+                $this->comparatorFactory->get('<'),
+                new Version($tokenList[0]->getValue() + 1)
+            )
         );
-        // Fake token (TODO: Concrete type?)
-        $resultList[] = new Token(Token::LOGICAL_AND, '');
-        $resultList[] = $this->comparatorFactory->get('<');
-        $resultList[] = new Version(
-            $tokenList[0]->getValue() + 1
-        );
-
-        return $resultList;
     }
 }
