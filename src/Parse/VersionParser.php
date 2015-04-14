@@ -103,15 +103,18 @@ class VersionParser
 
         switch (count($tokenList)) {
             case 1:
+                $comparator = $this->comparatorFactory->get('<');
                 $major = $tokenList[0]->getValue() + 1;
                 break;
 
             case 3:
+                $comparator = $this->comparatorFactory->get('<');
                 $major = $tokenList[0]->getValue();
                 $minor = $tokenList[2]->getValue() + 1;
                 break;
 
             case 5:
+                $comparator = $this->comparatorFactory->get('<=');
                 $major = $tokenList[0]->getValue();
                 $minor = $tokenList[2]->getValue();
                 $patch = $tokenList[4]->getValue();
@@ -122,11 +125,14 @@ class VersionParser
                 break;
         }
 
-        return new Version(
-            $major,
-            $minor,
-            $patch,
-            $this->getLabelFromTokens($labelTokenList)
+        return array(
+            $comparator,
+            new Version(
+                $major,
+                $minor,
+                $patch,
+                $this->getLabelFromTokens($labelTokenList)
+            )
         );
     }
 
@@ -146,18 +152,18 @@ class VersionParser
 
                 // Version with label
                 if (Token::LABEL_STRING === $chunkedList[1][0]->getType()) {
-                    $resultList[] = new ComparatorVersion(
-                        $this->comparatorFactory->get('='),
-                        $this->getVersionFromTokens($chunkedList[0], $chunkedList[1])
-                    );
+                    $resultList[] = $this->comparatorFactory->get('=');
+                    $resultList[] = $this->getVersionFromTokens($chunkedList[0], $chunkedList[1]);
 
                 // Version range
                 } else {
                     $resultList[] = $this->comparatorFactory->get('>=');
                     $resultList[] = $this->getVersionFromTokens($chunkedList[0]);
                     $resultList[] = new Token(Token::LOGICAL_AND, '');
-                    $resultList[] = $this->comparatorFactory->get('<');
-                    $resultList[] = $this->getUpperVersionForHyphenRange($chunkedList[1]);
+                    $resultList = array_merge(
+                        $resultList,
+                        $this->getUpperVersionForHyphenRange($chunkedList[1])
+                    );
                 }
 
                 break;
@@ -169,16 +175,20 @@ class VersionParser
                     $resultList[] = $this->comparatorFactory->get('>=');
                     $resultList[] = $this->getVersionFromTokens($chunkedList[0], $chunkedList[1]);
                     $resultList[] = new Token(Token::LOGICAL_AND, '');
-                    $resultList[] = $this->comparatorFactory->get('<');
-                    $resultList[] = $this->getUpperVersionForHyphenRange($chunkedList[2]);
+                    $resultList = array_merge(
+                        $resultList,
+                        $this->getUpperVersionForHyphenRange($chunkedList[2])
+                    );
 
                 // Label belongs to right version
                 } else {
                     $resultList[] = $this->comparatorFactory->get('>=');
                     $resultList[] = $this->getVersionFromTokens($chunkedList[0]);
                     $resultList[] = new Token(Token::LOGICAL_AND, '');
-                    $resultList[] = $this->comparatorFactory->get('<');
-                    $resultList[] = $this->getUpperVersionForHyphenRange($chunkedList[1], $chunkedList[2]);
+                    $resultList = array_merge(
+                        $resultList,
+                        $this->getUpperVersionForHyphenRange($chunkedList[1], $chunkedList[2])
+                    );
                 }
 
                 break;
@@ -188,8 +198,10 @@ class VersionParser
                 $resultList[] = $this->comparatorFactory->get('>=');
                 $resultList[] = $this->getVersionFromTokens($chunkedList[0], $chunkedList[1]);
                 $resultList[] = new Token(Token::LOGICAL_AND, '');
-                $resultList[] = $this->comparatorFactory->get('<');
-                $resultList[] = $this->getUpperVersionForHyphenRange($chunkedList[2], $chunkedList[3]);
+                $resultList = array_merge(
+                    $resultList,
+                    $this->getUpperVersionForHyphenRange($chunkedList[2], $chunkedList[3])
+                );
                 break;
         }
 

@@ -17,6 +17,7 @@ use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Version\Comparator\EqualTo;
 use ptlis\SemanticVersion\Version\Comparator\GreaterOrEqualTo;
 use ptlis\SemanticVersion\Version\Comparator\GreaterThan;
+use ptlis\SemanticVersion\Version\Comparator\LessOrEqualTo;
 use ptlis\SemanticVersion\Version\Comparator\LessThan;
 use ptlis\SemanticVersion\Version\Label\Label;
 use ptlis\SemanticVersion\Version\Version;
@@ -348,7 +349,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(1, 0, 7, new Label(Label::PRECEDENCE_ABSENT))
                     ),
                     new ComparatorVersion(
-                        new LessThan(),
+                        new LessOrEqualTo(),
                         new Version(3, 1, 18, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 )
@@ -398,6 +399,30 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                 )
             ),
             array(
+                '1.0-2.0',
+                array(
+                    new Token(Token::DIGITS, '1'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '0'),
+
+                    new Token(Token::DASH_SEPARATOR, '-'),
+
+                    new Token(Token::DIGITS, '2'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '0')
+                ),
+                new LogicalAnd(
+                    new ComparatorVersion(
+                        new GreaterOrEqualTo(),
+                        new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    ),
+                    new ComparatorVersion(
+                        new LessThan(),
+                        new Version(2, 1, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    )
+                )
+            ),
+            array(
                 '1.8.3-alpha.7',
                 array(
                     new Token(Token::DIGITS, '1'),
@@ -415,6 +440,46 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                 new ComparatorVersion(
                     new EqualTo(),
                     new Version(1, 8, 3, new Label(Label::PRECEDENCE_ALPHA, 7))
+                )
+            ),
+            array(
+                '1.8.0-alpha.7-1.8.0-beta.2',
+                array(
+                    new Token(Token::DIGITS, '1'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '8'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '0'),
+
+                    new Token(Token::DASH_SEPARATOR, '-'),
+
+                    new Token(Token::LABEL_STRING, 'alpha'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '7'),
+
+                    new Token(Token::DASH_SEPARATOR, '-'),
+
+                    new Token(Token::DIGITS, '1'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '8'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '0'),
+
+                    new Token(Token::DASH_SEPARATOR, '-'),
+
+                    new Token(Token::LABEL_STRING, 'beta'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '2')
+                ),
+                new LogicalAnd(
+                    new ComparatorVersion(
+                        new GreaterOrEqualTo(),
+                        new Version(1, 8, 0, new Label(Label::PRECEDENCE_ALPHA, 7))
+                    ),
+                    new ComparatorVersion(
+                        new LessOrEqualTo(),
+                        new Version(1, 8, 0, new Label(Label::PRECEDENCE_BETA, 2))
+                    )
                 )
             ),
             array(
