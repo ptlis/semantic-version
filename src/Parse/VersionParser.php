@@ -58,16 +58,7 @@ class VersionParser
      */
     public function parse(array $tokenList)
     {
-        $tokenClusterList = $this->clusterTokens($tokenList);
-
-        $resultList = array();
-
-        foreach ($tokenClusterList as $tokenCluster) {
-            $resultList = array_merge(
-                $resultList,
-                $this->parseCluster($tokenCluster)
-            );
-        }
+        $resultList = $this->clusterTokens($tokenList);
 
         // Parse out ComparatorVersions vs Logical operators
         $realResultList = array();
@@ -91,86 +82,6 @@ class VersionParser
     }
 
     /**
-     * @param Token[] $tokenList
-     */
-    private function parseCluster(array $tokenList)
-    {
-        $versionTokenList = array();
-        $labelTokenList = array();
-
-        $inLabel = false;
-        $inRange = false;
-
-        // Parse versions beginning with comparator, caret or tilde
-        $resultList = $this->getRangedVersion($tokenList);
-
-        // If no tokens were found then we have either a simple version or a hyphenated range
-        if (!count($resultList)) {
-            for ($i = 0; $i < count($tokenList); $i++) {
-                $currentToken = $tokenList[$i];
-
-                // Do nothing to logical tokens
-                if (in_array($currentToken->getType(), array(Token::LOGICAL_OR, Token::LOGICAL_AND))) {
-
-                    if (count($versionTokenList)) {
-                        $resultList[] = $this->getVersionFromTokens($versionTokenList, $labelTokenList);
-                    }
-
-                    $resultList[] = $currentToken;
-
-                // Special handling for dash separator - may be label or version range
-                } elseif (Token::DASH_SEPARATOR === $currentToken->getType()) {
-
-                    // Peek ahead - if not a label then we're dealing with the first part of a hyphenated range
-                    if ($i + 1 < count($tokenList) && Token::LABEL_STRING !== $tokenList[$i + 1]->getType()) {
-
-                        $resultList[] = new GreaterOrEqualTo();
-
-                        // TODO: Check for final wildcard...
-                        $resultList[] = $this->getVersionFromTokens($versionTokenList, $labelTokenList);
-                        $inRange = true;
-                        $versionTokenList = array();
-                        $labelTokenList = array();
-
-                    } else {
-                        $inLabel = true;
-                    }
-
-                // Otherwise accumulate version tokens
-                } else {
-                    if (!$inLabel) {
-                        $versionTokenList[] = $currentToken;
-                    } else {
-                        $labelTokenList[] = $currentToken;
-                    }
-                }
-            }
-        }
-
-        // Handle upper bounds for hyphenated ranges
-        if ($inRange) {
-            // Fake token (TODO: Concrete type?)
-            $resultList[] = new Token(Token::LOGICAL_AND, '');
-            $resultList[] = new LessThan();
-            $resultList[] = $this->getUpperVersionForHyphenRange($versionTokenList, $labelTokenList);
-
-        // Otherwise handle simple or wildcard version number
-        } elseif ($versionTokenList) {
-
-            if (Token::WILDCARD_DIGITS === $versionTokenList[count($versionTokenList) - 1]->getType()) {
-                $resultList = array_merge(
-                    $resultList,
-                    $this->getWildcardVersionFromTokens($versionTokenList)
-                );
-            } else {
-                $resultList[] = $this->getVersionFromTokens($versionTokenList, $labelTokenList);
-            }
-        }
-
-        return $resultList;
-    }
-
-    /**
      * @todo Return VersionRange instances?
      *
      * Hyphenated ranges are implemented as described @ https://getcomposer.org/doc/01-basic-usage.md#package-versions
@@ -180,7 +91,7 @@ class VersionParser
      *
      * @return array of Versions and comparators
      */
-    private function getUpperVersionForHyphenRange(array $tokenList, array $labelTokenList)
+    private function getUpperVersionForHyphenRange(array $tokenList, array $labelTokenList = array())
     {
         $minor = 0;
         $patch = 0;
@@ -214,38 +125,91 @@ class VersionParser
         );
     }
 
+
     /**
-     * @todo Return VersionRange instances?
-     *
      * @param Token[] $tokenList
-     *
-     * @return array of Versions and comparators
      */
-    private function getRangedVersion(array $tokenList)
+    private function parseHyphenated($tokenList)
     {
+        $chunkedList = $this->chunkOnHyphen($tokenList);
+
         $resultList = array();
 
-        // Tilde range
-        if (Token::TILDE_RANGE === $tokenList[0]->getType()) {
-            $resultList = $this->getTildeVersionFromTokens(
-                array_slice($tokenList, 1)
-            );
+        switch (count($chunkedList)) {
+            // Simple range or version with label
+            case 2:
 
-        // Caret range
-        } elseif (Token::CARET_RANGE === $tokenList[0]->getType()) {
-            $resultList = $this->getCaretVersionFromTokens(
-                array_slice($tokenList, 1)
-            );
+                // Version with label
+                if (Token::LABEL_STRING === $chunkedList[1][0]->getType()) {
+                    $resultList[] = new ComparatorVersion(
+                        new EqualTo(),
+                        $this->getVersionFromTokens($chunkedList[0], $chunkedList[1])
+                    );
 
-        // Any comparator
-        } elseif (!is_null($this->getComparatorByTokenType($tokenList[0]))) {
-            $resultList[] = $this->getComparatorByTokenType($tokenList[0]);
-            $resultList[] = $this->getVersionFromTokens(
-                array_slice($tokenList, 1)
-            );
+                // Version range
+                } else {
+                    $resultList[] = new GreaterOrEqualTo();
+                    $resultList[] = $this->getVersionFromTokens($chunkedList[0]);
+                    $resultList[] = new Token(Token::LOGICAL_AND, '');
+                    $resultList[] = new LessThan();
+                    $resultList[] = $this->getUpperVersionForHyphenRange($chunkedList[1]);
+                }
+
+                break;
+
+            // Range where one version has label
+            case 3:
+                // Label belongs to left version
+                if (Token::LABEL_STRING === $chunkedList[1][0]->getType()) {
+                    $resultList[] = new GreaterOrEqualTo();
+                    $resultList[] = $this->getVersionFromTokens($chunkedList[0], $chunkedList[1]);
+                    $resultList[] = new Token(Token::LOGICAL_AND, '');
+                    $resultList[] = new LessThan();
+                    $resultList[] = $this->getUpperVersionForHyphenRange($chunkedList[2]);
+
+                // Label belongs to right version
+                } else {
+                    $resultList[] = new GreaterOrEqualTo();
+                    $resultList[] = $this->getVersionFromTokens($chunkedList[0]);
+                    $resultList[] = new Token(Token::LOGICAL_AND, '');
+                    $resultList[] = new LessThan();
+                    $resultList[] = $this->getUpperVersionForHyphenRange($chunkedList[1], $chunkedList[2]);
+                }
+
+                break;
+
+            // Range where both versions have label
+            case 4:
+                $resultList[] = new GreaterOrEqualTo();
+                $resultList[] = $this->getVersionFromTokens($chunkedList[0], $chunkedList[1]);
+                $resultList[] = new Token(Token::LOGICAL_AND, '');
+                $resultList[] = new LessThan();
+                $resultList[] = $this->getUpperVersionForHyphenRange($chunkedList[2], $chunkedList[3]);
+                break;
         }
 
         return $resultList;
+    }
+
+    /**
+     * @param Token[] $tokenList
+     *
+     * @return Token[][]
+     */
+    private function chunkOnHyphen($tokenList)
+    {
+        $chunkedTokenList = array();
+
+        $index = 0;
+        foreach ($tokenList as $token) {
+            if (Token::DASH_SEPARATOR === $token->getType()) {
+                $index++;
+            } else {
+                $chunkedTokenList[$index][] = $token;
+            }
+        }
+
+        return $chunkedTokenList;
     }
 
     /**
@@ -255,16 +219,73 @@ class VersionParser
      *
      * @return Token[][] $tokenList
      */
-    public function clusterTokens(array $tokenList)
+    private function clusterTokens(array $tokenList)
     {
         $tokenClusterList = array();
 
         // Stores tokens not yet parcelled out
         $tokenAccumulator = array();
 
-        $addClusteredTokens = function($accumulatedTokenList) use (&$tokenClusterList) {
-            if (count($accumulatedTokenList)) {
-                $tokenClusterList[] = $accumulatedTokenList;
+        $that = $this;
+        $addClusteredTokens = function($accumulatedTokenList) use (&$tokenClusterList, $that) {
+            $accumulatedTokenCount = count($accumulatedTokenList);
+
+            if ($accumulatedTokenCount) {
+
+                $comparator = $that->getComparatorByTokenType($accumulatedTokenList[0]);
+
+                switch (true) {
+                    case !is_null($comparator = $that->getComparatorByTokenType($accumulatedTokenList[0])):
+                        $tokenClusterList[] = $comparator;
+                        break;
+
+                    case Token::DIGITS === $accumulatedTokenList[0]->getType():
+
+                        $hyphenated = false;
+
+                        for ($i = 0; $i < count($accumulatedTokenList); $i++) {
+                            if (Token::DASH_SEPARATOR === $accumulatedTokenList[$i]->getType()) {
+                                $hyphenated = true;
+                                break;
+                            }
+                        }
+
+                        if ($hyphenated) {
+                            $tokenClusterList = array_merge(
+                                $tokenClusterList,
+                                $that->parseHyphenated($accumulatedTokenList)
+                            );
+
+                        } elseif (Token::WILDCARD_DIGITS === $accumulatedTokenList[$accumulatedTokenCount - 1]->getType()) {
+                            $tokenClusterList = array_merge(
+                                $tokenClusterList,
+                                $that->getWildcardVersionFromTokens($accumulatedTokenList)
+                            );
+
+                        } else {
+                            $tokenClusterList[] = $that->getVersionFromTokens($accumulatedTokenList);
+                        }
+
+                        break;
+
+                    case Token::TILDE_RANGE === $accumulatedTokenList[0]->getType():
+                        $tokenClusterList = array_merge(
+                            $tokenClusterList,
+                            $that->getTildeVersionFromTokens(array_slice($accumulatedTokenList, 1))
+                        );
+                        break;
+
+                    case Token::CARET_RANGE === $accumulatedTokenList[0]->getType():
+                        $tokenClusterList = array_merge(
+                            $tokenClusterList,
+                            $that->getCaretVersionFromTokens(array_slice($accumulatedTokenList, 1))
+                        );
+                        break;
+
+                    default:
+                        $tokenClusterList[] = $accumulatedTokenList[0];
+                        break;
+                }
             }
         };
 
@@ -280,14 +301,15 @@ class VersionParser
                     $tokenAccumulator = array();
                     break;
 
-                // Beginning caret, tilde or comparator
+                // Beginning caret or tilde range
                 case in_array($currentToken->getType(), array(Token::TILDE_RANGE, Token::CARET_RANGE)):
-                case !is_null($this->getComparatorByTokenType($currentToken)):
                     $addClusteredTokens($tokenAccumulator);
                     $tokenAccumulator = array();
                     $tokenAccumulator[] = $currentToken;
                     break;
 
+                // Comparator or logical operator
+                case !is_null($this->getComparatorByTokenType($currentToken)):
                 case in_array($currentToken->getType(), array(Token::LOGICAL_AND, Token::LOGICAL_OR)):
                     $addClusteredTokens($tokenAccumulator);
                     $addClusteredTokens(array($currentToken));
