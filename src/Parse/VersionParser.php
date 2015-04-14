@@ -82,7 +82,7 @@ class VersionParser
                 $realResultList[] = $resultList[$i];
             }
         }
-        $buildRange = new BuildRange();
+        $buildRange = new LogicalOperatorProcessor();
 
         return $buildRange->run($realResultList);
     }

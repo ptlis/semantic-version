@@ -22,7 +22,7 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  *
  * Basic (and limited) implementation of the shunting algorithm for logical AND / OR.
  */
-class BuildRange
+class LogicalOperatorProcessor
 {
     /**
      * @var array Of operator precedences & associativity.
@@ -39,7 +39,7 @@ class BuildRange
     );
 
     /**
-     * Accepts an array of ComparatorVersions & logical operator tokens & returns a version range implementing those
+     * Accepts an array of VersionRanges & logical operator tokens & returns a single version range implementing those
      *  constraints.
      *
      * @param array $tokenList
@@ -131,10 +131,6 @@ class BuildRange
         // Merge remaining operators onto output list
         while ($this->hasOperator($operatorStack)) {
             $output->enqueue($operatorStack->pop());
-        }
-
-        if (count($operatorStack) > 1) {
-            throw new \RuntimeException('Invalid version number');
         }
 
         return iterator_to_array($output);
