@@ -637,6 +637,72 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     )
                 ),
                 '>1.5.0&&<4.0.0||>=5.0.0&&<6.0.0'
+            ),
+            array(
+                '1.0.0-rc.2-2.0.0',
+                array(
+                    new Token(Token::DIGITS, '1'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '0'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '0'),
+                    new Token(Token::DASH_SEPARATOR, '-'),
+                    new Token(Token::LABEL_STRING, 'rc'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '2'),
+
+                    new Token(Token::DASH_SEPARATOR, '-'),
+
+                    new Token(Token::DIGITS, '2'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '0'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '0')
+                ),
+                new LogicalAnd(
+                    new ComparatorVersion(
+                        new GreaterOrEqualTo(),
+                        new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC, 2))
+                    ),
+                    new ComparatorVersion(
+                        new LessOrEqualTo(),
+                        new Version(2, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    )
+                ),
+                '>=1.0.0-rc.2&&<=2.0.0'
+            ),
+            array(
+                '1.0.0-2.0.0-alpha.3',
+                array(
+                    new Token(Token::DIGITS, '1'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '0'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '0'),
+
+                    new Token(Token::DASH_SEPARATOR, '-'),
+
+                    new Token(Token::DIGITS, '2'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '0'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '0'),
+                    new Token(Token::DASH_SEPARATOR, '-'),
+                    new Token(Token::LABEL_STRING, 'alpha'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '3')
+                ),
+                new LogicalAnd(
+                    new ComparatorVersion(
+                        new GreaterOrEqualTo(),
+                        new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    ),
+                    new ComparatorVersion(
+                        new LessOrEqualTo(),
+                        new Version(2, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 3))
+                    )
+                ),
+                '>=1.0.0&&<=2.0.0-alpha.3'
             )
         );
     }
