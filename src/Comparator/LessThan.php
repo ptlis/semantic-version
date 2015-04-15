@@ -30,7 +30,6 @@ class LessThan extends AbstractComparator
         return '<';
     }
 
-
     /**
      * Return true if the left version is less than right version.
      *
@@ -48,7 +47,6 @@ class LessThan extends AbstractComparator
 
         return $lessThan;
     }
-
 
     /**
      * Returns true if left version number is less than right version number.
@@ -69,7 +67,6 @@ class LessThan extends AbstractComparator
         return $lessThan;
     }
 
-
     /**
      * Returns true if left label is less than right version label.
      *
@@ -88,7 +85,6 @@ class LessThan extends AbstractComparator
         return $lessThan;
     }
 
-
     /**
      * Returns true if left major is less than right major version.
      *
@@ -101,7 +97,6 @@ class LessThan extends AbstractComparator
     {
         return $lVersion->getMajor() < $rVersion->getMajor();
     }
-
 
     /**
      * Returns true if left & right major values match & left minor is less than right major version.
@@ -117,7 +112,6 @@ class LessThan extends AbstractComparator
             && $lVersion->getMinor() < $rVersion->getMinor();
     }
 
-
     /**
      * Returns true if left & right major & minor values match & left patch is less than right patch version.
      *
@@ -132,7 +126,6 @@ class LessThan extends AbstractComparator
             && $lVersion->getMinor() == $rVersion->getMinor()
             && $lVersion->getPatch() < $rVersion->getPatch();
     }
-
 
     /**
      * Returns true if left & right major, minor & patch values match & left label precedence is less than right label
@@ -150,7 +143,6 @@ class LessThan extends AbstractComparator
             && $lVersion->getPatch() == $rVersion->getPatch()
             && $lVersion->getLabel()->getPrecedence() < $rVersion->getLabel()->getPrecedence();
     }
-
 
     /**
      * Returns true if left & right major, minor, patch & label precedence values match & left label version is less

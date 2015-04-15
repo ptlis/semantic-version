@@ -30,7 +30,6 @@ class LessOrEqualTo extends AbstractComparator
         return '<=';
     }
 
-
     /**
      * Return true if the left version is less or equal to the right version.
      *

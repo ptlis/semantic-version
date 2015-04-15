@@ -30,7 +30,6 @@ class GreaterThan extends AbstractComparator
         return '>';
     }
 
-
     /**
      * Return true if the left version is greater than right version.
      *

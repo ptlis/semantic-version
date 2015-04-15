@@ -30,7 +30,6 @@ class EqualTo extends AbstractComparator
         return '=';
     }
 
-
     /**
      * Return true if the versions match.
      *
