@@ -44,7 +44,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                 new ComparatorVersion(
                     new EqualTo(),
                     new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
-                )
+                ),
+                '=1.0.0'
             ),
             array(
                 'v1',
@@ -54,7 +55,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                 new ComparatorVersion(
                     new EqualTo(),
                     new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
-                )
+                ),
+                '=1.0.0'
             ),
             array(
                 '1.2',
@@ -66,7 +68,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                 new ComparatorVersion(
                     new EqualTo(),
                     new Version(1, 2, 0, new Label(Label::PRECEDENCE_ABSENT))
-                )
+                ),
+                '=1.2.0'
             ),
             array(
                 '1.15.1',
@@ -80,7 +83,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                 new ComparatorVersion(
                     new EqualTo(),
                     new Version(1, 15, 1, new Label(Label::PRECEDENCE_ABSENT))
-                )
+                ),
+                '=1.15.1'
             ),
             array(
                 '> 5.4',
@@ -93,7 +97,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                 new ComparatorVersion(
                     new GreaterThan(),
                     new Version(5, 4, 0, new Label(Label::PRECEDENCE_ABSENT))
-                )
+                ),
+                '>5.4.0'
             ),
             array(
                 '1.*',
@@ -111,7 +116,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new LessThan(),
                         new Version(2, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
-                )
+                ),
+                '>=1.0.0&&<2.0.0'
             ),
             array(
                 '4.x',
@@ -129,7 +135,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new LessThan(),
                         new Version(5, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
-                )
+                ),
+                '>=4.0.0&&<5.0.0'
             ),
             array(
                 '1.5.*',
@@ -149,7 +156,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new LessThan(),
                         new Version(1, 6, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
-                )
+                ),
+                '>=1.5.0&&<1.6.0'
             ),
             array(
                 '1.3.x',
@@ -169,7 +177,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new LessThan(),
                         new Version(1, 4, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
-                )
+                ),
+                '>=1.3.0&&<1.4.0'
             ),
             array(
                 '>2.0',
@@ -183,7 +192,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                 new ComparatorVersion(
                     new GreaterThan(),
                     new Version(2, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
-                )
+                ),
+                '>2.0.0'
             ),
             array(
                 '>=1.2.1',
@@ -199,7 +209,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                 new ComparatorVersion(
                     new GreaterOrEqualTo(),
                     new Version(1, 2, 1, new Label(Label::PRECEDENCE_ABSENT))
-                )
+                ),
+                '>=1.2.1'
             ),
             array(
                 '<4.0.5',
@@ -215,7 +226,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                 new ComparatorVersion(
                     new LessThan(),
                     new Version(4, 0, 5, new Label(Label::PRECEDENCE_ABSENT))
-                )
+                ),
+                '<4.0.5'
             ),
             array(
                 '=1.0.1',
@@ -231,10 +243,11 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                 new ComparatorVersion(
                     new EqualTo(),
                     new Version(1, 0, 1, new Label(Label::PRECEDENCE_ABSENT))
-                )
+                ),
+                '=1.0.1'
             ),
             array(
-                '>=1.0.1<2.0.0',
+                '>=1.0.1&&<2.0.0',
                 array(
                     new Token(Token::GREATER_THAN_EQUAL, '>='),
 
@@ -263,7 +276,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new LessThan(),
                         new Version(2, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
-                )
+                ),
+                '>=1.0.1&&<2.0.0',
             ),
             array(
                 '~1.7',
@@ -282,7 +296,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new LessThan(),
                         new Version(2, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
-                )
+                ),
+                '>=1.7.0&&<2.0.0',
             ),
             array(
                 '~1.7.4',
@@ -303,7 +318,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new LessThan(),
                         new Version(1, 8, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
-                )
+                ),
+                '>=1.7.4&&<1.8.0',
             ),
             array(
                 '^3.1.0',
@@ -324,7 +340,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new LessThan(),
                         new Version(4, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
-                )
+                ),
+                '>=3.1.0&&<4.0.0',
             ),
             array(
                 '1.0.7-3.1.18',
@@ -352,7 +369,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new LessOrEqualTo(),
                         new Version(3, 1, 18, new Label(Label::PRECEDENCE_ABSENT))
                     )
-                )
+                ),
+                '>=1.0.7&&<=3.1.18',
             ),
             array(
                 '1.0-2.0',
@@ -376,7 +394,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new LessThan(),
                         new Version(2, 1, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
-                )
+                ),
+                '>=1.0.0&&<2.1.0',
             ),
             array(
                 '1-2',
@@ -396,7 +415,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new LessThan(),
                         new Version(3, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
-                )
+                ),
+                '>=1.0.0&&<3.0.0',
             ),
             array(
                 '1.0-2.0',
@@ -420,7 +440,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new LessThan(),
                         new Version(2, 1, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
-                )
+                ),
+                '>=1.0.0&&<2.1.0',
             ),
             array(
                 '1.8.3-alpha.7',
@@ -440,7 +461,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                 new ComparatorVersion(
                     new EqualTo(),
                     new Version(1, 8, 3, new Label(Label::PRECEDENCE_ALPHA, 7))
-                )
+                ),
+                '=1.8.3-alpha.7'
             ),
             array(
                 '1.8.0-alpha.7-1.8.0-beta.2',
@@ -480,7 +502,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new LessOrEqualTo(),
                         new Version(1, 8, 0, new Label(Label::PRECEDENCE_BETA, 2))
                     )
-                )
+                ),
+                '>=1.8.0-alpha.7&&<=1.8.0-beta.2'
             ),
             array(
                 '>=1.7.0 <1.9',
@@ -508,7 +531,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new LessThan(),
                         new Version(1, 9, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
-                )
+                ),
+                '>=1.7.0&&<1.9.0'
             ),
             array(
                 '>=1.7.0 && <1.9',
@@ -536,7 +560,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new LessThan(),
                         new Version(1, 9, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
-                )
+                ),
+                '>=1.7.0&&<1.9.0'
             ),
             array(
                 '1.7.6 || >1.9',
@@ -563,7 +588,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new GreaterThan(),
                         new Version(1, 9, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
-                )
+                ),
+                '=1.7.6||>1.9.0'
             ),
             array(
                 '>1.5 < 4 || >=5 <6',
@@ -609,7 +635,8 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                             new Version(6, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                         )
                     )
-                )
+                ),
+                '>1.5.0&&<4.0.0||>=5.0.0&&<6.0.0'
             )
         );
     }

@@ -36,5 +36,10 @@ class ParseRangeTest extends TestDataProvider
             $expectedValueList,
             $range
         );
+
+        $this->assertEquals(
+            $expectedSerialization,
+            strval($range)
+        );
     }
 }
