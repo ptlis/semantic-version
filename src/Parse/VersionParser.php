@@ -65,7 +65,7 @@ class VersionParser
      *
      * @return VersionRangeInterface
      */
-    public function parse(array $tokenList)
+    public function parseRange(array $tokenList)
     {
         $resultList = $this->clusterTokens($tokenList);
 
@@ -163,7 +163,7 @@ class VersionParser
     }
 
     /**
-     * Process a cluster of tokens building version ranges.
+     * Process a cluster of tokens building version ranges where possible.
      *
      * @param Token[] $tokenList
      *

@@ -17,7 +17,7 @@ use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 
-class ParserTest extends TestDataProvider
+class ParseRangeTest extends TestDataProvider
 {
     /**
      * @dataProvider tokenProvider
@@ -26,15 +26,15 @@ class ParserTest extends TestDataProvider
      * @param Token[] $tokenList
      * @param array $expectedValueList
      */
-    public function testParse($version, $tokenList, $expectedValueList)
+    public function testParseRange($version, $tokenList, $expectedValueList, $expectedSerialization)
     {
         $parser = new VersionParser(new LabelBuilder());
 
-        $valueList = $parser->parse($tokenList);
+        $range = $parser->parseRange($tokenList);
 
         $this->assertEquals(
             $expectedValueList,
-            $valueList
+            $range
         );
     }
 }
