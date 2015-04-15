@@ -48,4 +48,21 @@ class ParseRangeTest extends TestDataProvider
             strval($expectedRange)
         );
     }
+
+    /**
+     * @dataProvider tokenProvider
+     */
+    public function testSatisfiesRange(
+        $version,
+        $tokenList,
+        $expectedRange,
+        $expectedSerialization,
+        $satisfiesVersionList
+    ) {
+        foreach ($satisfiesVersionList as $satisfiesVersion) {
+            $this->assertTrue(
+                $expectedRange->isSatisfiedBy($satisfiesVersion)
+            );
+        }
+    }
 }
