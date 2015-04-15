@@ -1,11 +1,9 @@
 <?php
 
 /**
- * Simple class to provide version parsing with good defaults.
- *
  * PHP Version 5.3
  *
- * @copyright   (c) 2014 brian ridley
+ * @copyright   (c) 2014-2015 brian ridley
  * @author      brian ridley <ptlis@ptlis.net>
  * @license     http://opensource.org/licenses/MIT MIT
  *
@@ -15,17 +13,10 @@
 
 namespace ptlis\SemanticVersion;
 
-use ptlis\SemanticVersion\BoundingPair\BoundingPair;
-use ptlis\SemanticVersion\BoundingPair\BoundingPairFactory;
-use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersion;
-use ptlis\SemanticVersion\ComparatorVersion\ComparatorVersionFactory;
-use ptlis\SemanticVersion\OldVersion\Comparator\ComparatorFactory;
-use ptlis\SemanticVersion\Exception\InvalidBoundingPairException;
-use ptlis\SemanticVersion\Exception\InvalidComparatorVersionException;
-use ptlis\SemanticVersion\Exception\InvalidVersionException;
-use ptlis\SemanticVersion\Label\LabelFactory;
-use ptlis\SemanticVersion\OldVersion\Version;
-use ptlis\SemanticVersion\OldVersion\VersionFactory;
+use ptlis\SemanticVersion\Parse\VersionParser;
+use ptlis\SemanticVersion\Parse\VersionTokenizer;
+use ptlis\SemanticVersion\Version\Label\LabelBuilder;
+use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 
 /**
  * Simple class to provide version parsing with good defaults.
@@ -33,19 +24,14 @@ use ptlis\SemanticVersion\OldVersion\VersionFactory;
 class VersionEngine
 {
     /**
-     * @var VersionFactory
+     * @var VersionTokenizer
      */
-    private $versionFac;
+    private $tokenizer;
 
     /**
-     * @var ComparatorVersionFactory
+     * @var VersionParser
      */
-    private $comparatorVersionFac;
-
-    /**
-     * @var BoundingPairFactory
-     */
-    private $boundingPairFac;
+    private $parser;
 
 
     /**
@@ -53,56 +39,28 @@ class VersionEngine
      */
     public function __construct()
     {
-        $regexProvider = new VersionRegex();
-        $labelFac = new LabelFactory();
-        $comparatorFac = new ComparatorFactory();
-        $this->versionFac = new VersionFactory($regexProvider, $labelFac);
-        $this->comparatorVersionFac = new ComparatorVersionFactory($regexProvider, $this->versionFac, $comparatorFac);
-        $this->boundingPairFac = new BoundingPairFactory($regexProvider, $this->comparatorVersionFac);
+        $this->tokenizer = new VersionTokenizer();
+        $this->parser = new VersionParser(
+            new LabelBuilder()
+        );
     }
 
-
-    /**
-     * Parse a version number into an array of version number parts.
-     *
-     * @throws InvalidVersionException
-     *
-     * @param string $versionNo
-     *
-     * @return Version
-     */
-    public function parseVersion($versionNo)
+    public function parse()
     {
-        return $this->versionFac->parse($versionNo);
+        // TODO: Re-implement
     }
 
-
     /**
-     * Parse a comparator version number into an array of version number parts.
+     * Parse a version range & return a range object encoding those rules.
      *
-     * @throws InvalidComparatorVersionException
+     * @param string $rangeString
      *
-     * @param string $versionNo
-     *
-     * @return ComparatorVersion
+     * @return VersionRangeInterface
      */
-    public function parseComparatorVersion($versionNo)
+    public function parseRange($rangeString)
     {
-        return $this->comparatorVersionFac->parse($versionNo);
-    }
+        $tokenList = $this->tokenizer->tokenize($rangeString);
 
-
-    /**
-     * Parse a bounding pair string into a BoundingPair entity.
-     *
-     * @throws InvalidBoundingPairException
-     *
-     * @param string $versionNo
-     *
-     * @return BoundingPair
-     */
-    public function parseBoundingPair($versionNo)
-    {
-        return $this->boundingPairFac->parse($versionNo);
+        return $this->parser->parseRange($tokenList);
     }
 }
