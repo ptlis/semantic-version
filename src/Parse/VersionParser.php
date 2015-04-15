@@ -13,8 +13,8 @@
 
 namespace ptlis\SemanticVersion\Parse;
 
-use ptlis\SemanticVersion\Version\Comparator\ComparatorFactory;
-use ptlis\SemanticVersion\Version\Comparator\ComparatorInterface;
+use ptlis\SemanticVersion\Comparator\ComparatorFactory;
+use ptlis\SemanticVersion\Comparator\ComparatorInterface;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 use ptlis\SemanticVersion\Version\VersionInterface;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;

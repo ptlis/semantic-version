@@ -11,14 +11,14 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Version\Comparator;
+namespace ptlis\SemanticVersion\Comparator;
 
 use ptlis\SemanticVersion\Version\VersionInterface;
 
 /**
- * Version less than or equal comparator.
+ * Version equality comparator.
  */
-class LessOrEqualTo extends AbstractComparator
+class EqualTo extends AbstractComparator
 {
     /**
      * Retrieve the comparator's symbol.
@@ -27,12 +27,12 @@ class LessOrEqualTo extends AbstractComparator
      */
     public static function getSymbol()
     {
-        return '<=';
+        return '=';
     }
 
 
     /**
-     * Return true if the left version is less or equal to the right version.
+     * Return true if the versions match.
      *
      * @param VersionInterface $lVersion
      * @param VersionInterface $rVersion
@@ -41,9 +41,6 @@ class LessOrEqualTo extends AbstractComparator
      */
     public function compare(VersionInterface $lVersion, VersionInterface $rVersion)
     {
-        $lessThan = new LessThan();
-        $equalTo = new EqualTo();
-
-        return ($lessThan->compare($lVersion, $rVersion) || $equalTo->compare($lVersion, $rVersion));
+        return ($lVersion->__toString() === $rVersion->__toString());
     }
 }

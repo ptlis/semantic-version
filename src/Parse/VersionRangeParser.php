@@ -15,7 +15,7 @@ namespace ptlis\SemanticVersion\Parse;
 
 
 use ptlis\SemanticVersion\Label\LabelInterface;
-use ptlis\SemanticVersion\Version\Comparator\ComparatorFactory;
+use ptlis\SemanticVersion\Comparator\ComparatorFactory;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;

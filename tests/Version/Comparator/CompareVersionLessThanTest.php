@@ -13,7 +13,7 @@
 
 namespace ptlis\SemanticVersion\Test\Version\Comparator;
 
-use ptlis\SemanticVersion\Version\Comparator\LessThan;
+use ptlis\SemanticVersion\Comparator\LessThan;
 use ptlis\SemanticVersion\Version\Label\Label;
 use ptlis\SemanticVersion\Version\Version;
 
