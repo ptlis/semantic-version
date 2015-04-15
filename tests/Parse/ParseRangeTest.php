@@ -13,7 +13,6 @@
 
 namespace ptlis\SemanticVersion\Test\Parse;
 
-use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 
@@ -21,25 +20,32 @@ class ParseRangeTest extends TestDataProvider
 {
     /**
      * @dataProvider tokenProvider
-     *
-     * @param string $version
-     * @param Token[] $tokenList
-     * @param array $expectedValueList
      */
-    public function testParseRange($version, $tokenList, $expectedValueList, $expectedSerialization)
+    public function testParseRange($version, $tokenList, $expectedRange, $expectedSerialization)
     {
         $parser = new VersionParser(new LabelBuilder());
 
         $range = $parser->parseRange($tokenList);
 
         $this->assertEquals(
-            $expectedValueList,
+            $expectedRange,
             $range
         );
 
         $this->assertEquals(
             $expectedSerialization,
             strval($range)
+        );
+    }
+
+    /**
+     * @dataProvider tokenProvider
+     */
+    public function testSerializeRange($version, $tokenList, $expectedRange, $expectedSerialization)
+    {
+        $this->assertEquals(
+            $expectedSerialization,
+            strval($expectedRange)
         );
     }
 }
