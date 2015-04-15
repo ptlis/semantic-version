@@ -37,77 +37,77 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
     {
         return array(
             array(
-                '1',
-                array(
+                'version_string' => '1',
+                'tokens' => array(
                     new Token(Token::DIGITS, '1')
                 ),
-                new ComparatorVersion(
+                'parsed_range' => new ComparatorVersion(
                     new EqualTo(),
                     new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                 ),
-                '=1.0.0'
+                'serialized' => '=1.0.0'
             ),
             array(
-                'v1',
-                array(
+                'version_string' => 'v1',
+                'tokens' => array(
                     new Token(Token::DIGITS, '1')
                 ),
-                new ComparatorVersion(
+                'parsed_range' => new ComparatorVersion(
                     new EqualTo(),
                     new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                 ),
-                '=1.0.0'
+                'serialized' => '=1.0.0'
             ),
             array(
-                '1.2',
-                array(
+                'version_string' => '1.2',
+                'tokens' => array(
                     new Token(Token::DIGITS, '1'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '2')
                 ),
-                new ComparatorVersion(
+                'parsed_range' => new ComparatorVersion(
                     new EqualTo(),
                     new Version(1, 2, 0, new Label(Label::PRECEDENCE_ABSENT))
                 ),
-                '=1.2.0'
+                'serialized' => '=1.2.0'
             ),
             array(
-                '1.15.1',
-                array(
+                'version_string' => '1.15.1',
+                'tokens' => array(
                     new Token(Token::DIGITS, '1'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '15'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '1')
                 ),
-                new ComparatorVersion(
+                'parsed_range' => new ComparatorVersion(
                     new EqualTo(),
                     new Version(1, 15, 1, new Label(Label::PRECEDENCE_ABSENT))
                 ),
-                '=1.15.1'
+                'serialized' => '=1.15.1'
             ),
             array(
-                '> 5.4',
-                array(
+                'version_string' => '> 5.4',
+                'tokens' => array(
                     new Token(Token::GREATER_THAN, '>'),
                     new Token(Token::DIGITS, '5'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '4')
                 ),
-                new ComparatorVersion(
+                'parsed_range' => new ComparatorVersion(
                     new GreaterThan(),
                     new Version(5, 4, 0, new Label(Label::PRECEDENCE_ABSENT))
                 ),
-                '>5.4.0'
+                'serialized' => '>5.4.0'
             ),
             array(
-                '1.*',
-                array(
+                'version_string' => '1.*',
+                'tokens' => array(
                     new Token(Token::DIGITS, '1'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::WILDCARD_DIGITS, '*')
                 ),
-                new LogicalAnd(
+                'parsed_range' => new LogicalAnd(
                     new ComparatorVersion(
                         new GreaterOrEqualTo(),
                         new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
@@ -117,16 +117,16 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(2, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                '>=1.0.0&&<2.0.0'
+                'serialized' => '>=1.0.0&&<2.0.0'
             ),
             array(
-                '4.x',
-                array(
+                'version_string' => '4.x',
+                'tokens' => array(
                     new Token(Token::DIGITS, '4'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::WILDCARD_DIGITS, 'x')
                 ),
-                new LogicalAnd(
+                'parsed_range' => new LogicalAnd(
                     new ComparatorVersion(
                         new GreaterOrEqualTo(),
                         new Version(4, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
@@ -136,18 +136,18 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(5, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                '>=4.0.0&&<5.0.0'
+                'serialized' => '>=4.0.0&&<5.0.0'
             ),
             array(
-                '1.5.*',
-                array(
+                'version_string' => '1.5.*',
+                'tokens' => array(
                     new Token(Token::DIGITS, '1'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '5'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::WILDCARD_DIGITS, '*')
                 ),
-                new LogicalAnd(
+                'parsed_range' => new LogicalAnd(
                     new ComparatorVersion(
                         new GreaterOrEqualTo(),
                         new Version(1, 5, 0, new Label(Label::PRECEDENCE_ABSENT))
@@ -157,18 +157,18 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(1, 6, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                '>=1.5.0&&<1.6.0'
+                'serialized' => '>=1.5.0&&<1.6.0'
             ),
             array(
-                '1.3.x',
-                array(
+                'version_string' => '1.3.x',
+                'tokens' => array(
                     new Token(Token::DIGITS, '1'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '3'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::WILDCARD_DIGITS, 'x')
                 ),
-                new LogicalAnd(
+                'parsed_range' => new LogicalAnd(
                     new ComparatorVersion(
                         new GreaterOrEqualTo(),
                         new Version(1, 3, 0, new Label(Label::PRECEDENCE_ABSENT))
@@ -178,26 +178,26 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(1, 4, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                '>=1.3.0&&<1.4.0'
+                'serialized' => '>=1.3.0&&<1.4.0'
             ),
             array(
-                '>2.0',
-                array(
+                'version_string' => '>2.0',
+                'tokens' => array(
                     new Token(Token::GREATER_THAN, '>'),
 
                     new Token(Token::DIGITS, '2'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '0')
                 ),
-                new ComparatorVersion(
+                'parsed_range' => new ComparatorVersion(
                     new GreaterThan(),
                     new Version(2, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                 ),
-                '>2.0.0'
+                'serialized' => '>2.0.0'
             ),
             array(
-                '>=1.2.1',
-                array(
+                'version_string' => '>=1.2.1',
+                'tokens' => array(
                     new Token(Token::GREATER_THAN_EQUAL, '>='),
 
                     new Token(Token::DIGITS, '1'),
@@ -206,15 +206,15 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '1')
                 ),
-                new ComparatorVersion(
+                'parsed_range' => new ComparatorVersion(
                     new GreaterOrEqualTo(),
                     new Version(1, 2, 1, new Label(Label::PRECEDENCE_ABSENT))
                 ),
-                '>=1.2.1'
+                'serialized' => '>=1.2.1'
             ),
             array(
-                '<4.0.5',
-                array(
+                'version_string' => '<4.0.5',
+                'tokens' => array(
                     new Token(Token::LESS_THAN, '<'),
 
                     new Token(Token::DIGITS, '4'),
@@ -223,15 +223,15 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '5')
                 ),
-                new ComparatorVersion(
+                'parsed_range' => new ComparatorVersion(
                     new LessThan(),
                     new Version(4, 0, 5, new Label(Label::PRECEDENCE_ABSENT))
                 ),
-                '<4.0.5'
+                'serialized' => '<4.0.5'
             ),
             array(
-                '=1.0.1',
-                array(
+                'version_string' => '=1.0.1',
+                'tokens' => array(
                     new Token(Token::EQUAL_TO, '='),
 
                     new Token(Token::DIGITS, '1'),
@@ -240,15 +240,15 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '1')
                 ),
-                new ComparatorVersion(
+                'parsed_range' => new ComparatorVersion(
                     new EqualTo(),
                     new Version(1, 0, 1, new Label(Label::PRECEDENCE_ABSENT))
                 ),
-                '=1.0.1'
+                'serialized' => '=1.0.1'
             ),
             array(
-                '>=1.0.1&&<2.0.0',
-                array(
+                'version_string' => '>=1.0.1&&<2.0.0',
+                'tokens' => array(
                     new Token(Token::GREATER_THAN_EQUAL, '>='),
 
                     new Token(Token::DIGITS, '1'),
@@ -267,7 +267,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '0')
                 ),
-                new LogicalAnd(
+                'parsed_range' => new LogicalAnd(
                     new ComparatorVersion(
                         new GreaterOrEqualTo(),
                         new Version(1, 0, 1, new Label(Label::PRECEDENCE_ABSENT))
@@ -277,17 +277,17 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(2, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                '>=1.0.1&&<2.0.0',
+                'serialized' => '>=1.0.1&&<2.0.0',
             ),
             array(
-                '~1.7',
-                array(
+                'version_string' => '~1.7',
+                'tokens' => array(
                     new Token(Token::TILDE_RANGE, '~'),
                     new Token(Token::DIGITS, '1'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '7')
                 ),
-                new LogicalAnd(
+                'parsed_range' => new LogicalAnd(
                     new ComparatorVersion(
                         new GreaterOrEqualTo(),
                         new Version(1, 7, 0, new Label(Label::PRECEDENCE_ABSENT))
@@ -297,11 +297,11 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(2, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                '>=1.7.0&&<2.0.0',
+                'serialized' => '>=1.7.0&&<2.0.0',
             ),
             array(
-                '~1.7.4',
-                array(
+                'version_string' => '~1.7.4',
+                'tokens' => array(
                     new Token(Token::TILDE_RANGE, '~'),
                     new Token(Token::DIGITS, '1'),
                     new Token(Token::DOT_SEPARATOR, '.'),
@@ -309,7 +309,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '4'),
                 ),
-                new LogicalAnd(
+                'parsed_range' => new LogicalAnd(
                     new ComparatorVersion(
                         new GreaterOrEqualTo(),
                         new Version(1, 7, 4, new Label(Label::PRECEDENCE_ABSENT))
@@ -319,11 +319,11 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(1, 8, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                '>=1.7.4&&<1.8.0',
+                'serialized' => '>=1.7.4&&<1.8.0',
             ),
             array(
-                '^3.1.0',
-                array(
+                'version_string' => '^3.1.0',
+                'tokens' => array(
                     new Token(Token::CARET_RANGE, '^'),
                     new Token(Token::DIGITS, '3'),
                     new Token(Token::DOT_SEPARATOR, '.'),
@@ -331,7 +331,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '0'),
                 ),
-                new LogicalAnd(
+                'parsed_range' => new LogicalAnd(
                     new ComparatorVersion(
                         new GreaterOrEqualTo(),
                         new Version(3, 1, 0, new Label(Label::PRECEDENCE_ABSENT))
@@ -341,11 +341,11 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(4, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                '>=3.1.0&&<4.0.0',
+                'serialized' => '>=3.1.0&&<4.0.0',
             ),
             array(
-                '1.0.7-3.1.18',
-                array(
+                'version_string' => '1.0.7-3.1.18',
+                'tokens' => array(
                     new Token(Token::DIGITS, '1'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '0'),
@@ -360,7 +360,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '18')
                 ),
-                new LogicalAnd(
+                'parsed_range' => new LogicalAnd(
                     new ComparatorVersion(
                         new GreaterOrEqualTo(),
                         new Version(1, 0, 7, new Label(Label::PRECEDENCE_ABSENT))
@@ -370,11 +370,11 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(3, 1, 18, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                '>=1.0.7&&<=3.1.18',
+                'serialized' => '>=1.0.7&&<=3.1.18',
             ),
             array(
-                '1.0-2.0',
-                array(
+                'version_string' => '1.0-2.0',
+                'tokens' => array(
                     new Token(Token::DIGITS, '1'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '0'),
@@ -385,7 +385,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '0')
                 ),
-                new LogicalAnd(
+                'parsed_range' => new LogicalAnd(
                     new ComparatorVersion(
                         new GreaterOrEqualTo(),
                         new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
@@ -395,18 +395,18 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(2, 1, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                '>=1.0.0&&<2.1.0',
+                'serialized' => '>=1.0.0&&<2.1.0',
             ),
             array(
-                '1-2',
-                array(
+                'version_string' => '1-2',
+                'tokens' => array(
                     new Token(Token::DIGITS, '1'),
 
                     new Token(Token::DASH_SEPARATOR, '-'),
 
                     new Token(Token::DIGITS, '2'),
                 ),
-                new LogicalAnd(
+                'parsed_range' => new LogicalAnd(
                     new ComparatorVersion(
                         new GreaterOrEqualTo(),
                         new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
@@ -416,11 +416,11 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(3, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                '>=1.0.0&&<3.0.0',
+                'serialized' => '>=1.0.0&&<3.0.0',
             ),
             array(
-                '1.0-2.0',
-                array(
+                'version_string' => '1.0-2.0',
+                'tokens' => array(
                     new Token(Token::DIGITS, '1'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '0'),
@@ -431,7 +431,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '0')
                 ),
-                new LogicalAnd(
+                'parsed_range' => new LogicalAnd(
                     new ComparatorVersion(
                         new GreaterOrEqualTo(),
                         new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
@@ -441,11 +441,11 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(2, 1, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                '>=1.0.0&&<2.1.0',
+                'serialized' => '>=1.0.0&&<2.1.0',
             ),
             array(
-                '1.8.3-alpha.7',
-                array(
+                'version_string' => '1.8.3-alpha.7',
+                'tokens' => array(
                     new Token(Token::DIGITS, '1'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '8'),
@@ -458,15 +458,15 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '7')
                 ),
-                new ComparatorVersion(
+                'parsed_range' => new ComparatorVersion(
                     new EqualTo(),
                     new Version(1, 8, 3, new Label(Label::PRECEDENCE_ALPHA, 7))
                 ),
-                '=1.8.3-alpha.7'
+                'serialized' => '=1.8.3-alpha.7'
             ),
             array(
-                '1.8.0-alpha.7-1.8.0-beta.2',
-                array(
+                'version_string' => '1.8.0-alpha.7-1.8.0-beta.2',
+                'tokens' => array(
                     new Token(Token::DIGITS, '1'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '8'),
@@ -493,7 +493,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '2')
                 ),
-                new LogicalAnd(
+                'parsed_range' => new LogicalAnd(
                     new ComparatorVersion(
                         new GreaterOrEqualTo(),
                         new Version(1, 8, 0, new Label(Label::PRECEDENCE_ALPHA, 7))
@@ -503,11 +503,11 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(1, 8, 0, new Label(Label::PRECEDENCE_BETA, 2))
                     )
                 ),
-                '>=1.8.0-alpha.7&&<=1.8.0-beta.2'
+                'serialized' => '>=1.8.0-alpha.7&&<=1.8.0-beta.2'
             ),
             array(
-                '>=1.7.0 <1.9',
-                array(
+                'version_string' => '>=1.7.0 <1.9',
+                'tokens' => array(
                     new Token(Token::GREATER_THAN_EQUAL, '>='),
                     new Token(Token::DIGITS, '1'),
                     new Token(Token::DOT_SEPARATOR, '.'),
@@ -522,7 +522,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '9')
                 ),
-                new LogicalAnd(
+                'parsed_range' => new LogicalAnd(
                     new ComparatorVersion(
                         new GreaterOrEqualTo(),
                         new Version(1, 7, 0, new Label(Label::PRECEDENCE_ABSENT))
@@ -532,11 +532,11 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(1, 9, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                '>=1.7.0&&<1.9.0'
+                'serialized' => '>=1.7.0&&<1.9.0'
             ),
             array(
-                '>=1.7.0 && <1.9',
-                array(
+                'version_string' => '>=1.7.0 && <1.9',
+                'tokens' => array(
                     new Token(Token::GREATER_THAN_EQUAL, '>='),
                     new Token(Token::DIGITS, '1'),
                     new Token(Token::DOT_SEPARATOR, '.'),
@@ -551,7 +551,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '9')
                 ),
-                new LogicalAnd(
+                'parsed_range' => new LogicalAnd(
                     new ComparatorVersion(
                         new GreaterOrEqualTo(),
                         new Version(1, 7, 0, new Label(Label::PRECEDENCE_ABSENT))
@@ -561,11 +561,11 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(1, 9, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                '>=1.7.0&&<1.9.0'
+                'serialized' => '>=1.7.0&&<1.9.0'
             ),
             array(
-                '1.7.6 || >1.9',
-                array(
+                'version_string' => '1.7.6 || >1.9',
+                'tokens' => array(
                     new Token(Token::DIGITS, '1'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '7'),
@@ -579,7 +579,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '9')
                 ),
-                new LogicalOr(
+                'parsed_range' => new LogicalOr(
                     new ComparatorVersion(
                         new EqualTo(),
                         new Version(1, 7, 6, new Label(Label::PRECEDENCE_ABSENT))
@@ -589,11 +589,11 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(1, 9, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                '=1.7.6||>1.9.0'
+                'serialized' => '=1.7.6||>1.9.0'
             ),
             array(
-                '>1.5 < 4 || >=5 <6',
-                array(
+                'version_string' => '>1.5 < 4 || >=5 <6',
+                'tokens' => array(
                     new Token(Token::GREATER_THAN, '>'),
                     new Token(Token::DIGITS, '1'),
                     new Token(Token::DOT_SEPARATOR, '.'),
@@ -614,7 +614,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::LESS_THAN, '<'),
                     new Token(Token::DIGITS, '6')
                 ),
-                new LogicalOr(
+                'parsed_range' => new LogicalOr(
                     new LogicalAnd(
                         new ComparatorVersion(
                             new GreaterThan(),
@@ -636,11 +636,11 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         )
                     )
                 ),
-                '>1.5.0&&<4.0.0||>=5.0.0&&<6.0.0'
+                'serialized' => '>1.5.0&&<4.0.0||>=5.0.0&&<6.0.0'
             ),
             array(
-                '1.0.0-rc.2-2.0.0',
-                array(
+                'version_string' => '1.0.0-rc.2-2.0.0',
+                'tokens' => array(
                     new Token(Token::DIGITS, '1'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '0'),
@@ -659,7 +659,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '0')
                 ),
-                new LogicalAnd(
+                'parsed_range' => new LogicalAnd(
                     new ComparatorVersion(
                         new GreaterOrEqualTo(),
                         new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC, 2))
@@ -669,11 +669,11 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(2, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                '>=1.0.0-rc.2&&<=2.0.0'
+                'serialized' => '>=1.0.0-rc.2&&<=2.0.0'
             ),
             array(
-                '1.0.0-2.0.0-alpha.3',
-                array(
+                'version_string' => '1.0.0-2.0.0-alpha.3',
+                'tokens' => array(
                     new Token(Token::DIGITS, '1'),
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '0'),
@@ -692,7 +692,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '3')
                 ),
-                new LogicalAnd(
+                'parsed_range' => new LogicalAnd(
                     new ComparatorVersion(
                         new GreaterOrEqualTo(),
                         new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
@@ -702,7 +702,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(2, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 3))
                     )
                 ),
-                '>=1.0.0&&<=2.0.0-alpha.3'
+                'serialized' => '>=1.0.0&&<=2.0.0-alpha.3'
             )
         );
     }
