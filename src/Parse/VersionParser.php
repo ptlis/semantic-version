@@ -68,7 +68,8 @@ class VersionParser
 
         // Parse out ComparatorVersions vs Logical operators
         $realResultList = array();
-        for ($i = 0; $i < count($resultList); $i++) {
+        $resultListCount = count($resultList);
+        for ($i = 0; $i < $resultListCount; $i++) {
 
             // Version number only - effectively equals
             if ($resultList[$i] instanceof VersionInterface) {
@@ -103,8 +104,8 @@ class VersionParser
 
         // Stores tokens not yet parcelled out
         $tokenAccumulator = array();
-
-        for ($i = 0; $i < count($tokenList); $i++) {
+        $resultListCount = count($tokenList);
+        for ($i = 0; $i < $resultListCount; $i++) {
             $currentToken = $tokenList[$i];
 
             switch (true) {
@@ -183,7 +184,8 @@ class VersionParser
 
                     $hyphenated = false;
 
-                    for ($i = 0; $i < count($tokenList); $i++) {
+                    $tokenListCount = count($tokenList);
+                    for ($i = 0; $i < $tokenListCount; $i++) {
                         if (Token::DASH_SEPARATOR === $tokenList[$i]->getType()) {
                             $hyphenated = true;
                             break;

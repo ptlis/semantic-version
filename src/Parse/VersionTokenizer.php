@@ -25,9 +25,9 @@ class VersionTokenizer
      *
      * @param string $versionString
      *
-     * @return string[]
+     * @return Token[]
      */
-    function tokenize($versionString)
+    public function tokenize($versionString)
     {
         /** @var Token[] $tokenList */
         $tokenList = array();

@@ -144,7 +144,7 @@ class LogicalOperatorProcessor
      */
     private function hasOperator(\SplStack $stack)
     {
-        return count($stack);
+        return count($stack) > 0;
     }
 
     /**

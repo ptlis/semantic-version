@@ -22,17 +22,17 @@ use ptlis\SemanticVersion\Version\Label\LabelInterface;
 class Version implements VersionInterface
 {
     /**
-     * @var string
+     * @var int
      */
     private $major;
 
     /**
-     * @var string
+     * @var int
      */
     private $minor = 0;
 
     /**
-     * @var string
+     * @var int
      */
     private $patch = 0;
 
