@@ -257,7 +257,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '1'),
 
-                    new Token(Token::LOGICAL_AND, ''),
+                    new Token(Token::LOGICAL_AND, '&&'),
 
                     new Token(Token::LESS_THAN, '<'),
 
