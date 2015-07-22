@@ -16,6 +16,8 @@ namespace ptlis\SemanticVersion;
 use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\Parse\VersionTokenizer;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
+use ptlis\SemanticVersion\Version\VersionInterface;
+use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 
 /**
@@ -45,13 +47,32 @@ class VersionEngine
         );
     }
 
-    public function parse()
+    /**
+     * Parse a semantic version string into an object implementing VersionInterface.
+     *
+     * @todo Hacky - create a better method for handling this.
+     *
+     * @param string $versionString
+     *
+     * @return VersionInterface
+     */
+    public function parseVersion($versionString)
     {
-        // TODO: Re-implement
+        $tokenList = $this->tokenizer->tokenize($versionString);
+
+        $range = $this->parser->parseRange($tokenList);
+
+        if (!($range instanceof ComparatorVersion)) {
+            throw new \InvalidArgumentException(
+                '"' . $versionString . '" is not a valid semantic version number'
+            );
+        }
+
+       return $range->getVersion();
     }
 
     /**
-     * Parse a version range & return a range object encoding those rules.
+     * Parse a version range & return an object implementing VersionRangeInterface that encodes those rules.
      *
      * @param string $rangeString
      *
