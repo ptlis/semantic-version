@@ -13,11 +13,8 @@
 
 namespace ptlis\SemanticVersion\Parse\Matcher;
 
-use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
-use ptlis\SemanticVersion\Comparator\LessOrEqualTo;
-use ptlis\SemanticVersion\Comparator\LessThan;
+use ptlis\SemanticVersion\Comparator\ComparatorInterface;
 use ptlis\SemanticVersion\Parse\Token;
-use ptlis\SemanticVersion\Version\Label\Label;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
@@ -31,6 +28,39 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  */
 class HyphenatedRangeParser implements RangeParserInterface
 {
+    /**
+     * @var ComparatorInterface
+     */
+    private $greaterOrEqualTo;
+
+    /**
+     * @var ComparatorInterface
+     */
+    private $lessThan;
+
+    /**
+     * @var ComparatorInterface
+     */
+    private $lessOrEqualTo;
+
+
+    /**
+     * Constructor.
+     *
+     * @param ComparatorInterface $greaterOrEqualTo
+     * @param ComparatorInterface $lessThan
+     * @param ComparatorInterface $lessOrEqualTo
+     */
+    public function __construct(
+        ComparatorInterface $greaterOrEqualTo,
+        ComparatorInterface $lessThan,
+        ComparatorInterface $lessOrEqualTo
+    ) {
+        $this->greaterOrEqualTo = $greaterOrEqualTo;
+        $this->lessThan = $lessThan;
+        $this->lessOrEqualTo = $lessOrEqualTo;
+    }
+
     /**
      * Returns true if the token list can be parsed as a hyphenated range.
      *
@@ -126,7 +156,7 @@ class HyphenatedRangeParser implements RangeParserInterface
 
         return new LogicalAnd(
             new ComparatorVersion(
-                new GreaterOrEqualTo(),
+                $this->greaterOrEqualTo,
                 $lowerVersion
             ),
             $upperVersionConstraint
@@ -182,25 +212,25 @@ class HyphenatedRangeParser implements RangeParserInterface
 
         switch (count($tokenList)) {
             case 1:
-                $comparator = new LessThan();
+                $comparator = $this->lessThan;
                 $major = $tokenList[0]->getValue() + 1;
                 break;
 
             case 3:
-                $comparator = new LessThan();
+                $comparator = $this->lessThan;
                 $major = $tokenList[0]->getValue();
                 $minor = $tokenList[2]->getValue() + 1;
                 break;
 
             case 5:
-                $comparator = new LessOrEqualTo();
+                $comparator = $this->lessOrEqualTo;
                 $major = $tokenList[0]->getValue();
                 $minor = $tokenList[2]->getValue();
                 $patch = $tokenList[4]->getValue();
                 break;
 
             case 7:
-                $comparator = new LessOrEqualTo();
+                $comparator = $this->lessOrEqualTo;
                 $major = $tokenList[0]->getValue();
                 $minor = $tokenList[2]->getValue();
                 $patch = $tokenList[4]->getValue();
@@ -210,7 +240,7 @@ class HyphenatedRangeParser implements RangeParserInterface
                 break;
 
             case 9:
-                $comparator = new LessOrEqualTo();
+                $comparator = $this->lessOrEqualTo;
                 $major = $tokenList[0]->getValue();
                 $minor = $tokenList[2]->getValue();
                 $patch = $tokenList[4]->getValue();

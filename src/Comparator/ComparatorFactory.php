@@ -69,21 +69,4 @@ class ComparatorFactory
 
         return $comparator;
     }
-
-    /**
-     * Build a comparator instance from it's string representation
-     *
-     * @param Token $token
-     *
-     * @return ComparatorInterface|null
-     */
-    public function getFromToken(Token $token)
-    {
-        $comparator = null;
-        if (array_key_exists($token->getType(), $this->comparatorTokenMap)) {
-            $comparator = $this->comparatorTokenMap[$token->getType()];
-        }
-
-        return $comparator;
-    }
 }

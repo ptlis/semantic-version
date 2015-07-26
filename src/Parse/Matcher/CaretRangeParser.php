@@ -13,13 +13,12 @@
 
 namespace ptlis\SemanticVersion\Parse\Matcher;
 
+use ptlis\SemanticVersion\Comparator\ComparatorInterface;
 use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
-use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
 use ptlis\SemanticVersion\Version\Version;
-use ptlis\SemanticVersion\Comparator\LessThan;
 
 /**
  * Parser for caret ranges.
@@ -28,6 +27,29 @@ use ptlis\SemanticVersion\Comparator\LessThan;
  */
 class CaretRangeParser implements RangeParserInterface
 {
+    /**
+     * @var ComparatorInterface
+     */
+    private $greaterOrEqualTo;
+
+    /**
+     * @var ComparatorInterface
+     */
+    private $lessThan;
+
+
+    /**
+     * Constructor.
+     *
+     * @param ComparatorInterface $greaterOrEqualTo
+     * @param ComparatorInterface $lessThan
+     */
+    public function __construct(ComparatorInterface $greaterOrEqualTo, ComparatorInterface $lessThan)
+    {
+        $this->greaterOrEqualTo = $greaterOrEqualTo;
+        $this->lessThan = $lessThan;
+    }
+
     /**
      * Returns true if the provided tokens represent a caret range.
      *
@@ -63,11 +85,11 @@ class CaretRangeParser implements RangeParserInterface
 
         return new LogicalAnd(
             new ComparatorVersion(
-                new GreaterOrEqualTo(),
+                $this->greaterOrEqualTo,
                 new Version($tokenList[1]->getValue(), $minor, $patch)
             ),
             new ComparatorVersion(
-                new LessThan(),
+                $this->lessThan,
                 new Version($tokenList[1]->getValue() + 1)
             )
         );

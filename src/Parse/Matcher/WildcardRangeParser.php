@@ -13,8 +13,7 @@
 
 namespace ptlis\SemanticVersion\Parse\Matcher;
 
-use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
-use ptlis\SemanticVersion\Comparator\LessThan;
+use ptlis\SemanticVersion\Comparator\ComparatorInterface;
 use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
@@ -28,6 +27,28 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  */
 class WildcardRangeParser implements RangeParserInterface
 {
+    /**
+     * @var ComparatorInterface
+     */
+    private $greaterOrEqualTo;
+
+    /**
+     * @var ComparatorInterface
+     */
+    private $lessThan;
+
+
+    /**
+     * Constructor.
+     *
+     * @param ComparatorInterface $greaterOrEqualTo
+     * @param ComparatorInterface $lessThan
+     */
+    public function __construct(ComparatorInterface $greaterOrEqualTo, ComparatorInterface $lessThan) {
+        $this->greaterOrEqualTo = $greaterOrEqualTo;
+        $this->lessThan = $lessThan;
+    }
+
     /**
      * Returns true if the tokens represent a wildcard range.
      *
@@ -52,31 +73,25 @@ class WildcardRangeParser implements RangeParserInterface
     {
         // Upto minor version
         if (3 === count($tokenList)) {
-            $range = new LogicalAnd(
-                new ComparatorVersion(
-                    new GreaterOrEqualTo(),
-                    new Version($tokenList[0]->getValue(), $tokenList[2]->getValue())
-                ),
-                new ComparatorVersion(
-                    new LessThan(),
-                    new Version($tokenList[0]->getValue() + 1)
-                )
-            );
+            $lowerVersion = new Version($tokenList[0]->getValue(), $tokenList[2]->getValue());
+            $upperVersion = new Version($tokenList[0]->getValue() + 1);
 
-            // Upto patch version
+        // Upto patch version
         } else {
-            $range = new LogicalAnd(
-                new ComparatorVersion(
-                    new GreaterOrEqualTo(),
-                    new Version($tokenList[0]->getValue(), $tokenList[2]->getValue(), $tokenList[4]->getValue())
-                ),
-                new ComparatorVersion(
-                    new LessThan(),
-                    new Version($tokenList[0]->getValue(), $tokenList[2]->getValue() + 1)
-                )
-            );
+            $lowerVersion = new Version($tokenList[0]->getValue(), $tokenList[2]->getValue(), $tokenList[4]->getValue());
+            $upperVersion = new Version($tokenList[0]->getValue(), $tokenList[2]->getValue() + 1);
         }
 
+        $range = new LogicalAnd(
+            new ComparatorVersion(
+                $this->greaterOrEqualTo,
+                $lowerVersion
+            ),
+            new ComparatorVersion(
+                $this->lessThan,
+                $upperVersion
+            )
+        );
         return $range;
     }
 }

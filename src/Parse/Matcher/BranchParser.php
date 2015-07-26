@@ -24,6 +24,22 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 class BranchParser implements RangeParserInterface
 {
     /**
+     * @var WildcardRangeParser
+     */
+    private $wildcardParser;
+
+
+    /**
+     * Constructor.
+     *
+     * @param WildcardRangeParser $wildcardParser
+     */
+    public function __construct(WildcardRangeParser $wildcardParser)
+    {
+        $this->wildcardParser = $wildcardParser;
+    }
+
+    /**
      * Returns true if the tokens can be parsed as a Packagist-style branch
      *
      * @param Token[] $tokenList
@@ -49,8 +65,6 @@ class BranchParser implements RangeParserInterface
      */
     public function parse(array $tokenList)
     {
-        $parser = new WildcardRangeParser();
-
-        return $parser->parse($tokenList);
+        return $this->wildcardParser->parse($tokenList);
     }
 }

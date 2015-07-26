@@ -13,6 +13,7 @@
 
 namespace ptlis\SemanticVersion\Parse;
 
+use ptlis\SemanticVersion\Comparator\ComparatorFactory;
 use ptlis\SemanticVersion\Parse\Matcher\BranchParser;
 use ptlis\SemanticVersion\Parse\Matcher\CaretRangeParser;
 use ptlis\SemanticVersion\Parse\Matcher\ComparatorVersionParser;
@@ -62,14 +63,27 @@ class VersionParser
             Token::LOGICAL_OR
         );
 
+        $comparatorFactory = new ComparatorFactory();    // TODO: Inject!
+
         /** @var RangeParserInterface[] */
+        $wildcardParser = new WildcardRangeParser(
+            $comparatorFactory->get('>='),
+            $comparatorFactory->get('<')
+        );
         $matcherList = array(
-            new CaretRangeParser(),
-            new TildeRangeParser(),
-            new WildcardRangeParser(),
-            new BranchParser(),
+            new CaretRangeParser(
+                $comparatorFactory->get('>='),
+                $comparatorFactory->get('<')
+            ),
+            new TildeRangeParser($wildcardParser),
+            $wildcardParser,
+            new BranchParser($wildcardParser),
             new ComparatorVersionParser(),
-            new HyphenatedRangeParser()
+            new HyphenatedRangeParser(
+                $comparatorFactory->get('>='),
+                $comparatorFactory->get('<'),
+                $comparatorFactory->get('<=')
+            )
         );
 
         $realResultList = array();

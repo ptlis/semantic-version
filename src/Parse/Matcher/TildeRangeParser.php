@@ -24,6 +24,22 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 class TildeRangeParser implements RangeParserInterface
 {
     /**
+     * @var RangeParserInterface
+     */
+    private $wildcardParser;
+
+
+    /**
+     * Constructor.
+     *
+     * @param RangeParserInterface $wildcardParser
+     */
+    public function __construct(RangeParserInterface $wildcardParser)
+    {
+        $this->wildcardParser = $wildcardParser;
+    }
+
+    /**
      * Returns true if the provided tokens represent a tilde range.
      *
      * @param Token[] $tokenList
@@ -45,8 +61,6 @@ class TildeRangeParser implements RangeParserInterface
      */
     public function parse(array $tokenList)
     {
-        $parser = new WildcardRangeParser();
-
-        return $parser->parse(array_slice($tokenList, 1));
+        return $this->wildcardParser->parse(array_slice($tokenList, 1));
     }
 }
