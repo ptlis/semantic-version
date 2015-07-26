@@ -534,11 +534,17 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DASH_SEPARATOR, '-'),
                     new Token(Token::LABEL_STRING, 'dev')
                 ),
-                'parsed_range' => new ComparatorVersion(
-                    new EqualTo(),
-                    new Version(3, 7, 0, new Label(Label::PRECEDENCE_ABSENT))
+                'parsed_range' => new LogicalAnd(
+                    new ComparatorVersion(
+                        new GreaterOrEqualTo(),
+                        new Version(3, 7, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    ),
+                    new ComparatorVersion(
+                        new LessThan(),
+                        new Version(3, 8, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    )
                 ),
-                'serialized' => '>=3.7.0<3.8.0',
+                'serialized' => '>=3.7.0,<3.8.0',
                 'satisfies' => array(
 
                 )
@@ -679,7 +685,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                 )
             ),
             array(
-                'version_string' => '1.7.6 || >1.9',
+                'version_string' => '1.7.6 | >1.9',
                 'tokens' => array(
                     new Token(Token::DIGITS, '1'),
                     new Token(Token::DOT_SEPARATOR, '.'),
@@ -687,7 +693,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '6'),
 
-                    new Token(Token::LOGICAL_OR, '||'),
+                    new Token(Token::LOGICAL_OR, '|'),
 
                     new Token(Token::GREATER_THAN, '>'),
                     new Token(Token::DIGITS, '1'),
@@ -704,14 +710,14 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(1, 9, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                'serialized' => '=1.7.6||>1.9.0',
+                'serialized' => '=1.7.6|>1.9.0',
                 'satisfies' => array(
                     new Version(1, 7, 6, new Label(Label::PRECEDENCE_ABSENT)),
                     new Version(1, 9, 1, new Label(Label::PRECEDENCE_ABSENT))
                 )
             ),
             array(
-                'version_string' => '>1.5 < 4 || >=5 <6',
+                'version_string' => '>1.5 < 4 | >=5 <6',
                 'tokens' => array(
                     new Token(Token::GREATER_THAN, '>'),
                     new Token(Token::DIGITS, '1'),
@@ -723,7 +729,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::LESS_THAN, '<'),
                     new Token(Token::DIGITS, '4'),
 
-                    new Token(Token::LOGICAL_OR, '||'),
+                    new Token(Token::LOGICAL_OR, '|'),
 
                     new Token(Token::GREATER_THAN_EQUAL, '>='),
                     new Token(Token::DIGITS, '5'),
@@ -755,7 +761,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         )
                     )
                 ),
-                'serialized' => '>1.5.0,<4.0.0||>=5.0.0,<6.0.0',
+                'serialized' => '>1.5.0,<4.0.0|>=5.0.0,<6.0.0',
                 'satisfies' => array(
                     new Version(1, 5, 1, new Label(Label::PRECEDENCE_ABSENT)),
                     new Version(3, 9, 0, new Label(Label::PRECEDENCE_ABSENT)),
