@@ -36,23 +36,8 @@ class ComparatorVersionParser implements RangeParserInterface
     {
         $canParse = false;
 
-        $illegalTokenList = array(
-            Token::CARET_RANGE,
-            Token::TILDE_RANGE,
-            Token::WILDCARD_DIGITS,
-            Token::LOGICAL_AND,
-            Token::LOGICAL_OR
-        );
-
-        $hasIllegalToken = false;
-        foreach ($tokenList as $token) {
-            if (in_array($token->getType(), $illegalTokenList)) {
-                $hasIllegalToken = true;
-            }
-        }
-
         // No illegal tokens present
-        if (!$hasIllegalToken) {
+        if (!$this->hasIllegalTokens($tokenList)) {
             $chunkedList = $this->chunk($tokenList);
 
             if (
@@ -101,6 +86,32 @@ class ComparatorVersionParser implements RangeParserInterface
         );
     }
 
+    /**
+     * Returns true if an illegal token is found.
+     *
+     * @param Token[] $tokenList
+     *
+     * @return boolean
+     */
+    public function hasIllegalTokens(array $tokenList)
+    {
+        $illegalTokenList = array(
+            Token::CARET_RANGE,
+            Token::TILDE_RANGE,
+            Token::WILDCARD_DIGITS,
+            Token::LOGICAL_AND,
+            Token::LOGICAL_OR
+        );
+
+        $hasIllegalToken = false;
+        foreach ($tokenList as $token) {
+            if (in_array($token->getType(), $illegalTokenList)) {
+                $hasIllegalToken = true;
+            }
+        }
+
+        return $hasIllegalToken;
+    }
 
     /**
      * Chuck the tokens, splitting on hyphen.
