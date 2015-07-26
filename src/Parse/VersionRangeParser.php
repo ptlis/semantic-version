@@ -145,7 +145,6 @@ class VersionRangeParser
         switch (count($chunkedList)) {
             // Simple range or version with label
             case 2:
-
                 // Version with label
                 if (Token::LABEL_STRING === $chunkedList[1][0]->getType()) {
                     $range = new ComparatorVersion(
@@ -153,7 +152,7 @@ class VersionRangeParser
                         $this->getVersionFromTokens($chunkedList[0], $chunkedList[1])
                     );
 
-                    // Version range
+                // Version range
                 } else {
                     $range = new LogicalAnd(
                         new ComparatorVersion(

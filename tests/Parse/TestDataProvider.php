@@ -519,6 +519,30 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Version(2, 0, 847, new Label(Label::PRECEDENCE_ABSENT))
                 )
             ),
+
+            // Test compatibility with packigist-style -dev version numbers
+            // See https://getcomposer.org/doc/02-libraries.md#branches for meaning
+            array(
+                'version_string' => '3.7.x-dev',
+                'tokens' => array(
+                    new Token(Token::DIGITS, '3'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '7'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::WILDCARD_DIGITS, 'x'),
+
+                    new Token(Token::DASH_SEPARATOR, '-'),
+                    new Token(Token::LABEL_STRING, 'dev')
+                ),
+                'parsed_range' => new ComparatorVersion(
+                    new EqualTo(),
+                    new Version(3, 7, 0, new Label(Label::PRECEDENCE_ABSENT))
+                ),
+                'serialized' => '>=3.7.0<3.8.0',
+                'satisfies' => array(
+
+                )
+            ),
             array(
                 'version_string' => '1.8.3-alpha.7',
                 'tokens' => array(

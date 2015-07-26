@@ -84,8 +84,10 @@ class LabelBuilder
             'rc' => Label::PRECEDENCE_RC
         );
 
-        // No Label present
-        if (!strlen($this->name)) {
+        // No Label present or a dev label (these are a special-case for packagist - a version like 1.0.x-dev is
+        // equivalent to 1.0.* in  conventional notation - there is additional semantics attached to this but it's not
+        // important for our purposes
+        if (!strlen($this->name) || 'dev' === $this->name) {
             $label = new Label(Label::PRECEDENCE_ABSENT);
 
         // Alpha, Beta & RC standard labels

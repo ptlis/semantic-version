@@ -104,15 +104,24 @@ class VersionParser
 
         // Stores tokens not yet parcelled out
         $tokenAccumulator = array();
-        $resultListCount = count($tokenList);
-        for ($i = 0; $i < $resultListCount; $i++) {
+        $tokenListCount = count($tokenList);
+        for ($i = 0; $i < $tokenListCount; $i++) {
             $currentToken = $tokenList[$i];
 
             switch (true) {
 
                 // Terminating digit wildcard
                 case Token::WILDCARD_DIGITS === $currentToken->getType():
+
                     $tokenAccumulator[] = $currentToken;
+
+                    // Grab the label tokens & increment the counter
+                    if ($this->isBranch($tokenList, $i)) {
+                        $tokenAccumulator[] = $tokenList[$i+1];
+                        $tokenAccumulator[] = $tokenList[$i+2];
+                        $i = $i + 2;
+                    }
+
                     $tokenClusterList = array_merge(
                         $tokenClusterList,
                         $this->processClusteredTokenList($tokenAccumulator)
@@ -122,6 +131,7 @@ class VersionParser
 
                 // Beginning caret or tilde range
                 case in_array($currentToken->getType(), array(Token::TILDE_RANGE, Token::CARET_RANGE)):
+
                     $tokenClusterList = array_merge(
                         $tokenClusterList,
                         $this->processClusteredTokenList($tokenAccumulator)
@@ -161,6 +171,25 @@ class VersionParser
     }
 
     /**
+     * Handles packagist branch version numbers.
+     *
+     * See https://getcomposer.org/doc/02-libraries.md#branches for how these work
+     *
+     * @param Token[] $tokenList
+     * @param int $currentOffset
+     *
+     * @return boolean
+     */
+    private function isBranch(array $tokenList, $currentOffset)
+    {
+        return
+            Token::WILDCARD_DIGITS === $tokenList[$currentOffset]->getType()
+            && $currentOffset + 2 < count($tokenList)
+            && Token::DASH_SEPARATOR === $tokenList[$currentOffset+1]->getType()
+            && Token::LABEL_STRING === $tokenList[$currentOffset+2]->getType();
+    }
+
+    /**
      * Process a cluster of tokens building version ranges where possible.
      *
      * @param Token[] $tokenList
@@ -169,11 +198,11 @@ class VersionParser
      */
     private function processClusteredTokenList(array $tokenList)
     {
-        $accumulatedTokenCount = count($tokenList);
+        $tokenListCount = count($tokenList);
 
         $tokenClusterList = array();
 
-        if ($accumulatedTokenCount) {
+        if ($tokenListCount) {
 
             switch (true) {
                 case !is_null($comparator = $this->comparatorFactory->getFromToken($tokenList[0])):
@@ -183,8 +212,6 @@ class VersionParser
                 case Token::DIGITS === $tokenList[0]->getType():
 
                     $hyphenated = false;
-
-                    $tokenListCount = count($tokenList);
                     for ($i = 0; $i < $tokenListCount; $i++) {
                         if (Token::DASH_SEPARATOR === $tokenList[$i]->getType()) {
                             $hyphenated = true;
@@ -195,7 +222,7 @@ class VersionParser
                     if ($hyphenated) {
                         $tokenClusterList[] = $this->versionRangeParser->getFromHyphenatedTokens($tokenList);
 
-                    } elseif (Token::WILDCARD_DIGITS === $tokenList[$accumulatedTokenCount - 1]->getType()) {
+                    } elseif (Token::WILDCARD_DIGITS === $tokenList[$tokenListCount - 1]->getType()) {
                         $tokenClusterList[] = $this->versionRangeParser->getFromWildcardTokens(
                             $tokenList
                         );
