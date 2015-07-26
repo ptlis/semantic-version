@@ -96,7 +96,7 @@ class VersionTokenizer
                             if ($this->isPossibleLogicalOperator($operatorChr)) {
                                 $possibleOperator .= trim($operatorChr);
                             } else {
-                                if (!strlen($possibleOperator) || '&&' === $possibleOperator) {
+                                if (!strlen($possibleOperator) || ',' === $possibleOperator) {
                                     $tokenList[] = new Token(Token::LOGICAL_AND, $possibleOperator);
                                 } else {
                                     $tokenList[] = new Token(Token::LOGICAL_OR, $possibleOperator);
@@ -154,7 +154,7 @@ class VersionTokenizer
      */
     private function isPossibleLogicalOperator($chr)
     {
-        return in_array($chr, array(',', '|', '&')) || ctype_space($chr);
+        return in_array($chr, array(',', '|')) || ctype_space($chr);
     }
 
     /**

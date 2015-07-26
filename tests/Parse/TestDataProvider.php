@@ -132,7 +132,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(2, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                'serialized' => '>=1.0.0&&<2.0.0',
+                'serialized' => '>=1.0.0,<2.0.0',
                 'satisfies' => array(
                     new Version(1, 5, 0, new Label(Label::PRECEDENCE_ABSENT))
                 )
@@ -154,7 +154,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(5, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                'serialized' => '>=4.0.0&&<5.0.0',
+                'serialized' => '>=4.0.0,<5.0.0',
                 'satisfies' => array(
                     new Version(4, 0, 0, new Label(Label::PRECEDENCE_ABSENT)),
                     new Version(4, 1, 0, new Label(Label::PRECEDENCE_ABSENT))
@@ -179,7 +179,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(1, 6, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                'serialized' => '>=1.5.0&&<1.6.0',
+                'serialized' => '>=1.5.0,<1.6.0',
                 'satisfies' => array(
                     new Version(1, 5, 0, new Label(Label::PRECEDENCE_ABSENT)),
                     new Version(1, 5, 9, new Label(Label::PRECEDENCE_ABSENT))
@@ -204,7 +204,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(1, 4, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                'serialized' => '>=1.3.0&&<1.4.0',
+                'serialized' => '>=1.3.0,<1.4.0',
                 'satisfies' => array(
                     new Version(1, 3, 0, new Label(Label::PRECEDENCE_ABSENT)),
                     new Version(1, 3, 5, new Label(Label::PRECEDENCE_ABSENT))
@@ -291,7 +291,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                 )
             ),
             array(
-                'version_string' => '>=1.0.1&&<2.0.0',
+                'version_string' => '>=1.0.1,<2.0.0',
                 'tokens' => array(
                     new Token(Token::GREATER_THAN_EQUAL, '>='),
 
@@ -301,7 +301,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '1'),
 
-                    new Token(Token::LOGICAL_AND, '&&'),
+                    new Token(Token::LOGICAL_AND, ','),
 
                     new Token(Token::LESS_THAN, '<'),
 
@@ -321,7 +321,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(2, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                'serialized' => '>=1.0.1&&<2.0.0',
+                'serialized' => '>=1.0.1,<2.0.0',
                 'satisfies' => array(
                     new Version(1, 0, 1, new Label(Label::PRECEDENCE_ABSENT)),
                     new Version(1, 9999, 9999, new Label(Label::PRECEDENCE_ABSENT))
@@ -345,7 +345,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(2, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                'serialized' => '>=1.7.0&&<2.0.0',
+                'serialized' => '>=1.7.0,<2.0.0',
                 'satisfies' => array(
                     new Version(1, 7, 0, new Label(Label::PRECEDENCE_ABSENT)),
                     new Version(1, 87, 1, new Label(Label::PRECEDENCE_ABSENT))
@@ -371,7 +371,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(1, 8, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                'serialized' => '>=1.7.4&&<1.8.0',
+                'serialized' => '>=1.7.4,<1.8.0',
                 'satisfies' => array(
                     new Version(1, 7, 4, new Label(Label::PRECEDENCE_ABSENT)),
                     new Version(1, 7, 99, new Label(Label::PRECEDENCE_ABSENT))
@@ -397,7 +397,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(4, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                'serialized' => '>=3.1.0&&<4.0.0',
+                'serialized' => '>=3.1.0,<4.0.0',
                 'satisfies' => array(
                     new Version(3, 1, 0, new Label(Label::PRECEDENCE_ABSENT)),
                     new Version(3, 99, 1, new Label(Label::PRECEDENCE_ABSENT))
@@ -430,7 +430,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(3, 1, 18, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                'serialized' => '>=1.0.7&&<=3.1.18',
+                'serialized' => '>=1.0.7,<=3.1.18',
                 'satisfies' => array(
                     new Version(1, 0, 7, new Label(Label::PRECEDENCE_ABSENT)),
                     new Version(3, 1, 18, new Label(Label::PRECEDENCE_ABSENT))
@@ -459,7 +459,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(2, 1, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                'serialized' => '>=1.0.0&&<2.1.0',
+                'serialized' => '>=1.0.0,<2.1.0',
                 'satisfies' => array(
                     new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT)),
                     new Version(2, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
@@ -484,7 +484,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(3, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                'serialized' => '>=1.0.0&&<3.0.0',
+                'serialized' => '>=1.0.0,<3.0.0',
                 'satisfies' => array(
                     new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT)),
                     new Version(2, 9999, 9999, new Label(Label::PRECEDENCE_ABSENT))
@@ -513,7 +513,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(2, 1, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                'serialized' => '>=1.0.0&&<2.1.0',
+                'serialized' => '>=1.0.0,<2.1.0',
                 'satisfies' => array(
                     new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT)),
                     new Version(2, 0, 847, new Label(Label::PRECEDENCE_ABSENT))
@@ -606,7 +606,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(1, 8, 0, new Label(Label::PRECEDENCE_BETA, 2))
                     )
                 ),
-                'serialized' => '>=1.8.0-alpha.7&&<=1.8.0-beta.2',
+                'serialized' => '>=1.8.0-alpha.7,<=1.8.0-beta.2',
                 'satisfies' => array(
                     new Version(1, 8, 0, new Label(Label::PRECEDENCE_ALPHA, 8)),
                     new Version(1, 8, 0, new Label(Label::PRECEDENCE_BETA, 1))
@@ -639,14 +639,14 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(1, 9, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                'serialized' => '>=1.7.0&&<1.9.0',
+                'serialized' => '>=1.7.0,<1.9.0',
                 'satisfies' => array(
                     new Version(1, 7, 0, new Label(Label::PRECEDENCE_ABSENT)),
                     new Version(1, 8, 9, new Label(Label::PRECEDENCE_ABSENT))
                 )
             ),
             array(
-                'version_string' => '>=1.7.0 && <1.9',
+                'version_string' => '>=1.7.0 , <1.9',
                 'tokens' => array(
                     new Token(Token::GREATER_THAN_EQUAL, '>='),
                     new Token(Token::DIGITS, '1'),
@@ -655,7 +655,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                     new Token(Token::DOT_SEPARATOR, '.'),
                     new Token(Token::DIGITS, '0'),
 
-                    new Token(Token::LOGICAL_AND, '&&'),
+                    new Token(Token::LOGICAL_AND, ','),
 
                     new Token(Token::LESS_THAN, '<'),
                     new Token(Token::DIGITS, '1'),
@@ -672,7 +672,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(1, 9, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                'serialized' => '>=1.7.0&&<1.9.0',
+                'serialized' => '>=1.7.0,<1.9.0',
                 'satisfies' => array(
                     new Version(1, 7, 0, new Label(Label::PRECEDENCE_ABSENT)),
                     new Version(1, 8, 9, new Label(Label::PRECEDENCE_ABSENT))
@@ -755,7 +755,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         )
                     )
                 ),
-                'serialized' => '>1.5.0&&<4.0.0||>=5.0.0&&<6.0.0',
+                'serialized' => '>1.5.0,<4.0.0||>=5.0.0,<6.0.0',
                 'satisfies' => array(
                     new Version(1, 5, 1, new Label(Label::PRECEDENCE_ABSENT)),
                     new Version(3, 9, 0, new Label(Label::PRECEDENCE_ABSENT)),
@@ -794,7 +794,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(2, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
                     )
                 ),
-                'serialized' => '>=1.0.0-rc.2&&<=2.0.0',
+                'serialized' => '>=1.0.0-rc.2,<=2.0.0',
                 'satisfies' => array(
                     new Version(1, 0, 0, new Label(Label::PRECEDENCE_RC, 2)),
                     new Version(1, 9, 1, new Label(Label::PRECEDENCE_ABSENT))
@@ -831,7 +831,7 @@ class TestDataProvider extends \PHPUnit_Framework_TestCase
                         new Version(2, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 3))
                     )
                 ),
-                'serialized' => '>=1.0.0&&<=2.0.0-alpha.3',
+                'serialized' => '>=1.0.0,<=2.0.0-alpha.3',
                 'satisfies' => array(
                     new Version(1, 0, 0, new Label(Label::PRECEDENCE_ABSENT)),
                     new Version(2, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 3))
