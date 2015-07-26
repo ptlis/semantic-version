@@ -111,17 +111,9 @@ class VersionParser
             switch (true) {
 
                 // Terminating digit wildcard
-                case Token::WILDCARD_DIGITS === $currentToken->getType():
+                case Token::WILDCARD_DIGITS === $currentToken->getType() && !$this->isBranch($tokenList, $i):
 
                     $tokenAccumulator[] = $currentToken;
-
-                    // Grab the label tokens & increment the counter
-                    if ($this->isBranch($tokenList, $i)) {
-                        $tokenAccumulator[] = $tokenList[$i+1];
-                        $tokenAccumulator[] = $tokenList[$i+2];
-                        $i = $i + 2;
-                    }
-
                     $tokenClusterList = array_merge(
                         $tokenClusterList,
                         $this->processClusteredTokenList($tokenAccumulator)
