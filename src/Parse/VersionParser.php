@@ -65,11 +65,12 @@ class VersionParser
 
         $comparatorFactory = new ComparatorFactory();    // TODO: Inject!
 
-        /** @var RangeParserInterface[] */
         $wildcardParser = new WildcardRangeParser(
             $comparatorFactory->get('>='),
             $comparatorFactory->get('<')
         );
+        $comparatorVersionParser = new ComparatorVersionParser($comparatorFactory, $this->labelBuilder);
+
         $matcherList = array(
             new CaretRangeParser(
                 $comparatorFactory->get('>='),
@@ -78,8 +79,9 @@ class VersionParser
             new TildeRangeParser($wildcardParser),
             $wildcardParser,
             new BranchParser($wildcardParser),
-            new ComparatorVersionParser(),
+            $comparatorVersionParser,
             new HyphenatedRangeParser(
+                $comparatorVersionParser,
                 $comparatorFactory->get('>='),
                 $comparatorFactory->get('<'),
                 $comparatorFactory->get('<=')

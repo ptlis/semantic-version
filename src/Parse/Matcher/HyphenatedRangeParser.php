@@ -29,6 +29,11 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 class HyphenatedRangeParser implements RangeParserInterface
 {
     /**
+     * @var ComparatorVersionParser
+     */
+    private $comparatorVersionParser;
+
+    /**
      * @var ComparatorInterface
      */
     private $greaterOrEqualTo;
@@ -47,15 +52,18 @@ class HyphenatedRangeParser implements RangeParserInterface
     /**
      * Constructor.
      *
+     * @param ComparatorVersionParser $comparatorVersionParser
      * @param ComparatorInterface $greaterOrEqualTo
      * @param ComparatorInterface $lessThan
      * @param ComparatorInterface $lessOrEqualTo
      */
     public function __construct(
+        ComparatorVersionParser $comparatorVersionParser,
         ComparatorInterface $greaterOrEqualTo,
         ComparatorInterface $lessThan,
         ComparatorInterface $lessOrEqualTo
     ) {
+        $this->comparatorVersionParser = $comparatorVersionParser;
         $this->greaterOrEqualTo = $greaterOrEqualTo;
         $this->lessThan = $lessThan;
         $this->lessOrEqualTo = $lessOrEqualTo;
@@ -179,11 +187,9 @@ class HyphenatedRangeParser implements RangeParserInterface
      */
     private function getLowerConstraint(array $versionTokenList, array $labelTokenList = array())
     {
-        $versionParser = new ComparatorVersionParser(); // TODO: Inject!
-
         return new ComparatorVersion(
             $this->greaterOrEqualTo,
-            $versionParser->parseVersion($versionTokenList, $labelTokenList)
+            $this->comparatorVersionParser->parseVersion($versionTokenList, $labelTokenList)
         );
     }
 

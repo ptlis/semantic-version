@@ -26,6 +26,29 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 class ComparatorVersionParser implements RangeParserInterface
 {
     /**
+     * @var ComparatorFactory
+     */
+    private $comparatorFactory;
+
+    /**
+     * @var LabelBuilder
+     */
+    private $labelBuilder;
+
+
+    /**
+     * Constructor.
+     *
+     * @param ComparatorFactory $comparatorFactory
+     * @param LabelBuilder $labelBuilder
+     */
+    public function __construct(ComparatorFactory $comparatorFactory, LabelBuilder $labelBuilder)
+    {
+        $this->comparatorFactory = $comparatorFactory;
+        $this->labelBuilder = $labelBuilder;
+    }
+
+    /**
      * Returns true if the tokens can be parsed as a ComparatorVersion.
      *
      * @param Token[] $tokenList
@@ -68,16 +91,14 @@ class ComparatorVersionParser implements RangeParserInterface
             '='
         );
 
-        $comparatorFactory = new ComparatorFactory();
-
         // Prefixed comparator, hydrate & remove
         if (count($tokenList) > 0 && in_array($tokenList[0]->getValue(), $comparatorList)) {
-            $comparator = $comparatorFactory->get($tokenList[0]->getValue());
+            $comparator = $this->comparatorFactory->get($tokenList[0]->getValue());
             $tokenList = array_slice($tokenList, 1);
 
         // Default to equality
         } else {
-            $comparator = $comparatorFactory->get('=');
+            $comparator = $this->comparatorFactory->get('=');
         }
 
         $chunkList = $this->chunk($tokenList);
@@ -168,7 +189,6 @@ class ComparatorVersionParser implements RangeParserInterface
         $minor = 0;
         $patch = 0;
         $label = null;
-        $labelBuilder = new LabelBuilder(); // TODO: Inject!
 
         switch (count($versionTokenList)) {
 
@@ -203,14 +223,14 @@ class ComparatorVersionParser implements RangeParserInterface
 
             // Version string part only
             case 1:
-                $label = $labelBuilder
+                $label = $this->labelBuilder
                     ->setName($labelTokenList[0]->getValue())
                     ->build();
                 break;
 
             // Label version
             case 3:
-                $label = $labelBuilder
+                $label = $this->labelBuilder
                     ->setName($labelTokenList[0]->getValue())
                     ->setVersion($labelTokenList[2]->getValue())
                     ->build();
