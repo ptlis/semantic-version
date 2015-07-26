@@ -96,58 +96,34 @@ class HyphenatedRangeParser implements RangeParserInterface
     public function parse(array $tokenList)
     {
         $chunkedList = $this->chunk($tokenList);
-        $versionParser = new ComparatorVersionParser();
 
         switch (count($chunkedList)) {
 
             // No labels
             case 2:
-                $lowerVersion = $versionParser->parseVersion($chunkedList[0]);
-                $upperVersionConstraint = $this->getUpperVersionConstraintFromTokens($chunkedList[1]);
+                $lowerVersionConstraint = $this->getLowerConstraint($chunkedList[0]);
+                $upperVersionConstraint = $this->getUpperConstraint($chunkedList[1]);
                 break;
 
             // Label on one version
             case 3:
                 // Label belongs to first version
                 if (Token::LABEL_STRING === $chunkedList[1][0]->getType()) {
-                    $lowerMerged = array_merge(
-                        $chunkedList[0],
-                        array(new Token(Token::DASH_SEPARATOR, '-')),
-                        $chunkedList[1]
-                    );
-                    $lowerVersion = $versionParser->parseVersion($lowerMerged);
-
-                    $upperVersionConstraint = $this->getUpperVersionConstraintFromTokens($chunkedList[2]);
+                    $lowerVersionConstraint = $this->getLowerConstraint($chunkedList[0], $chunkedList[1]);
+                    $upperVersionConstraint = $this->getUpperConstraint($chunkedList[2]);
 
                 // Label belongs to second version
                 } else {
-                    $lowerVersion = $versionParser->parseVersion($chunkedList[0]);
-
-                    $upperMerged = array_merge(
-                        $chunkedList[1],
-                        array(new Token(Token::DASH_SEPARATOR, '-')),
-                        $chunkedList[2]
-                    );
-                    $upperVersionConstraint = $this->getUpperVersionConstraintFromTokens($upperMerged);
+                    $lowerVersionConstraint = $this->getLowerConstraint($chunkedList[0]);
+                    $upperVersionConstraint = $this->getUpperConstraint($chunkedList[1], $chunkedList[2]);
                 }
 
                 break;
 
             // Label on both versions
             case 4:
-                $lowerMerged = array_merge(
-                    $chunkedList[0],
-                    array(new Token(Token::DASH_SEPARATOR, '-')),
-                    $chunkedList[1]
-                );
-                $upperMerged = array_merge(
-                    $chunkedList[2],
-                    array(new Token(Token::DASH_SEPARATOR, '-')),
-                    $chunkedList[3]
-                );
-
-                $lowerVersion = $versionParser->parseVersion($lowerMerged);
-                $upperVersionConstraint = $this->getUpperVersionConstraintFromTokens($upperMerged);
+                $lowerVersionConstraint = $this->getLowerConstraint($chunkedList[0], $chunkedList[1]);
+                $upperVersionConstraint = $this->getUpperConstraint($chunkedList[2], $chunkedList[3]);
                 break;
 
             default:
@@ -155,10 +131,7 @@ class HyphenatedRangeParser implements RangeParserInterface
         }
 
         return new LogicalAnd(
-            new ComparatorVersion(
-                $this->greaterOrEqualTo,
-                $lowerVersion
-            ),
+            $lowerVersionConstraint,
             $upperVersionConstraint
         );
     }
@@ -197,56 +170,81 @@ class HyphenatedRangeParser implements RangeParserInterface
     }
 
     /**
-     * Determines the correct upper version constraint for a hyphenated range.
+     * Determines the correct lower version constraint for a hyphenated range.
      *
-     * @param Token[] $tokenList
+     * @param Token[] $versionTokenList
+     * @param Token[] $labelTokenList
      *
      * @return VersionRangeInterface
      */
-    private function getUpperVersionConstraintFromTokens(array $tokenList)
+    private function getLowerConstraint(array $versionTokenList, array $labelTokenList = array())
+    {
+        $versionParser = new ComparatorVersionParser(); // TODO: Inject!
+
+        return new ComparatorVersion(
+            $this->greaterOrEqualTo,
+            $versionParser->parseVersion($versionTokenList, $labelTokenList)
+        );
+    }
+
+    /**
+     * Determines the correct upper version constraint for a hyphenated range.
+     *
+     * @param Token[] $versionTokenList
+     * @param Token[] $labelTokenList
+     *
+     * @return VersionRangeInterface
+     */
+    private function getUpperConstraint(array $versionTokenList, array $labelTokenList = array())
     {
         $minor = 0;
         $patch = 0;
         $label = null;
         $labelBuilder = new LabelBuilder();
 
-        switch (count($tokenList)) {
+        switch (count($versionTokenList)) {
             case 1:
                 $comparator = $this->lessThan;
-                $major = $tokenList[0]->getValue() + 1;
+                $major = $versionTokenList[0]->getValue() + 1;
                 break;
 
             case 3:
                 $comparator = $this->lessThan;
-                $major = $tokenList[0]->getValue();
-                $minor = $tokenList[2]->getValue() + 1;
+                $major = $versionTokenList[0]->getValue();
+                $minor = $versionTokenList[2]->getValue() + 1;
                 break;
 
             case 5:
                 $comparator = $this->lessOrEqualTo;
-                $major = $tokenList[0]->getValue();
-                $minor = $tokenList[2]->getValue();
-                $patch = $tokenList[4]->getValue();
+                $major = $versionTokenList[0]->getValue();
+                $minor = $versionTokenList[2]->getValue();
+                $patch = $versionTokenList[4]->getValue();
                 break;
 
-            case 7:
-                $comparator = $this->lessOrEqualTo;
-                $major = $tokenList[0]->getValue();
-                $minor = $tokenList[2]->getValue();
-                $patch = $tokenList[4]->getValue();
+            default:
+                throw new \RuntimeException('Invalid version');
+        }
+
+        // TODO: This part is copied & pasted from ComparatorVersionParser::parseVersion!
+        switch (count($labelTokenList)) {
+
+            // No label
+            case 0:
+                // Do Nothing
+                break;
+
+            // Version string part only
+            case 1:
                 $label = $labelBuilder
-                    ->setName($tokenList[6]->getValue())
+                    ->setName($labelTokenList[0]->getValue())
                     ->build();
                 break;
 
-            case 9:
-                $comparator = $this->lessOrEqualTo;
-                $major = $tokenList[0]->getValue();
-                $minor = $tokenList[2]->getValue();
-                $patch = $tokenList[4]->getValue();
+            // Label version
+            case 3:
                 $label = $labelBuilder
-                    ->setName($tokenList[6]->getValue())
-                    ->setVersion($tokenList[8]->getValue())
+                    ->setName($labelTokenList[0]->getValue())
+                    ->setVersion($labelTokenList[2]->getValue())
                     ->build();
                 break;
 

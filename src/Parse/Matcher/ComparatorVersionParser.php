@@ -80,9 +80,16 @@ class ComparatorVersionParser implements RangeParserInterface
             $comparator = $comparatorFactory->get('=');
         }
 
+        $chunkList = $this->chunk($tokenList);
+        $versionTokenList = $chunkList[0];
+        $labelTokenList = array();
+        if (count($chunkList) > 1) {
+            $labelTokenList = $chunkList[1];
+        }
+
         return new ComparatorVersion(
             $comparator,
-            $this->parseVersion($tokenList)
+            $this->parseVersion($versionTokenList, $labelTokenList)
         );
     }
 
@@ -151,55 +158,61 @@ class ComparatorVersionParser implements RangeParserInterface
     /**
      * Parse a token list into a Version.
      *
-     * @param Token[] $tokenList
+     * @param Token[] $versionTokenList
+     * @param Token[] $labelTokenList
      *
      * @return Version
      */
-    public function parseVersion(array $tokenList)
+    public function parseVersion(array $versionTokenList, array $labelTokenList = array())
     {
         $minor = 0;
         $patch = 0;
         $label = null;
-        $labelBuilder = new LabelBuilder();
+        $labelBuilder = new LabelBuilder(); // TODO: Inject!
 
-        switch (count($tokenList)) {
+        switch (count($versionTokenList)) {
 
             // Major Only
             case 1:
-                $major = $tokenList[0]->getValue();
+                $major = $versionTokenList[0]->getValue();
                 break;
 
             // Major, minor
             case 3:
-                $major = $tokenList[0]->getValue();
-                $minor = $tokenList[2]->getValue();
+                $major = $versionTokenList[0]->getValue();
+                $minor = $versionTokenList[2]->getValue();
                 break;
 
             // Major, minor, patch
             case 5:
-                $major = $tokenList[0]->getValue();
-                $minor = $tokenList[2]->getValue();
-                $patch = $tokenList[4]->getValue();
+                $major = $versionTokenList[0]->getValue();
+                $minor = $versionTokenList[2]->getValue();
+                $patch = $versionTokenList[4]->getValue();
                 break;
 
-            // Major, minor, patch, label
-            case 7:
-                $major = $tokenList[0]->getValue();
-                $minor = $tokenList[2]->getValue();
-                $patch = $tokenList[4]->getValue();
+            default:
+                throw new \RuntimeException('Invalid version');
+        }
+
+        switch (count($labelTokenList)) {
+
+            // No label
+            case 0:
+                // Do Nothing
+                break;
+
+            // Version string part only
+            case 1:
                 $label = $labelBuilder
-                    ->setName($tokenList[6]->getValue())
+                    ->setName($labelTokenList[0]->getValue())
                     ->build();
                 break;
 
-            // Major, minor, patch, label, label version
-            case 9:
-                $major = $tokenList[0]->getValue();
-                $minor = $tokenList[2]->getValue();
-                $patch = $tokenList[4]->getValue();
+            // Label version
+            case 3:
                 $label = $labelBuilder
-                    ->setName($tokenList[6]->getValue())
-                    ->setVersion($tokenList[8]->getValue())
+                    ->setName($labelTokenList[0]->getValue())
+                    ->setVersion($labelTokenList[2]->getValue())
                     ->build();
                 break;
 
