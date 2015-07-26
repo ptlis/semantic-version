@@ -51,6 +51,6 @@ class BranchParser implements RangeParserInterface
     {
         $parser = new WildcardRangeParser();
 
-        return $parser->parse($tokenList, 1);
+        return $parser->parse($tokenList);
     }
 }

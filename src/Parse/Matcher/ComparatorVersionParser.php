@@ -113,11 +113,11 @@ class ComparatorVersionParser implements RangeParserInterface
      */
     private function chunk(array $tokenList)
     {
+        $tokenListCount = count($tokenList);
         $chunkedList = array();
-
         $accumulator = array();
 
-        for ($i = 0; $i < count($tokenList); $i++) {
+        for ($i = 0; $i < $tokenListCount; $i++) {
             $token = $tokenList[$i];
 
             // Accumulate until we hit a dash
@@ -194,7 +194,6 @@ class ComparatorVersionParser implements RangeParserInterface
 
             default:
                 throw new \RuntimeException('Invalid version');
-                break;
         }
 
         return new Version($major, $minor, $patch, $label);
