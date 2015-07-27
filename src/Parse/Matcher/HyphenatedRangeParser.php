@@ -30,11 +30,6 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 class HyphenatedRangeParser implements RangeParserInterface
 {
     /**
-     * @var ComparatorVersionParser
-     */
-    private $comparatorVersionParser;
-
-    /**
      * @var VersionBuilder
      */
     private $versionBuilder;
@@ -58,20 +53,17 @@ class HyphenatedRangeParser implements RangeParserInterface
     /**
      * Constructor.
      *
-     * @param ComparatorVersionParser $comparatorVersionParser
      * @param VersionBuilder $versionBuilder
      * @param ComparatorInterface $greaterOrEqualTo
      * @param ComparatorInterface $lessThan
      * @param ComparatorInterface $lessOrEqualTo
      */
     public function __construct(
-        ComparatorVersionParser $comparatorVersionParser,
         VersionBuilder $versionBuilder,
         ComparatorInterface $greaterOrEqualTo,
         ComparatorInterface $lessThan,
         ComparatorInterface $lessOrEqualTo
     ) {
-        $this->comparatorVersionParser = $comparatorVersionParser;
         $this->versionBuilder = $versionBuilder;
         $this->greaterOrEqualTo = $greaterOrEqualTo;
         $this->lessThan = $lessThan;

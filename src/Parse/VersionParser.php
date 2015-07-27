@@ -70,10 +70,6 @@ class VersionParser
             $comparatorFactory->get('>='),
             $comparatorFactory->get('<')
         );
-        $comparatorVersionParser = new ComparatorVersionParser(
-            $comparatorFactory,
-            $versionBuilder     // TODO: Inject!
-        );
 
         $matcherList = array(
             new CaretRangeParser(
@@ -83,9 +79,11 @@ class VersionParser
             new TildeRangeParser($wildcardParser),
             $wildcardParser,
             new BranchParser($wildcardParser),
-            $comparatorVersionParser,
+            new ComparatorVersionParser(
+                $comparatorFactory,
+                $versionBuilder
+            ),
             new HyphenatedRangeParser(
-                $comparatorVersionParser,
                 $versionBuilder,
                 $comparatorFactory->get('>='),
                 $comparatorFactory->get('<'),
@@ -119,11 +117,9 @@ class VersionParser
 
         }
 
-
         $buildRange = new LogicalOperatorProcessor();
 
         return $buildRange->run($realResultList);
-
     }
 
     /**
