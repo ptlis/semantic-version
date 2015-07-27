@@ -13,6 +13,8 @@
 
 namespace ptlis\SemanticVersion\Version\Label;
 
+use ptlis\SemanticVersion\Parse\Token;
+
 /**
  * Immutable builder for label instances.
  */
@@ -97,6 +99,46 @@ class LabelBuilder
         // Anything else is a miscellaneous 'dev' label
         } else {
             $label = new Label(Label::PRECEDENCE_DEV, $this->version, $this->name);
+        }
+
+        return $label;
+    }
+
+    /**
+     * Build a label from a token list.
+     *
+     * @param Token[] $labelTokenList
+     *
+     * @return LabelInterface|null
+     */
+    public function buildFromTokens(array $labelTokenList)
+    {
+        $label = null;
+
+        switch (count($labelTokenList)) {
+
+            // No label
+            case 0:
+                // Do Nothing
+                break;
+
+            // Version string part only
+            case 1:
+                $label = $this
+                    ->setName($labelTokenList[0]->getValue())
+                    ->build();
+                break;
+
+            // Label version
+            case 3:
+                $label = $this
+                    ->setName($labelTokenList[0]->getValue())
+                    ->setVersion($labelTokenList[2]->getValue())
+                    ->build();
+                break;
+
+            default:
+                throw new \RuntimeException('Invalid version');
         }
 
         return $label;

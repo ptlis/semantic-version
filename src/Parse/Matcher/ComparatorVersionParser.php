@@ -214,32 +214,11 @@ class ComparatorVersionParser implements RangeParserInterface
                 throw new \RuntimeException('Invalid version');
         }
 
-        switch (count($labelTokenList)) {
-
-            // No label
-            case 0:
-                // Do Nothing
-                break;
-
-            // Version string part only
-            case 1:
-                $label = $this->labelBuilder
-                    ->setName($labelTokenList[0]->getValue())
-                    ->build();
-                break;
-
-            // Label version
-            case 3:
-                $label = $this->labelBuilder
-                    ->setName($labelTokenList[0]->getValue())
-                    ->setVersion($labelTokenList[2]->getValue())
-                    ->build();
-                break;
-
-            default:
-                throw new \RuntimeException('Invalid version');
-        }
-
-        return new Version($major, $minor, $patch, $label);
+        return new Version(
+            $major,
+            $minor,
+            $patch,
+            $this->labelBuilder->buildFromTokens($labelTokenList)
+        );
     }
 }
