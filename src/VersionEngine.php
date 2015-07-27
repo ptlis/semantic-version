@@ -13,9 +13,17 @@
 
 namespace ptlis\SemanticVersion;
 
+use ptlis\SemanticVersion\Comparator\ComparatorFactory;
+use ptlis\SemanticVersion\Parse\Matcher\BranchParser;
+use ptlis\SemanticVersion\Parse\Matcher\CaretRangeParser;
+use ptlis\SemanticVersion\Parse\Matcher\ComparatorVersionParser;
+use ptlis\SemanticVersion\Parse\Matcher\HyphenatedRangeParser;
+use ptlis\SemanticVersion\Parse\Matcher\TildeRangeParser;
+use ptlis\SemanticVersion\Parse\Matcher\WildcardRangeParser;
 use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\Parse\VersionTokenizer;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
+use ptlis\SemanticVersion\Version\VersionBuilder;
 use ptlis\SemanticVersion\Version\VersionInterface;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
@@ -41,10 +49,36 @@ class VersionEngine
      */
     public function __construct()
     {
-        $this->tokenizer = new VersionTokenizer();
-        $this->parser = new VersionParser(
-            new LabelBuilder()
+        $comparatorFactory = new ComparatorFactory();
+        $versionBuilder = new VersionBuilder(new LabelBuilder());
+
+        $wildcardParser = new WildcardRangeParser(
+            $comparatorFactory->get('>='),
+            $comparatorFactory->get('<')
         );
+
+        $matcherList = array(
+            new CaretRangeParser(
+                $comparatorFactory->get('>='),
+                $comparatorFactory->get('<')
+            ),
+            new TildeRangeParser($wildcardParser),
+            $wildcardParser,
+            new BranchParser($wildcardParser),
+            new ComparatorVersionParser(
+                $comparatorFactory,
+                $versionBuilder
+            ),
+            new HyphenatedRangeParser(
+                $versionBuilder,
+                $comparatorFactory->get('>='),
+                $comparatorFactory->get('<'),
+                $comparatorFactory->get('<=')
+            )
+        );
+
+        $this->tokenizer = new VersionTokenizer();
+        $this->parser = new VersionParser($matcherList);
     }
 
     /**

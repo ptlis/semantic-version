@@ -13,15 +13,7 @@
 
 namespace ptlis\SemanticVersion\Parse;
 
-use ptlis\SemanticVersion\Comparator\ComparatorFactory;
-use ptlis\SemanticVersion\Parse\Matcher\BranchParser;
-use ptlis\SemanticVersion\Parse\Matcher\CaretRangeParser;
-use ptlis\SemanticVersion\Parse\Matcher\ComparatorVersionParser;
-use ptlis\SemanticVersion\Parse\Matcher\HyphenatedRangeParser;
-use ptlis\SemanticVersion\Parse\Matcher\TildeRangeParser;
-use ptlis\SemanticVersion\Parse\Matcher\WildcardRangeParser;
-use ptlis\SemanticVersion\Version\Label\LabelBuilder;
-use ptlis\SemanticVersion\Version\VersionBuilder;
+use ptlis\SemanticVersion\Parse\Matcher\RangeParserInterface;
 use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 
 /**
@@ -32,23 +24,23 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 class VersionParser
 {
     /**
-     * @var LabelBuilder
+     * @var RangeParserInterface[]
      */
-    private $labelBuilder;
+    private $rangeParserList;
 
 
     /**
      * Constructor.
      *
-     * @param LabelBuilder $labelBuilder
+     * @param RangeParserInterface[] $rangeParserList
      */
-    public function __construct(LabelBuilder $labelBuilder)
+    public function __construct(array $rangeParserList)
     {
-        $this->labelBuilder = $labelBuilder;
+        $this->rangeParserList = $rangeParserList;
     }
 
     /**
-     *
+     * Parse a version range.
      *
      * @param Token[] $tokenList
      *
@@ -63,41 +55,13 @@ class VersionParser
             Token::LOGICAL_OR
         );
 
-        $comparatorFactory = new ComparatorFactory();    // TODO: Inject!
-        $versionBuilder = new VersionBuilder($this->labelBuilder);     // TODO: Inject!
-
-        $wildcardParser = new WildcardRangeParser(
-            $comparatorFactory->get('>='),
-            $comparatorFactory->get('<')
-        );
-
-        $matcherList = array(
-            new CaretRangeParser(
-                $comparatorFactory->get('>='),
-                $comparatorFactory->get('<')
-            ),
-            new TildeRangeParser($wildcardParser),
-            $wildcardParser,
-            new BranchParser($wildcardParser),
-            new ComparatorVersionParser(
-                $comparatorFactory,
-                $versionBuilder
-            ),
-            new HyphenatedRangeParser(
-                $versionBuilder,
-                $comparatorFactory->get('>='),
-                $comparatorFactory->get('<'),
-                $comparatorFactory->get('<=')
-            )
-        );
-
         $realResultList = array();
         foreach ($clusteredTokenList as $clusteredTokens) {
 
             $parsed = null;
-            foreach ($matcherList as $matcher) {
-                if ($matcher->canParse($clusteredTokens)) {
-                    $parsed = $matcher->parse($clusteredTokens);
+            foreach ($this->rangeParserList as $rangeParser) {
+                if ($rangeParser->canParse($clusteredTokens)) {
+                    $parsed = $rangeParser->parse($clusteredTokens);
                     break;
                 }
             }
