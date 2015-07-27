@@ -18,7 +18,6 @@ use ptlis\SemanticVersion\Parse\Matcher\BranchParser;
 use ptlis\SemanticVersion\Parse\Matcher\CaretRangeParser;
 use ptlis\SemanticVersion\Parse\Matcher\ComparatorVersionParser;
 use ptlis\SemanticVersion\Parse\Matcher\HyphenatedRangeParser;
-use ptlis\SemanticVersion\Parse\Matcher\RangeParserInterface;
 use ptlis\SemanticVersion\Parse\Matcher\TildeRangeParser;
 use ptlis\SemanticVersion\Parse\Matcher\WildcardRangeParser;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
@@ -73,7 +72,6 @@ class VersionParser
         );
         $comparatorVersionParser = new ComparatorVersionParser(
             $comparatorFactory,
-            $this->labelBuilder,
             $versionBuilder     // TODO: Inject!
         );
 

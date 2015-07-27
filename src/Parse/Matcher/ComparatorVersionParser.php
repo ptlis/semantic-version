@@ -15,7 +15,6 @@ namespace ptlis\SemanticVersion\Parse\Matcher;
 
 use ptlis\SemanticVersion\Comparator\ComparatorFactory;
 use ptlis\SemanticVersion\Parse\Token;
-use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 use ptlis\SemanticVersion\Version\VersionBuilder;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
@@ -31,11 +30,6 @@ class ComparatorVersionParser implements RangeParserInterface
     private $comparatorFactory;
 
     /**
-     * @var LabelBuilder
-     */
-    private $labelBuilder;
-
-    /**
      * @var VersionBuilder
      */
     private $versionBuilder;
@@ -45,16 +39,13 @@ class ComparatorVersionParser implements RangeParserInterface
      * Constructor.
      *
      * @param ComparatorFactory $comparatorFactory
-     * @param LabelBuilder $labelBuilder
      * @param VersionBuilder $versionBuilder
      */
     public function __construct(
         ComparatorFactory $comparatorFactory,
-        LabelBuilder $labelBuilder,
         VersionBuilder $versionBuilder
     ) {
         $this->comparatorFactory = $comparatorFactory;
-        $this->labelBuilder = $labelBuilder;
         $this->versionBuilder = $versionBuilder;
     }
 
