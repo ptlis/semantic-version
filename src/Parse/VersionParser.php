@@ -22,6 +22,7 @@ use ptlis\SemanticVersion\Parse\Matcher\RangeParserInterface;
 use ptlis\SemanticVersion\Parse\Matcher\TildeRangeParser;
 use ptlis\SemanticVersion\Parse\Matcher\WildcardRangeParser;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
+use ptlis\SemanticVersion\Version\VersionBuilder;
 use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 
 /**
@@ -64,12 +65,17 @@ class VersionParser
         );
 
         $comparatorFactory = new ComparatorFactory();    // TODO: Inject!
+        $versionBuilder = new VersionBuilder($this->labelBuilder);     // TODO: Inject!
 
         $wildcardParser = new WildcardRangeParser(
             $comparatorFactory->get('>='),
             $comparatorFactory->get('<')
         );
-        $comparatorVersionParser = new ComparatorVersionParser($comparatorFactory, $this->labelBuilder);
+        $comparatorVersionParser = new ComparatorVersionParser(
+            $comparatorFactory,
+            $this->labelBuilder,
+            $versionBuilder     // TODO: Inject!
+        );
 
         $matcherList = array(
             new CaretRangeParser(
@@ -82,6 +88,7 @@ class VersionParser
             $comparatorVersionParser,
             new HyphenatedRangeParser(
                 $comparatorVersionParser,
+                $versionBuilder,
                 $comparatorFactory->get('>='),
                 $comparatorFactory->get('<'),
                 $comparatorFactory->get('<=')

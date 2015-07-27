@@ -17,6 +17,7 @@ use ptlis\SemanticVersion\Comparator\ComparatorInterface;
 use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 use ptlis\SemanticVersion\Version\Version;
+use ptlis\SemanticVersion\Version\VersionBuilder;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
@@ -24,7 +25,7 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 /**
  * Parser for hyphenated ranges.
  *
- * Hyphenated ranges are implemented as described @ https://getcomposer.org/doc/01-basic-usage.md#package-versions
+ * Hyphenated ranges are implemented as described @ https://getcomposer.org/doc/articles/versions.md#range-hyphen-
  */
 class HyphenatedRangeParser implements RangeParserInterface
 {
@@ -32,6 +33,11 @@ class HyphenatedRangeParser implements RangeParserInterface
      * @var ComparatorVersionParser
      */
     private $comparatorVersionParser;
+
+    /**
+     * @var VersionBuilder
+     */
+    private $versionBuilder;
 
     /**
      * @var ComparatorInterface
@@ -53,17 +59,20 @@ class HyphenatedRangeParser implements RangeParserInterface
      * Constructor.
      *
      * @param ComparatorVersionParser $comparatorVersionParser
+     * @param VersionBuilder $versionBuilder
      * @param ComparatorInterface $greaterOrEqualTo
      * @param ComparatorInterface $lessThan
      * @param ComparatorInterface $lessOrEqualTo
      */
     public function __construct(
         ComparatorVersionParser $comparatorVersionParser,
+        VersionBuilder $versionBuilder,
         ComparatorInterface $greaterOrEqualTo,
         ComparatorInterface $lessThan,
         ComparatorInterface $lessOrEqualTo
     ) {
         $this->comparatorVersionParser = $comparatorVersionParser;
+        $this->versionBuilder = $versionBuilder;
         $this->greaterOrEqualTo = $greaterOrEqualTo;
         $this->lessThan = $lessThan;
         $this->lessOrEqualTo = $lessOrEqualTo;
@@ -189,7 +198,7 @@ class HyphenatedRangeParser implements RangeParserInterface
     {
         return new ComparatorVersion(
             $this->greaterOrEqualTo,
-            $this->comparatorVersionParser->parseVersion($versionTokenList, $labelTokenList)
+            $this->versionBuilder->buildFromTokens($versionTokenList, $labelTokenList)
         );
     }
 

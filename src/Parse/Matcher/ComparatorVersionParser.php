@@ -16,7 +16,7 @@ namespace ptlis\SemanticVersion\Parse\Matcher;
 use ptlis\SemanticVersion\Comparator\ComparatorFactory;
 use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
-use ptlis\SemanticVersion\Version\Version;
+use ptlis\SemanticVersion\Version\VersionBuilder;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 
@@ -35,17 +35,27 @@ class ComparatorVersionParser implements RangeParserInterface
      */
     private $labelBuilder;
 
+    /**
+     * @var VersionBuilder
+     */
+    private $versionBuilder;
+
 
     /**
      * Constructor.
      *
      * @param ComparatorFactory $comparatorFactory
      * @param LabelBuilder $labelBuilder
+     * @param VersionBuilder $versionBuilder
      */
-    public function __construct(ComparatorFactory $comparatorFactory, LabelBuilder $labelBuilder)
-    {
+    public function __construct(
+        ComparatorFactory $comparatorFactory,
+        LabelBuilder $labelBuilder,
+        VersionBuilder $versionBuilder
+    ) {
         $this->comparatorFactory = $comparatorFactory;
         $this->labelBuilder = $labelBuilder;
+        $this->versionBuilder = $versionBuilder;
     }
 
     /**
@@ -110,7 +120,7 @@ class ComparatorVersionParser implements RangeParserInterface
 
         return new ComparatorVersion(
             $comparator,
-            $this->parseVersion($versionTokenList, $labelTokenList)
+            $this->versionBuilder->buildFromTokens($versionTokenList, $labelTokenList)
         );
     }
 
@@ -174,51 +184,5 @@ class ComparatorVersionParser implements RangeParserInterface
         }
 
         return $chunkedList;
-    }
-
-    /**
-     * Parse a token list into a Version.
-     *
-     * @param Token[] $versionTokenList
-     * @param Token[] $labelTokenList
-     *
-     * @return Version
-     */
-    public function parseVersion(array $versionTokenList, array $labelTokenList = array())
-    {
-        $minor = 0;
-        $patch = 0;
-        $label = null;
-
-        switch (count($versionTokenList)) {
-
-            // Major Only
-            case 1:
-                $major = $versionTokenList[0]->getValue();
-                break;
-
-            // Major, minor
-            case 3:
-                $major = $versionTokenList[0]->getValue();
-                $minor = $versionTokenList[2]->getValue();
-                break;
-
-            // Major, minor, patch
-            case 5:
-                $major = $versionTokenList[0]->getValue();
-                $minor = $versionTokenList[2]->getValue();
-                $patch = $versionTokenList[4]->getValue();
-                break;
-
-            default:
-                throw new \RuntimeException('Invalid version');
-        }
-
-        return new Version(
-            $major,
-            $minor,
-            $patch,
-            $this->labelBuilder->buildFromTokens($labelTokenList)
-        );
     }
 }
