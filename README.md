@@ -4,7 +4,7 @@ A modular, extensible library for PHP >= 5.3 providing APIs to support parsing &
 
 The [Semantic Versioning Specification](http://semver.org/) describes the semantics and precedence rules used when parsing & manipulating version numbers etc.
 
-[![Build Status](https://travis-ci.org/ptlis/semantic-version.png?branch=master)](https://travis-ci.org/ptlis/semantic-version) [![Code Coverage](https://scrutinizer-ci.com/g/ptlis/semantic-version/badges/coverage.png?s=fb09ca8f948767518b41f546f33b78fff81b9b71)](https://scrutinizer-ci.com/g/ptlis/semantic-version/) [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/ptlis/semantic-version/badges/quality-score.png?s=7651fefac69baed0a2a77d8196dddc48e39f35bd)](https://scrutinizer-ci.com/g/ptlis/semantic-version/) [![Latest Stable Version](https://poser.pugx.org/ptlis/semantic-version/v/stable.png)](https://packagist.org/packages/ptlis/semantic-version)
+[![Build Status](https://travis-ci.org/ptlis/semantic-version.png?branch=master)](https://travis-ci.org/ptlis/semantic-version) [![Code Coverage](https://scrutinizer-ci.com/g/ptlis/semantic-version/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/ptlis/semantic-version/?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ptlis/semantic-version/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ptlis/semantic-version/?branch=master) [![Latest Stable Version](https://poser.pugx.org/ptlis/semantic-version/v/stable.png)](https://packagist.org/packages/ptlis/semantic-version)
 
 ## Usage
 
