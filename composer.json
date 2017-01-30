@@ -26,8 +26,5 @@
             "ptlis\\SemanticVersion\\": "src/",
             "ptlis\\SemanticVersion\\Test\\": "tests/"
         }
-    },
-    "config": {
-        "bin-dir": "bin"
     }
 }
