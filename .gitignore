@@ -4,11 +4,9 @@
 /build/logs/
 /build/pdepend/
 /build/phpdox/
-
 /vendor/
-/composer.phar
 /.idea/
-
+composer.lock
 
 
 
