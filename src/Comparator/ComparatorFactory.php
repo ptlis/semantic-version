@@ -1,8 +1,6 @@
 <?php
 
 /**
- * PHP Version 5.3
- *
  * @copyright   (c) 2014-2017 brian ridley
  * @author      brian ridley <ptlis@ptlis.net>
  * @license     http://opensource.org/licenses/MIT MIT
@@ -36,21 +34,21 @@ class ComparatorFactory
      */
     public function __construct()
     {
-        $this->comparatorTokenMap = array(
+        $this->comparatorTokenMap = [
             Token::GREATER_THAN => new GreaterThan(),
             Token::GREATER_THAN_EQUAL => new GreaterOrEqualTo(),
             Token::LESS_THAN => new LessThan(),
             Token::LESS_THAN_EQUAL => new LessOrEqualTo(),
             Token::EQUAL_TO => new EqualTo()
-        );
+        ];
 
-        $this->comparatorStringMap = array(
+        $this->comparatorStringMap = [
             '>' => new GreaterThan(),
             '>=' => new GreaterOrEqualTo(),
             '<' => new LessThan(),
             '<=' => new LessOrEqualTo(),
             '=' => new EqualTo()
-        );
+        ];
     }
 
     /**

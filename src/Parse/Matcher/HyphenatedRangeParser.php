@@ -1,8 +1,6 @@
 <?php
 
 /**
- * PHP Version 5.3
- *
  * @copyright   (c) 2014-2017 brian ridley
  * @author      brian ridley <ptlis@ptlis.net>
  * @license     http://opensource.org/licenses/MIT MIT
@@ -155,8 +153,8 @@ class HyphenatedRangeParser implements RangeParserInterface
     private function chunk(array $tokenList)
     {
         $tokenListCount = count($tokenList);
-        $chunkedList = array();
-        $accumulator = array();
+        $chunkedList = [];
+        $accumulator = [];
 
         for ($i = 0; $i < $tokenListCount; $i++) {
             $token = $tokenList[$i];
@@ -167,7 +165,7 @@ class HyphenatedRangeParser implements RangeParserInterface
 
             } else {
                 $chunkedList[] = $accumulator;
-                $accumulator = array();
+                $accumulator = [];
             }
         }
 
@@ -186,7 +184,7 @@ class HyphenatedRangeParser implements RangeParserInterface
      *
      * @return VersionRangeInterface
      */
-    private function getLowerConstraint(array $versionTokenList, array $labelTokenList = array())
+    private function getLowerConstraint(array $versionTokenList, array $labelTokenList = [])
     {
         return new ComparatorVersion(
             $this->greaterOrEqualTo,
@@ -202,7 +200,7 @@ class HyphenatedRangeParser implements RangeParserInterface
      *
      * @return VersionRangeInterface
      */
-    private function getUpperConstraint(array $versionTokenList, array $labelTokenList = array())
+    private function getUpperConstraint(array $versionTokenList, array $labelTokenList = [])
     {
         $minor = 0;
         $patch = 0;

@@ -1,8 +1,6 @@
 <?php
 
 /**
- * PHP Version 5.3
- *
  * @copyright   (c) 2014-2017 brian ridley
  * @author      brian ridley <ptlis@ptlis.net>
  * @license     http://opensource.org/licenses/MIT MIT
@@ -30,7 +28,7 @@ class VersionTokenizer
     public function tokenize($versionString)
     {
         /** @var Token[] $tokenList */
-        $tokenList = array();
+        $tokenList = [];
         $digitAccumulator = '';
         $stringAccumulator = '';
 
@@ -75,13 +73,13 @@ class VersionTokenizer
                     $this->conditionallyAddToken(Token::DIGITS, $digitAccumulator, $tokenList);
                     $this->conditionallyAddToken(Token::LABEL_STRING, $stringAccumulator, $tokenList);
 
-                    $operatorTokenList = array(
+                    $operatorTokenList = [
                         Token::GREATER_THAN,
                         Token::GREATER_THAN_EQUAL,
                         Token::LESS_THAN,
                         Token::LESS_THAN_EQUAL,
                         Token::EQUAL_TO
-                    );
+                    ];
 
                     // No previous tokens, or previous token was not a comparator
                     if (
@@ -135,10 +133,10 @@ class VersionTokenizer
      */
     private function addImplicitAnd(array &$tokenList)
     {
-        $digitTokenList = array(
+        $digitTokenList = [
             Token::DIGITS,
             Token::WILDCARD_DIGITS
-        );
+        ];
 
         if (count($tokenList) && in_array($tokenList[count($tokenList) -1]->getType(), $digitTokenList)) {
             $tokenList[] = new Token(Token::LOGICAL_AND, '');
@@ -167,13 +165,13 @@ class VersionTokenizer
      */
     private function getComparatorToken(&$index, $versionString)
     {
-        $comparatorMap = array(
+        $comparatorMap = [
             '>' => Token::GREATER_THAN,
             '>=' => Token::GREATER_THAN_EQUAL,
             '<' => Token::LESS_THAN,
             '<=' => Token::LESS_THAN_EQUAL,
             '=' => Token::EQUAL_TO
-        );
+        ];
 
         $chr = substr($versionString, $index, 1);
 
@@ -203,14 +201,14 @@ class VersionTokenizer
      */
     private function getSimpleToken($chr)
     {
-        $tokenMap = array(
+        $tokenMap = [
             '-' => Token::DASH_SEPARATOR,
             '.' => Token::DOT_SEPARATOR,
             '~' => Token::TILDE_RANGE,
             '^' => Token::CARET_RANGE,
             '*' => Token::WILDCARD_DIGITS,
             'x' => Token::WILDCARD_DIGITS
-        );
+        ];
 
         $token = null;
         if (array_key_exists($chr, $tokenMap)) {

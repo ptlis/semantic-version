@@ -1,8 +1,6 @@
 <?php
 
 /**
- * PHP Version 5.3
- *
  * @copyright   (c) 2014-2017 brian ridley
  * @author      brian ridley <ptlis@ptlis.net>
  * @license     http://opensource.org/licenses/MIT MIT
@@ -80,11 +78,11 @@ class LabelBuilder
      */
     public function build()
     {
-        $labelMap = array(
+        $labelMap = [
             'alpha' => Label::PRECEDENCE_ALPHA,
             'beta' => Label::PRECEDENCE_BETA,
             'rc' => Label::PRECEDENCE_RC
-        );
+        ];
 
         // No Label present or a dev label (these are a special-case for packagist - a version like 1.0.x-dev is
         // equivalent to 1.0.* in  conventional notation - there is additional semantics attached to this but it's not

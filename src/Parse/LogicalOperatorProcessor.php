@@ -1,8 +1,6 @@
 <?php
 
 /**
- * PHP Version 5.3
- *
  * @copyright   (c) 2014-2017 brian ridley
  * @author      brian ridley <ptlis@ptlis.net>
  * @license     http://opensource.org/licenses/MIT MIT
@@ -27,16 +25,16 @@ class LogicalOperatorProcessor
     /**
      * @var array Of operator precedences & associativity.
      */
-    private $operatorPrecedence = array(
-        Token::LOGICAL_OR => array(
+    private $operatorPrecedence = [
+        Token::LOGICAL_OR => [
             'precedence' => 0,
             'associativity' => 'left'
-        ),
-        Token::LOGICAL_AND => array(
+        ],
+        Token::LOGICAL_AND => [
             'precedence' => 1,
             'associativity' => 'left'
-        )
-    );
+        ]
+    ];
 
     /**
      * Accepts an array of VersionRanges & logical operator tokens & returns a single version range implementing those

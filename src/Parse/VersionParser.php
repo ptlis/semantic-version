@@ -1,8 +1,6 @@
 <?php
 
 /**
- * PHP Version 5.3
- *
  * @copyright   (c) 2014-2017 brian ridley
  * @author      brian ridley <ptlis@ptlis.net>
  * @license     http://opensource.org/licenses/MIT MIT
@@ -50,12 +48,12 @@ class VersionParser
     {
         $clusteredTokenList = $this->clusterTokens($tokenList);
 
-        $operatorList = array(
+        $operatorList = [
             Token::LOGICAL_AND,
             Token::LOGICAL_OR
-        );
+        ];
 
-        $realResultList = array();
+        $realResultList = [];
         foreach ($clusteredTokenList as $clusteredTokens) {
 
             $parsed = null;
@@ -95,23 +93,23 @@ class VersionParser
      */
     private function clusterTokens(array $tokenList)
     {
-        $comparatorTokenList = array(
+        $comparatorTokenList = [
             Token::LOGICAL_AND,
             Token::LOGICAL_OR
-        );
+        ];
 
-        $tokenClusterList = array();
+        $tokenClusterList = [];
 
         // Stores tokens not yet parcelled out
-        $tokenAccumulator = array();
+        $tokenAccumulator = [];
         $tokenListCount = count($tokenList);
         for ($i = 0; $i < $tokenListCount; $i++) {
             $currentToken = $tokenList[$i];
 
             if (in_array($currentToken->getType(), $comparatorTokenList)) {
                 $tokenClusterList[] = $tokenAccumulator;
-                $tokenClusterList[] = array($currentToken);
-                $tokenAccumulator = array();
+                $tokenClusterList[] = [$currentToken];
+                $tokenAccumulator = [];
 
             } else {
                 $tokenAccumulator[] = $currentToken;

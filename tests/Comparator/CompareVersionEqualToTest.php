@@ -1,8 +1,6 @@
 <?php
 
 /**
- * PHP Version 5.3
- *
  * @copyright   (c) 2014-2017 brian ridley
  * @author      brian ridley <ptlis@ptlis.net>
  * @license     http://opensource.org/licenses/MIT MIT
@@ -11,8 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Test\Version\Comparator;
+namespace ptlis\SemanticVersion\Test\Comparator;
 
+use PHPUnit\Framework\TestCase;
 use ptlis\SemanticVersion\Comparator\EqualTo;
 use ptlis\SemanticVersion\Version\Label\Label;
 use ptlis\SemanticVersion\Version\Version;
@@ -20,7 +19,7 @@ use ptlis\SemanticVersion\Version\Version;
 /**
  * Tests to ensure correct handling of version number equality.
  */
-class CompareVersionEqualToTest extends \PHPUnit_Framework_TestCase
+final class CompareVersionEqualToTest extends TestCase
 {
     public function testReadSymbol()
     {
@@ -69,49 +68,49 @@ class CompareVersionEqualToTest extends \PHPUnit_Framework_TestCase
 
     public function isEqualProvider()
     {
-        return array(
-            array(
+        return [
+            [
                 new Version(1, 0, 0),
                 new Version(1, 0, 0)
-            ),
-            array(
+            ],
+            [
                 new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 1)),
                 new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 1))
-            ),
-            array(
+            ],
+            [
                 new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 1)),
                 new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 1))
-            )
-        );
+            ]
+        ];
     }
 
     public function isNotEqualProvider()
     {
-        return array(
-            array(
+        return [
+            [
                 new Version(1, 0, 0),
                 new Version(2, 0, 0)
-            ),
-            array(
+            ],
+            [
                 new Version(1, 0, 0),
                 new Version(1, 1, 0)
-            ),
-            array(
+            ],
+            [
                 new Version(1, 0, 0),
                 new Version(1, 0, 5)
-            ),
-            array(
+            ],
+            [
                 new Version(1, 0, 0),
                 new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA))
-            ),
-            array(
+            ],
+            [
                 new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA)),
                 new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA, 1))
-            ),
-            array(
+            ],
+            [
                 new Version(1, 0, 0, new Label(Label::PRECEDENCE_ALPHA)),
                 new Version(1, 0, 0, new Label(Label::PRECEDENCE_BETA))
-            )
-        );
+            ]
+        ];
     }
 }

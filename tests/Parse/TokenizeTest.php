@@ -1,8 +1,6 @@
 <?php
 
 /**
- * PHP Version 5.3
- *
  * @copyright   (c) 2014-2017 brian ridley
  * @author      brian ridley <ptlis@ptlis.net>
  * @license     http://opensource.org/licenses/MIT MIT
@@ -16,10 +14,11 @@ namespace ptlis\SemanticVersion\Test\Parse;
 use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Parse\VersionTokenizer;
 
-class TokenizeTest extends TestDataProvider
+final class TokenizeTest extends TestDataProvider
 {
     /**
      * @dataProvider tokenProvider
+     * @covers \ptlis\SemanticVersion\Parse\VersionTokenizer
      *
      * @param string $version
      * @param Token[] $tokenList

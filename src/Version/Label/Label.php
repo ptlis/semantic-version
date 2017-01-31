@@ -1,8 +1,6 @@
 <?php
 
 /**
- * PHP Version 5.3
- *
  * @copyright   (c) 2014-2017 brian ridley
  * @author      brian ridley <ptlis@ptlis.net>
  * @license     http://opensource.org/licenses/MIT MIT
@@ -43,11 +41,11 @@ class Label implements LabelInterface
      */
     public function __construct($precedence, $version = null, $name = '')
     {
-        $precedenceToNameMap = array(
+        $precedenceToNameMap = [
             self::PRECEDENCE_ALPHA => 'alpha',
             self::PRECEDENCE_BETA => 'beta',
             self::PRECEDENCE_RC => 'rc'
-        );
+        ];
 
         $this->precedence = $precedence;
         $this->version = $version;

@@ -1,6 +1,6 @@
 # SemanticVersion
 
-A modular, extensible library for PHP >= 5.3 providing APIs to support parsing & manipulation of semantic version numbers, comparators, ranges & collections.
+A modular, extensible library for PHP >= 5.6 providing APIs to support parsing & manipulation of semantic version numbers, comparators, ranges & collections.
 
 The [Semantic Versioning Specification](http://semver.org/) describes the semantics and precedence rules used when parsing & manipulating version numbers etc.
 

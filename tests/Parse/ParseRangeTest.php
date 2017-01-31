@@ -1,8 +1,6 @@
 <?php
 
 /**
- * PHP Version 5.3
- *
  * @copyright   (c) 2014-2017 brian ridley
  * @author      brian ridley <ptlis@ptlis.net>
  * @license     http://opensource.org/licenses/MIT MIT
@@ -24,12 +22,9 @@ use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 use ptlis\SemanticVersion\Version\VersionBuilder;
 
-class ParseRangeTest extends TestDataProvider
+final class ParseRangeTest extends TestDataProvider
 {
-    /**
-     * @dataProvider tokenProvider
-     */
-    public function testParseRange($version, $tokenList, $expectedRange, $expectedSerialization)
+    private function getMatcherList()
     {
         $comparatorFactory = new ComparatorFactory();
         $versionBuilder = new VersionBuilder(new LabelBuilder());
@@ -39,7 +34,7 @@ class ParseRangeTest extends TestDataProvider
             $comparatorFactory->get('<')
         );
 
-        $matcherList = array(
+        return [
             new CaretRangeParser(
                 $comparatorFactory->get('>='),
                 $comparatorFactory->get('<')
@@ -57,10 +52,16 @@ class ParseRangeTest extends TestDataProvider
                 $comparatorFactory->get('<'),
                 $comparatorFactory->get('<=')
             )
-        );
+        ];
+    }
 
-        $parser = new VersionParser($matcherList);
-
+    /**
+     * @dataProvider tokenProvider
+     * @covers \ptlis\SemanticVersion\Parse\VersionParser
+     */
+    public function testParseRange($version, $tokenList, $expectedRange, $expectedSerialization)
+    {
+        $parser = new VersionParser($this->getMatcherList());
         $range = $parser->parseRange($tokenList);
 
         $this->assertEquals(
@@ -72,33 +73,5 @@ class ParseRangeTest extends TestDataProvider
             $expectedSerialization,
             strval($range)
         );
-    }
-
-    /**
-     * @dataProvider tokenProvider
-     */
-    public function testSerializeRange($version, $tokenList, $expectedRange, $expectedSerialization)
-    {
-        $this->assertEquals(
-            $expectedSerialization,
-            strval($expectedRange)
-        );
-    }
-
-    /**
-     * @dataProvider tokenProvider
-     */
-    public function testSatisfiesRange(
-        $version,
-        $tokenList,
-        $expectedRange,
-        $expectedSerialization,
-        $satisfiesVersionList
-    ) {
-        foreach ($satisfiesVersionList as $satisfiesVersion) {
-            $this->assertTrue(
-                $expectedRange->isSatisfiedBy($satisfiesVersion)
-            );
-        }
     }
 }

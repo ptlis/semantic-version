@@ -1,8 +1,6 @@
 <?php
 
 /**
- * PHP Version 5.3
- *
  * @copyright   (c) 2014-2017 brian ridley
  * @author      brian ridley <ptlis@ptlis.net>
  * @license     http://opensource.org/licenses/MIT MIT
@@ -84,13 +82,13 @@ class ComparatorVersionParser implements RangeParserInterface
      */
     public function parse(array $tokenList)
     {
-        $comparatorList = array(
+        $comparatorList = [
             '<',
             '<=',
             '>',
             '>=',
             '='
-        );
+        ];
 
         // Prefixed comparator, hydrate & remove
         if (count($tokenList) > 0 && in_array($tokenList[0]->getValue(), $comparatorList)) {
@@ -104,7 +102,7 @@ class ComparatorVersionParser implements RangeParserInterface
 
         $chunkList = $this->chunk($tokenList);
         $versionTokenList = $chunkList[0];
-        $labelTokenList = array();
+        $labelTokenList = [];
         if (count($chunkList) > 1) {
             $labelTokenList = $chunkList[1];
         }
@@ -124,13 +122,13 @@ class ComparatorVersionParser implements RangeParserInterface
      */
     public function hasIllegalTokens(array $tokenList)
     {
-        $illegalTokenList = array(
+        $illegalTokenList = [
             Token::CARET_RANGE,
             Token::TILDE_RANGE,
             Token::WILDCARD_DIGITS,
             Token::LOGICAL_AND,
             Token::LOGICAL_OR
-        );
+        ];
 
         $hasIllegalToken = false;
         foreach ($tokenList as $token) {
@@ -154,8 +152,8 @@ class ComparatorVersionParser implements RangeParserInterface
     private function chunk(array $tokenList)
     {
         $tokenListCount = count($tokenList);
-        $chunkedList = array();
-        $accumulator = array();
+        $chunkedList = [];
+        $accumulator = [];
 
         for ($i = 0; $i < $tokenListCount; $i++) {
             $token = $tokenList[$i];
@@ -166,7 +164,7 @@ class ComparatorVersionParser implements RangeParserInterface
 
             } else {
                 $chunkedList[] = $accumulator;
-                $accumulator = array();
+                $accumulator = [];
             }
         }
 
