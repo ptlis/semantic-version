@@ -38,8 +38,6 @@ final class GreaterThan extends AbstractComparator
      */
     public function compare(VersionInterface $lVersion, VersionInterface $rVersion)
     {
-        $lessThan = new LessThan();
-
-        return $lessThan->compare($rVersion, $lVersion);
+        return (new LessThan())->compare($rVersion, $lVersion);
     }
 }

@@ -38,9 +38,9 @@ final class LessOrEqualTo extends AbstractComparator
      */
     public function compare(VersionInterface $lVersion, VersionInterface $rVersion)
     {
-        $lessThan = new LessThan();
-        $equalTo = new EqualTo();
-
-        return ($lessThan->compare($lVersion, $rVersion) || $equalTo->compare($lVersion, $rVersion));
+        return (
+            (new LessThan())->compare($lVersion, $rVersion)
+            || (new EqualTo())->compare($lVersion, $rVersion)
+        );
     }
 }

@@ -38,9 +38,9 @@ final class GreaterOrEqualTo extends AbstractComparator
      */
     public function compare(VersionInterface $lVersion, VersionInterface $rVersion)
     {
-        $greaterThan = new GreaterThan();
-        $equalTo = new EqualTo();
-
-        return ($greaterThan->compare($lVersion, $rVersion) || $equalTo->compare($lVersion, $rVersion));
+        return (
+            (new GreaterThan())->compare($lVersion, $rVersion)
+            || (new EqualTo())->compare($lVersion, $rVersion)
+        );
     }
 }
