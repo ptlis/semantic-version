@@ -57,8 +57,10 @@ final class CaretRangeParser implements RangeParserInterface
      */
     public function canParse(array $tokenList)
     {
-        return count($tokenList) > 0
-            && Token::CARET_RANGE === $tokenList[0]->getType();
+        return (
+            count($tokenList) > 0
+            && Token::CARET_RANGE === $tokenList[0]->getType()
+        );
     }
 
     /**

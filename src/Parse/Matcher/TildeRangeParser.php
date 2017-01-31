@@ -46,8 +46,10 @@ final class TildeRangeParser implements RangeParserInterface
      */
     public function canParse(array $tokenList)
     {
-        return count($tokenList) > 0
-            && Token::TILDE_RANGE === $tokenList[0]->getType();
+        return (
+            count($tokenList) > 0
+            && Token::TILDE_RANGE === $tokenList[0]->getType()
+        );
     }
 
     /**

@@ -56,8 +56,10 @@ final class WildcardRangeParser implements RangeParserInterface
      */
     public function canParse(array $tokenList)
     {
-        return count($tokenList) > 0
-            && Token::WILDCARD_DIGITS === $tokenList[count($tokenList) - 1]->getType();
+        return (
+            count($tokenList) > 0
+            && Token::WILDCARD_DIGITS === $tokenList[count($tokenList) - 1]->getType()
+        );
     }
 
     /**
@@ -80,7 +82,7 @@ final class WildcardRangeParser implements RangeParserInterface
             $upperVersion = new Version($tokenList[0]->getValue(), $tokenList[2]->getValue() + 1);
         }
 
-        $range = new LogicalAnd(
+        return new LogicalAnd(
             new ComparatorVersion(
                 $this->greaterOrEqualTo,
                 $lowerVersion
@@ -90,6 +92,5 @@ final class WildcardRangeParser implements RangeParserInterface
                 $upperVersion
             )
         );
-        return $range;
     }
 }
