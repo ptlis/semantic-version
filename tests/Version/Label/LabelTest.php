@@ -17,42 +17,19 @@ class LabelTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreate()
     {
-        $label = new Label(
-            Label::PRECEDENCE_RC,
-            '1'
-        );
+        $label = new Label(Label::PRECEDENCE_RC, '1');
 
-        $this->assertEquals(
-            Label::PRECEDENCE_RC,
-            $label->getPrecedence()
-        );
-
-        $this->assertEquals(
-            'rc',
-            $label->getName()
-        );
-
-        $this->assertEquals(
-            '1',
-            $label->getVersion()
-        );
-
-        $this->assertEquals(
-            'rc.1',
-            strval($label)
-        );
+        $this->assertEquals(Label::PRECEDENCE_RC, $label->getPrecedence());
+        $this->assertEquals('rc', $label->getName());
+        $this->assertEquals('1', $label->getVersion());
+        $this->assertEquals('rc.1', strval($label));
     }
 
     public function testCreateAbsent()
     {
-        $label = new Label(
-            Label::PRECEDENCE_ABSENT
-        );
+        $label = new Label(Label::PRECEDENCE_ABSENT);
 
-        $this->assertEquals(
-            '',
-            strval($label)
-        );
+        $this->assertEquals('', strval($label));
     }
 
     // TODO: Rework once build metadata is re-added

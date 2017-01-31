@@ -21,23 +21,20 @@ use ptlis\SemanticVersion\Version\Version;
  */
 final class CompareVersionLessThanTest extends TestCase
 {
+    /**
+     * @covers \ptlis\SemanticVersion\Comparator\LessThan<extended>
+     */
     public function testReadSymbol()
     {
         $lessThan = new LessThan();
 
-        $this->assertEquals(
-            '<',
-            $lessThan->getSymbol()
-        );
-
-        $this->assertEquals(
-            '<',
-            strval($lessThan)
-        );
+        $this->assertEquals('<', $lessThan->getSymbol());
+        $this->assertEquals('<', strval($lessThan));
     }
 
     /**
      * @dataProvider isLessProvider
+     * @covers \ptlis\SemanticVersion\Comparator\LessThan<extended>
      *
      * @param Version $lVersion
      * @param Version $rVersion
@@ -46,13 +43,12 @@ final class CompareVersionLessThanTest extends TestCase
     {
         $lessThan = new LessThan();
 
-        $this->assertTrue(
-            $lessThan->compare($lVersion, $rVersion)
-        );
+        $this->assertTrue($lessThan->compare($lVersion, $rVersion));
     }
 
     /**
      * @dataProvider isNotLessProvider
+     * @covers \ptlis\SemanticVersion\Comparator\LessThan<extended>
      *
      * @param Version $lVersion
      * @param Version $rVersion
@@ -61,9 +57,7 @@ final class CompareVersionLessThanTest extends TestCase
     {
         $lessThan = new LessThan();
 
-        $this->assertFalse(
-            $lessThan->compare($lVersion, $rVersion)
-        );
+        $this->assertFalse($lessThan->compare($lVersion, $rVersion));
     }
 
     public function isLessProvider()

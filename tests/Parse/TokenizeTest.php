@@ -27,9 +27,6 @@ final class TokenizeTest extends TestDataProvider
     {
         $tokenizer = new VersionTokenizer();
 
-        $this->assertEquals(
-            $tokenList,
-            $tokenizer->tokenize($version)
-        );
+        $this->assertEquals($tokenList, $tokenizer->tokenize($version));
     }
 }

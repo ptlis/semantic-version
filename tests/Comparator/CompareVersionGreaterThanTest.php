@@ -21,23 +21,20 @@ use ptlis\SemanticVersion\Version\Version;
  */
 final class CompareVersionGreaterThanTest extends TestCase
 {
+    /**
+     * @covers \ptlis\SemanticVersion\Comparator\GreaterThan<extended>
+     */
     public function testReadSymbol()
     {
         $greaterThan = new GreaterThan();
 
-        $this->assertEquals(
-            '>',
-            $greaterThan->getSymbol()
-        );
-
-        $this->assertEquals(
-            '>',
-            strval($greaterThan)
-        );
+        $this->assertEquals('>', $greaterThan->getSymbol());
+        $this->assertEquals('>', strval($greaterThan));
     }
 
     /**
      * @dataProvider isGreaterProvider
+     * @covers \ptlis\SemanticVersion\Comparator\GreaterThan<extended>
      *
      * @param Version $lVersion
      * @param Version $rVersion
@@ -46,13 +43,12 @@ final class CompareVersionGreaterThanTest extends TestCase
     {
         $greaterThan = new GreaterThan();
 
-        $this->assertTrue(
-            $greaterThan->compare($lVersion, $rVersion)
-        );
+        $this->assertTrue($greaterThan->compare($lVersion, $rVersion));
     }
 
     /**
      * @dataProvider isNotGreaterProvider
+     * @covers \ptlis\SemanticVersion\Comparator\GreaterThan<extended>
      *
      * @param Version $lVersion
      * @param Version $rVersion
@@ -61,9 +57,7 @@ final class CompareVersionGreaterThanTest extends TestCase
     {
         $greaterThan = new GreaterThan();
 
-        $this->assertFalse(
-            $greaterThan->compare($lVersion, $rVersion)
-        );
+        $this->assertFalse($greaterThan->compare($lVersion, $rVersion));
     }
 
     public function isGreaterProvider()

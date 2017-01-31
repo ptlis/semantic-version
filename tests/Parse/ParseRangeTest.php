@@ -64,14 +64,7 @@ final class ParseRangeTest extends TestDataProvider
         $parser = new VersionParser($this->getMatcherList());
         $range = $parser->parseRange($tokenList);
 
-        $this->assertEquals(
-            $expectedRange,
-            $range
-        );
-
-        $this->assertEquals(
-            $expectedSerialization,
-            strval($range)
-        );
+        $this->assertEquals($expectedRange, $range);
+        $this->assertEquals($expectedSerialization, strval($range));
     }
 }

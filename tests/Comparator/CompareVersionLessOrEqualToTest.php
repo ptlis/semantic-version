@@ -21,23 +21,20 @@ use ptlis\SemanticVersion\Version\Version;
  */
 final class CompareVersionLessOrEqualToTest extends TestCase
 {
+    /**
+     * @covers \ptlis\SemanticVersion\Comparator\LessOrEqualTo<extended>
+     */
     public function testReadSymbol()
     {
         $lessOrEqualTo = new LessOrEqualTo();
 
-        $this->assertEquals(
-            '<=',
-            $lessOrEqualTo->getSymbol()
-        );
-
-        $this->assertEquals(
-            '<=',
-            strval($lessOrEqualTo)
-        );
+        $this->assertEquals('<=', $lessOrEqualTo->getSymbol());
+        $this->assertEquals('<=', strval($lessOrEqualTo));
     }
 
     /**
      * @dataProvider isLessOrEqualProvider
+     * @covers \ptlis\SemanticVersion\Comparator\LessOrEqualTo<extended>
      *
      * @param Version $lVersion
      * @param Version $rVersion
@@ -46,13 +43,12 @@ final class CompareVersionLessOrEqualToTest extends TestCase
     {
         $lessOrEqualTo = new LessOrEqualTo();
 
-        $this->assertTrue(
-            $lessOrEqualTo->compare($lVersion, $rVersion)
-        );
+        $this->assertTrue($lessOrEqualTo->compare($lVersion, $rVersion));
     }
 
     /**
      * @dataProvider isNotLessOrEqualProvider
+     * @covers \ptlis\SemanticVersion\Comparator\LessOrEqualTo<extended>
      *
      * @param Version $lVersion
      * @param Version $rVersion
@@ -61,9 +57,7 @@ final class CompareVersionLessOrEqualToTest extends TestCase
     {
         $lessOrEqualTo = new LessOrEqualTo();
 
-        $this->assertFalse(
-            $lessOrEqualTo->compare($lVersion, $rVersion)
-        );
+        $this->assertFalse($lessOrEqualTo->compare($lVersion, $rVersion));
     }
 
     public function isLessOrEqualProvider()

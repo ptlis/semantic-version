@@ -21,23 +21,20 @@ use ptlis\SemanticVersion\Version\Version;
  */
 final class CompareVersionGreaterOrEqualToTest extends TestCase
 {
+    /**
+     * @covers \ptlis\SemanticVersion\Comparator\GreaterOrEqualTo<extended>
+     */
     public function testReadSymbol()
     {
         $greaterOrEqualTo = new GreaterOrEqualTo();
 
-        $this->assertEquals(
-            '>=',
-            $greaterOrEqualTo->getSymbol()
-        );
-
-        $this->assertEquals(
-            '>=',
-            strval($greaterOrEqualTo)
-        );
+        $this->assertEquals('>=', $greaterOrEqualTo->getSymbol());
+        $this->assertEquals('>=', strval($greaterOrEqualTo));
     }
 
     /**
      * @dataProvider isGreaterOrEqualProvider
+     * @covers \ptlis\SemanticVersion\Comparator\GreaterOrEqualTo<extended>
      *
      * @param Version $lVersion
      * @param Version $rVersion
@@ -46,13 +43,12 @@ final class CompareVersionGreaterOrEqualToTest extends TestCase
     {
         $greaterOrEqualTo = new GreaterOrEqualTo();
 
-        $this->assertTrue(
-            $greaterOrEqualTo->compare($lVersion, $rVersion)
-        );
+        $this->assertTrue($greaterOrEqualTo->compare($lVersion, $rVersion));
     }
 
     /**
      * @dataProvider isNotGreaterOrEqualProvider
+     * @covers \ptlis\SemanticVersion\Comparator\GreaterOrEqualTo<extended>
      *
      * @param Version $lVersion
      * @param Version $rVersion
@@ -61,9 +57,7 @@ final class CompareVersionGreaterOrEqualToTest extends TestCase
     {
         $greaterOrEqualTo = new GreaterOrEqualTo();
 
-        $this->assertFalse(
-            $greaterOrEqualTo->compare($lVersion, $rVersion)
-        );
+        $this->assertFalse($greaterOrEqualTo->compare($lVersion, $rVersion));
     }
 
     public function isGreaterOrEqualProvider()

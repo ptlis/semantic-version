@@ -18,72 +18,47 @@ class LabelBuilderTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreateDev()
     {
-        $builder = new LabelBuilder();
-
-        $label = $builder
+        $label = (new LabelBuilder())
             ->setName('wibble')
             ->setVersion(5)
             ->build();
 
-        $this->assertEquals(
-            new Label(Label::PRECEDENCE_DEV, 5, 'wibble'),
-            $label
-        );
+        $this->assertEquals(new Label(Label::PRECEDENCE_DEV, 5, 'wibble'), $label);
     }
 
     public function testCreateAlpha()
     {
-        $builder = new LabelBuilder();
-
-        $label = $builder
+        $label = (new LabelBuilder())
             ->setName('alpha')
             ->setVersion(1)
             ->build();
 
-        $this->assertEquals(
-            new Label(Label::PRECEDENCE_ALPHA, 1),
-            $label
-        );
+        $this->assertEquals(new Label(Label::PRECEDENCE_ALPHA, 1), $label);
     }
 
     public function testCreateBeta()
     {
-        $builder = new LabelBuilder();
-
-        $label = $builder
+        $label = (new LabelBuilder())
             ->setName('beta')
             ->build();
 
-        $this->assertEquals(
-            new Label(Label::PRECEDENCE_BETA),
-            $label
-        );
+        $this->assertEquals(new Label(Label::PRECEDENCE_BETA), $label);
     }
 
     public function testCreateRC()
     {
-        $builder = new LabelBuilder();
-
-        $label = $builder
+        $label = (new LabelBuilder())
             ->setName('rc')
             ->setVersion(3)
             ->build();
 
-        $this->assertEquals(
-            new Label(Label::PRECEDENCE_RC, 3),
-            $label
-        );
+        $this->assertEquals(new Label(Label::PRECEDENCE_RC, 3), $label);
     }
 
     public function testCreateAbsent()
     {
-        $builder = new LabelBuilder();
+        $label = (new LabelBuilder())->build();
 
-        $label = $builder->build();
-
-        $this->assertEquals(
-            new Label(Label::PRECEDENCE_ABSENT),
-            $label
-        );
+        $this->assertEquals(new Label(Label::PRECEDENCE_ABSENT), $label);
     }
 }

@@ -21,23 +21,20 @@ use ptlis\SemanticVersion\Version\Version;
  */
 final class CompareVersionEqualToTest extends TestCase
 {
+    /**
+     * @covers \ptlis\SemanticVersion\Comparator\EqualTo<extended>
+     */
     public function testReadSymbol()
     {
         $equalTo = new EqualTo();
 
-        $this->assertEquals(
-            '=',
-            $equalTo->getSymbol()
-        );
-
-        $this->assertEquals(
-            '=',
-            strval($equalTo)
-        );
+        $this->assertEquals('=', $equalTo->getSymbol());
+        $this->assertEquals('=', strval($equalTo));
     }
 
     /**
      * @dataProvider isEqualProvider
+     * @covers \ptlis\SemanticVersion\Comparator\EqualTo<extended>
      *
      * @param Version $lVersion
      * @param Version $rVersion
@@ -46,13 +43,12 @@ final class CompareVersionEqualToTest extends TestCase
     {
         $equalTo = new EqualTo();
 
-        $this->assertTrue(
-            $equalTo->compare($lVersion, $rVersion)
-        );
+        $this->assertTrue($equalTo->compare($lVersion, $rVersion));
     }
 
     /**
      * @dataProvider isNotEqualProvider
+     * @covers \ptlis\SemanticVersion\Comparator\EqualTo<extended>
      *
      * @param Version $lVersion
      * @param Version $rVersion
@@ -61,9 +57,7 @@ final class CompareVersionEqualToTest extends TestCase
     {
         $equalTo = new EqualTo();
 
-        $this->assertFalse(
-            $equalTo->compare($lVersion, $rVersion)
-        );
+        $this->assertFalse($equalTo->compare($lVersion, $rVersion));
     }
 
     public function isEqualProvider()
