@@ -21,11 +21,6 @@ final class ComparatorFactory
     /**
      * @var ComparatorInterface[]
      */
-    private $comparatorTokenMap;
-
-    /**
-     * @var ComparatorInterface[]
-     */
     private $comparatorStringMap;
 
 
@@ -34,14 +29,6 @@ final class ComparatorFactory
      */
     public function __construct()
     {
-        $this->comparatorTokenMap = [
-            Token::GREATER_THAN => new GreaterThan(),
-            Token::GREATER_THAN_EQUAL => new GreaterOrEqualTo(),
-            Token::LESS_THAN => new LessThan(),
-            Token::LESS_THAN_EQUAL => new LessOrEqualTo(),
-            Token::EQUAL_TO => new EqualTo()
-        ];
-
         $this->comparatorStringMap = [
             '>' => new GreaterThan(),
             '>=' => new GreaterOrEqualTo(),
@@ -60,11 +47,10 @@ final class ComparatorFactory
      */
     public function get($comparatorString)
     {
-        $comparator = null;
-        if (array_key_exists($comparatorString, $this->comparatorStringMap)) {
-            $comparator = $this->comparatorStringMap[$comparatorString];
+        if (!array_key_exists($comparatorString, $this->comparatorStringMap)) {
+            throw new \RuntimeException('Unknown comparator "' . $comparatorString . '" encountered"');
         }
 
-        return $comparator;
+        return $this->comparatorStringMap[$comparatorString];
     }
 }
