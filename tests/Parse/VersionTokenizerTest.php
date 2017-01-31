@@ -14,7 +14,7 @@ namespace ptlis\SemanticVersion\Test\Parse;
 use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Parse\VersionTokenizer;
 
-final class TokenizeTest extends TestDataProvider
+final class VersionTokenizerTest extends TestDataProvider
 {
     /**
      * @dataProvider tokenProvider

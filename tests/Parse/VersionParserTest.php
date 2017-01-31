@@ -22,7 +22,7 @@ use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 use ptlis\SemanticVersion\Version\VersionBuilder;
 
-final class ParseRangeTest extends TestDataProvider
+final class VersionParserTest extends TestDataProvider
 {
     private function getMatcherList()
     {
