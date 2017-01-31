@@ -75,7 +75,7 @@ final class CaretRangeParser implements RangeParserInterface
         $minor = 0;
         $patch = 0;
 
-        if (count($tokenList) > 4) {
+        if (count($tokenList) >= 4) {
             $minor = $tokenList[3]->getValue();
         }
 

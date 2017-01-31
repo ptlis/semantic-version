@@ -50,9 +50,9 @@ final class BranchParser implements RangeParserInterface
 
         return (
             $tokenListCount > 2
-            && Token::LABEL_STRING === $tokenList[$tokenListCount - 1]->getType()
-            && Token::DASH_SEPARATOR === $tokenList[$tokenListCount - 2]->getType()
             && Token::WILDCARD_DIGITS === $tokenList[$tokenListCount - 3]->getType()
+            && Token::DASH_SEPARATOR === $tokenList[$tokenListCount - 2]->getType()
+            && Token::LABEL_STRING === $tokenList[$tokenListCount - 1]->getType()
         );
     }
 
