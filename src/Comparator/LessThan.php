@@ -38,12 +38,10 @@ final class LessThan extends AbstractComparator
      */
     public function compare(VersionInterface $lVersion, VersionInterface $rVersion)
     {
-        $lessThan = false;
-        if ($this->compareVersionNumber($lVersion, $rVersion) || $this->compareFullLabel($lVersion, $rVersion)) {
-            $lessThan = true;
-        }
-
-        return $lessThan;
+        return (
+            $this->compareVersionNumber($lVersion, $rVersion)
+            || $this->compareFullLabel($lVersion, $rVersion)
+        );
     }
 
     /**
@@ -56,13 +54,11 @@ final class LessThan extends AbstractComparator
      */
     private function compareVersionNumber(VersionInterface $lVersion, VersionInterface $rVersion)
     {
-        $lessThan = false;
-        if ($this->compareMajor($lVersion, $rVersion) || $this->compareMinor($lVersion, $rVersion)
-                || $this->comparePatch($lVersion, $rVersion)) {
-            $lessThan = true;
-        }
-
-        return $lessThan;
+        return (
+            $this->compareMajor($lVersion, $rVersion)
+            || $this->compareMinor($lVersion, $rVersion)
+            || $this->comparePatch($lVersion, $rVersion)
+        );
     }
 
     /**
@@ -75,12 +71,10 @@ final class LessThan extends AbstractComparator
      */
     private function compareFullLabel(VersionInterface $lVersion, VersionInterface $rVersion)
     {
-        $lessThan = false;
-        if ($this->compareLabel($lVersion, $rVersion) || $this->compareLabelVersion($lVersion, $rVersion)) {
-            $lessThan = true;
-        }
-
-        return $lessThan;
+        return (
+            $this->compareLabel($lVersion, $rVersion)
+            || $this->compareLabelVersion($lVersion, $rVersion)
+        );
     }
 
     /**
@@ -106,8 +100,10 @@ final class LessThan extends AbstractComparator
      */
     private function compareMinor(VersionInterface $lVersion, VersionInterface $rVersion)
     {
-        return $lVersion->getMajor() == $rVersion->getMajor()
-            && $lVersion->getMinor() < $rVersion->getMinor();
+        return (
+            $lVersion->getMajor() == $rVersion->getMajor()
+            && $lVersion->getMinor() < $rVersion->getMinor()
+        );
     }
 
     /**
@@ -120,9 +116,11 @@ final class LessThan extends AbstractComparator
      */
     private function comparePatch(VersionInterface $lVersion, VersionInterface $rVersion)
     {
-        return $lVersion->getMajor() == $rVersion->getMajor()
+        return (
+            $lVersion->getMajor() == $rVersion->getMajor()
             && $lVersion->getMinor() == $rVersion->getMinor()
-            && $lVersion->getPatch() < $rVersion->getPatch();
+            && $lVersion->getPatch() < $rVersion->getPatch()
+        );
     }
 
     /**
@@ -136,10 +134,12 @@ final class LessThan extends AbstractComparator
      */
     private function compareLabel(VersionInterface $lVersion, VersionInterface $rVersion)
     {
-        return $lVersion->getMajor() == $rVersion->getMajor()
+        return (
+            $lVersion->getMajor() == $rVersion->getMajor()
             && $lVersion->getMinor() == $rVersion->getMinor()
             && $lVersion->getPatch() == $rVersion->getPatch()
-            && $lVersion->getLabel()->getPrecedence() < $rVersion->getLabel()->getPrecedence();
+            && $lVersion->getLabel()->getPrecedence() < $rVersion->getLabel()->getPrecedence()
+        );
     }
 
     /**
@@ -153,10 +153,12 @@ final class LessThan extends AbstractComparator
      */
     private function compareLabelVersion(VersionInterface $lVersion, VersionInterface $rVersion)
     {
-        return $lVersion->getMajor() == $rVersion->getMajor()
+        return (
+            $lVersion->getMajor() == $rVersion->getMajor()
             && $lVersion->getMinor() == $rVersion->getMinor()
             && $lVersion->getPatch() == $rVersion->getPatch()
             && $lVersion->getLabel()->getPrecedence() == $rVersion->getLabel()->getPrecedence()
-            && $lVersion->getLabel()->getVersion() < $rVersion->getLabel()->getVersion();
+            && $lVersion->getLabel()->getVersion() < $rVersion->getLabel()->getVersion()
+        );
     }
 }
