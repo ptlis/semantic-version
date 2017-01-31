@@ -19,7 +19,7 @@ use ptlis\SemanticVersion\Version\Version;
 /**
  * Tests to ensure correct handling of version number greater than version.
  */
-final class CompareVersionGreaterThanTest extends TestCase
+final class GreaterThanTest extends TestCase
 {
     /**
      * @covers \ptlis\SemanticVersion\Comparator\GreaterThan<extended>

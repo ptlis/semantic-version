@@ -19,7 +19,7 @@ use ptlis\SemanticVersion\Version\Version;
 /**
  * Tests to ensure correct handling of version number equality.
  */
-final class CompareVersionEqualToTest extends TestCase
+final class EqualToTest extends TestCase
 {
     /**
      * @covers \ptlis\SemanticVersion\Comparator\EqualTo<extended>
