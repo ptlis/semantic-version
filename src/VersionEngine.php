@@ -29,7 +29,7 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 /**
  * Simple class to provide version parsing with good defaults.
  */
-class VersionEngine
+final class VersionEngine
 {
     /**
      * @var VersionTokenizer

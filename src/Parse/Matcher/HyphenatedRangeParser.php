@@ -25,7 +25,7 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  *
  * Hyphenated ranges are implemented as described @ https://getcomposer.org/doc/articles/versions.md#range-hyphen-
  */
-class HyphenatedRangeParser implements RangeParserInterface
+final class HyphenatedRangeParser implements RangeParserInterface
 {
     /**
      * @var VersionBuilder

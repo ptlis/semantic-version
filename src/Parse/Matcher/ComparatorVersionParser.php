@@ -20,7 +20,7 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 /**
  * Comparator versions store a comparator & version specifying part of a version range.
  */
-class ComparatorVersionParser implements RangeParserInterface
+final class ComparatorVersionParser implements RangeParserInterface
 {
     /**
      * @var ComparatorFactory

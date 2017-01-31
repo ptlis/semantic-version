@@ -23,7 +23,7 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  *
  * Behaviour of wildcard ranges is described @ https://getcomposer.org/doc/articles/versions.md#wildcard
  */
-class WildcardRangeParser implements RangeParserInterface
+final class WildcardRangeParser implements RangeParserInterface
 {
     /**
      * @var ComparatorInterface

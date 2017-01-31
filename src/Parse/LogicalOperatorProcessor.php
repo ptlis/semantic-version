@@ -20,7 +20,7 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  *
  * Basic (and limited) implementation of the shunting algorithm for logical AND / OR.
  */
-class LogicalOperatorProcessor
+final class LogicalOperatorProcessor
 {
     /**
      * @var array Of operator precedences & associativity.

@@ -17,7 +17,7 @@ use ptlis\SemanticVersion\Version\VersionInterface;
 /**
  * Simple version number & comparator.
  */
-class ComparatorVersion implements VersionRangeInterface
+final class ComparatorVersion implements VersionRangeInterface
 {
     /**
      * @var ComparatorInterface

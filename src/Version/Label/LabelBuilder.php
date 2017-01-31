@@ -16,7 +16,7 @@ use ptlis\SemanticVersion\Parse\Token;
 /**
  * Immutable builder for label instances.
  */
-class LabelBuilder
+final class LabelBuilder
 {
     /**
      * @var string

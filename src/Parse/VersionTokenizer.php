@@ -14,7 +14,7 @@ namespace ptlis\SemanticVersion\Parse;
 /**
  * Tokenizer for version numbers.
  */
-class VersionTokenizer
+final class VersionTokenizer
 {
     /**
      * Accepts a version string & returns an array of tokenized values.

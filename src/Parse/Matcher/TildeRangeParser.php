@@ -19,7 +19,7 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  *
  * Behaviour of caret ranges is described @ https://getcomposer.org/doc/articles/versions.md#tilde
  */
-class TildeRangeParser implements RangeParserInterface
+final class TildeRangeParser implements RangeParserInterface
 {
     /**
      * @var RangeParserInterface

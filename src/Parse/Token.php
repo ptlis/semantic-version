@@ -14,7 +14,7 @@ namespace ptlis\SemanticVersion\Parse;
 /**
  * A token from a version number.
  */
-class Token
+final class Token
 {
     /**
      * '0-9' Numeric component of a version number (may be part of the label e.g. the final digit of 1.2.7-alpha.2).

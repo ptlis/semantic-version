@@ -17,7 +17,7 @@ use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 /**
  * Immutable builder for version instances.
  */
-class VersionBuilder
+final class VersionBuilder
 {
     /**
      * @var LabelBuilder

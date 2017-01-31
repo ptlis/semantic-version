@@ -23,7 +23,7 @@ use ptlis\SemanticVersion\Version\Version;
  *
  * Behaviour of caret ranges is described @ https://getcomposer.org/doc/articles/versions.md#caret
  */
-class CaretRangeParser implements RangeParserInterface
+final class CaretRangeParser implements RangeParserInterface
 {
     /**
      * @var ComparatorInterface

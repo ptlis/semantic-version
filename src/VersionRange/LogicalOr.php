@@ -16,7 +16,7 @@ use ptlis\SemanticVersion\Version\VersionInterface;
 /**
  * Version range with a left & right value - either may true to fulfill the isSatisfiedBy requirement.
  */
-class LogicalOr implements VersionRangeInterface
+final class LogicalOr implements VersionRangeInterface
 {
     /**
      * @var VersionRangeInterface

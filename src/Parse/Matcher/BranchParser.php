@@ -19,7 +19,7 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  *
  * Behaviour of branch ranges is described @ https://getcomposer.org/doc/02-libraries.md#branches
  */
-class BranchParser implements RangeParserInterface
+final class BranchParser implements RangeParserInterface
 {
     /**
      * @var WildcardRangeParser

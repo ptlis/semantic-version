@@ -14,7 +14,7 @@ namespace ptlis\SemanticVersion\Version\Label;
 /**
  * Value types for labels in version numbers.
  */
-class Label implements LabelInterface
+final class Label implements LabelInterface
 {
     /**
      * @var int

@@ -17,7 +17,7 @@ use ptlis\SemanticVersion\Version\Label\LabelInterface;
 /**
  * Value type for simple version numbers.
  */
-class Version implements VersionInterface
+final class Version implements VersionInterface
 {
     /**
      * @var int

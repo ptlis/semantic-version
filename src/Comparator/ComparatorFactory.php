@@ -16,7 +16,7 @@ use ptlis\SemanticVersion\Parse\Token;
 /**
  * Factory to build comparator instances from string representation.
  */
-class ComparatorFactory
+final class ComparatorFactory
 {
     /**
      * @var ComparatorInterface[]

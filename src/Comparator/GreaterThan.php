@@ -16,7 +16,7 @@ use ptlis\SemanticVersion\Version\VersionInterface;
 /**
  * Version greater than comparator.
  */
-class GreaterThan extends AbstractComparator
+final class GreaterThan extends AbstractComparator
 {
     /**
      * Retrieve the comparator's symbol.
