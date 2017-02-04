@@ -57,5 +57,4 @@ final class LogicalOr implements VersionRangeInterface
     {
         return $this->leftRange . '|' . $this->rightRange;
     }
-
 }

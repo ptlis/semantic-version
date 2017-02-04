@@ -43,8 +43,8 @@ interface LabelInterface
 
 
     /**
-     * Get the precedence value for the label ('dev' (0) < alpha (1) < beta (2) < rc (3) < absent (4)); greater values are closer to
-     *  release 'i.e. later'.
+     * Get the precedence value for the label ('dev' (0) < alpha (1) < beta (2) < rc (3) < absent (4)); greater values
+     * are closer to release 'i.e. later'.
      *
      * @return int
      */

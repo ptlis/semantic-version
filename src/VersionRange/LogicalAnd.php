@@ -57,5 +57,4 @@ final class LogicalAnd implements VersionRangeInterface
     {
         return $this->leftRange . ',' . $this->rightRange;
     }
-
 }

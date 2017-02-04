@@ -100,7 +100,7 @@ final class VersionEngine
             );
         }
 
-       return $range->getVersion();
+        return $range->getVersion();
     }
 
     /**

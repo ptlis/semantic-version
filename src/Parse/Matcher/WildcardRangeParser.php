@@ -42,7 +42,8 @@ final class WildcardRangeParser implements RangeParserInterface
      * @param ComparatorInterface $greaterOrEqualTo
      * @param ComparatorInterface $lessThan
      */
-    public function __construct(ComparatorInterface $greaterOrEqualTo, ComparatorInterface $lessThan) {
+    public function __construct(ComparatorInterface $greaterOrEqualTo, ComparatorInterface $lessThan)
+    {
         $this->greaterOrEqualTo = $greaterOrEqualTo;
         $this->lessThan = $lessThan;
     }
