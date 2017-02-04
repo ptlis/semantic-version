@@ -111,7 +111,7 @@ final class LabelBuilder
      */
     public function buildFromTokens(array $labelTokenList)
     {
-        $label = null;
+        $label = $this->build();
 
         switch (count($labelTokenList)) {
 
