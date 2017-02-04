@@ -69,6 +69,9 @@ class LogicalOperatorProcessorTest extends TestCase
         );
     }
 
+    /**
+     * @covers \ptlis\SemanticVersion\Parse\LogicalOperatorProcessor
+     */
     public function testSuccessOneOfTwoRanges()
     {
         $logicalOperatorProcessor = new LogicalOperatorProcessor();
