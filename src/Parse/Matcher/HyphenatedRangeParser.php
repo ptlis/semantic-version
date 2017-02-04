@@ -147,7 +147,7 @@ final class HyphenatedRangeParser implements RangeParserInterface
                     $upperVersionConstraint = $this->getUpperConstraint($chunkedList[2]);
 
                 // Label belongs to second version
-                } else if (Token::LABEL_STRING === $chunkedList[2][0]->getType()) {
+                } else {
                     $lowerVersionConstraint = $this->getLowerConstraint($chunkedList[0]);
                     $upperVersionConstraint = $this->getUpperConstraint($chunkedList[1], $chunkedList[2]);
                 }
