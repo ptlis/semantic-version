@@ -17,9 +17,7 @@ use ptlis\SemanticVersion\Parse\Token;
 final class TokenTest extends TestCase
 {
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Token::__construct
-     * @covers \ptlis\SemanticVersion\Parse\Token::getType
-     * @covers \ptlis\SemanticVersion\Parse\Token::getValue
+     * @covers \ptlis\SemanticVersion\Parse\Token
      */
     public function testCreate()
     {
