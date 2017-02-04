@@ -77,43 +77,43 @@ final class HyphenatedRangeParser implements RangeParserInterface
      */
     public function canParse(array $tokenList)
     {
+        $validConfigurations = [
+            [Token::DIGITS, Token::DIGITS],
+            [Token::DIGITS, Token::LABEL_STRING, Token::DIGITS],
+            [Token::DIGITS, Token::DIGITS, Token::LABEL_STRING],
+            [Token::DIGITS, Token::LABEL_STRING, Token::DIGITS, Token::LABEL_STRING]
+        ];
+
         $isRange = false;
-
         $chunkedList = $this->chunk($tokenList);
-        switch (count($chunkedList)) {
-            case 2:
-                $isRange = (
-                    Token::DIGITS === $chunkedList[0][0]->getType()
-                    && Token::DIGITS === $chunkedList[1][0]->getType()
-                );
-                break;
-
-            case 3:
-                $isRange = (
-                    (
-                        Token::DIGITS === $chunkedList[0][0]->getType()
-                        && Token::LABEL_STRING === $chunkedList[1][0]->getType()
-                        && Token::DIGITS === $chunkedList[2][0]->getType()
-                    )
-                    || (
-                        Token::DIGITS === $chunkedList[0][0]->getType()
-                        && Token::DIGITS === $chunkedList[1][0]->getType()
-                        && Token::LABEL_STRING === $chunkedList[2][0]->getType()
-                    )
-                );
-                break;
-
-            case 4:
-                $isRange = (
-                    Token::DIGITS === $chunkedList[0][0]->getType()
-                    && Token::LABEL_STRING === $chunkedList[1][0]->getType()
-                    && Token::DIGITS === $chunkedList[2][0]->getType()
-                    && Token::LABEL_STRING === $chunkedList[3][0]->getType()
-                );
-                break;
+        foreach ($validConfigurations as $configuration) {
+            $isRange = $isRange || $this->chunksMatchConfiguration($chunkedList, $configuration);
         }
 
         return $isRange;
+    }
+
+    /**
+     * Returns true if the provided token
+     *
+     * @param Token[][] $chunkedList
+     * @param string[] $configuration
+     *
+     * @return boolean
+     */
+    private function chunksMatchConfiguration(
+        array $chunkedList,
+        array $configuration
+    ) {
+        $matches = count($chunkedList) === count($configuration);
+
+        foreach ($configuration as $index => $token) {
+            if ($matches) {
+                $matches = $chunkedList[$index][0]->getType() === $token;
+            }
+        }
+
+        return $matches;
     }
 
     /**
