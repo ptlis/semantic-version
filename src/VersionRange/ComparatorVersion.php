@@ -19,14 +19,10 @@ use ptlis\SemanticVersion\Version\VersionInterface;
  */
 final class ComparatorVersion implements VersionRangeInterface
 {
-    /**
-     * @var ComparatorInterface
-     */
+    /** @var ComparatorInterface */
     private $comparator;
 
-    /**
-     * @var VersionInterface
-     */
+    /** @var VersionInterface */
     private $version;
 
 

@@ -91,14 +91,10 @@ final class Token
     const LOGICAL_OR = 'or';
 
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $type;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $value;
 
 

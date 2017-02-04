@@ -19,24 +19,16 @@ use ptlis\SemanticVersion\Version\Label\LabelInterface;
  */
 final class Version implements VersionInterface
 {
-    /**
-     * @var int
-     */
+    /** @var int */
     private $major;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $minor = 0;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $patch = 0;
 
-    /**
-     * @var LabelInterface
-     */
+    /** @var LabelInterface */
     private $label;
 
 

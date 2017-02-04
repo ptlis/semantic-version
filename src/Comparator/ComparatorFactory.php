@@ -18,9 +18,7 @@ use ptlis\SemanticVersion\Parse\Token;
  */
 final class ComparatorFactory
 {
-    /**
-     * @var ComparatorInterface[]
-     */
+    /** @var ComparatorInterface[] */
     private $comparatorStringMap;
 
 

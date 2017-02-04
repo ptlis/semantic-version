@@ -18,14 +18,10 @@ use ptlis\SemanticVersion\Version\VersionInterface;
  */
 final class LogicalAnd implements VersionRangeInterface
 {
-    /**
-     * @var VersionRangeInterface
-     */
+    /** @var VersionRangeInterface */
     private $leftRange;
 
-    /**
-     * @var VersionRangeInterface
-     */
+    /** @var VersionRangeInterface */
     private $rightRange;
 
 

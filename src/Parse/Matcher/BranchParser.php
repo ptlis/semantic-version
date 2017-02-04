@@ -21,9 +21,7 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  */
 final class BranchParser implements RangeParserInterface
 {
-    /**
-     * @var WildcardRangeParser
-     */
+    /** @var WildcardRangeParser */
     private $wildcardParser;
 
 

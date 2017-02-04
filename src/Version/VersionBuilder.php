@@ -19,9 +19,7 @@ use ptlis\SemanticVersion\Version\Label\LabelBuilder;
  */
 final class VersionBuilder
 {
-    /**
-     * @var LabelBuilder
-     */
+    /** @var LabelBuilder */
     private $labelBuilder;
 
 

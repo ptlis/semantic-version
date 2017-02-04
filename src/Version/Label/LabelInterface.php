@@ -16,29 +16,19 @@ namespace ptlis\SemanticVersion\Version\Label;
  */
 interface LabelInterface
 {
-    /**
-     * Precedence for development releases.
-     */
+    /** Precedence for development releases. */
     const PRECEDENCE_DEV = 0;
 
-    /**
-     * Precedence for alpha releases.
-     */
+    /** Precedence for alpha releases. */
     const PRECEDENCE_ALPHA = 1;
 
-    /**
-     * Precedence for beta releases.
-     */
+    /** Precedence for beta releases. */
     const PRECEDENCE_BETA = 2;
 
-    /**
-     * Precedence for release candidates.
-     */
+    /** Precedence for release candidates. */
     const PRECEDENCE_RC = 3;
 
-    /**
-     * Precedence for absent labels.
-     */
+    /** Precedence for absent labels. */
     const PRECEDENCE_ABSENT = 4;
 
 

@@ -27,24 +27,16 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  */
 final class HyphenatedRangeParser implements RangeParserInterface
 {
-    /**
-     * @var VersionBuilder
-     */
+    /** @var VersionBuilder */
     private $versionBuilder;
 
-    /**
-     * @var ComparatorInterface
-     */
+    /** @var ComparatorInterface */
     private $greaterOrEqualTo;
 
-    /**
-     * @var ComparatorInterface
-     */
+    /** @var ComparatorInterface */
     private $lessThan;
 
-    /**
-     * @var ComparatorInterface
-     */
+    /** @var ComparatorInterface */
     private $lessOrEqualTo;
 
 

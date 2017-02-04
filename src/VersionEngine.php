@@ -31,14 +31,10 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  */
 final class VersionEngine
 {
-    /**
-     * @var VersionTokenizer
-     */
+    /** @var VersionTokenizer */
     private $tokenizer;
 
-    /**
-     * @var VersionParser
-     */
+    /** @var VersionParser */
     private $parser;
 
 

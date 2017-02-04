@@ -18,14 +18,10 @@ use ptlis\SemanticVersion\Parse\Token;
  */
 final class LabelBuilder
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $name;
 
-    /**
-     * @var int|null
-     */
+    /** @var int|null */
     private $version;
 
 

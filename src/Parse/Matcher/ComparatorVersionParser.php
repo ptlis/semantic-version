@@ -22,14 +22,10 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  */
 final class ComparatorVersionParser implements RangeParserInterface
 {
-    /**
-     * @var ComparatorFactory
-     */
+    /** @var ComparatorFactory */
     private $comparatorFactory;
 
-    /**
-     * @var VersionBuilder
-     */
+    /** @var VersionBuilder */
     private $versionBuilder;
 
 

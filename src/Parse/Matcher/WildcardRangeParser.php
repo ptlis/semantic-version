@@ -25,14 +25,10 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  */
 final class WildcardRangeParser implements RangeParserInterface
 {
-    /**
-     * @var ComparatorInterface
-     */
+    /** @var ComparatorInterface */
     private $greaterOrEqualTo;
 
-    /**
-     * @var ComparatorInterface
-     */
+    /** @var ComparatorInterface */
     private $lessThan;
 
 

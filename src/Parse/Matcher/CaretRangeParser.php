@@ -25,14 +25,10 @@ use ptlis\SemanticVersion\Version\Version;
  */
 final class CaretRangeParser implements RangeParserInterface
 {
-    /**
-     * @var ComparatorInterface
-     */
+    /** @var ComparatorInterface */
     private $greaterOrEqualTo;
 
-    /**
-     * @var ComparatorInterface
-     */
+    /** @var ComparatorInterface */
     private $lessThan;
 
 

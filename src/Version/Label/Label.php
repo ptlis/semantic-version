@@ -16,19 +16,13 @@ namespace ptlis\SemanticVersion\Version\Label;
  */
 final class Label implements LabelInterface
 {
-    /**
-     * @var int
-     */
+    /** @var int */
     private $precedence;
 
-    /**
-     * @var int|null
-     */
+    /** @var int|null */
     private $version;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $name;
 
 

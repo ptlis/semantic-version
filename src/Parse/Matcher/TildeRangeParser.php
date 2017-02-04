@@ -21,9 +21,7 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  */
 final class TildeRangeParser implements RangeParserInterface
 {
-    /**
-     * @var RangeParserInterface
-     */
+    /** @var RangeParserInterface */
     private $wildcardParser;
 
 

@@ -21,9 +21,7 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  */
 final class VersionParser
 {
-    /**
-     * @var RangeParserInterface[]
-     */
+    /** @var RangeParserInterface[] */
     private $rangeParserList;
 
 
