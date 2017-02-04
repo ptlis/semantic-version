@@ -184,4 +184,21 @@ final class ComparatorVersionParserTest extends TestCase
 
         $this->assertFalse($parser->canParse($tokenList));
     }
+
+    /**
+     * @covers \ptlis\SemanticVersion\Parse\Matcher\TildeRangeParser
+     */
+    public function testLabelOnlyError()
+    {
+        $parser = new ComparatorVersionParser(
+            new ComparatorFactory(),
+            new VersionBuilder(new LabelBuilder())
+        );
+
+        $tokenList = [
+            new Token(Token::LABEL_STRING, 'bob')
+        ];
+
+        $this->assertFalse($parser->canParse($tokenList));
+    }
 }

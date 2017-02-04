@@ -18,6 +18,7 @@ use ptlis\SemanticVersion\Parse\Matcher\ComparatorVersionParser;
 use ptlis\SemanticVersion\Parse\Matcher\HyphenatedRangeParser;
 use ptlis\SemanticVersion\Parse\Matcher\TildeRangeParser;
 use ptlis\SemanticVersion\Parse\Matcher\WildcardRangeParser;
+use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 use ptlis\SemanticVersion\Version\VersionBuilder;
@@ -66,5 +67,16 @@ final class VersionParserTest extends TestDataProvider
 
         $this->assertEquals($expectedRange, $range);
         $this->assertEquals($expectedSerialization, strval($range));
+    }
+
+    /**
+     * @covers \ptlis\SemanticVersion\Parse\VersionParser
+     */
+    public function testParseRangeError()
+    {
+        $this->expectException('\RuntimeException');
+
+        $parser = new VersionParser($this->getMatcherList());
+        $parser->parseRange([new Token(Token::LABEL_STRING, 'bob')]);
     }
 }

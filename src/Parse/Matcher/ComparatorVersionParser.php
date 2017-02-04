@@ -63,7 +63,7 @@ final class ComparatorVersionParser implements RangeParserInterface
             $chunkedList = $this->chunk($tokenList);
 
             if (
-                1 === count($chunkedList)
+                (1 === count($chunkedList) && Token::LABEL_STRING !== $chunkedList[0][0]->getType())
                 || (2 === count($chunkedList) && Token::LABEL_STRING === $chunkedList[1][0]->getType())
             ) {
                 $canParse = true;

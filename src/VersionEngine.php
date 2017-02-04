@@ -86,13 +86,19 @@ final class VersionEngine
      *
      * @param string $versionString
      *
+     * @throws \InvalidArgumentException When version string is invalid.
+     *
      * @return VersionInterface
      */
     public function parseVersion($versionString)
     {
         $tokenList = $this->tokenizer->tokenize($versionString);
 
-        $range = $this->parser->parseRange($tokenList);
+        try {
+            $range = $this->parser->parseRange($tokenList);
+        } catch (\RuntimeException $e) {
+            throw new \InvalidArgumentException('"' . $versionString . '" is not a valid semantic version number', $e->getCode(), $e);
+        }
 
         if (!($range instanceof ComparatorVersion)) {
             throw new \InvalidArgumentException(
@@ -108,12 +114,20 @@ final class VersionEngine
      *
      * @param string $rangeString
      *
+     * @throws \InvalidArgumentException When version range string is invalid.
+     *
      * @return VersionRangeInterface
      */
     public function parseRange($rangeString)
     {
         $tokenList = $this->tokenizer->tokenize($rangeString);
 
-        return $this->parser->parseRange($tokenList);
+        try {
+            $range = $this->parser->parseRange($tokenList);
+        } catch (\RuntimeException $e) {
+            throw new \InvalidArgumentException('"' . $rangeString . '" is not a valid version range', $e->getCode(), $e);
+        }
+
+        return $range;
     }
 }
