@@ -79,15 +79,38 @@ final class HyphenatedRangeParser implements RangeParserInterface
     {
         $isRange = false;
 
-        for ($i = 0; $i < count($tokenList); $i++) {
-            $token = $tokenList[$i];
-            if (
-                Token::DASH_SEPARATOR === $token->getType()
-                && $i + 1 < count($tokenList)
-                && Token::LABEL_STRING !== $tokenList[$i]
-            ) {
-                $isRange = true;
-            }
+        $chunkedList = $this->chunk($tokenList);
+        switch (count($chunkedList)) {
+            case 2:
+                $isRange = (
+                    Token::DIGITS === $chunkedList[0][0]->getType()
+                    && Token::DIGITS === $chunkedList[1][0]->getType()
+                );
+                break;
+
+            case 3:
+                $isRange = (
+                    (
+                        Token::DIGITS === $chunkedList[0][0]->getType()
+                        && Token::LABEL_STRING === $chunkedList[1][0]->getType()
+                        && Token::DIGITS === $chunkedList[2][0]->getType()
+                    )
+                    || (
+                        Token::DIGITS === $chunkedList[0][0]->getType()
+                        && Token::DIGITS === $chunkedList[1][0]->getType()
+                        && Token::LABEL_STRING === $chunkedList[2][0]->getType()
+                    )
+                );
+                break;
+
+            case 4:
+                $isRange = (
+                    Token::DIGITS === $chunkedList[0][0]->getType()
+                    && Token::LABEL_STRING === $chunkedList[1][0]->getType()
+                    && Token::DIGITS === $chunkedList[2][0]->getType()
+                    && Token::LABEL_STRING === $chunkedList[3][0]->getType()
+                );
+                break;
         }
 
         return $isRange;
@@ -102,6 +125,10 @@ final class HyphenatedRangeParser implements RangeParserInterface
      */
     public function parse(array $tokenList)
     {
+        if (!$this->canParse($tokenList)) {
+            throw new \RuntimeException('Invalid version');
+        }
+
         $chunkedList = $this->chunk($tokenList);
 
         switch (count($chunkedList)) {
@@ -120,7 +147,7 @@ final class HyphenatedRangeParser implements RangeParserInterface
                     $upperVersionConstraint = $this->getUpperConstraint($chunkedList[2]);
 
                 // Label belongs to second version
-                } else {
+                } else if (Token::LABEL_STRING === $chunkedList[2][0]->getType()) {
                     $lowerVersionConstraint = $this->getLowerConstraint($chunkedList[0]);
                     $upperVersionConstraint = $this->getUpperConstraint($chunkedList[1], $chunkedList[2]);
                 }
@@ -202,19 +229,19 @@ final class HyphenatedRangeParser implements RangeParserInterface
      */
     private function getUpperConstraint(array $versionTokenList, array $labelTokenList = [])
     {
+        $major = 0;
         $minor = 0;
         $patch = 0;
         $label = null;
+        $comparator = $this->lessThan;
         $labelBuilder = new LabelBuilder();
 
         switch (count($versionTokenList)) {
             case 1:
-                $comparator = $this->lessThan;
                 $major = $versionTokenList[0]->getValue() + 1;
                 break;
 
             case 3:
-                $comparator = $this->lessThan;
                 $major = $versionTokenList[0]->getValue();
                 $minor = $versionTokenList[2]->getValue() + 1;
                 break;
@@ -225,9 +252,6 @@ final class HyphenatedRangeParser implements RangeParserInterface
                 $minor = $versionTokenList[2]->getValue();
                 $patch = $versionTokenList[4]->getValue();
                 break;
-
-            default:
-                throw new \RuntimeException('Invalid version');
         }
 
         return new ComparatorVersion(
