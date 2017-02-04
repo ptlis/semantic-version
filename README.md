@@ -34,10 +34,6 @@ The [Semantic Versioning Specification](http://semver.org/) describes the semant
     $boundingPair->getLower()... // As ComparatorVersion description above
 ```
 
-## TODO
-
-* Collections - probably require a factory of their own, for parsing etc
-
 ## Known limitations
 
 There currently are a few areas where this library deviates from the specification when dealing with labels & build metadata; this is to due to how the parsing of version-ranges is handled. However, having tested the parsing code against the complete list of packages scraped from packagist I found no packages affected by this.
