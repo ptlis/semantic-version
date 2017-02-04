@@ -11,11 +11,12 @@
 
 namespace ptlis\SemanticVersion\Test\Version\Label;
 
+use PHPUnit\Framework\TestCase;
 use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Version\Label\Label;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 
-class LabelBuilderTest extends \PHPUnit_Framework_TestCase
+class LabelBuilderTest extends TestCase
 {
     /**
      * @covers \ptlis\SemanticVersion\Version\Label\LabelBuilder

@@ -11,9 +11,10 @@
 
 namespace ptlis\SemanticVersion\Test\Version\Label;
 
+use PHPUnit\Framework\TestCase;
 use ptlis\SemanticVersion\Version\Label\Label;
 
-class SpecificLabelTest extends \PHPUnit_Framework_TestCase
+class SpecificLabelTest extends TestCase
 {
     public function testAbsent()
     {

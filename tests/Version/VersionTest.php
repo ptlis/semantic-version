@@ -11,10 +11,11 @@
 
 namespace ptlis\SemanticVersion\Test\Version;
 
+use PHPUnit\Framework\TestCase;
 use ptlis\SemanticVersion\Version\Label\Label;
 use ptlis\SemanticVersion\Version\Version;
 
-class VersionTest extends \PHPUnit_Framework_TestCase
+class VersionTest extends TestCase
 {
     /**
      * @covers \ptlis\SemanticVersion\Version\Version
