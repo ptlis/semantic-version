@@ -326,6 +326,44 @@ class TestDataProvider extends TestCase
                     new Version(1, 9999, 9999, new Label(Label::PRECEDENCE_ABSENT))
                 ]
             ],
+
+            [
+                'version_string' => '>=1.0.1<2.0.0',
+                'tokens' => [
+                    new Token(Token::GREATER_THAN_EQUAL, '>='),
+
+                    new Token(Token::DIGITS, '1'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '0'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '1'),
+
+                    new Token(Token::LOGICAL_AND, ''),
+
+                    new Token(Token::LESS_THAN, '<'),
+
+                    new Token(Token::DIGITS, '2'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '0'),
+                    new Token(Token::DOT_SEPARATOR, '.'),
+                    new Token(Token::DIGITS, '0')
+                ],
+                'parsed_range' => new LogicalAnd(
+                    new ComparatorVersion(
+                        new GreaterOrEqualTo(),
+                        new Version(1, 0, 1, new Label(Label::PRECEDENCE_ABSENT))
+                    ),
+                    new ComparatorVersion(
+                        new LessThan(),
+                        new Version(2, 0, 0, new Label(Label::PRECEDENCE_ABSENT))
+                    )
+                ),
+                'serialized' => '>=1.0.1,<2.0.0',
+                'satisfies' => [
+                    new Version(1, 0, 1, new Label(Label::PRECEDENCE_ABSENT)),
+                    new Version(1, 9999, 9999, new Label(Label::PRECEDENCE_ABSENT))
+                ]
+            ],
             [
                 'version_string' => '~1.7',
                 'tokens' => [
