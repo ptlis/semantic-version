@@ -159,9 +159,6 @@ final class HyphenatedRangeParser implements RangeParserInterface
                 $lowerVersionConstraint = $this->getLowerConstraint($chunkedList[0], $chunkedList[1]);
                 $upperVersionConstraint = $this->getUpperConstraint($chunkedList[2], $chunkedList[3]);
                 break;
-
-            default:
-                throw new \RuntimeException('Invalid version');
         }
 
         return new LogicalAnd(
