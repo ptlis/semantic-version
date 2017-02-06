@@ -27,6 +27,7 @@ final class ComparatorVersionParserTest extends TestCase
 {
     /**
      * @covers \ptlis\SemanticVersion\Parse\Matcher\ComparatorVersionParser
+     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
      */
     public function testValidComparatorVersionImplicitEqual()
     {
@@ -51,6 +52,7 @@ final class ComparatorVersionParserTest extends TestCase
 
     /**
      * @covers \ptlis\SemanticVersion\Parse\Matcher\ComparatorVersionParser
+     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
      */
     public function testValidComparatorVersionMajorOnly()
     {
@@ -76,6 +78,7 @@ final class ComparatorVersionParserTest extends TestCase
 
     /**
      * @covers \ptlis\SemanticVersion\Parse\Matcher\ComparatorVersionParser
+     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
      */
     public function testValidComparatorVersionMajorMinor()
     {
@@ -103,6 +106,7 @@ final class ComparatorVersionParserTest extends TestCase
 
     /**
      * @covers \ptlis\SemanticVersion\Parse\Matcher\ComparatorVersionParser
+     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
      */
     public function testValidComparatorVersionMajorMinorPatch()
     {
@@ -132,6 +136,7 @@ final class ComparatorVersionParserTest extends TestCase
 
     /**
      * @covers \ptlis\SemanticVersion\Parse\Matcher\ComparatorVersionParser
+     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
      */
     public function testValidComparatorVersionMajorMinorPatchLabel()
     {
@@ -165,6 +170,7 @@ final class ComparatorVersionParserTest extends TestCase
 
     /**
      * @covers \ptlis\SemanticVersion\Parse\Matcher\TildeRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
      */
     public function testNotComparatorVersion()
     {
@@ -187,6 +193,7 @@ final class ComparatorVersionParserTest extends TestCase
 
     /**
      * @covers \ptlis\SemanticVersion\Parse\Matcher\TildeRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
      */
     public function testLabelOnlyError()
     {

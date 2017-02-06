@@ -27,6 +27,8 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  */
 final class HyphenatedRangeParser implements RangeParserInterface
 {
+    use ChunkByDash;
+
     /** @var VersionBuilder */
     private $versionBuilder;
 
@@ -157,39 +159,6 @@ final class HyphenatedRangeParser implements RangeParserInterface
             $lowerVersionConstraint,
             $upperVersionConstraint
         );
-    }
-
-    /**
-     * Chuck the tokens, splitting on hyphen.
-     *
-     * @param Token[] $tokenList
-     *
-     * @return Token[][]
-     */
-    private function chunk(array $tokenList)
-    {
-        $tokenListCount = count($tokenList);
-        $chunkedList = [];
-        $accumulator = [];
-
-        for ($i = 0; $i < $tokenListCount; $i++) {
-            $token = $tokenList[$i];
-
-            // Accumulate until we hit a dash
-            if (Token::DASH_SEPARATOR !== $token->getType()) {
-                $accumulator[] = $token;
-
-            } else {
-                $chunkedList[] = $accumulator;
-                $accumulator = [];
-            }
-        }
-
-        if (count($accumulator)) {
-            $chunkedList[] = $accumulator;
-        }
-
-        return $chunkedList;
     }
 
     /**
