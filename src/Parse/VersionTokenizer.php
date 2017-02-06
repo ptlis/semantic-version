@@ -63,7 +63,6 @@ final class VersionTokenizer
                 // Skip the 'v' character if immediately preceding a digit
                 case $this->isPrefixedV($i, $versionString):
                     // Do nothing
-                    // TODO: Should we store this for correct reverse transformation?
                     break;
 
                 // Spaces, pipes, ampersands and commas may contextually be logical AND/OR
