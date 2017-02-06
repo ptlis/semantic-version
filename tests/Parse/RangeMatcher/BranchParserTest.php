@@ -9,34 +9,35 @@
  * file that was distributed with this source code.
  */
 
-namespace Parse\Matcher;
+namespace Parse\RangeMatcher;
 
 use PHPUnit\Framework\TestCase;
 use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
 use ptlis\SemanticVersion\Comparator\LessThan;
-use ptlis\SemanticVersion\Parse\Matcher\TildeRangeParser;
-use ptlis\SemanticVersion\Parse\Matcher\WildcardRangeParser;
+use ptlis\SemanticVersion\Parse\RangeMatcher\BranchParser;
+use ptlis\SemanticVersion\Parse\RangeMatcher\WildcardRangeParser;
 use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 
-class TildeRangeParserTest extends TestCase
+final class BranchParserTest extends TestCase
 {
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\TildeRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\BranchParser
      */
     public function testVersionBranch()
     {
-        $parser = new TildeRangeParser(new WildcardRangeParser(new GreaterOrEqualTo(), new LessThan()));
+        $parser = new BranchParser(new WildcardRangeParser(new GreaterOrEqualTo(), new LessThan()));
 
         $tokenList = [
-            new Token(Token::TILDE_RANGE, '~'),
-            new Token(Token::DIGITS, 2),
+            new Token(Token::DIGITS, 1),
             new Token(Token::DOT_SEPARATOR, '.'),
-            new Token(Token::DIGITS, 2),
+            new Token(Token::DIGITS, 5),
             new Token(Token::DOT_SEPARATOR, '.'),
-            new Token(Token::DIGITS, '0')
+            new Token(Token::WILDCARD_DIGITS, '*'),
+            new Token(Token::DASH_SEPARATOR, '-'),
+            new Token(Token::LABEL_STRING, 'my_branch')
         ];
 
         $this->assertTrue($parser->canParse($tokenList));
@@ -44,11 +45,11 @@ class TildeRangeParserTest extends TestCase
             new LogicalAnd(
                 new ComparatorVersion(
                     new GreaterOrEqualTo(),
-                    new Version(2, 2, 0)
+                    new Version(1, 5, 0)
                 ),
                 new ComparatorVersion(
                     new LessThan(),
-                    new Version(2, 3, 0)
+                    new Version(1, 6, 0)
                 )
             ),
             $parser->parse($tokenList)
@@ -56,18 +57,18 @@ class TildeRangeParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\TildeRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\BranchParser
      */
     public function testNotVersionBranch()
     {
-        $parser = new TildeRangeParser(new WildcardRangeParser(new GreaterOrEqualTo(), new LessThan()));
+        $parser = new BranchParser(new WildcardRangeParser(new GreaterOrEqualTo(), new LessThan()));
 
         $tokenList = [
-            new Token(Token::DIGITS, 2),
+            new Token(Token::DIGITS, 1),
             new Token(Token::DOT_SEPARATOR, '.'),
-            new Token(Token::DIGITS, 2),
+            new Token(Token::DIGITS, 5),
             new Token(Token::DOT_SEPARATOR, '.'),
-            new Token(Token::DIGITS, 5)
+            new Token(Token::DIGITS, 3)
         ];
 
         $this->assertFalse($parser->canParse($tokenList));

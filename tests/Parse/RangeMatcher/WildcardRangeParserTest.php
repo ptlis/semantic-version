@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Test\Parse\Matcher;
+namespace ptlis\SemanticVersion\Test\Parse\RangeMatcher;
 
 use PHPUnit\Framework\TestCase;
 use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
 use ptlis\SemanticVersion\Comparator\LessThan;
-use ptlis\SemanticVersion\Parse\Matcher\WildcardRangeParser;
+use ptlis\SemanticVersion\Parse\RangeMatcher\WildcardRangeParser;
 use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
@@ -23,7 +23,7 @@ use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 final class WildcardRangeParserTest extends TestCase
 {
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\WildcardRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\WildcardRangeParser
      */
     public function testValidWildcardRangePatch()
     {
@@ -55,7 +55,7 @@ final class WildcardRangeParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\WildcardRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\WildcardRangeParser
      */
     public function testValidWildcardRangeMinor()
     {
@@ -84,7 +84,7 @@ final class WildcardRangeParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\WildcardRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\WildcardRangeParser
      */
     public function testInvalidWildcardRangeMinor()
     {

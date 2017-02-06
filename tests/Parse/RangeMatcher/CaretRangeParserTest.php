@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Test\Parse\Matcher;
+namespace ptlis\SemanticVersion\Test\Parse\RangeMatcher;
 
 use PHPUnit\Framework\TestCase;
 use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
 use ptlis\SemanticVersion\Comparator\LessThan;
-use ptlis\SemanticVersion\Parse\Matcher\CaretRangeParser;
+use ptlis\SemanticVersion\Parse\RangeMatcher\CaretRangeParser;
 use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
@@ -23,7 +23,7 @@ use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 final class CaretRangeParserTest extends TestCase
 {
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\CaretRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\CaretRangeParser
      */
     public function testValidCaretRangeMajorOnly()
     {
@@ -52,7 +52,7 @@ final class CaretRangeParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\CaretRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\CaretRangeParser
      */
     public function testValidCaretRangeMajorMinor()
     {
@@ -82,7 +82,7 @@ final class CaretRangeParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\CaretRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\CaretRangeParser
      */
     public function testValidCaretRangeMajorMinorPatch()
     {
@@ -114,7 +114,7 @@ final class CaretRangeParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\CaretRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\CaretRangeParser
      */
     public function testInvalidCaretRange()
     {

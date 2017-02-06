@@ -9,21 +9,21 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Parse\Matcher;
+namespace ptlis\SemanticVersion\Parse\RangeMatcher;
 
 use ptlis\SemanticVersion\Comparator\ComparatorInterface;
 use ptlis\SemanticVersion\Parse\Token;
-use ptlis\SemanticVersion\Version\Version;
-use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
-use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
+use ptlis\SemanticVersion\VersionRange\LogicalAnd;
+use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
+use ptlis\SemanticVersion\Version\Version;
 
 /**
- * Parser for wildcard ranges.
+ * Parser for caret ranges.
  *
- * Behaviour of wildcard ranges is described @ https://getcomposer.org/doc/articles/versions.md#wildcard
+ * Behaviour of caret ranges is described @ https://getcomposer.org/doc/articles/versions.md#caret
  */
-final class WildcardRangeParser implements RangeParserInterface
+final class CaretRangeParser implements RangeParserInterface
 {
     /** @var ComparatorInterface */
     private $greaterOrEqualTo;
@@ -45,7 +45,7 @@ final class WildcardRangeParser implements RangeParserInterface
     }
 
     /**
-     * Returns true if the tokens represent a wildcard range.
+     * Returns true if the provided tokens represent a caret range.
      *
      * @param Token[] $tokenList
      *
@@ -55,12 +55,12 @@ final class WildcardRangeParser implements RangeParserInterface
     {
         return (
             count($tokenList) > 0
-            && Token::WILDCARD_DIGITS === $tokenList[count($tokenList) - 1]->getType()
+            && Token::CARET_RANGE === $tokenList[0]->getType()
         );
     }
 
     /**
-     * Build a comparator representing the wildcard range.
+     * Build a ComparatorVersion representing the caret range.
      *
      * @param Token[] $tokenList
      *
@@ -68,25 +68,25 @@ final class WildcardRangeParser implements RangeParserInterface
      */
     public function parse(array $tokenList)
     {
-        // Upto minor version
-        if (3 === count($tokenList)) {
-            $lowerVersion = new Version($tokenList[0]->getValue(), $tokenList[2]->getValue());
-            $upperVersion = new Version($tokenList[0]->getValue() + 1);
+        $minor = 0;
+        $patch = 0;
 
-        // Upto patch version
-        } else {
-            $lowerVersion = new Version($tokenList[0]->getValue(), $tokenList[2]->getValue(), $tokenList[4]->getValue());
-            $upperVersion = new Version($tokenList[0]->getValue(), $tokenList[2]->getValue() + 1);
+        if (count($tokenList) >= 4) {
+            $minor = $tokenList[3]->getValue();
+        }
+
+        if (6 === count($tokenList)) {
+            $patch = $tokenList[5]->getValue();
         }
 
         return new LogicalAnd(
             new ComparatorVersion(
                 $this->greaterOrEqualTo,
-                $lowerVersion
+                new Version($tokenList[1]->getValue(), $minor, $patch)
             ),
             new ComparatorVersion(
                 $this->lessThan,
-                $upperVersion
+                new Version($tokenList[1]->getValue() + 1)
             )
         );
     }

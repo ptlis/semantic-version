@@ -12,12 +12,12 @@
 namespace ptlis\SemanticVersion\Test\Parse;
 
 use ptlis\SemanticVersion\Comparator\ComparatorFactory;
-use ptlis\SemanticVersion\Parse\Matcher\BranchParser;
-use ptlis\SemanticVersion\Parse\Matcher\CaretRangeParser;
-use ptlis\SemanticVersion\Parse\Matcher\ComparatorVersionParser;
-use ptlis\SemanticVersion\Parse\Matcher\HyphenatedRangeParser;
-use ptlis\SemanticVersion\Parse\Matcher\TildeRangeParser;
-use ptlis\SemanticVersion\Parse\Matcher\WildcardRangeParser;
+use ptlis\SemanticVersion\Parse\RangeMatcher\BranchParser;
+use ptlis\SemanticVersion\Parse\RangeMatcher\CaretRangeParser;
+use ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser;
+use ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser;
+use ptlis\SemanticVersion\Parse\RangeMatcher\TildeRangeParser;
+use ptlis\SemanticVersion\Parse\RangeMatcher\WildcardRangeParser;
 use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;

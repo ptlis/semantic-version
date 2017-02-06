@@ -11,7 +11,7 @@
 
 namespace ptlis\SemanticVersion\Parse;
 
-use ptlis\SemanticVersion\Parse\Matcher\RangeParserInterface;
+use ptlis\SemanticVersion\Parse\RangeMatcher\RangeParserInterface;
 use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 
 /**

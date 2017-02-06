@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Test\Parse\Matcher;
+namespace ptlis\SemanticVersion\Test\Parse\RangeMatcher;
 
 use PHPUnit\Framework\TestCase;
 use ptlis\SemanticVersion\Comparator\ComparatorFactory;
 use ptlis\SemanticVersion\Comparator\EqualTo;
 use ptlis\SemanticVersion\Comparator\GreaterThan;
-use ptlis\SemanticVersion\Parse\Matcher\ComparatorVersionParser;
+use ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser;
 use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Version\Label\Label;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
@@ -26,8 +26,8 @@ use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 final class ComparatorVersionParserTest extends TestCase
 {
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\ComparatorVersionParser
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
      */
     public function testValidComparatorVersionImplicitEqual()
     {
@@ -51,8 +51,8 @@ final class ComparatorVersionParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\ComparatorVersionParser
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
      */
     public function testValidComparatorVersionMajorOnly()
     {
@@ -77,8 +77,8 @@ final class ComparatorVersionParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\ComparatorVersionParser
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
      */
     public function testValidComparatorVersionMajorMinor()
     {
@@ -105,8 +105,8 @@ final class ComparatorVersionParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\ComparatorVersionParser
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
      */
     public function testValidComparatorVersionMajorMinorPatch()
     {
@@ -135,8 +135,8 @@ final class ComparatorVersionParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\ComparatorVersionParser
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
      */
     public function testValidComparatorVersionMajorMinorPatchLabel()
     {
@@ -169,8 +169,8 @@ final class ComparatorVersionParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\TildeRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\TildeRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
      */
     public function testNotComparatorVersion()
     {
@@ -192,8 +192,8 @@ final class ComparatorVersionParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\TildeRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\TildeRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
      */
     public function testLabelOnlyError()
     {

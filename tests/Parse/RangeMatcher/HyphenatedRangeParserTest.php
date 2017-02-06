@@ -1,12 +1,12 @@
 <?php
 
-namespace ptlis\SemanticVersion\Test\Parse\Matcher;
+namespace ptlis\SemanticVersion\Test\Parse\RangeMatcher;
 
 use PHPUnit\Framework\TestCase;
 use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
 use ptlis\SemanticVersion\Comparator\LessOrEqualTo;
 use ptlis\SemanticVersion\Comparator\LessThan;
-use ptlis\SemanticVersion\Parse\Matcher\HyphenatedRangeParser;
+use ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser;
 use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Version\Label\Label;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
@@ -18,8 +18,8 @@ use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 final class HyphenatedRangeParserTest extends TestCase
 {
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\HyphenatedRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
      */
     public function testValidHyphenatedRangeMajorOnly()
     {
@@ -53,8 +53,8 @@ final class HyphenatedRangeParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\HyphenatedRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
      */
     public function testValidHyphenatedRangeMajorMinor()
     {
@@ -92,8 +92,8 @@ final class HyphenatedRangeParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\HyphenatedRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
      */
     public function testValidHyphenatedRangeMajorMinorPatch()
     {
@@ -135,8 +135,8 @@ final class HyphenatedRangeParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\HyphenatedRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
      */
     public function testValidHyphenatedRangeMajorMinorPatchLabelOnFirst()
     {
@@ -180,8 +180,8 @@ final class HyphenatedRangeParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\HyphenatedRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
      */
     public function testValidHyphenatedRangeMajorMinorPatchLabelOnSecond()
     {
@@ -225,8 +225,8 @@ final class HyphenatedRangeParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\HyphenatedRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
      */
     public function testValidHyphenatedRangeMajorMinorPatchLabelOnBoth()
     {
@@ -272,8 +272,8 @@ final class HyphenatedRangeParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\HyphenatedRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
      */
     public function testNotHyphenatedRange()
     {
@@ -292,8 +292,8 @@ final class HyphenatedRangeParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\HyphenatedRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
      */
     public function testNotHyphenatedRangeWithLabel()
     {
@@ -323,8 +323,8 @@ final class HyphenatedRangeParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\HyphenatedRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
      */
     public function testParseInvalidHyphenatedRangeThreeVersions()
     {
@@ -351,8 +351,8 @@ final class HyphenatedRangeParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\HyphenatedRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
      */
     public function testParseInvalidHyphenatedRangeFourVersions()
     {
@@ -381,8 +381,8 @@ final class HyphenatedRangeParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\HyphenatedRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\Matcher\ChunkByDash
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
      */
     public function testParseInvalidHyphenatedRangeFiveVersions()
     {
