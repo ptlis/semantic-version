@@ -19,8 +19,6 @@ final class VersionTokenizer
     /**
      * Accepts a version string & returns an array of tokenized values.
      *
-     * @todo Handle build metadata ('+' at end of version followed by [0-9a-z-]+
-     *
      * @param string $versionString
      *
      * @return Token[]
