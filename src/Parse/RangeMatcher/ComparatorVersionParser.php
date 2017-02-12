@@ -30,7 +30,6 @@ final class ComparatorVersionParser implements RangeParserInterface
     /** @var VersionParser */
     private $versionParser;
 
-
     /**
      * Constructor.
      *
@@ -54,21 +53,13 @@ final class ComparatorVersionParser implements RangeParserInterface
      */
     public function canParse(array $tokenList)
     {
-        $canParse = false;
-
-        // No illegal tokens present
-        if (!$this->hasIllegalTokens($tokenList)) {
-            $chunkedList = $this->chunk($tokenList);
-
-            if (
-                (1 === count($chunkedList) && Token::LABEL_STRING !== $chunkedList[0][0]->getType())
-                || (2 === count($chunkedList) && Token::LABEL_STRING === $chunkedList[1][0]->getType())
-            ) {
-                $canParse = true;
-            }
-        }
-
-        return $canParse;
+        return (
+            $this->versionParser->canParse($tokenList)
+            || (
+                $this->comparatorFactory->isComparator($tokenList[0]->getValue())
+                && $this->versionParser->canParse(array_slice($tokenList, 1))
+            )
+        );
     }
 
     /**
@@ -80,54 +71,22 @@ final class ComparatorVersionParser implements RangeParserInterface
      */
     public function parse(array $tokenList)
     {
-        $comparatorList = [
-            '<',
-            '<=',
-            '>',
-            '>=',
-            '='
-        ];
+        if (!$this->canParse($tokenList)) {
+            throw new \RuntimeException('Invalid comparator (>1.3.0) version range');
+        }
 
-        // Prefixed comparator, hydrate & remove
-        if (count($tokenList) > 0 && in_array($tokenList[0]->getValue(), $comparatorList)) {
+        // Default to equality comparator
+        $comparator = $this->comparatorFactory->get('=');
+
+        // Prefixed comparator, create comparator instance and remove from token list
+        if ($this->comparatorFactory->isComparator($tokenList[0]->getValue())) {
             $comparator = $this->comparatorFactory->get($tokenList[0]->getValue());
             $tokenList = array_slice($tokenList, 1);
-
-        // Default to equality
-        } else {
-            $comparator = $this->comparatorFactory->get('=');
         }
 
         return new ComparatorVersion(
             $comparator,
             $this->versionParser->parse($tokenList)
         );
-    }
-
-    /**
-     * Returns true if an illegal token is found.
-     *
-     * @param Token[] $tokenList
-     *
-     * @return boolean
-     */
-    public function hasIllegalTokens(array $tokenList)
-    {
-        $illegalTokenList = [
-            Token::CARET_RANGE,
-            Token::TILDE_RANGE,
-            Token::WILDCARD_DIGITS,
-            Token::LOGICAL_AND,
-            Token::LOGICAL_OR
-        ];
-
-        $hasIllegalToken = false;
-        foreach ($tokenList as $token) {
-            if (in_array($token->getType(), $illegalTokenList)) {
-                $hasIllegalToken = true;
-            }
-        }
-
-        return $hasIllegalToken;
     }
 }

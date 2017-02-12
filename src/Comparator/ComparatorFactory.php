@@ -45,10 +45,22 @@ final class ComparatorFactory
      */
     public function get($comparatorString)
     {
-        if (!array_key_exists($comparatorString, $this->comparatorStringMap)) {
+        if (!$this->isComparator($comparatorString)) {
             throw new \RuntimeException('Unknown comparator "' . $comparatorString . '" encountered"');
         }
 
         return $this->comparatorStringMap[$comparatorString];
+    }
+
+    /**
+     * Returns true if the provided string is a valid comparator.
+     *
+     * @param string $comparatorString
+     *
+     * @return bool
+     */
+    public function isComparator($comparatorString)
+    {
+        return array_key_exists($comparatorString, $this->comparatorStringMap);
     }
 }

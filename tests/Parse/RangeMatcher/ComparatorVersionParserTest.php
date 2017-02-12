@@ -169,7 +169,7 @@ final class ComparatorVersionParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\TildeRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser
      * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
      */
     public function testNotComparatorVersion()
@@ -192,11 +192,13 @@ final class ComparatorVersionParserTest extends TestCase
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\TildeRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser
      * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
      */
     public function testLabelOnlyError()
     {
+        $this->expectException('\RuntimeException');
+
         $parser = new ComparatorVersionParser(
             new ComparatorFactory(),
             new VersionParser(new LabelBuilder())
@@ -207,5 +209,6 @@ final class ComparatorVersionParserTest extends TestCase
         ];
 
         $this->assertFalse($parser->canParse($tokenList));
+        $parser->parse($tokenList);
     }
 }
