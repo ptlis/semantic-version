@@ -13,6 +13,7 @@ namespace ptlis\SemanticVersion\Parse\RangeMatcher;
 
 use ptlis\SemanticVersion\Comparator\ComparatorInterface;
 use ptlis\SemanticVersion\Parse\Token;
+use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
@@ -25,6 +26,9 @@ use ptlis\SemanticVersion\Version\Version;
  */
 final class CaretRangeParser implements RangeParserInterface
 {
+    /** @var VersionParser */
+    private $versionParser;
+
     /** @var ComparatorInterface */
     private $greaterOrEqualTo;
 
@@ -35,11 +39,16 @@ final class CaretRangeParser implements RangeParserInterface
     /**
      * Constructor.
      *
+     * @param VersionParser $versionParser
      * @param ComparatorInterface $greaterOrEqualTo
      * @param ComparatorInterface $lessThan
      */
-    public function __construct(ComparatorInterface $greaterOrEqualTo, ComparatorInterface $lessThan)
-    {
+    public function __construct(
+        VersionParser $versionParser,
+        ComparatorInterface $greaterOrEqualTo,
+        ComparatorInterface $lessThan
+    ) {
+        $this->versionParser = $versionParser;
         $this->greaterOrEqualTo = $greaterOrEqualTo;
         $this->lessThan = $lessThan;
     }
@@ -56,6 +65,7 @@ final class CaretRangeParser implements RangeParserInterface
         return (
             count($tokenList) > 0
             && Token::CARET_RANGE === $tokenList[0]->getType()
+            && $this->versionParser->canParse(array_slice($tokenList, 1))
         );
     }
 
@@ -68,25 +78,20 @@ final class CaretRangeParser implements RangeParserInterface
      */
     public function parse(array $tokenList)
     {
-        $minor = 0;
-        $patch = 0;
-
-        if (count($tokenList) >= 4) {
-            $minor = $tokenList[3]->getValue();
+        if (!$this->canParse($tokenList)) {
+            throw new \RuntimeException('Invalid caret range (^) version range');
         }
 
-        if (6 === count($tokenList)) {
-            $patch = $tokenList[5]->getValue();
-        }
+        $lowerVersion = $this->versionParser->parse(array_slice($tokenList, 1));
 
         return new LogicalAnd(
             new ComparatorVersion(
                 $this->greaterOrEqualTo,
-                new Version($tokenList[1]->getValue(), $minor, $patch)
+                $lowerVersion
             ),
             new ComparatorVersion(
                 $this->lessThan,
-                new Version($tokenList[1]->getValue() + 1)
+                new Version($lowerVersion->getMajor() + 1)
             )
         );
     }

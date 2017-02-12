@@ -37,6 +37,7 @@ final class VersionRangeParserTest extends TestDataProvider
 
         return [
             new CaretRangeParser(
+                $versionParser,
                 $comparatorFactory->get('>='),
                 $comparatorFactory->get('<')
             ),

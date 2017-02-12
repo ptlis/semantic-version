@@ -56,6 +56,7 @@ final class VersionEngine
 
         $matcherList = [
             new CaretRangeParser(
+                $this->versionParser,
                 $comparatorFactory->get('>='),
                 $comparatorFactory->get('<')
             ),

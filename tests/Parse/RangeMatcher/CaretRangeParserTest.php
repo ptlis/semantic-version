@@ -16,6 +16,8 @@ use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
 use ptlis\SemanticVersion\Comparator\LessThan;
 use ptlis\SemanticVersion\Parse\RangeMatcher\CaretRangeParser;
 use ptlis\SemanticVersion\Parse\Token;
+use ptlis\SemanticVersion\Parse\VersionParser;
+use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\LogicalAnd;
@@ -27,7 +29,11 @@ final class CaretRangeParserTest extends TestCase
      */
     public function testValidCaretRangeMajorOnly()
     {
-        $parser = new CaretRangeParser(new GreaterOrEqualTo(), new LessThan());
+        $parser = new CaretRangeParser(
+            new VersionParser(new LabelBuilder()),
+            new GreaterOrEqualTo(),
+            new LessThan()
+        );
 
         $tokenList = [
             new Token(Token::CARET_RANGE, '^'),
@@ -56,7 +62,11 @@ final class CaretRangeParserTest extends TestCase
      */
     public function testValidCaretRangeMajorMinor()
     {
-        $parser = new CaretRangeParser(new GreaterOrEqualTo(), new LessThan());
+        $parser = new CaretRangeParser(
+            new VersionParser(new LabelBuilder()),
+            new GreaterOrEqualTo(),
+            new LessThan()
+        );
 
         $tokenList = [
             new Token(Token::CARET_RANGE, '^'),
@@ -86,7 +96,11 @@ final class CaretRangeParserTest extends TestCase
      */
     public function testValidCaretRangeMajorMinorPatch()
     {
-        $parser = new CaretRangeParser(new GreaterOrEqualTo(), new LessThan());
+        $parser = new CaretRangeParser(
+            new VersionParser(new LabelBuilder()),
+            new GreaterOrEqualTo(),
+            new LessThan()
+        );
 
         $tokenList = [
             new Token(Token::CARET_RANGE, '^'),
@@ -118,8 +132,13 @@ final class CaretRangeParserTest extends TestCase
      */
     public function testInvalidCaretRange()
     {
+        $this->expectException('\RuntimeException');
 
-        $parser = new CaretRangeParser(new GreaterOrEqualTo(), new LessThan());
+        $parser = new CaretRangeParser(
+            new VersionParser(new LabelBuilder()),
+            new GreaterOrEqualTo(),
+            new LessThan()
+        );
 
         $tokenList = [
             new Token(Token::DIGITS, 3),
@@ -128,5 +147,6 @@ final class CaretRangeParserTest extends TestCase
         ];
 
         $this->assertFalse($parser->canParse($tokenList));
+        $parser->parse($tokenList);
     }
 }
