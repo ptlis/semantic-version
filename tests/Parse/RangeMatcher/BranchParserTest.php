@@ -27,6 +27,7 @@ final class BranchParserTest extends TestCase
 {
     /**
      * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\BranchParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ParseSimpleRange
      */
     public function testVersionBranch()
     {
@@ -64,9 +65,12 @@ final class BranchParserTest extends TestCase
 
     /**
      * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\BranchParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ParseSimpleRange
      */
     public function testNotVersionBranch()
     {
+        $this->expectException('\RuntimeException');
+
         $parser = new BranchParser(
             new VersionParser(new LabelBuilder()), new GreaterOrEqualTo(), new LessThan(),
             new GreaterOrEqualTo(),
@@ -82,5 +86,6 @@ final class BranchParserTest extends TestCase
         ];
 
         $this->assertFalse($parser->canParse($tokenList));
+        $parser->parse($tokenList);
     }
 }

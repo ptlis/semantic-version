@@ -27,6 +27,7 @@ class TildeRangeParserTest extends TestCase
 {
     /**
      * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\TildeRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ParseSimpleRange
      */
     public function testVersionBranch()
     {
@@ -63,9 +64,12 @@ class TildeRangeParserTest extends TestCase
 
     /**
      * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\TildeRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ParseSimpleRange
      */
     public function testNotVersionBranch()
     {
+        $this->expectException('\RuntimeException');
+
         $parser = new TildeRangeParser(
             new VersionParser(new LabelBuilder()),
             new GreaterOrEqualTo(),
@@ -81,5 +85,6 @@ class TildeRangeParserTest extends TestCase
         ];
 
         $this->assertFalse($parser->canParse($tokenList));
+        $parser->parse($tokenList);
     }
 }

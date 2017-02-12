@@ -26,6 +26,7 @@ final class WildcardRangeParserTest extends TestCase
 {
     /**
      * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\WildcardRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ParseSimpleRange
      */
     public function testValidWildcardRangePatch()
     {
@@ -62,6 +63,7 @@ final class WildcardRangeParserTest extends TestCase
 
     /**
      * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\WildcardRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ParseSimpleRange
      */
     public function testValidWildcardRangeMinor()
     {
@@ -95,6 +97,7 @@ final class WildcardRangeParserTest extends TestCase
 
     /**
      * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\WildcardRangeParser
+     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ParseSimpleRange
      */
     public function testInvalidWildcardRangeMinor()
     {

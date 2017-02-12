@@ -26,6 +26,8 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  */
 final class WildcardRangeParser implements RangeParserInterface
 {
+    use ParseSimpleRange;
+
     /** @var VersionParser */
     private $versionParser;
 
@@ -82,27 +84,11 @@ final class WildcardRangeParser implements RangeParserInterface
             throw new \RuntimeException('Invalid version');
         }
 
-        // Remove trailing '*' when parsing as version
-        $lowerVersion = $this->versionParser->parse(array_slice($tokenList, 0, count($tokenList) - 1));
-
-        // Upto minor version
-        if (3 === count($tokenList)) {
-            $upperVersion = new Version($lowerVersion->getMajor() + 1);
-
-        // Upto patch version
-        } else {
-            $upperVersion = new Version($lowerVersion->getMajor(), $lowerVersion->getMinor() + 1);
-        }
-
-        return new LogicalAnd(
-            new ComparatorVersion(
-                $this->greaterOrEqualTo,
-                $lowerVersion
-            ),
-            new ComparatorVersion(
-                $this->lessThan,
-                $upperVersion
-            )
+        return $this->parseSimpleVersionRange(
+            $this->versionParser,
+            $this->greaterOrEqualTo,
+            $this->lessThan,
+            array_slice($tokenList, 0, count($tokenList) - 1) // Remove trailing '*' when parsing as version
         );
     }
 }
