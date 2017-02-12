@@ -23,7 +23,6 @@ use ptlis\SemanticVersion\Parse\VersionRangeParser;
 use ptlis\SemanticVersion\Parse\VersionTokenizer;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 use ptlis\SemanticVersion\Version\VersionInterface;
-use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 
 /**

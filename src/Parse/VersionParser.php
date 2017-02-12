@@ -11,7 +11,6 @@
 
 namespace ptlis\SemanticVersion\Parse;
 
-use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\Version\VersionInterface;

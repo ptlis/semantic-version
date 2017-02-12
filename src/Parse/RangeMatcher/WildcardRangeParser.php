@@ -14,9 +14,6 @@ namespace ptlis\SemanticVersion\Parse\RangeMatcher;
 use ptlis\SemanticVersion\Comparator\ComparatorInterface;
 use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Parse\VersionParser;
-use ptlis\SemanticVersion\Version\Version;
-use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
-use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 
 /**

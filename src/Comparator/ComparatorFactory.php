@@ -11,8 +11,6 @@
 
 namespace ptlis\SemanticVersion\Comparator;
 
-use ptlis\SemanticVersion\Parse\Token;
-
 /**
  * Factory to build comparator instances from string representation.
  */
