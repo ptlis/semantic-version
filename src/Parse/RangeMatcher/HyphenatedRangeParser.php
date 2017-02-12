@@ -82,6 +82,7 @@ final class HyphenatedRangeParser implements RangeParserInterface
         $chunkedList = $this->chunk($tokenList);
         foreach ($validConfigurations as $configuration) {
             $isRange = $isRange || $this->chunksMatchConfiguration($chunkedList, $configuration);
+            // TODO: Needs to check for valid verisons too (by joining to label etc)
         }
 
         return $isRange;
