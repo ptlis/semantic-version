@@ -19,7 +19,7 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  *
  * @todo Correctly validate versions
  */
-final class VersionParser
+final class VersionRangeParser
 {
     /** @var RangeParserInterface[] */
     private $rangeParserList;

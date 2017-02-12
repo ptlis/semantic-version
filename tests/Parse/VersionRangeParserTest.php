@@ -19,11 +19,11 @@ use ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser;
 use ptlis\SemanticVersion\Parse\RangeMatcher\TildeRangeParser;
 use ptlis\SemanticVersion\Parse\RangeMatcher\WildcardRangeParser;
 use ptlis\SemanticVersion\Parse\Token;
-use ptlis\SemanticVersion\Parse\VersionParser;
+use ptlis\SemanticVersion\Parse\VersionRangeParser;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 use ptlis\SemanticVersion\Version\VersionBuilder;
 
-final class VersionParserTest extends TestDataProvider
+final class VersionRangeParserTest extends TestDataProvider
 {
     private function getMatcherList()
     {
@@ -58,11 +58,11 @@ final class VersionParserTest extends TestDataProvider
 
     /**
      * @dataProvider tokenProvider
-     * @covers \ptlis\SemanticVersion\Parse\VersionParser
+     * @covers \ptlis\SemanticVersion\Parse\VersionRangeParser
      */
     public function testParseRange($version, $tokenList, $expectedRange, $expectedSerialization)
     {
-        $parser = new VersionParser($this->getMatcherList());
+        $parser = new VersionRangeParser($this->getMatcherList());
         $range = $parser->parseRange($tokenList);
 
         $this->assertEquals($expectedRange, $range);
@@ -70,13 +70,13 @@ final class VersionParserTest extends TestDataProvider
     }
 
     /**
-     * @covers \ptlis\SemanticVersion\Parse\VersionParser
+     * @covers \ptlis\SemanticVersion\Parse\VersionRangeParser
      */
     public function testParseRangeError()
     {
         $this->expectException('\RuntimeException');
 
-        $parser = new VersionParser($this->getMatcherList());
+        $parser = new VersionRangeParser($this->getMatcherList());
         $parser->parseRange([new Token(Token::LABEL_STRING, 'bob')]);
     }
 }

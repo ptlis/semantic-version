@@ -18,7 +18,7 @@ use ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser;
 use ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser;
 use ptlis\SemanticVersion\Parse\RangeMatcher\TildeRangeParser;
 use ptlis\SemanticVersion\Parse\RangeMatcher\WildcardRangeParser;
-use ptlis\SemanticVersion\Parse\VersionParser;
+use ptlis\SemanticVersion\Parse\VersionRangeParser;
 use ptlis\SemanticVersion\Parse\VersionTokenizer;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 use ptlis\SemanticVersion\Version\VersionBuilder;
@@ -34,7 +34,7 @@ final class VersionEngine
     /** @var VersionTokenizer */
     private $tokenizer;
 
-    /** @var VersionParser */
+    /** @var VersionRangeParser */
     private $parser;
 
 
@@ -72,7 +72,7 @@ final class VersionEngine
         ];
 
         $this->tokenizer = new VersionTokenizer();
-        $this->parser = new VersionParser($matcherList);
+        $this->parser = new VersionRangeParser($matcherList);
     }
 
     /**
