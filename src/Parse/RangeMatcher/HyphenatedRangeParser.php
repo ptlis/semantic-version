@@ -190,7 +190,6 @@ final class HyphenatedRangeParser implements RangeParserInterface
         $major = 0;
         $minor = 0;
         $patch = 0;
-        $label = null;
         $comparator = $this->lessThan;
         $labelBuilder = new LabelBuilder();
 
