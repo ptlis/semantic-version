@@ -17,6 +17,8 @@ use ptlis\SemanticVersion\Comparator\LessThan;
 use ptlis\SemanticVersion\Parse\RangeMatcher\BranchParser;
 use ptlis\SemanticVersion\Parse\RangeMatcher\WildcardRangeParser;
 use ptlis\SemanticVersion\Parse\Token;
+use ptlis\SemanticVersion\Parse\VersionParser;
+use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\LogicalAnd;
@@ -28,7 +30,9 @@ final class BranchParserTest extends TestCase
      */
     public function testVersionBranch()
     {
-        $parser = new BranchParser(new WildcardRangeParser(new GreaterOrEqualTo(), new LessThan()));
+        $parser = new BranchParser(
+            new WildcardRangeParser(new VersionParser(new LabelBuilder()), new GreaterOrEqualTo(), new LessThan())
+        );
 
         $tokenList = [
             new Token(Token::DIGITS, 1),
@@ -61,7 +65,9 @@ final class BranchParserTest extends TestCase
      */
     public function testNotVersionBranch()
     {
-        $parser = new BranchParser(new WildcardRangeParser(new GreaterOrEqualTo(), new LessThan()));
+        $parser = new BranchParser(
+            new WildcardRangeParser(new VersionParser(new LabelBuilder()), new GreaterOrEqualTo(), new LessThan())
+        );
 
         $tokenList = [
             new Token(Token::DIGITS, 1),

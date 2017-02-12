@@ -16,6 +16,8 @@ use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
 use ptlis\SemanticVersion\Comparator\LessThan;
 use ptlis\SemanticVersion\Parse\RangeMatcher\WildcardRangeParser;
 use ptlis\SemanticVersion\Parse\Token;
+use ptlis\SemanticVersion\Parse\VersionParser;
+use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\LogicalAnd;
@@ -27,7 +29,11 @@ final class WildcardRangeParserTest extends TestCase
      */
     public function testValidWildcardRangePatch()
     {
-        $parser = new WildcardRangeParser(new GreaterOrEqualTo(), new LessThan());
+        $parser = new WildcardRangeParser(
+            new VersionParser(new LabelBuilder()),
+            new GreaterOrEqualTo(),
+            new LessThan()
+        );
 
         $tokenList = [
             new Token(Token::DIGITS, 5),
@@ -59,7 +65,11 @@ final class WildcardRangeParserTest extends TestCase
      */
     public function testValidWildcardRangeMinor()
     {
-        $parser = new WildcardRangeParser(new GreaterOrEqualTo(), new LessThan());
+        $parser = new WildcardRangeParser(
+            new VersionParser(new LabelBuilder()),
+            new GreaterOrEqualTo(),
+            new LessThan()
+        );
 
         $tokenList = [
             new Token(Token::DIGITS, 3),
@@ -88,7 +98,11 @@ final class WildcardRangeParserTest extends TestCase
      */
     public function testInvalidWildcardRangeMinor()
     {
-        $parser = new WildcardRangeParser(new GreaterOrEqualTo(), new LessThan());
+        $parser = new WildcardRangeParser(
+            new VersionParser(new LabelBuilder()),
+            new GreaterOrEqualTo(),
+            new LessThan()
+        );
 
         $tokenList = [
             new Token(Token::DIGITS, 3),

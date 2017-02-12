@@ -50,6 +50,7 @@ final class VersionEngine
         $comparatorFactory = new ComparatorFactory();
 
         $wildcardParser = new WildcardRangeParser(
+            $this->versionParser,
             $comparatorFactory->get('>='),
             $comparatorFactory->get('<')
         );

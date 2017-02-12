@@ -31,6 +31,7 @@ final class VersionRangeParserTest extends TestDataProvider
         $versionParser = new VersionParser(new LabelBuilder());
 
         $wildcardParser = new WildcardRangeParser(
+            $versionParser,
             $comparatorFactory->get('>='),
             $comparatorFactory->get('<')
         );

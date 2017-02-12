@@ -13,6 +13,7 @@ namespace ptlis\SemanticVersion\Parse\RangeMatcher;
 
 use ptlis\SemanticVersion\Comparator\ComparatorInterface;
 use ptlis\SemanticVersion\Parse\Token;
+use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\LogicalAnd;
@@ -25,6 +26,9 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  */
 final class WildcardRangeParser implements RangeParserInterface
 {
+    /** @var VersionParser */
+    private $versionParser;
+
     /** @var ComparatorInterface */
     private $greaterOrEqualTo;
 
@@ -35,11 +39,16 @@ final class WildcardRangeParser implements RangeParserInterface
     /**
      * Constructor.
      *
+     * @param VersionParser $versionParser
      * @param ComparatorInterface $greaterOrEqualTo
      * @param ComparatorInterface $lessThan
      */
-    public function __construct(ComparatorInterface $greaterOrEqualTo, ComparatorInterface $lessThan)
-    {
+    public function __construct(
+        VersionParser $versionParser,
+        ComparatorInterface $greaterOrEqualTo,
+        ComparatorInterface $lessThan
+    ) {
+        $this->versionParser = $versionParser;
         $this->greaterOrEqualTo = $greaterOrEqualTo;
         $this->lessThan = $lessThan;
     }
@@ -56,6 +65,7 @@ final class WildcardRangeParser implements RangeParserInterface
         return (
             count($tokenList) > 0
             && Token::WILDCARD_DIGITS === $tokenList[count($tokenList) - 1]->getType()
+            && $this->versionParser->canParse(array_slice($tokenList, 0, count($tokenList) - 1))
         );
     }
 
