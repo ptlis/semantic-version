@@ -37,6 +37,7 @@ final class VersionEngine
     /** @var VersionRangeParser */
     private $versionRangeParser;
 
+    /** @var VersionParser */
     private $versionParser;
 
 
