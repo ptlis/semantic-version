@@ -25,7 +25,7 @@ final class VersionParser
     private $labelBuilder;
 
     /** Array of token patterns that can be used to construct a valid semantic version number */
-    const VALID_PATTERNS = [
+    private $validPatterns = [
         [Token::DIGITS],
         [Token::DIGITS, Token::DOT_SEPARATOR], // Allow trailing dot
         [Token::DIGITS, Token::DOT_SEPARATOR, Token::DIGITS],
@@ -53,7 +53,7 @@ final class VersionParser
     public function canParse(array $tokenList)
     {
         $isVersion = false;
-        foreach (self::VALID_PATTERNS as $pattern) {
+        foreach ($this->validPatterns as $pattern) {
             $isVersion = $isVersion || $this->tokensMatchPattern($tokenList, $pattern);
         }
 
