@@ -42,9 +42,17 @@ final class VersionRangeParserTest extends TestDataProvider
                 $comparatorFactory->get('>='),
                 $comparatorFactory->get('<')
             ),
-            new TildeRangeParser($wildcardParser),
+            new TildeRangeParser(
+                $versionParser,
+                $comparatorFactory->get('>='),
+                $comparatorFactory->get('<')
+            ),
             $wildcardParser,
-            new BranchParser($wildcardParser),
+            new BranchParser(
+                $versionParser,
+                $comparatorFactory->get('>='),
+                $comparatorFactory->get('<')
+            ),
             new ComparatorVersionParser(
                 $comparatorFactory,
                 $versionParser

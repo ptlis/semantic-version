@@ -61,9 +61,17 @@ final class VersionEngine
                 $comparatorFactory->get('>='),
                 $comparatorFactory->get('<')
             ),
-            new TildeRangeParser($wildcardParser),
+            new TildeRangeParser(
+                $this->versionParser,
+                $comparatorFactory->get('>='),
+                $comparatorFactory->get('<')
+            ),
             $wildcardParser,
-            new BranchParser($wildcardParser),
+            new BranchParser(
+                $this->versionParser,
+                $comparatorFactory->get('>='),
+                $comparatorFactory->get('<')
+            ),
             new ComparatorVersionParser(
                 $comparatorFactory,
                 $this->versionParser

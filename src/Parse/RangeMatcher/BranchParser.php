@@ -11,7 +11,12 @@
 
 namespace ptlis\SemanticVersion\Parse\RangeMatcher;
 
+use ptlis\SemanticVersion\Comparator\ComparatorInterface;
 use ptlis\SemanticVersion\Parse\Token;
+use ptlis\SemanticVersion\Parse\VersionParser;
+use ptlis\SemanticVersion\Version\Version;
+use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
+use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 
 /**
@@ -21,18 +26,31 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  */
 final class BranchParser implements RangeParserInterface
 {
-    /** @var WildcardRangeParser */
-    private $wildcardParser;
+    /** @var VersionParser */
+    private $versionParser;
+
+    /** @var ComparatorInterface */
+    private $greaterOrEqualTo;
+
+    /** @var ComparatorInterface */
+    private $lessThan;
 
 
     /**
      * Constructor.
      *
-     * @param WildcardRangeParser $wildcardParser
+     * @param VersionParser $versionParser
+     * @param ComparatorInterface $greaterOrEqualTo
+     * @param ComparatorInterface $lessThan
      */
-    public function __construct(WildcardRangeParser $wildcardParser)
-    {
-        $this->wildcardParser = $wildcardParser;
+    public function __construct(
+        VersionParser $versionParser,
+        ComparatorInterface $greaterOrEqualTo,
+        ComparatorInterface $lessThan
+    ) {
+        $this->versionParser = $versionParser;
+        $this->greaterOrEqualTo = $greaterOrEqualTo;
+        $this->lessThan = $lessThan;
     }
 
     /**
@@ -47,7 +65,7 @@ final class BranchParser implements RangeParserInterface
         $tokenListCount = count($tokenList);
 
         return (
-            $tokenListCount > 2
+            $tokenListCount >= 3
             && Token::WILDCARD_DIGITS === $tokenList[$tokenListCount - 3]->getType()
             && Token::DASH_SEPARATOR === $tokenList[$tokenListCount - 2]->getType()
             && Token::LABEL_STRING === $tokenList[$tokenListCount - 1]->getType()
@@ -63,6 +81,26 @@ final class BranchParser implements RangeParserInterface
      */
     public function parse(array $tokenList)
     {
-        return $this->wildcardParser->parse($tokenList);
+        // Upto minor version
+        if (3 === count($tokenList)) {
+            $lowerVersion = new Version($tokenList[0]->getValue(), $tokenList[2]->getValue());
+            $upperVersion = new Version($tokenList[0]->getValue() + 1);
+
+            // Upto patch version
+        } else {
+            $lowerVersion = new Version($tokenList[0]->getValue(), $tokenList[2]->getValue(), $tokenList[4]->getValue());
+            $upperVersion = new Version($tokenList[0]->getValue(), $tokenList[2]->getValue() + 1);
+        }
+
+        return new LogicalAnd(
+            new ComparatorVersion(
+                $this->greaterOrEqualTo,
+                $lowerVersion
+            ),
+            new ComparatorVersion(
+                $this->lessThan,
+                $upperVersion
+            )
+        );
     }
 }

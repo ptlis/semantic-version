@@ -98,6 +98,8 @@ final class WildcardRangeParserTest extends TestCase
      */
     public function testInvalidWildcardRangeMinor()
     {
+        $this->expectException('\RuntimeException');
+
         $parser = new WildcardRangeParser(
             new VersionParser(new LabelBuilder()),
             new GreaterOrEqualTo(),
@@ -113,5 +115,6 @@ final class WildcardRangeParserTest extends TestCase
         ];
 
         $this->assertFalse($parser->canParse($tokenList));
+        $parser->parse($tokenList);
     }
 }

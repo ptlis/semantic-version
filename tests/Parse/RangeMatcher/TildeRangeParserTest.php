@@ -31,7 +31,9 @@ class TildeRangeParserTest extends TestCase
     public function testVersionBranch()
     {
         $parser = new TildeRangeParser(
-            new WildcardRangeParser(new VersionParser(new LabelBuilder()), new GreaterOrEqualTo(), new LessThan())
+            new VersionParser(new LabelBuilder()),
+            new GreaterOrEqualTo(),
+            new LessThan()
         );
 
         $tokenList = [
@@ -65,7 +67,9 @@ class TildeRangeParserTest extends TestCase
     public function testNotVersionBranch()
     {
         $parser = new TildeRangeParser(
-            new WildcardRangeParser(new VersionParser(new LabelBuilder()), new GreaterOrEqualTo(), new LessThan())
+            new VersionParser(new LabelBuilder()),
+            new GreaterOrEqualTo(),
+            new LessThan()
         );
 
         $tokenList = [

@@ -78,15 +78,20 @@ final class WildcardRangeParser implements RangeParserInterface
      */
     public function parse(array $tokenList)
     {
+        if (!$this->canParse($tokenList)) {
+            throw new \RuntimeException('Invalid version');
+        }
+
+        // Remove trailing '*' when parsing as version
+        $lowerVersion = $this->versionParser->parse(array_slice($tokenList, 0, count($tokenList) - 1));
+
         // Upto minor version
         if (3 === count($tokenList)) {
-            $lowerVersion = new Version($tokenList[0]->getValue(), $tokenList[2]->getValue());
-            $upperVersion = new Version($tokenList[0]->getValue() + 1);
+            $upperVersion = new Version($lowerVersion->getMajor() + 1);
 
         // Upto patch version
         } else {
-            $lowerVersion = new Version($tokenList[0]->getValue(), $tokenList[2]->getValue(), $tokenList[4]->getValue());
-            $upperVersion = new Version($tokenList[0]->getValue(), $tokenList[2]->getValue() + 1);
+            $upperVersion = new Version($lowerVersion->getMajor(), $lowerVersion->getMinor() + 1);
         }
 
         return new LogicalAnd(

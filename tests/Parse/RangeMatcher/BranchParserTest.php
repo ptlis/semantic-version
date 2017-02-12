@@ -31,7 +31,9 @@ final class BranchParserTest extends TestCase
     public function testVersionBranch()
     {
         $parser = new BranchParser(
-            new WildcardRangeParser(new VersionParser(new LabelBuilder()), new GreaterOrEqualTo(), new LessThan())
+            new VersionParser(new LabelBuilder()), new GreaterOrEqualTo(), new LessThan(),
+            new GreaterOrEqualTo(),
+            new LessThan()
         );
 
         $tokenList = [
@@ -66,7 +68,9 @@ final class BranchParserTest extends TestCase
     public function testNotVersionBranch()
     {
         $parser = new BranchParser(
-            new WildcardRangeParser(new VersionParser(new LabelBuilder()), new GreaterOrEqualTo(), new LessThan())
+            new VersionParser(new LabelBuilder()), new GreaterOrEqualTo(), new LessThan(),
+            new GreaterOrEqualTo(),
+            new LessThan()
         );
 
         $tokenList = [
