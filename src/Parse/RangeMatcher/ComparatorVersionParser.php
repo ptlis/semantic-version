@@ -13,7 +13,7 @@ namespace ptlis\SemanticVersion\Parse\RangeMatcher;
 
 use ptlis\SemanticVersion\Comparator\ComparatorFactory;
 use ptlis\SemanticVersion\Parse\Token;
-use ptlis\SemanticVersion\Version\VersionBuilder;
+use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 
@@ -27,22 +27,22 @@ final class ComparatorVersionParser implements RangeParserInterface
     /** @var ComparatorFactory */
     private $comparatorFactory;
 
-    /** @var VersionBuilder */
-    private $versionBuilder;
+    /** @var VersionParser */
+    private $versionParser;
 
 
     /**
      * Constructor.
      *
      * @param ComparatorFactory $comparatorFactory
-     * @param VersionBuilder $versionBuilder
+     * @param VersionParser $versionParser
      */
     public function __construct(
         ComparatorFactory $comparatorFactory,
-        VersionBuilder $versionBuilder
+        VersionParser $versionParser
     ) {
         $this->comparatorFactory = $comparatorFactory;
-        $this->versionBuilder = $versionBuilder;
+        $this->versionParser = $versionParser;
     }
 
     /**
@@ -98,16 +98,9 @@ final class ComparatorVersionParser implements RangeParserInterface
             $comparator = $this->comparatorFactory->get('=');
         }
 
-        $chunkList = $this->chunk($tokenList);
-        $versionTokenList = $chunkList[0];
-        $labelTokenList = [];
-        if (count($chunkList) > 1) {
-            $labelTokenList = $chunkList[1];
-        }
-
         return new ComparatorVersion(
             $comparator,
-            $this->versionBuilder->buildFromTokens($versionTokenList, $labelTokenList)
+            $this->versionParser->parse($tokenList)
         );
     }
 

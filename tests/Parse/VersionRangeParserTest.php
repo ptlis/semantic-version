@@ -19,16 +19,16 @@ use ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser;
 use ptlis\SemanticVersion\Parse\RangeMatcher\TildeRangeParser;
 use ptlis\SemanticVersion\Parse\RangeMatcher\WildcardRangeParser;
 use ptlis\SemanticVersion\Parse\Token;
+use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\Parse\VersionRangeParser;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
-use ptlis\SemanticVersion\Version\VersionBuilder;
 
 final class VersionRangeParserTest extends TestDataProvider
 {
     private function getMatcherList()
     {
         $comparatorFactory = new ComparatorFactory();
-        $versionBuilder = new VersionBuilder(new LabelBuilder());
+        $versionParser = new VersionParser(new LabelBuilder());
 
         $wildcardParser = new WildcardRangeParser(
             $comparatorFactory->get('>='),
@@ -45,10 +45,10 @@ final class VersionRangeParserTest extends TestDataProvider
             new BranchParser($wildcardParser),
             new ComparatorVersionParser(
                 $comparatorFactory,
-                $versionBuilder
+                $versionParser
             ),
             new HyphenatedRangeParser(
-                $versionBuilder,
+                $versionParser,
                 $comparatorFactory->get('>='),
                 $comparatorFactory->get('<'),
                 $comparatorFactory->get('<=')

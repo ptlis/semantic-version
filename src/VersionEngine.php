@@ -18,10 +18,10 @@ use ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser;
 use ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser;
 use ptlis\SemanticVersion\Parse\RangeMatcher\TildeRangeParser;
 use ptlis\SemanticVersion\Parse\RangeMatcher\WildcardRangeParser;
+use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\Parse\VersionRangeParser;
 use ptlis\SemanticVersion\Parse\VersionTokenizer;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
-use ptlis\SemanticVersion\Version\VersionBuilder;
 use ptlis\SemanticVersion\Version\VersionInterface;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
@@ -35,7 +35,9 @@ final class VersionEngine
     private $tokenizer;
 
     /** @var VersionRangeParser */
-    private $parser;
+    private $versionRangeParser;
+
+    private $versionParser;
 
 
     /**
@@ -43,8 +45,9 @@ final class VersionEngine
      */
     public function __construct()
     {
+        $labelBuilder = new LabelBuilder();
+        $this->versionParser = new VersionParser($labelBuilder);
         $comparatorFactory = new ComparatorFactory();
-        $versionBuilder = new VersionBuilder(new LabelBuilder());
 
         $wildcardParser = new WildcardRangeParser(
             $comparatorFactory->get('>='),
@@ -61,10 +64,10 @@ final class VersionEngine
             new BranchParser($wildcardParser),
             new ComparatorVersionParser(
                 $comparatorFactory,
-                $versionBuilder
+                $this->versionParser
             ),
             new HyphenatedRangeParser(
-                $versionBuilder,
+                $this->versionParser,
                 $comparatorFactory->get('>='),
                 $comparatorFactory->get('<'),
                 $comparatorFactory->get('<=')
@@ -72,13 +75,11 @@ final class VersionEngine
         ];
 
         $this->tokenizer = new VersionTokenizer();
-        $this->parser = new VersionRangeParser($matcherList);
+        $this->versionRangeParser = new VersionRangeParser($matcherList);
     }
 
     /**
      * Parse a semantic version string into an object implementing VersionInterface.
-     *
-     * @todo Hacky - create a better method for handling this.
      *
      * @param string $versionString
      *
@@ -91,18 +92,12 @@ final class VersionEngine
         $tokenList = $this->tokenizer->tokenize($versionString);
 
         try {
-            $range = $this->parser->parseRange($tokenList);
+            $version = $this->versionParser->parse($tokenList);
         } catch (\RuntimeException $e) {
             throw new \InvalidArgumentException('"' . $versionString . '" is not a valid semantic version number', $e->getCode(), $e);
         }
 
-        if (!($range instanceof ComparatorVersion)) {
-            throw new \InvalidArgumentException(
-                '"' . $versionString . '" is not a valid semantic version number'
-            );
-        }
-
-        return $range->getVersion();
+        return $version;
     }
 
     /**
@@ -119,7 +114,7 @@ final class VersionEngine
         $tokenList = $this->tokenizer->tokenize($rangeString);
 
         try {
-            $range = $this->parser->parseRange($tokenList);
+            $range = $this->versionRangeParser->parseRange($tokenList);
         } catch (\RuntimeException $e) {
             throw new \InvalidArgumentException('"' . $rangeString . '" is not a valid version range', $e->getCode(), $e);
         }

@@ -8,10 +8,10 @@ use ptlis\SemanticVersion\Comparator\LessOrEqualTo;
 use ptlis\SemanticVersion\Comparator\LessThan;
 use ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser;
 use ptlis\SemanticVersion\Parse\Token;
+use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\Version\Label\Label;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 use ptlis\SemanticVersion\Version\Version;
-use ptlis\SemanticVersion\Version\VersionBuilder;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 
@@ -24,7 +24,7 @@ final class HyphenatedRangeParserTest extends TestCase
     public function testValidHyphenatedRangeMajorOnly()
     {
         $parser = new HyphenatedRangeParser(
-            new VersionBuilder(new LabelBuilder()),
+            new VersionParser(new LabelBuilder()),
             new GreaterOrEqualTo(),
             new LessThan(),
             new LessOrEqualTo()
@@ -59,7 +59,7 @@ final class HyphenatedRangeParserTest extends TestCase
     public function testValidHyphenatedRangeMajorMinor()
     {
         $parser = new HyphenatedRangeParser(
-            new VersionBuilder(new LabelBuilder()),
+            new VersionParser(new LabelBuilder()),
             new GreaterOrEqualTo(),
             new LessThan(),
             new LessOrEqualTo()
@@ -98,7 +98,7 @@ final class HyphenatedRangeParserTest extends TestCase
     public function testValidHyphenatedRangeMajorMinorPatch()
     {
         $parser = new HyphenatedRangeParser(
-            new VersionBuilder(new LabelBuilder()),
+            new VersionParser(new LabelBuilder()),
             new GreaterOrEqualTo(),
             new LessThan(),
             new LessOrEqualTo()
@@ -141,7 +141,7 @@ final class HyphenatedRangeParserTest extends TestCase
     public function testValidHyphenatedRangeMajorMinorPatchLabelOnFirst()
     {
         $parser = new HyphenatedRangeParser(
-            new VersionBuilder(new LabelBuilder()),
+            new VersionParser(new LabelBuilder()),
             new GreaterOrEqualTo(),
             new LessThan(),
             new LessOrEqualTo()
@@ -186,7 +186,7 @@ final class HyphenatedRangeParserTest extends TestCase
     public function testValidHyphenatedRangeMajorMinorPatchLabelOnSecond()
     {
         $parser = new HyphenatedRangeParser(
-            new VersionBuilder(new LabelBuilder()),
+            new VersionParser(new LabelBuilder()),
             new GreaterOrEqualTo(),
             new LessThan(),
             new LessOrEqualTo()
@@ -231,7 +231,7 @@ final class HyphenatedRangeParserTest extends TestCase
     public function testValidHyphenatedRangeMajorMinorPatchLabelOnBoth()
     {
         $parser = new HyphenatedRangeParser(
-            new VersionBuilder(new LabelBuilder()),
+            new VersionParser(new LabelBuilder()),
             new GreaterOrEqualTo(),
             new LessThan(),
             new LessOrEqualTo()
@@ -278,7 +278,7 @@ final class HyphenatedRangeParserTest extends TestCase
     public function testNotHyphenatedRange()
     {
         $parser = new HyphenatedRangeParser(
-            new VersionBuilder(new LabelBuilder()),
+            new VersionParser(new LabelBuilder()),
             new GreaterOrEqualTo(),
             new LessThan(),
             new LessOrEqualTo()
@@ -300,7 +300,7 @@ final class HyphenatedRangeParserTest extends TestCase
         $this->expectException('\RuntimeException');
 
         $parser = new HyphenatedRangeParser(
-            new VersionBuilder(new LabelBuilder()),
+            new VersionParser(new LabelBuilder()),
             new GreaterOrEqualTo(),
             new LessThan(),
             new LessOrEqualTo()
@@ -331,7 +331,7 @@ final class HyphenatedRangeParserTest extends TestCase
         $this->expectException('\RuntimeException');
 
         $parser = new HyphenatedRangeParser(
-            new VersionBuilder(new LabelBuilder()),
+            new VersionParser(new LabelBuilder()),
             new GreaterOrEqualTo(),
             new LessThan(),
             new LessOrEqualTo()
@@ -359,7 +359,7 @@ final class HyphenatedRangeParserTest extends TestCase
         $this->expectException('\RuntimeException');
 
         $parser = new HyphenatedRangeParser(
-            new VersionBuilder(new LabelBuilder()),
+            new VersionParser(new LabelBuilder()),
             new GreaterOrEqualTo(),
             new LessThan(),
             new LessOrEqualTo()
@@ -389,7 +389,7 @@ final class HyphenatedRangeParserTest extends TestCase
         $this->expectException('\RuntimeException');
 
         $parser = new HyphenatedRangeParser(
-            new VersionBuilder(new LabelBuilder()),
+            new VersionParser(new LabelBuilder()),
             new GreaterOrEqualTo(),
             new LessThan(),
             new LessOrEqualTo()

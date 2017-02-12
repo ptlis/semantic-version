@@ -17,10 +17,10 @@ use ptlis\SemanticVersion\Comparator\EqualTo;
 use ptlis\SemanticVersion\Comparator\GreaterThan;
 use ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser;
 use ptlis\SemanticVersion\Parse\Token;
+use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\Version\Label\Label;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 use ptlis\SemanticVersion\Version\Version;
-use ptlis\SemanticVersion\Version\VersionBuilder;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 
 final class ComparatorVersionParserTest extends TestCase
@@ -33,7 +33,7 @@ final class ComparatorVersionParserTest extends TestCase
     {
         $parser = new ComparatorVersionParser(
             new ComparatorFactory(),
-            new VersionBuilder(new LabelBuilder())
+            new VersionParser(new LabelBuilder())
         );
 
         $tokenList = [
@@ -58,7 +58,7 @@ final class ComparatorVersionParserTest extends TestCase
     {
         $parser = new ComparatorVersionParser(
             new ComparatorFactory(),
-            new VersionBuilder(new LabelBuilder())
+            new VersionParser(new LabelBuilder())
         );
 
         $tokenList = [
@@ -84,7 +84,7 @@ final class ComparatorVersionParserTest extends TestCase
     {
         $parser = new ComparatorVersionParser(
             new ComparatorFactory(),
-            new VersionBuilder(new LabelBuilder())
+            new VersionParser(new LabelBuilder())
         );
 
         $tokenList = [
@@ -112,7 +112,7 @@ final class ComparatorVersionParserTest extends TestCase
     {
         $parser = new ComparatorVersionParser(
             new ComparatorFactory(),
-            new VersionBuilder(new LabelBuilder())
+            new VersionParser(new LabelBuilder())
         );
 
         $tokenList = [
@@ -142,7 +142,7 @@ final class ComparatorVersionParserTest extends TestCase
     {
         $parser = new ComparatorVersionParser(
             new ComparatorFactory(),
-            new VersionBuilder(new LabelBuilder())
+            new VersionParser(new LabelBuilder())
         );
 
         $tokenList = [
@@ -176,7 +176,7 @@ final class ComparatorVersionParserTest extends TestCase
     {
         $parser = new ComparatorVersionParser(
             new ComparatorFactory(),
-            new VersionBuilder(new LabelBuilder())
+            new VersionParser(new LabelBuilder())
         );
 
         $tokenList = [
@@ -199,7 +199,7 @@ final class ComparatorVersionParserTest extends TestCase
     {
         $parser = new ComparatorVersionParser(
             new ComparatorFactory(),
-            new VersionBuilder(new LabelBuilder())
+            new VersionParser(new LabelBuilder())
         );
 
         $tokenList = [

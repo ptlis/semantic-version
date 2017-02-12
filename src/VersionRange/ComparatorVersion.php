@@ -53,28 +53,4 @@ final class ComparatorVersion implements VersionRangeInterface
     {
         return $this->comparator . $this->version;
     }
-
-    /**
-     * Get the comparator.
-     *
-     * @todo Remove this hack - temporary mechanism to allow for extraction of comparator info
-     *
-     * @return ComparatorInterface
-     */
-    public function getComparator()
-    {
-        return $this->comparator;
-    }
-
-    /**
-     * Get the version.
-     *
-     * @todo Remove this hack - temporary mechanism to allow for extraction of version info
-     *
-     * @return VersionInterface
-     */
-    public function getVersion()
-    {
-        return $this->version;
-    }
 }

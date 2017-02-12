@@ -13,9 +13,9 @@ namespace ptlis\SemanticVersion\Parse\RangeMatcher;
 
 use ptlis\SemanticVersion\Comparator\ComparatorInterface;
 use ptlis\SemanticVersion\Parse\Token;
+use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 use ptlis\SemanticVersion\Version\Version;
-use ptlis\SemanticVersion\Version\VersionBuilder;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
@@ -29,8 +29,8 @@ final class HyphenatedRangeParser implements RangeParserInterface
 {
     use ChunkByDash;
 
-    /** @var VersionBuilder */
-    private $versionBuilder;
+    /** @var VersionParser */
+    private $versionParser;
 
     /** @var ComparatorInterface */
     private $greaterOrEqualTo;
@@ -45,18 +45,18 @@ final class HyphenatedRangeParser implements RangeParserInterface
     /**
      * Constructor.
      *
-     * @param VersionBuilder $versionBuilder
+     * @param VersionParser $versionParser
      * @param ComparatorInterface $greaterOrEqualTo
      * @param ComparatorInterface $lessThan
      * @param ComparatorInterface $lessOrEqualTo
      */
     public function __construct(
-        VersionBuilder $versionBuilder,
+        VersionParser $versionParser,
         ComparatorInterface $greaterOrEqualTo,
         ComparatorInterface $lessThan,
         ComparatorInterface $lessOrEqualTo
     ) {
-        $this->versionBuilder = $versionBuilder;
+        $this->versionParser = $versionParser;
         $this->greaterOrEqualTo = $greaterOrEqualTo;
         $this->lessThan = $lessThan;
         $this->lessOrEqualTo = $lessOrEqualTo;
@@ -171,9 +171,15 @@ final class HyphenatedRangeParser implements RangeParserInterface
      */
     private function getLowerConstraint(array $versionTokenList, array $labelTokenList = [])
     {
+        $tokenList = $versionTokenList;
+        if (count($labelTokenList)) {
+            $tokenList[] = new Token(Token::DASH_SEPARATOR, '-');
+            $tokenList = array_merge($tokenList, $labelTokenList);
+        }
+
         return new ComparatorVersion(
             $this->greaterOrEqualTo,
-            $this->versionBuilder->buildFromTokens($versionTokenList, $labelTokenList)
+            $this->versionParser->parse($tokenList)
         );
     }
 

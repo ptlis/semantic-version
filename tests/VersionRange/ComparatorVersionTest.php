@@ -45,19 +45,4 @@ class ComparatorVersionTest extends TestCase
 
         $this->assertEquals('<=2.5.1', strval($comparatorVersion));
     }
-
-    /**
-     * @covers \ptlis\SemanticVersion\VersionRange\ComparatorVersion
-     */
-    public function testGetters()
-    {
-
-        $comparatorVersion = new ComparatorVersion(
-            new LessOrEqualTo(),
-            new Version(2, 5, 1)
-        );
-
-        $this->assertEquals(new LessOrEqualTo(), $comparatorVersion->getComparator());
-        $this->assertEquals(new Version(2, 5, 1), $comparatorVersion->getVersion());
-    }
 }
