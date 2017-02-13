@@ -24,8 +24,8 @@ final class LabelBuilder
     /** @var int|null */
     private $version;
 
-    /** @var array Map of string encoded labels to label constants */
-    private $labelMap = [
+    /** @var array Map of string encoded labels to label precedences */
+    private $labelPrecedenceMap = [
         'alpha' => Label::PRECEDENCE_ALPHA,
         'beta' => Label::PRECEDENCE_BETA,
         'rc' => Label::PRECEDENCE_RC
@@ -91,8 +91,8 @@ final class LabelBuilder
             $label = new Label(Label::PRECEDENCE_ABSENT);
 
         // Alpha, Beta & RC standard labels
-        } elseif (array_key_exists($this->name, $this->labelMap)) {
-            $label = new Label($this->labelMap[$this->name], $this->version);
+        } elseif (array_key_exists($this->name, $this->labelPrecedenceMap)) {
+            $label = new Label($this->labelPrecedenceMap[$this->name], $this->version);
         }
 
         return $label;
