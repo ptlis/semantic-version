@@ -24,6 +24,13 @@ final class LabelBuilder
     /** @var int|null */
     private $version;
 
+    /** @var array Map of string encoded labels to label constants */
+    private $labelMap = [
+        'alpha' => Label::PRECEDENCE_ALPHA,
+        'beta' => Label::PRECEDENCE_BETA,
+        'rc' => Label::PRECEDENCE_RC
+    ];
+
 
     /**
      * Constructor.
@@ -74,25 +81,18 @@ final class LabelBuilder
      */
     public function build()
     {
-        $labelMap = [
-            'alpha' => Label::PRECEDENCE_ALPHA,
-            'beta' => Label::PRECEDENCE_BETA,
-            'rc' => Label::PRECEDENCE_RC
-        ];
+        // Default to miscellaneous 'dev' label
+        $label = new Label(Label::PRECEDENCE_DEV, $this->version, $this->name);
 
-        // No Label present or a dev label (these are a special-case for packagist - a version like 1.0.x-dev is
-        // equivalent to 1.0.* in  conventional notation - there is additional semantics attached to this but it's not
-        // important for our purposes
+        // No Label present or a dev label (these are a special-case for packagist branch versions - a version like
+        // 1.0.x-dev is equivalent to 1.0.* in  conventional notation - there are additional semantics attached to this
+        // but they're not important for our purposes
         if (!strlen($this->name) || 'dev' === $this->name) {
             $label = new Label(Label::PRECEDENCE_ABSENT);
 
         // Alpha, Beta & RC standard labels
-        } elseif (array_key_exists($this->name, $labelMap)) {
-            $label = new Label($labelMap[$this->name], $this->version);
-
-        // Anything else is a miscellaneous 'dev' label
-        } else {
-            $label = new Label(Label::PRECEDENCE_DEV, $this->version, $this->name);
+        } elseif (array_key_exists($this->name, $this->labelMap)) {
+            $label = new Label($this->labelMap[$this->name], $this->version);
         }
 
         return $label;
