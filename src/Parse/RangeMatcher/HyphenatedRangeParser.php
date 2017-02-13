@@ -40,7 +40,7 @@ final class HyphenatedRangeParser implements RangeParserInterface
     /** @var ComparatorInterface */
     private $lessOrEqualTo;
 
-    /** @var Token[][] */
+    /** @var string[][] */
     private $validConfigurations = [
         [Token::DIGITS, Token::DIGITS],
         [Token::DIGITS, Token::LABEL_STRING, Token::DIGITS],
@@ -128,40 +128,37 @@ final class HyphenatedRangeParser implements RangeParserInterface
     private function getSingleVersionTokens(
         array $chunkedList
     ) {
-        $dashToken = new Token(Token::DASH_SEPARATOR, '-');
-        $lowerVersionTokenList = [];
-        $upperVersionTokenList = [];
-        switch (count($chunkedList)) {
+        $dashTokenList = [new Token(Token::DASH_SEPARATOR, '-')];
+        $lowerTokenList = [];
+        $upperTokenList = [];
 
+        switch (true) {
             // No labels
-            case 2:
-                $lowerVersionTokenList = $chunkedList[0];
-                $upperVersionTokenList = $chunkedList[1];
+            case 2 === count($chunkedList):
+                $lowerTokenList = $chunkedList[0];
+                $upperTokenList = $chunkedList[1];
                 break;
 
-            // Label on one version
-            case 3:
-                // Label belongs to first version
-                if (Token::LABEL_STRING === $chunkedList[1][0]->getType()) {
-                    $lowerVersionTokenList = array_merge($chunkedList[0], [$dashToken], $chunkedList[1]);
-                    $upperVersionTokenList = $chunkedList[2];
+            // Label on first version
+            case 3 === count($chunkedList) && Token::LABEL_STRING === $chunkedList[1][0]->getType():
+                $lowerTokenList = array_merge($chunkedList[0], $dashTokenList, $chunkedList[1]);
+                $upperTokenList = $chunkedList[2];
+                break;
 
-                    // Label belongs to second version
-                } else {
-                    $lowerVersionTokenList = $chunkedList[0];
-                    $upperVersionTokenList = array_merge($chunkedList[1], [$dashToken], $chunkedList[2]);
-                }
-
+            // Label on second version
+            case 3 === count($chunkedList) && Token::LABEL_STRING === $chunkedList[2][0]->getType():
+                $lowerTokenList = $chunkedList[0];
+                $upperTokenList = array_merge($chunkedList[1], $dashTokenList, $chunkedList[2]);
                 break;
 
             // Label on both versions
-            case 4:
-                $lowerVersionTokenList = array_merge($chunkedList[0], [$dashToken], $chunkedList[1]);
-                $upperVersionTokenList = array_merge($chunkedList[2], [$dashToken], $chunkedList[3]);
+            case 4 === count($chunkedList):
+                $lowerTokenList = array_merge($chunkedList[0], $dashTokenList, $chunkedList[1]);
+                $upperTokenList = array_merge($chunkedList[2], $dashTokenList, $chunkedList[3]);
                 break;
         }
 
-        return [$lowerVersionTokenList, $upperVersionTokenList];
+        return [$lowerTokenList, $upperTokenList];
     }
 
     /**
