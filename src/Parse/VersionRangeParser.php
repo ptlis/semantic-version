@@ -16,8 +16,6 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 
 /**
  * Parser accepting array of tokens and returning an array of comparators & versions.
- *
- * @todo Correctly validate versions
  */
 final class VersionRangeParser
 {
