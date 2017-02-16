@@ -16,6 +16,14 @@ namespace ptlis\SemanticVersion\Parse;
  */
 final class VersionTokenizer
 {
+    private $comparatorMap = [
+        '>' => Token::GREATER_THAN,
+        '>=' => Token::GREATER_THAN_EQUAL,
+        '<' => Token::LESS_THAN,
+        '<=' => Token::LESS_THAN_EQUAL,
+        '=' => Token::EQUAL_TO
+    ];
+
     /**
      * Accepts a version string & returns an array of tokenized values.
      *
@@ -162,28 +170,20 @@ final class VersionTokenizer
      */
     private function getComparatorToken(&$index, $versionString)
     {
-        $comparatorMap = [
-            '>' => Token::GREATER_THAN,
-            '>=' => Token::GREATER_THAN_EQUAL,
-            '<' => Token::LESS_THAN,
-            '<=' => Token::LESS_THAN_EQUAL,
-            '=' => Token::EQUAL_TO
-        ];
-
-        $chr = substr($versionString, $index, 1);
-
         $token = null;
-        if (array_key_exists($chr, $comparatorMap)) {
-            $comparator = $chr;
 
-            // We have a '<=' or '=>'
+        // See if the first character matches a token
+        $comparator = substr($versionString, $index, 1);
+        if (array_key_exists($comparator, $this->comparatorMap)) {
+
+            // Check for second character in comparator ('<=' or '=>')
             $nextChr = $this->getCharacter($index + 1, $versionString);
-            if (array_key_exists($chr . $nextChr, $comparatorMap)) {
+            if (array_key_exists($comparator . $nextChr, $this->comparatorMap)) {
                 $comparator .= $nextChr;
                 $index++;
             }
 
-            $token = new Token($comparatorMap[$comparator], $comparator);
+            $token = new Token($this->comparatorMap[$comparator], $comparator);
         }
 
         return $token;
