@@ -28,27 +28,23 @@ trait ChunkByDash
      */
     private function chunk(array $tokenList, $separator = Token::DASH_SEPARATOR)
     {
-        $tokenListCount = count($tokenList);
-        $chunkedList = [];
+        $chunkList = [];
         $accumulator = [];
 
-        for ($i = 0; $i < $tokenListCount; $i++) {
-            $token = $tokenList[$i];
-
-            // Accumulate until we hit a dash
-            if ($separator !== $token->getType()) {
-                $accumulator[] = $token;
-
+        // Split token stream by dash separators
+        for ($i = 0; $i < count($tokenList); $i++) {
+            if ($separator !== $tokenList[$i]->getType()) {
+                $accumulator[] = $tokenList[$i];
             } else {
-                $chunkedList[] = $accumulator;
+                $chunkList[] = $accumulator;
                 $accumulator = [];
             }
         }
 
         if (count($accumulator)) {
-            $chunkedList[] = $accumulator;
+            $chunkList[] = $accumulator;
         }
 
-        return $chunkedList;
+        return $chunkList;
     }
 }
