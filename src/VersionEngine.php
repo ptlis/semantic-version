@@ -45,37 +45,15 @@ final class VersionEngine
      */
     public function __construct()
     {
-        $labelBuilder = new LabelBuilder();
-        $this->versionParser = new VersionParser($labelBuilder);
+        $this->versionParser = new VersionParser(new LabelBuilder());
         $comparatorFactory = new ComparatorFactory();
 
-        $wildcardParser = new WildcardRangeParser(
-            $this->versionParser,
-            $comparatorFactory->get('>='),
-            $comparatorFactory->get('<')
-        );
-
         $matcherList = [
-            new CaretRangeParser(
-                $this->versionParser,
-                $comparatorFactory->get('>='),
-                $comparatorFactory->get('<')
-            ),
-            new TildeRangeParser(
-                $this->versionParser,
-                $comparatorFactory->get('>='),
-                $comparatorFactory->get('<')
-            ),
-            $wildcardParser,
-            new BranchParser(
-                $this->versionParser,
-                $comparatorFactory->get('>='),
-                $comparatorFactory->get('<')
-            ),
-            new ComparatorVersionParser(
-                $comparatorFactory,
-                $this->versionParser
-            ),
+            new CaretRangeParser($this->versionParser, $comparatorFactory->get('>='), $comparatorFactory->get('<')),
+            new TildeRangeParser($this->versionParser, $comparatorFactory->get('>='), $comparatorFactory->get('<')),
+            new WildcardRangeParser($this->versionParser, $comparatorFactory->get('>='), $comparatorFactory->get('<')),
+            new BranchParser($this->versionParser, $comparatorFactory->get('>='), $comparatorFactory->get('<')),
+            new ComparatorVersionParser($comparatorFactory, $this->versionParser),
             new HyphenatedRangeParser(
                 $this->versionParser,
                 $comparatorFactory->get('>='),
