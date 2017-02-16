@@ -39,7 +39,7 @@ final class ComparatorFactory
      *
      * @param string $comparatorString
      *
-     * @return ComparatorInterface|null
+     * @return ComparatorInterface
      */
     public function get($comparatorString)
     {
