@@ -19,17 +19,29 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  */
 final class VersionRangeParser
 {
+    /** @var LogicalOperatorProcessor */
+    private $logicalOperatorProcessor;
+
     /** @var RangeParserInterface[] */
     private $rangeParserList;
 
+    /** @var string[] Array of tokens representing logical operators */
+    private $operatorTokenList = [
+        Token::LOGICAL_AND,
+        Token::LOGICAL_OR
+    ];
+
 
     /**
-     * Constructor.
+     * Constructor
      *
-     * @param RangeParserInterface[] $rangeParserList
+     * @param LogicalOperatorProcessor $logicalOperatorProcessor
      */
-    public function __construct(array $rangeParserList)
-    {
+    public function __construct(
+        LogicalOperatorProcessor $logicalOperatorProcessor,
+        array $rangeParserList
+    ) {
+        $this->logicalOperatorProcessor = $logicalOperatorProcessor;
         $this->rangeParserList = $rangeParserList;
     }
 
@@ -42,42 +54,46 @@ final class VersionRangeParser
      */
     public function parseRange(array $tokenList)
     {
-        $clusteredTokenList = $this->clusterTokens($tokenList);
-
-        $operatorList = [
-            Token::LOGICAL_AND,
-            Token::LOGICAL_OR
-        ];
-
         $realResultList = [];
-        foreach ($clusteredTokenList as $clusteredTokens) {
-
-            $parsed = null;
-            foreach ($this->rangeParserList as $rangeParser) {
-                if ($rangeParser->canParse($clusteredTokens)) {
-                    $parsed = $rangeParser->parse($clusteredTokens);
-                    break;
-                }
-            }
+        $tokenClusterList = $this->clusterTokens($tokenList);
+        foreach ($tokenClusterList as $tokenCluster) {
+            $parsed = $this->attemptParse($tokenCluster);
 
             if (is_null($parsed)) {
-
-                if (in_array($clusteredTokens[0]->getType(), $operatorList)) {
-                    $realResultList[] = $clusteredTokens[0];
-
-
+                if (in_array($tokenCluster[0]->getType(), $this->operatorTokenList)) {
+                    $realResultList[] = $tokenCluster[0];
                 } else {
                     throw new \RuntimeException('Unable to parse version string');
                 }
             } else {
                 $realResultList[] = $parsed;
             }
-
         }
 
-        $buildRange = new LogicalOperatorProcessor();
+        return $this->logicalOperatorProcessor->run($realResultList);
+    }
 
-        return $buildRange->run($realResultList);
+    /**
+     * Attempt to parse the token list as a version range into an object implementing VersionRangeInterface
+     *
+     * Iterates through the provided range parsers checking to see if they can parse the token list. If they can then we
+     * call the parse method and return a version range object, otherwise return null.
+     *
+     * @param Token[] $tokenList
+     *
+     * @return VersionRangeInterface|null
+     */
+    private function attemptParse(array $tokenList)
+    {
+        $parsed = null;
+        foreach ($this->rangeParserList as $rangeParser) {
+            if ($rangeParser->canParse($tokenList)) {
+                $parsed = $rangeParser->parse($tokenList);
+                break;
+            }
+        }
+
+        return $parsed;
     }
 
     /**

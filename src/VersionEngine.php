@@ -12,6 +12,7 @@
 namespace ptlis\SemanticVersion;
 
 use ptlis\SemanticVersion\Comparator\ComparatorFactory;
+use ptlis\SemanticVersion\Parse\LogicalOperatorProcessor;
 use ptlis\SemanticVersion\Parse\RangeMatcher\BranchParser;
 use ptlis\SemanticVersion\Parse\RangeMatcher\CaretRangeParser;
 use ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser;
@@ -63,7 +64,7 @@ final class VersionEngine
         ];
 
         $this->tokenizer = new VersionTokenizer();
-        $this->versionRangeParser = new VersionRangeParser($matcherList);
+        $this->versionRangeParser = new VersionRangeParser(new LogicalOperatorProcessor(), $matcherList);
     }
 
     /**

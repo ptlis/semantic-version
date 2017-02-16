@@ -12,6 +12,7 @@
 namespace ptlis\SemanticVersion\Test\Parse;
 
 use ptlis\SemanticVersion\Comparator\ComparatorFactory;
+use ptlis\SemanticVersion\Parse\LogicalOperatorProcessor;
 use ptlis\SemanticVersion\Parse\RangeMatcher\BranchParser;
 use ptlis\SemanticVersion\Parse\RangeMatcher\CaretRangeParser;
 use ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser;
@@ -72,7 +73,7 @@ final class VersionRangeParserTest extends TestDataProvider
      */
     public function testParseRange($version, $tokenList, $expectedRange, $expectedSerialization)
     {
-        $parser = new VersionRangeParser($this->getMatcherList());
+        $parser = new VersionRangeParser(new LogicalOperatorProcessor(), $this->getMatcherList());
         $range = $parser->parseRange($tokenList);
 
         $this->assertEquals($expectedRange, $range);
@@ -86,7 +87,7 @@ final class VersionRangeParserTest extends TestDataProvider
     {
         $this->expectException('\RuntimeException');
 
-        $parser = new VersionRangeParser($this->getMatcherList());
+        $parser = new VersionRangeParser(new LogicalOperatorProcessor(), $this->getMatcherList());
         $parser->parseRange([new Token(Token::LABEL_STRING, 'bob')]);
     }
 }
