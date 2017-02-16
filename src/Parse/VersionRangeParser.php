@@ -105,24 +105,14 @@ final class VersionRangeParser
      */
     private function clusterTokens(array $tokenList)
     {
-        $comparatorTokenList = [
-            Token::LOGICAL_AND,
-            Token::LOGICAL_OR
-        ];
-
-        $tokenClusterList = [];
-
-        // Stores tokens not yet parcelled out
         $tokenAccumulator = [];
-        $tokenListCount = count($tokenList);
-        for ($i = 0; $i < $tokenListCount; $i++) {
+        $tokenClusterList = [];
+        for ($i = 0; $i < count($tokenList); $i++) {
             $currentToken = $tokenList[$i];
 
-            if (in_array($currentToken->getType(), $comparatorTokenList)) {
-                $tokenClusterList[] = $tokenAccumulator;
-                $tokenClusterList[] = [$currentToken];
+            if (in_array($currentToken->getType(), $this->operatorTokenList)) {
+                $tokenClusterList = array_merge($tokenClusterList, [$tokenAccumulator], [[$currentToken]]);
                 $tokenAccumulator = [];
-
             } else {
                 $tokenAccumulator[] = $currentToken;
             }
