@@ -20,15 +20,13 @@ trait ChunkBySeparator
      * Chuck the tokens, splitting on the specified token types.
      *
      * @param Token[] $tokenList
-     * @param string[] $separatorList One of Token class constants
-     * @param bool $includeSeparator Whether to include an array containing just the separator that split the tokens.
+     * @param string[] $separatorList Array of Token class constants
      *
      * @return Token[][]
      */
     private function chunk(
         array $tokenList,
-        $separatorList = [Token::DASH_SEPARATOR],
-        $includeSeparator = false
+        array $separatorList
     ) {
         $chunkList = [];
         $accumulator = [];
@@ -37,9 +35,7 @@ trait ChunkBySeparator
         for ($i = 0; $i < count($tokenList); $i++) {
             if (in_array($tokenList[$i]->getType(), $separatorList)) {
                 $chunkList[] = $accumulator;
-                if ($includeSeparator) {
-                    $chunkList[] = [$tokenList[$i]];
-                }
+                $chunkList[] = [$tokenList[$i]];
                 $accumulator = [];
             } else {
                 $accumulator[] = $tokenList[$i];

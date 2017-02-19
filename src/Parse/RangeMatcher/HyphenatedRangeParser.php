@@ -80,7 +80,7 @@ final class HyphenatedRangeParser implements RangeParserInterface
     public function canParse(array $tokenList)
     {
         $isRange = false;
-        $chunkedList = $this->chunk($tokenList);
+        $chunkedList = $this->chunkByDash($tokenList);
         foreach ($this->validConfigurations as $configuration) {
             list($lowerVersionTokenList, $upperVersionTokenList) = $this->getSingleVersionTokens($chunkedList);
             $isRange = $isRange || (
@@ -106,7 +106,7 @@ final class HyphenatedRangeParser implements RangeParserInterface
             throw new \RuntimeException('Invalid version');
         }
 
-        $chunkedList = $this->chunk($tokenList);
+        $chunkedList = $this->chunkByDash($tokenList);
 
         list($lowerVersionTokenList, $upperVersionTokenList) = $this->getSingleVersionTokens($chunkedList);
 
@@ -117,6 +117,22 @@ final class HyphenatedRangeParser implements RangeParserInterface
             ),
             $this->getUpperConstraint($upperVersionTokenList)
         );
+    }
+
+    /**
+     * Chunk a token list by the dash seperator, returning array of token lists omitting the seperator tokens.
+     *
+     * @param Token[] $tokenList
+     * @return Token[][]
+     */
+    private function chunkByDash(array $tokenList)
+    {
+        return array_values(array_filter(
+            $this->chunk($tokenList, [Token::DASH_SEPARATOR]),
+            function($chunk) {
+                return 1 !== count($chunk) || (1 === count($chunk) && Token::DASH_SEPARATOR !== $chunk[0]->getType());
+            }
+        ));
     }
 
     /**

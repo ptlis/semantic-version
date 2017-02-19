@@ -57,7 +57,7 @@ final class VersionRangeParser
     public function parseRange(array $tokenList)
     {
         $realResultList = [];
-        $tokenClusterList = $this->chunk($tokenList, $this->operatorTokenList, true);
+        $tokenClusterList = $this->chunk($tokenList, $this->operatorTokenList);
         foreach ($tokenClusterList as $tokenCluster) {
             $parsed = $this->attemptParse($tokenCluster);
 
