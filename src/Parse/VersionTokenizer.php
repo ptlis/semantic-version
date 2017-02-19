@@ -16,12 +16,23 @@ namespace ptlis\SemanticVersion\Parse;
  */
 final class VersionTokenizer
 {
+    /** @var array Array mapping strings to comparator types */
     private $comparatorMap = [
         '>' => Token::GREATER_THAN,
         '>=' => Token::GREATER_THAN_EQUAL,
         '<' => Token::LESS_THAN,
         '<=' => Token::LESS_THAN_EQUAL,
         '=' => Token::EQUAL_TO
+    ];
+
+    /** @var array Array mapping strings to simple token types */
+    private $simpleTokenMap = [
+        '-' => Token::DASH_SEPARATOR,
+        '.' => Token::DOT_SEPARATOR,
+        '~' => Token::TILDE_RANGE,
+        '^' => Token::CARET_RANGE,
+        '*' => Token::WILDCARD_DIGITS,
+        'x' => Token::WILDCARD_DIGITS
     ];
 
     /**
@@ -78,18 +89,10 @@ final class VersionTokenizer
                     $this->conditionallyAddToken(Token::DIGITS, $digitAccumulator, $tokenList);
                     $this->conditionallyAddToken(Token::LABEL_STRING, $stringAccumulator, $tokenList);
 
-                    $operatorTokenList = [
-                        Token::GREATER_THAN,
-                        Token::GREATER_THAN_EQUAL,
-                        Token::LESS_THAN,
-                        Token::LESS_THAN_EQUAL,
-                        Token::EQUAL_TO
-                    ];
-
                     // No previous tokens, or previous token was not a comparator
                     if (
                         !count($tokenList)
-                        || !in_array($tokenList[count($tokenList)-1]->getType(), $operatorTokenList)
+                        || !in_array($tokenList[count($tokenList)-1]->getType(), $this->comparatorMap)
                     ) {
                         $possibleOperator = trim($chr);
 
@@ -198,18 +201,9 @@ final class VersionTokenizer
      */
     private function getSimpleToken($chr)
     {
-        $tokenMap = [
-            '-' => Token::DASH_SEPARATOR,
-            '.' => Token::DOT_SEPARATOR,
-            '~' => Token::TILDE_RANGE,
-            '^' => Token::CARET_RANGE,
-            '*' => Token::WILDCARD_DIGITS,
-            'x' => Token::WILDCARD_DIGITS
-        ];
-
         $token = null;
-        if (array_key_exists($chr, $tokenMap)) {
-            $token = new Token($tokenMap[$chr], $chr);
+        if (array_key_exists($chr, $this->simpleTokenMap)) {
+            $token = new Token($this->simpleTokenMap[$chr], $chr);
         }
 
         return $token;
