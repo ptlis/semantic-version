@@ -32,20 +32,4 @@ class LabelTest extends TestCase
 
         $this->assertEquals('', strval($label));
     }
-
-    // TODO: Rework once build metadata is re-added
-//    public function testCreateWithBuildMetadata()
-//    {
-//        $label = new Label(
-//            Label::PRECEDENCE_ALPHA,
-//            'alpha',
-//            '1',
-//            '2015-04-01'
-//        );
-//
-//        $this->assertEquals(
-//            'alpha.1+2015-04-01',
-//            strval($label)
-//        );
-//    }
 }
