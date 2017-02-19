@@ -54,10 +54,8 @@ final class VersionTokenizer
             $chr = $this->getCharacter($i, $versionString);
 
             switch (true) {
-
                 // Simple token types - separators and range indicators
                 case !is_null($this->getSimpleToken($chr)):
-
                     // Handle preceding digits or labels
                     $this->conditionallyAddToken(Token::DIGITS, $digitAccumulator, $tokenList);
                     $this->conditionallyAddToken(Token::LABEL_STRING, $stringAccumulator, $tokenList);
@@ -67,7 +65,6 @@ final class VersionTokenizer
 
                 // Comparator token types
                 case !is_null($token = $this->getComparatorToken($i, $versionString)):
-
                     // Handle preceding digits or labels
                     $this->conditionallyAddToken(Token::DIGITS, $digitAccumulator, $tokenList);
                     $this->conditionallyAddToken(Token::LABEL_STRING, $stringAccumulator, $tokenList);
@@ -84,7 +81,6 @@ final class VersionTokenizer
 
                 // Spaces, pipes, ampersands and commas may contextually be logical AND/OR
                 case $this->isPossibleLogicalOperator($chr):
-
                     // Handle preceding digits or labels
                     $this->conditionallyAddToken(Token::DIGITS, $digitAccumulator, $tokenList);
                     $this->conditionallyAddToken(Token::LABEL_STRING, $stringAccumulator, $tokenList);
@@ -178,7 +174,6 @@ final class VersionTokenizer
         // See if the first character matches a token
         $comparator = substr($versionString, $index, 1);
         if (array_key_exists($comparator, $this->comparatorMap)) {
-
             // Check for second character in comparator ('<=' or '=>')
             $nextChr = $this->getCharacter($index + 1, $versionString);
             if (array_key_exists($comparator . $nextChr, $this->comparatorMap)) {

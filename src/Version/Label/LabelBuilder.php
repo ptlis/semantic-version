@@ -110,7 +110,6 @@ final class LabelBuilder
         $label = $this->build();
 
         switch (count($labelTokenList)) {
-
             // No label
             case 0:
                 // Do Nothing

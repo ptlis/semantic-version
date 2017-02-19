@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Parse\RangeMatcher;
+namespace ptlis\SemanticVersion\Parse\RangeParser;
 
 use ptlis\SemanticVersion\Comparator\ComparatorInterface;
 use ptlis\SemanticVersion\Parse\ChunkBySeparator;
@@ -129,7 +129,7 @@ final class HyphenatedRangeParser implements RangeParserInterface
     {
         return array_values(array_filter(
             $this->chunk($tokenList, [Token::DASH_SEPARATOR]),
-            function($chunk) {
+            function ($chunk) {
                 return 1 !== count($chunk) || (1 === count($chunk) && Token::DASH_SEPARATOR !== $chunk[0]->getType());
             }
         ));

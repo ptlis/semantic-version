@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Parse\RangeMatcher;
+namespace ptlis\SemanticVersion\Test\Parse\RangeParser;
 
 use PHPUnit\Framework\TestCase;
 use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
 use ptlis\SemanticVersion\Comparator\LessThan;
-use ptlis\SemanticVersion\Parse\RangeMatcher\BranchParser;
-use ptlis\SemanticVersion\Parse\RangeMatcher\WildcardRangeParser;
+use ptlis\SemanticVersion\Parse\RangeParser\BranchParser;
+use ptlis\SemanticVersion\Parse\RangeParser\WildcardRangeParser;
 use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
@@ -24,8 +24,8 @@ use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 
 /**
- * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\BranchParser
- * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ParseSimpleRange
+ * @covers \ptlis\SemanticVersion\Parse\RangeParser\BranchParser
+ * @covers \ptlis\SemanticVersion\Parse\RangeParser\ParseSimpleRange
  */
 final class BranchParserTest extends TestCase
 {

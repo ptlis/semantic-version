@@ -11,7 +11,7 @@
 
 namespace ptlis\SemanticVersion\Parse;
 
-use ptlis\SemanticVersion\Parse\RangeMatcher\RangeParserInterface;
+use ptlis\SemanticVersion\Parse\RangeParser\RangeParserInterface;
 use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 
 /**
@@ -38,6 +38,7 @@ final class VersionRangeParser
      * Constructor
      *
      * @param LogicalOperatorProcessor $logicalOperatorProcessor
+     * @param RangeParserInterface[] $rangeParserList
      */
     public function __construct(
         LogicalOperatorProcessor $logicalOperatorProcessor,

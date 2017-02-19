@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Parse\RangeMatcher;
+namespace ptlis\SemanticVersion\Parse\RangeParser;
 
 use ptlis\SemanticVersion\Comparator\ComparatorInterface;
 use ptlis\SemanticVersion\Parse\Token;
@@ -17,11 +17,11 @@ use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 
 /**
- * Parser for composer branch ranges.
+ * Parser for wildcard ranges.
  *
- * Behaviour of branch ranges is described @ https://getcomposer.org/doc/02-libraries.md#branches
+ * Behaviour of wildcard ranges is described @ https://getcomposer.org/doc/articles/versions.md#wildcard
  */
-final class BranchParser implements RangeParserInterface
+final class WildcardRangeParser implements RangeParserInterface
 {
     use ParseSimpleRange;
 
@@ -53,7 +53,7 @@ final class BranchParser implements RangeParserInterface
     }
 
     /**
-     * Returns true if the tokens can be parsed as a Packagist-style branch
+     * Returns true if the tokens represent a wildcard range.
      *
      * @param Token[] $tokenList
      *
@@ -61,19 +61,15 @@ final class BranchParser implements RangeParserInterface
      */
     public function canParse(array $tokenList)
     {
-        $tokenListCount = count($tokenList);
-
         return (
-            $tokenListCount >= 3
-            && Token::WILDCARD_DIGITS === $tokenList[$tokenListCount - 3]->getType()
-            && Token::DASH_SEPARATOR === $tokenList[$tokenListCount - 2]->getType()
-            && Token::LABEL_STRING === $tokenList[$tokenListCount - 1]->getType()
-            && $this->versionParser->canParse(array_slice($tokenList, 0, count($tokenList) - 3))
+            count($tokenList) > 0
+            && Token::WILDCARD_DIGITS === $tokenList[count($tokenList) - 1]->getType()
+            && $this->versionParser->canParse(array_slice($tokenList, 0, count($tokenList) - 1))
         );
     }
 
     /**
-     * Build a ComparatorVersion representing the branch.
+     * Build a comparator representing the wildcard range.
      *
      * @param Token[] $tokenList
      *
@@ -89,7 +85,7 @@ final class BranchParser implements RangeParserInterface
             $this->versionParser,
             $this->greaterOrEqualTo,
             $this->lessThan,
-            array_slice($tokenList, 0, count($tokenList) - 3) // Remove x-branch suffix
+            array_slice($tokenList, 0, count($tokenList) - 1) // Remove trailing '*' when parsing as version
         );
     }
 }

@@ -13,12 +13,12 @@ namespace ptlis\SemanticVersion\Test\Parse;
 
 use ptlis\SemanticVersion\Comparator\ComparatorFactory;
 use ptlis\SemanticVersion\Parse\LogicalOperatorProcessor;
-use ptlis\SemanticVersion\Parse\RangeMatcher\BranchParser;
-use ptlis\SemanticVersion\Parse\RangeMatcher\CaretRangeParser;
-use ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser;
-use ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser;
-use ptlis\SemanticVersion\Parse\RangeMatcher\TildeRangeParser;
-use ptlis\SemanticVersion\Parse\RangeMatcher\WildcardRangeParser;
+use ptlis\SemanticVersion\Parse\RangeParser\BranchParser;
+use ptlis\SemanticVersion\Parse\RangeParser\CaretRangeParser;
+use ptlis\SemanticVersion\Parse\RangeParser\ComparatorVersionParser;
+use ptlis\SemanticVersion\Parse\RangeParser\HyphenatedRangeParser;
+use ptlis\SemanticVersion\Parse\RangeParser\TildeRangeParser;
+use ptlis\SemanticVersion\Parse\RangeParser\WildcardRangeParser;
 use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\Parse\VersionRangeParser;

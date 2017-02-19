@@ -9,12 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Test\Parse\RangeMatcher;
+namespace ptlis\SemanticVersion\Test\Parse\RangeParser;
 
 use PHPUnit\Framework\TestCase;
 use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
 use ptlis\SemanticVersion\Comparator\LessThan;
-use ptlis\SemanticVersion\Parse\RangeMatcher\WildcardRangeParser;
+use ptlis\SemanticVersion\Parse\RangeParser\TildeRangeParser;
+use ptlis\SemanticVersion\Parse\RangeParser\WildcardRangeParser;
 use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
@@ -23,56 +24,26 @@ use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 
 /**
- * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\WildcardRangeParser
- * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ParseSimpleRange
+ * @covers \ptlis\SemanticVersion\Parse\RangeParser\TildeRangeParser
+ * @covers \ptlis\SemanticVersion\Parse\RangeParser\ParseSimpleRange
  */
-final class WildcardRangeParserTest extends TestCase
+class TildeRangeParserTest extends TestCase
 {
-    public function testValidWildcardRangePatch()
+    public function testVersionBranch()
     {
-        $parser = new WildcardRangeParser(
+        $parser = new TildeRangeParser(
             new VersionParser(new LabelBuilder()),
             new GreaterOrEqualTo(),
             new LessThan()
         );
 
         $tokenList = [
-            new Token(Token::DIGITS, 5),
+            new Token(Token::TILDE_RANGE, '~'),
+            new Token(Token::DIGITS, 2),
             new Token(Token::DOT_SEPARATOR, '.'),
-            new Token(Token::DIGITS, 1),
+            new Token(Token::DIGITS, 2),
             new Token(Token::DOT_SEPARATOR, '.'),
-            new Token(Token::WILDCARD_DIGITS, '*')
-        ];
-
-        $this->assertTrue($parser->canParse($tokenList));
-        $this->assertEquals(
-
-            new LogicalAnd(
-                new ComparatorVersion(
-                    new GreaterOrEqualTo(),
-                    new Version(5, 1, 0)
-                ),
-                new ComparatorVersion(
-                    new LessThan(),
-                    new Version(5, 2, 0)
-                )
-            ),
-            $parser->parse($tokenList)
-        );
-    }
-
-    public function testValidWildcardRangeMinor()
-    {
-        $parser = new WildcardRangeParser(
-            new VersionParser(new LabelBuilder()),
-            new GreaterOrEqualTo(),
-            new LessThan()
-        );
-
-        $tokenList = [
-            new Token(Token::DIGITS, 3),
-            new Token(Token::DOT_SEPARATOR, '.'),
-            new Token(Token::WILDCARD_DIGITS, '*')
+            new Token(Token::DIGITS, '0')
         ];
 
         $this->assertTrue($parser->canParse($tokenList));
@@ -80,31 +51,31 @@ final class WildcardRangeParserTest extends TestCase
             new LogicalAnd(
                 new ComparatorVersion(
                     new GreaterOrEqualTo(),
-                    new Version(3, 0, 0)
+                    new Version(2, 2, 0)
                 ),
                 new ComparatorVersion(
                     new LessThan(),
-                    new Version(4, 0, 0)
+                    new Version(2, 3, 0)
                 )
             ),
             $parser->parse($tokenList)
         );
     }
 
-    public function testInvalidWildcardRangeMinor()
+    public function testNotVersionBranch()
     {
         $this->expectException('\RuntimeException');
 
-        $parser = new WildcardRangeParser(
+        $parser = new TildeRangeParser(
             new VersionParser(new LabelBuilder()),
             new GreaterOrEqualTo(),
             new LessThan()
         );
 
         $tokenList = [
-            new Token(Token::DIGITS, 3),
+            new Token(Token::DIGITS, 2),
             new Token(Token::DOT_SEPARATOR, '.'),
-            new Token(Token::DIGITS, 4),
+            new Token(Token::DIGITS, 2),
             new Token(Token::DOT_SEPARATOR, '.'),
             new Token(Token::DIGITS, 5)
         ];

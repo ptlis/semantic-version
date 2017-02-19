@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Test\Parse\RangeMatcher;
+namespace ptlis\SemanticVersion\Test\Parse\RangeParser;
 
 use PHPUnit\Framework\TestCase;
 use ptlis\SemanticVersion\Comparator\ComparatorFactory;
 use ptlis\SemanticVersion\Comparator\EqualTo;
 use ptlis\SemanticVersion\Comparator\GreaterThan;
-use ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser;
+use ptlis\SemanticVersion\Parse\RangeParser\ComparatorVersionParser;
 use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\Version\Label\Label;
@@ -24,7 +24,7 @@ use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 
 /**
- * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser
+ * @covers \ptlis\SemanticVersion\Parse\RangeParser\ComparatorVersionParser
  */
 final class ComparatorVersionParserTest extends TestCase
 {

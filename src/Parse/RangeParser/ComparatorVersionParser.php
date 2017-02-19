@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Parse\RangeMatcher;
+namespace ptlis\SemanticVersion\Parse\RangeParser;
 
 use ptlis\SemanticVersion\Comparator\ComparatorFactory;
 use ptlis\SemanticVersion\Parse\Token;

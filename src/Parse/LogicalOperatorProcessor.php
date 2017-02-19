@@ -101,14 +101,12 @@ final class LogicalOperatorProcessor
         $output = new \SplQueue();
 
         foreach ($tokenList as $token) {
-
             // Accumulate Versions & Comparators
             if ($token instanceof VersionRangeInterface) {
                 $output->enqueue($token);
 
             // Handle operators
             } elseif ($token instanceof Token) {
-
                 // Loop while the current token has higher precedence then the stack token
                 $operator1 = $token;
                 while (
@@ -120,7 +118,6 @@ final class LogicalOperatorProcessor
                 }
 
                 $operatorStack->push($operator1);
-
             } else {
                 throw new \RuntimeException('Invalid version number');
             }

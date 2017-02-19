@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Test\Parse\RangeMatcher;
+namespace ptlis\SemanticVersion\Test\Parse\RangeParser;
 
 use PHPUnit\Framework\TestCase;
 use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
 use ptlis\SemanticVersion\Comparator\LessThan;
-use ptlis\SemanticVersion\Parse\RangeMatcher\CaretRangeParser;
+use ptlis\SemanticVersion\Parse\RangeParser\CaretRangeParser;
 use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
@@ -23,7 +23,7 @@ use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 
 /**
- * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\CaretRangeParser
+ * @covers \ptlis\SemanticVersion\Parse\RangeParser\CaretRangeParser
  */
 final class CaretRangeParserTest extends TestCase
 {

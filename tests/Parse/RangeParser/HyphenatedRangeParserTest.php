@@ -1,12 +1,12 @@
 <?php
 
-namespace ptlis\SemanticVersion\Test\Parse\RangeMatcher;
+namespace ptlis\SemanticVersion\Test\Parse\RangeParser;
 
 use PHPUnit\Framework\TestCase;
 use ptlis\SemanticVersion\Comparator\GreaterOrEqualTo;
 use ptlis\SemanticVersion\Comparator\LessOrEqualTo;
 use ptlis\SemanticVersion\Comparator\LessThan;
-use ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser;
+use ptlis\SemanticVersion\Parse\RangeParser\HyphenatedRangeParser;
 use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\Version\Label\Label;
@@ -16,7 +16,7 @@ use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 
 /**
- * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
+ * @covers \ptlis\SemanticVersion\Parse\RangeParser\HyphenatedRangeParser
  * @covers \ptlis\SemanticVersion\Parse\ChunkBySeparator
  */
 final class HyphenatedRangeParserTest extends TestCase

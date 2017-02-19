@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ptlis\SemanticVersion\Parse\RangeMatcher;
+namespace ptlis\SemanticVersion\Parse\RangeParser;
 
 use ptlis\SemanticVersion\Comparator\ComparatorInterface;
 use ptlis\SemanticVersion\Parse\Token;
@@ -17,11 +17,11 @@ use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
 
 /**
- * Parser for wildcard ranges.
+ * Parser for tilde ranges.
  *
- * Behaviour of wildcard ranges is described @ https://getcomposer.org/doc/articles/versions.md#wildcard
+ * Behaviour of caret ranges is described @ https://getcomposer.org/doc/articles/versions.md#tilde
  */
-final class WildcardRangeParser implements RangeParserInterface
+final class TildeRangeParser implements RangeParserInterface
 {
     use ParseSimpleRange;
 
@@ -53,7 +53,7 @@ final class WildcardRangeParser implements RangeParserInterface
     }
 
     /**
-     * Returns true if the tokens represent a wildcard range.
+     * Returns true if the provided tokens represent a tilde range.
      *
      * @param Token[] $tokenList
      *
@@ -63,13 +63,13 @@ final class WildcardRangeParser implements RangeParserInterface
     {
         return (
             count($tokenList) > 0
-            && Token::WILDCARD_DIGITS === $tokenList[count($tokenList) - 1]->getType()
-            && $this->versionParser->canParse(array_slice($tokenList, 0, count($tokenList) - 1))
+            && Token::TILDE_RANGE === $tokenList[0]->getType()
+            && $this->versionParser->canParse(array_slice($tokenList, 1))
         );
     }
 
     /**
-     * Build a comparator representing the wildcard range.
+     * Build a comparator version representing the tilde range.
      *
      * @param Token[] $tokenList
      *
@@ -85,7 +85,7 @@ final class WildcardRangeParser implements RangeParserInterface
             $this->versionParser,
             $this->greaterOrEqualTo,
             $this->lessThan,
-            array_slice($tokenList, 0, count($tokenList) - 1) // Remove trailing '*' when parsing as version
+            array_slice($tokenList, 1) // Remove prefix tilde
         );
     }
 }
