@@ -12,6 +12,7 @@
 namespace ptlis\SemanticVersion\Parse\RangeMatcher;
 
 use ptlis\SemanticVersion\Comparator\ComparatorInterface;
+use ptlis\SemanticVersion\Parse\ChunkBySeparator;
 use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\Version\Version;
@@ -26,7 +27,7 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  */
 final class HyphenatedRangeParser implements RangeParserInterface
 {
-    use ChunkByDash;
+    use ChunkBySeparator;
 
     /** @var VersionParser */
     private $versionParser;

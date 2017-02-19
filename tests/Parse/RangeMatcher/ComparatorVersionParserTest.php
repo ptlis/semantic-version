@@ -25,7 +25,6 @@ use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 
 /**
  * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser
- * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
  */
 final class ComparatorVersionParserTest extends TestCase
 {

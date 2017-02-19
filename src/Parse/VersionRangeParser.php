@@ -19,6 +19,8 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  */
 final class VersionRangeParser
 {
+    use ChunkBySeparator;
+
     /** @var LogicalOperatorProcessor */
     private $logicalOperatorProcessor;
 
@@ -55,7 +57,7 @@ final class VersionRangeParser
     public function parseRange(array $tokenList)
     {
         $realResultList = [];
-        $tokenClusterList = $this->clusterTokens($tokenList);
+        $tokenClusterList = $this->chunk($tokenList, $this->operatorTokenList, true);
         foreach ($tokenClusterList as $tokenCluster) {
             $parsed = $this->attemptParse($tokenCluster);
 
@@ -94,35 +96,5 @@ final class VersionRangeParser
         }
 
         return $parsed;
-    }
-
-    /**
-     * Clusters the tokens, breaking them up upon finding a logical AND / OR.
-     *
-     * @param Token[] $tokenList
-     *
-     * @return Token[][] $tokenList
-     */
-    private function clusterTokens(array $tokenList)
-    {
-        $tokenAccumulator = [];
-        $tokenClusterList = [];
-        for ($i = 0; $i < count($tokenList); $i++) {
-            $currentToken = $tokenList[$i];
-
-            if (in_array($currentToken->getType(), $this->operatorTokenList)) {
-                $tokenClusterList = array_merge($tokenClusterList, [$tokenAccumulator], [[$currentToken]]);
-                $tokenAccumulator = [];
-            } else {
-                $tokenAccumulator[] = $currentToken;
-            }
-        }
-
-        // Add any remaining tokens
-        if (count($tokenAccumulator)) {
-            $tokenClusterList[] = $tokenAccumulator;
-        }
-
-        return $tokenClusterList;
     }
 }

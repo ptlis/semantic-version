@@ -26,6 +26,7 @@ use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 
 /**
  * @covers \ptlis\SemanticVersion\Parse\VersionRangeParser
+ * @covers \ptlis\SemanticVersion\Parse\ChunkBySeparator
  */
 final class VersionRangeParserTest extends TestDataProvider
 {

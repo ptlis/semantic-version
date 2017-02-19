@@ -17,7 +17,7 @@ use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 
 /**
  * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
- * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
+ * @covers \ptlis\SemanticVersion\Parse\ChunkBySeparator
  */
 final class HyphenatedRangeParserTest extends TestCase
 {
