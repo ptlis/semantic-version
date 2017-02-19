@@ -22,8 +22,6 @@ use ptlis\SemanticVersion\VersionRange\VersionRangeInterface;
  */
 final class ComparatorVersionParser implements RangeParserInterface
 {
-    use ChunkByDash;
-
     /** @var ComparatorFactory */
     private $comparatorFactory;
 
