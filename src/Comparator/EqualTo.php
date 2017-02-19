@@ -16,18 +16,8 @@ use ptlis\SemanticVersion\Version\VersionInterface;
 /**
  * Version equality comparator.
  */
-final class EqualTo extends AbstractComparator
+final class EqualTo implements ComparatorInterface
 {
-    /**
-     * Retrieve the comparator's symbol.
-     *
-     * @return string
-     */
-    public static function getSymbol()
-    {
-        return '=';
-    }
-
     /**
      * Return true if the versions match.
      *
@@ -39,5 +29,13 @@ final class EqualTo extends AbstractComparator
     public function compare(VersionInterface $lVersion, VersionInterface $rVersion)
     {
         return ($lVersion->__toString() === $rVersion->__toString());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+        return '=';
     }
 }

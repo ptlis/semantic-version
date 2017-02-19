@@ -28,7 +28,6 @@ final class GreaterThanTest extends TestCase
     {
         $greaterThan = new GreaterThan();
 
-        $this->assertEquals('>', $greaterThan->getSymbol());
         $this->assertEquals('>', strval($greaterThan));
     }
 

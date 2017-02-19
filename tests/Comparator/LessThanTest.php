@@ -28,7 +28,6 @@ final class LessThanTest extends TestCase
     {
         $lessThan = new LessThan();
 
-        $this->assertEquals('<', $lessThan->getSymbol());
         $this->assertEquals('<', strval($lessThan));
     }
 

@@ -28,7 +28,6 @@ final class EqualToTest extends TestCase
     {
         $equalTo = new EqualTo();
 
-        $this->assertEquals('=', $equalTo->getSymbol());
         $this->assertEquals('=', strval($equalTo));
     }
 

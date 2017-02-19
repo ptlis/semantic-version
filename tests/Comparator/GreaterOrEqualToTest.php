@@ -28,7 +28,6 @@ final class GreaterOrEqualToTest extends TestCase
     {
         $greaterOrEqualTo = new GreaterOrEqualTo();
 
-        $this->assertEquals('>=', $greaterOrEqualTo->getSymbol());
         $this->assertEquals('>=', strval($greaterOrEqualTo));
     }
 

@@ -16,18 +16,8 @@ use ptlis\SemanticVersion\Version\VersionInterface;
 /**
  * Version greater than equal or comparator.
  */
-final class GreaterOrEqualTo extends AbstractComparator
+final class GreaterOrEqualTo implements ComparatorInterface
 {
-    /**
-     * Retrieve the comparator's symbol.
-     *
-     * @return string
-     */
-    public static function getSymbol()
-    {
-        return '>=';
-    }
-
     /**
      * Return true if the left version is greater or equal to the right version.
      *
@@ -42,5 +32,13 @@ final class GreaterOrEqualTo extends AbstractComparator
             (new GreaterThan())->compare($lVersion, $rVersion)
             || (new EqualTo())->compare($lVersion, $rVersion)
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+        return '>=';
     }
 }

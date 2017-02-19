@@ -19,13 +19,6 @@ use ptlis\SemanticVersion\Version\VersionInterface;
 interface ComparatorInterface
 {
     /**
-     * Retrieve the comparator's symbol.
-     *
-     * @return string
-     */
-    public static function getSymbol();
-
-    /**
      * Compare the provided versions using the appropriate method for the comparator.
      *
      * @param VersionInterface $lVersion

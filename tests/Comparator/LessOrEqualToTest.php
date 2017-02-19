@@ -28,7 +28,6 @@ final class LessOrEqualToTest extends TestCase
     {
         $lessOrEqualTo = new LessOrEqualTo();
 
-        $this->assertEquals('<=', $lessOrEqualTo->getSymbol());
         $this->assertEquals('<=', strval($lessOrEqualTo));
     }
 
