@@ -22,11 +22,11 @@ use ptlis\SemanticVersion\VersionEngine;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 
+/**
+ * @covers \ptlis\SemanticVersion\VersionEngine
+ */
 class VersionEngineTest extends TestCase
 {
-    /**
-     * @covers \ptlis\SemanticVersion\VersionEngine
-     */
     public function testParseVersionSuccess()
     {
         $version = (new VersionEngine())->parseVersion('1.2.3-alpha.3');
@@ -37,9 +37,6 @@ class VersionEngineTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\VersionEngine
-     */
     public function testParseVersionErrorLabelOnly()
     {
         $this->expectException('\InvalidArgumentException');
@@ -47,9 +44,6 @@ class VersionEngineTest extends TestCase
         (new VersionEngine())->parseVersion('bob');
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\VersionEngine
-     */
     public function testParseVersionErrorPassRange()
     {
         $this->expectException('\InvalidArgumentException');
@@ -57,9 +51,6 @@ class VersionEngineTest extends TestCase
         (new VersionEngine())->parseVersion('1.5.2-2.8.1');
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\VersionEngine
-     */
     public function testParseVersionRangeSuccess()
     {
         $range = (new VersionEngine())->parseRange('1.5.2-2.8.1');
@@ -79,9 +70,6 @@ class VersionEngineTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\VersionEngine
-     */
     public function testParseVersionRangePassVersion()
     {
         $range = (new VersionEngine())->parseRange('1.5.2');
@@ -95,9 +83,6 @@ class VersionEngineTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\VersionEngine
-     */
     public function testParseVersionRangePassComparatorVersion()
     {
         $range = (new VersionEngine())->parseRange('>=1.5.2');
@@ -111,9 +96,6 @@ class VersionEngineTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\VersionEngine
-     */
     public function testParseVersionRangeErrorLabelOnly()
     {
         $this->expectException('\InvalidArgumentException');

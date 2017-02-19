@@ -14,11 +14,13 @@ namespace ptlis\SemanticVersion\Test\Parse;
 use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Parse\VersionTokenizer;
 
+/**
+ * @covers \ptlis\SemanticVersion\Parse\VersionTokenizer
+ */
 final class VersionTokenizerTest extends TestDataProvider
 {
     /**
      * @dataProvider tokenProvider
-     * @covers \ptlis\SemanticVersion\Parse\VersionTokenizer
      *
      * @param string $version
      * @param Token[] $tokenList

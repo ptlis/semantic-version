@@ -23,12 +23,12 @@ use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 
+/**
+ * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\TildeRangeParser
+ * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ParseSimpleRange
+ */
 class TildeRangeParserTest extends TestCase
 {
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\TildeRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ParseSimpleRange
-     */
     public function testVersionBranch()
     {
         $parser = new TildeRangeParser(
@@ -62,10 +62,6 @@ class TildeRangeParserTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\TildeRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ParseSimpleRange
-     */
     public function testNotVersionBranch()
     {
         $this->expectException('\RuntimeException');

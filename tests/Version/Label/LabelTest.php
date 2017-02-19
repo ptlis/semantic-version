@@ -14,6 +14,9 @@ namespace ptlis\SemanticVersion\Test\Version\Label;
 use PHPUnit\Framework\TestCase;
 use ptlis\SemanticVersion\Version\Label\Label;
 
+/**
+ * @covers \ptlis\SemanticVersion\Version\Label\Label
+ */
 class LabelTest extends TestCase
 {
     public function testCreate()

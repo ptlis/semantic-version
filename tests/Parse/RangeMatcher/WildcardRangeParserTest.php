@@ -22,12 +22,12 @@ use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 
+/**
+ * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\WildcardRangeParser
+ * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ParseSimpleRange
+ */
 final class WildcardRangeParserTest extends TestCase
 {
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\WildcardRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ParseSimpleRange
-     */
     public function testValidWildcardRangePatch()
     {
         $parser = new WildcardRangeParser(
@@ -61,10 +61,6 @@ final class WildcardRangeParserTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\WildcardRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ParseSimpleRange
-     */
     public function testValidWildcardRangeMinor()
     {
         $parser = new WildcardRangeParser(
@@ -95,10 +91,6 @@ final class WildcardRangeParserTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\WildcardRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ParseSimpleRange
-     */
     public function testInvalidWildcardRangeMinor()
     {
         $this->expectException('\RuntimeException');

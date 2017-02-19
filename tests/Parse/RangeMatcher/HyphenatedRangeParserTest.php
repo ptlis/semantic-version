@@ -15,12 +15,12 @@ use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 
+/**
+ * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
+ * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
+ */
 final class HyphenatedRangeParserTest extends TestCase
 {
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
-     */
     public function testValidHyphenatedRangeMajorOnly()
     {
         $parser = new HyphenatedRangeParser(
@@ -52,10 +52,6 @@ final class HyphenatedRangeParserTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
-     */
     public function testValidHyphenatedRangeMajorMinor()
     {
         $parser = new HyphenatedRangeParser(
@@ -91,10 +87,6 @@ final class HyphenatedRangeParserTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
-     */
     public function testValidHyphenatedRangeMajorMinorPatch()
     {
         $parser = new HyphenatedRangeParser(
@@ -134,10 +126,6 @@ final class HyphenatedRangeParserTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
-     */
     public function testValidHyphenatedRangeMajorMinorPatchLabelOnFirst()
     {
         $parser = new HyphenatedRangeParser(
@@ -179,10 +167,6 @@ final class HyphenatedRangeParserTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
-     */
     public function testValidHyphenatedRangeMajorMinorPatchLabelOnSecond()
     {
         $parser = new HyphenatedRangeParser(
@@ -224,10 +208,6 @@ final class HyphenatedRangeParserTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
-     */
     public function testValidHyphenatedRangeMajorMinorPatchLabelOnBoth()
     {
         $parser = new HyphenatedRangeParser(
@@ -271,10 +251,6 @@ final class HyphenatedRangeParserTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
-     */
     public function testNotHyphenatedRange()
     {
         $parser = new HyphenatedRangeParser(
@@ -291,10 +267,6 @@ final class HyphenatedRangeParserTest extends TestCase
         $this->assertFalse($parser->canParse($tokenList));
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
-     */
     public function testNotHyphenatedRangeWithLabel()
     {
         $this->expectException('\RuntimeException');
@@ -322,10 +294,6 @@ final class HyphenatedRangeParserTest extends TestCase
         $parser->parse($tokenList);
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
-     */
     public function testParseInvalidHyphenatedRangeThreeVersions()
     {
         $this->expectException('\RuntimeException');
@@ -350,10 +318,6 @@ final class HyphenatedRangeParserTest extends TestCase
         $parser->parse($tokenList);
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
-     */
     public function testParseInvalidHyphenatedRangeFourVersions()
     {
         $this->expectException('\RuntimeException');
@@ -380,10 +344,6 @@ final class HyphenatedRangeParserTest extends TestCase
         $parser->parse($tokenList);
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\HyphenatedRangeParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
-     */
     public function testParseInvalidHyphenatedRangeFiveVersions()
     {
         $this->expectException('\RuntimeException');

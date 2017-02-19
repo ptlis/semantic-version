@@ -16,11 +16,11 @@ use ptlis\SemanticVersion\Parse\Token;
 use ptlis\SemanticVersion\Version\Label\Label;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 
+/**
+ * @covers \ptlis\SemanticVersion\Version\Label\LabelBuilder
+ */
 class LabelBuilderTest extends TestCase
 {
-    /**
-     * @covers \ptlis\SemanticVersion\Version\Label\LabelBuilder
-     */
     public function testCreateDev()
     {
         $label = (new LabelBuilder())
@@ -31,9 +31,6 @@ class LabelBuilderTest extends TestCase
         $this->assertEquals(new Label(Label::PRECEDENCE_DEV, 5, 'wibble'), $label);
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Version\Label\LabelBuilder
-     */
     public function testCreateAlpha()
     {
         $label = (new LabelBuilder())
@@ -44,9 +41,6 @@ class LabelBuilderTest extends TestCase
         $this->assertEquals(new Label(Label::PRECEDENCE_ALPHA, 1), $label);
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Version\Label\LabelBuilder
-     */
     public function testCreateBeta()
     {
         $label = (new LabelBuilder())
@@ -56,9 +50,6 @@ class LabelBuilderTest extends TestCase
         $this->assertEquals(new Label(Label::PRECEDENCE_BETA), $label);
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Version\Label\LabelBuilder
-     */
     public function testCreateRC()
     {
         $label = (new LabelBuilder())
@@ -69,9 +60,6 @@ class LabelBuilderTest extends TestCase
         $this->assertEquals(new Label(Label::PRECEDENCE_RC, 3), $label);
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Version\Label\LabelBuilder
-     */
     public function testCreateAbsent()
     {
         $label = (new LabelBuilder())->build();
@@ -79,9 +67,6 @@ class LabelBuilderTest extends TestCase
         $this->assertEquals(new Label(Label::PRECEDENCE_ABSENT), $label);
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Version\Label\LabelBuilder
-     */
     public function testCreateFromTokensNoLabel()
     {
         $label = (new LabelBuilder())->buildFromTokens([]);
@@ -89,9 +74,6 @@ class LabelBuilderTest extends TestCase
         $this->assertEquals(new Label(Label::PRECEDENCE_ABSENT), $label);
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Version\Label\LabelBuilder
-     */
     public function testCreateFromTokensLabelStringOnly()
     {
         $label = (new LabelBuilder())->buildFromTokens([
@@ -101,9 +83,6 @@ class LabelBuilderTest extends TestCase
         $this->assertEquals(new Label(Label::PRECEDENCE_ALPHA, null, 'alpha'), $label);
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Version\Label\LabelBuilder
-     */
     public function testCreateFromTokensLabelAndVersion()
     {
         $label = (new LabelBuilder())->buildFromTokens([
@@ -115,9 +94,6 @@ class LabelBuilderTest extends TestCase
         $this->assertEquals(new Label(Label::PRECEDENCE_ALPHA, 2, 'alpha'), $label);
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Version\Label\LabelBuilder
-     */
     public function testCreateFromTokensInvalid()
     {
         $this->expectException('\RuntimeException');

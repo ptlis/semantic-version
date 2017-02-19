@@ -22,11 +22,11 @@ use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 
+/**
+ * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\CaretRangeParser
+ */
 final class CaretRangeParserTest extends TestCase
 {
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\CaretRangeParser
-     */
     public function testValidCaretRangeMajorOnly()
     {
         $parser = new CaretRangeParser(
@@ -57,9 +57,6 @@ final class CaretRangeParserTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\CaretRangeParser
-     */
     public function testValidCaretRangeMajorMinor()
     {
         $parser = new CaretRangeParser(
@@ -91,9 +88,6 @@ final class CaretRangeParserTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\CaretRangeParser
-     */
     public function testValidCaretRangeMajorMinorPatch()
     {
         $parser = new CaretRangeParser(
@@ -127,9 +121,6 @@ final class CaretRangeParserTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\CaretRangeParser
-     */
     public function testInvalidCaretRange()
     {
         $this->expectException('\RuntimeException');

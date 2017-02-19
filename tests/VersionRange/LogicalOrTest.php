@@ -19,11 +19,11 @@ use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 use ptlis\SemanticVersion\VersionRange\LogicalOr;
 
+/**
+ * @covers \ptlis\SemanticVersion\VersionRange\LogicalOr
+ */
 class LogicalOrTest extends TestCase
 {
-    /**
-     * @covers \ptlis\SemanticVersion\VersionRange\LogicalOr
-     */
     public function testIsSatisfiedBy()
     {
         $range = new LogicalOr(
@@ -57,9 +57,6 @@ class LogicalOrTest extends TestCase
         $this->assertFalse($range->isSatisfiedBy(new Version(6)));
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\VersionRange\LogicalOr
-     */
     public function testToString()
     {
         $range = new LogicalOr(

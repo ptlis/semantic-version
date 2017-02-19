@@ -23,11 +23,11 @@ use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 use ptlis\SemanticVersion\VersionRange\LogicalOr;
 
+/**
+ * @covers \ptlis\SemanticVersion\Parse\LogicalOperatorProcessor
+ */
 class LogicalOperatorProcessorTest extends TestCase
 {
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\LogicalOperatorProcessor
-     */
     public function testSuccessLogicalAnd()
     {
         $logicalOperatorProcessor = new LogicalOperatorProcessor();
@@ -47,9 +47,6 @@ class LogicalOperatorProcessorTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\LogicalOperatorProcessor
-     */
     public function testSuccessLogicalOr()
     {
         $logicalOperatorProcessor = new LogicalOperatorProcessor();
@@ -69,9 +66,6 @@ class LogicalOperatorProcessorTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\LogicalOperatorProcessor
-     */
     public function testSuccessOneOfTwoRanges()
     {
         $logicalOperatorProcessor = new LogicalOperatorProcessor();

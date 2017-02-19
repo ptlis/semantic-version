@@ -15,11 +15,11 @@ use PHPUnit\Framework\TestCase;
 use ptlis\SemanticVersion\Version\Label\Label;
 use ptlis\SemanticVersion\Version\Version;
 
+/**
+ * @covers \ptlis\SemanticVersion\Version\Version
+ */
 class VersionTest extends TestCase
 {
-    /**
-     * @covers \ptlis\SemanticVersion\Version\Version
-     */
     public function testCreate()
     {
         $version = new Version(1, 0, 5, new Label(Label::PRECEDENCE_ALPHA, 1));
@@ -31,9 +31,6 @@ class VersionTest extends TestCase
         $this->assertEquals('1.0.5-alpha.1', strval($version));
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Version\Version
-     */
     public function testCreateWithDefaults()
     {
         $version = new Version(1);
@@ -44,9 +41,6 @@ class VersionTest extends TestCase
         $this->assertEquals(new Label(Label::PRECEDENCE_ABSENT), $version->getLabel());
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Version\Version
-     */
     public function testCreateAbsent()
     {
         $version = new Version(1, 0, 5);
@@ -54,9 +48,6 @@ class VersionTest extends TestCase
         $this->assertEquals('1.0.5', strval($version));
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Version\Version
-     */
     public function testIsSatisfiedBy()
     {
         $version = new Version(1, 0, 5);
@@ -64,9 +55,6 @@ class VersionTest extends TestCase
         $this->assertTrue($version->isSatisfiedBy(new Version(1, 0, 5)));
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Version\Version
-     */
     public function testIsNotSatisfiedBy()
     {
         $version = new Version(1, 0, 5);

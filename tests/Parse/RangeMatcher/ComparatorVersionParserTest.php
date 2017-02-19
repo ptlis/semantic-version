@@ -23,12 +23,12 @@ use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 
+/**
+ * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser
+ * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
+ */
 final class ComparatorVersionParserTest extends TestCase
 {
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
-     */
     public function testValidComparatorVersionImplicitEqual()
     {
         $parser = new ComparatorVersionParser(
@@ -50,10 +50,6 @@ final class ComparatorVersionParserTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
-     */
     public function testValidComparatorVersionMajorOnly()
     {
         $parser = new ComparatorVersionParser(
@@ -76,10 +72,6 @@ final class ComparatorVersionParserTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
-     */
     public function testValidComparatorVersionMajorMinor()
     {
         $parser = new ComparatorVersionParser(
@@ -104,10 +96,6 @@ final class ComparatorVersionParserTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
-     */
     public function testValidComparatorVersionMajorMinorPatch()
     {
         $parser = new ComparatorVersionParser(
@@ -134,10 +122,6 @@ final class ComparatorVersionParserTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
-     */
     public function testValidComparatorVersionMajorMinorPatchLabel()
     {
         $parser = new ComparatorVersionParser(
@@ -168,10 +152,6 @@ final class ComparatorVersionParserTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
-     */
     public function testNotComparatorVersion()
     {
         $parser = new ComparatorVersionParser(
@@ -191,10 +171,6 @@ final class ComparatorVersionParserTest extends TestCase
         $this->assertFalse($parser->canParse($tokenList));
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ComparatorVersionParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ChunkByDash
-     */
     public function testLabelOnlyError()
     {
         $this->expectException('\RuntimeException');

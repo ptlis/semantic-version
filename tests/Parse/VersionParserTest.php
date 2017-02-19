@@ -18,6 +18,9 @@ use ptlis\SemanticVersion\Version\Label\Label;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 use ptlis\SemanticVersion\Version\Version;
 
+/**
+ * @covers \ptlis\SemanticVersion\Parse\VersionParser
+ */
 class VersionParserTest extends TestCase
 {
     public function testMajorOnly()

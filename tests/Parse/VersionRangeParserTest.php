@@ -24,6 +24,9 @@ use ptlis\SemanticVersion\Parse\VersionParser;
 use ptlis\SemanticVersion\Parse\VersionRangeParser;
 use ptlis\SemanticVersion\Version\Label\LabelBuilder;
 
+/**
+ * @covers \ptlis\SemanticVersion\Parse\VersionRangeParser
+ */
 final class VersionRangeParserTest extends TestDataProvider
 {
     private function getMatcherList()
@@ -69,7 +72,6 @@ final class VersionRangeParserTest extends TestDataProvider
 
     /**
      * @dataProvider tokenProvider
-     * @covers \ptlis\SemanticVersion\Parse\VersionRangeParser
      */
     public function testParseRange($version, $tokenList, $expectedRange, $expectedSerialization)
     {
@@ -80,9 +82,6 @@ final class VersionRangeParserTest extends TestDataProvider
         $this->assertEquals($expectedSerialization, strval($range));
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\VersionRangeParser
-     */
     public function testParseRangeError()
     {
         $this->expectException('\RuntimeException');

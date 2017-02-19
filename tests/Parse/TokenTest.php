@@ -14,11 +14,11 @@ namespace ptlis\SemanticVersion\Test\Parse;
 use PHPUnit\Framework\TestCase;
 use ptlis\SemanticVersion\Parse\Token;
 
+/**
+ * @covers \ptlis\SemanticVersion\Parse\Token
+ */
 final class TokenTest extends TestCase
 {
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\Token
-     */
     public function testCreate()
     {
         $token = new Token(Token::DIGITS, 1);

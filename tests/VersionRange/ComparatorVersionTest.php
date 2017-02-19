@@ -17,11 +17,11 @@ use ptlis\SemanticVersion\Comparator\LessOrEqualTo;
 use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 
+/**
+ * @covers \ptlis\SemanticVersion\VersionRange\ComparatorVersion
+ */
 class ComparatorVersionTest extends TestCase
 {
-    /**
-     * @covers \ptlis\SemanticVersion\VersionRange\ComparatorVersion
-     */
     public function testIsSatisfiedBy()
     {
         $comparatorVersion = new ComparatorVersion(
@@ -33,9 +33,6 @@ class ComparatorVersionTest extends TestCase
         $this->assertFalse($comparatorVersion->isSatisfiedBy(new Version(1, 2)));
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\VersionRange\ComparatorVersion
-     */
     public function testToString()
     {
         $comparatorVersion = new ComparatorVersion(

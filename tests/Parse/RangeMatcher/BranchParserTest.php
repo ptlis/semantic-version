@@ -23,12 +23,12 @@ use ptlis\SemanticVersion\Version\Version;
 use ptlis\SemanticVersion\VersionRange\ComparatorVersion;
 use ptlis\SemanticVersion\VersionRange\LogicalAnd;
 
+/**
+ * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\BranchParser
+ * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ParseSimpleRange
+ */
 final class BranchParserTest extends TestCase
 {
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\BranchParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ParseSimpleRange
-     */
     public function testVersionBranch()
     {
         $parser = new BranchParser(
@@ -63,10 +63,6 @@ final class BranchParserTest extends TestCase
         );
     }
 
-    /**
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\BranchParser
-     * @covers \ptlis\SemanticVersion\Parse\RangeMatcher\ParseSimpleRange
-     */
     public function testNotVersionBranch()
     {
         $this->expectException('\RuntimeException');
