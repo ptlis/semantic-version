@@ -19,7 +19,7 @@
         "phpmd/phpmd":                          "@dev",
         "phpunit/phpunit":                      "^5.7.9",
         "sebastian/phpcpd":                     "^2.0",
-        "squizlabs/php_codesniffer":            "^1.5"
+        "squizlabs/php_codesniffer": "^2.8"
     },
     "autoload": {
         "psr-4": {
