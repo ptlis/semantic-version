@@ -269,7 +269,7 @@ final class HyphenatedRangeParserTest extends TestCase
 
     public function testNotHyphenatedRangeWithLabel()
     {
-        $this->expectException('\RuntimeException');
+        $this->setExpectedException('\RuntimeException');
 
         $parser = new HyphenatedRangeParser(
             new VersionParser(new LabelBuilder()),
@@ -296,7 +296,7 @@ final class HyphenatedRangeParserTest extends TestCase
 
     public function testParseInvalidHyphenatedRangeThreeVersions()
     {
-        $this->expectException('\RuntimeException');
+        $this->setExpectedException('\RuntimeException');
 
         $parser = new HyphenatedRangeParser(
             new VersionParser(new LabelBuilder()),
@@ -320,7 +320,7 @@ final class HyphenatedRangeParserTest extends TestCase
 
     public function testParseInvalidHyphenatedRangeFourVersions()
     {
-        $this->expectException('\RuntimeException');
+        $this->setExpectedException('\RuntimeException');
 
         $parser = new HyphenatedRangeParser(
             new VersionParser(new LabelBuilder()),
@@ -346,7 +346,7 @@ final class HyphenatedRangeParserTest extends TestCase
 
     public function testParseInvalidHyphenatedRangeFiveVersions()
     {
-        $this->expectException('\RuntimeException');
+        $this->setExpectedException('\RuntimeException');
 
         $parser = new HyphenatedRangeParser(
             new VersionParser(new LabelBuilder()),

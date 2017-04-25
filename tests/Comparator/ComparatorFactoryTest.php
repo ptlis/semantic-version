@@ -32,8 +32,7 @@ final class ComparatorFactoryTest extends TestCase
      */
     public function testInvalidComparator()
     {
-        $this->expectException('\RuntimeException');
-        $this->expectExceptionMessage('Unknown comparator "??" encountered"');
+        $this->setExpectedException('\RuntimeException', 'Unknown comparator "??" encountered"');
 
         (new ComparatorFactory())
             ->get('??');

@@ -96,7 +96,7 @@ class LabelBuilderTest extends TestCase
 
     public function testCreateFromTokensInvalid()
     {
-        $this->expectException('\RuntimeException');
+        $this->setExpectedException('\RuntimeException');
 
         (new LabelBuilder())->buildFromTokens([
             new Token(Token::LABEL_STRING, 'alpha'),

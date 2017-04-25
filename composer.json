@@ -11,13 +11,13 @@
         }
     ],
     "require": {
-        "php": ">=5.6.0"
+        "php": ">=5.5.0"
     },
     "require-dev": {
         "pdepend/pdepend":                      "^1.1",
         "phploc/phploc":                        "^2.0",
         "phpmd/phpmd":                          "@dev",
-        "phpunit/phpunit":                      "^5.7.9",
+        "phpunit/phpunit":                      "^4.0.0",
         "sebastian/phpcpd":                     "^2.0",
         "squizlabs/php_codesniffer": "^2.8"
     },

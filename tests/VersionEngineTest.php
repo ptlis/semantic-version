@@ -39,14 +39,14 @@ class VersionEngineTest extends TestCase
 
     public function testParseVersionErrorLabelOnly()
     {
-        $this->expectException('\InvalidArgumentException');
+        $this->setExpectedException('\InvalidArgumentException');
 
         (new VersionEngine())->parseVersion('bob');
     }
 
     public function testParseVersionErrorPassRange()
     {
-        $this->expectException('\InvalidArgumentException');
+        $this->setExpectedException('\InvalidArgumentException');
 
         (new VersionEngine())->parseVersion('1.5.2-2.8.1');
     }
@@ -98,7 +98,7 @@ class VersionEngineTest extends TestCase
 
     public function testParseVersionRangeErrorLabelOnly()
     {
-        $this->expectException('\InvalidArgumentException');
+        $this->setExpectedException('\InvalidArgumentException');
 
         (new VersionEngine())->parseRange('foo');
     }

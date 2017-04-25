@@ -147,7 +147,7 @@ class VersionParserTest extends TestCase
 
     public function testInvalidLabelOnly()
     {
-        $this->expectException('\RuntimeException');
+        $this->setExpectedException('\RuntimeException');
 
         $matcher = new VersionParser(new LabelBuilder());
 

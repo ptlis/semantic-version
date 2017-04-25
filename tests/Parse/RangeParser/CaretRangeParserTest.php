@@ -123,7 +123,7 @@ final class CaretRangeParserTest extends TestCase
 
     public function testInvalidCaretRange()
     {
-        $this->expectException('\RuntimeException');
+        $this->setExpectedException('\RuntimeException');
 
         $parser = new CaretRangeParser(
             new VersionParser(new LabelBuilder()),

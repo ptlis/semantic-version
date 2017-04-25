@@ -85,7 +85,7 @@ final class VersionRangeParserTest extends TestDataProvider
 
     public function testParseRangeError()
     {
-        $this->expectException('\RuntimeException');
+        $this->setExpectedException('\RuntimeException');
 
         $parser = new VersionRangeParser(new LogicalOperatorProcessor(), $this->getMatcherList());
         $parser->parseRange([new Token(Token::LABEL_STRING, 'bob')]);

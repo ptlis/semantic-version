@@ -65,7 +65,7 @@ final class BranchParserTest extends TestCase
 
     public function testNotVersionBranch()
     {
-        $this->expectException('\RuntimeException');
+        $this->setExpectedException('\RuntimeException');
 
         $parser = new BranchParser(
             new VersionParser(new LabelBuilder()), new GreaterOrEqualTo(), new LessThan(),

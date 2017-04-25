@@ -93,7 +93,7 @@ final class WildcardRangeParserTest extends TestCase
 
     public function testInvalidWildcardRangeMinor()
     {
-        $this->expectException('\RuntimeException');
+        $this->setExpectedException('\RuntimeException');
 
         $parser = new WildcardRangeParser(
             new VersionParser(new LabelBuilder()),

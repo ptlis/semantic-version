@@ -172,7 +172,7 @@ final class ComparatorVersionParserTest extends TestCase
 
     public function testLabelOnlyError()
     {
-        $this->expectException('\RuntimeException');
+        $this->setExpectedException('\RuntimeException');
 
         $parser = new ComparatorVersionParser(
             new ComparatorFactory(),
